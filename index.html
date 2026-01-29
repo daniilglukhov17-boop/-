@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stihl Luxury App Concept</title>
+    <title>Stihl Luxury App Concept - Animated</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --app-bg: #F0F2F5;
             --panel-bg: #F8F9FA;
             --stihl-copper: linear-gradient(135deg, #FF6600 0%, #E65C00 100%);
+            --stihl-copper-active: linear-gradient(135deg, #E65C00 0%, #CC5200 100%); /* Более темный для active */
             --text-main: #1C1C1E;
             --text-sec: #8E8E93;
             --shadow-light: #FFFFFF;
             --shadow-dark: #D1D9E6;
+            --online-green: #34C759;
         }
 
+        /* --- Базовые стили и сброс --- */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
@@ -24,57 +27,82 @@
             color: var(--text-main);
             display: flex;
             justify-content: center;
+            min-height: 100vh;
+            padding: 16px; /* Отступы для контейнера */
         }
 
-        /* Контейнер приложения (имитация экрана телефона) */
+        /* --- Контейнер приложения (имитация экрана телефона) --- */
         .app-container {
             width: 100%;
-            max-width: 500px;
-            min-height: 100vh;
-            padding: 16px;
+            max-width: 500px; /* Ограничиваем ширину для лучшего вида */
         }
 
-        /* Парящая шапка-панель */
+        /* --- Парящая шапка-панель --- */
         .premium-header {
             background: var(--panel-bg);
-            border-radius: 24px;
-            padding: 20px;
+            border-radius: 24px; /* Мягкие закругления */
+            padding: 24px; /* Увеличенный внутренний отступ */
             box-shadow: 
                 8px 8px 16px var(--shadow-dark), 
-                -8px -8px 16px var(--shadow-light);
-            border: 1px solid rgba(255,255,255,0.5);
-            margin-bottom: 24px;
+                -8px -8px 16px var(--shadow-light); /* Эффект выдавливания */
+            border: 1px solid rgba(255,255,255,0.5); /* Легкая рамка */
+            margin-bottom: 24px; /* Отступ от нижнего контента */
+            /* Дополнительная, едва заметная тень для глубины */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05),
+                        8px 8px 16px var(--shadow-dark), 
+                        -8px -8px 16px var(--shadow-light);
         }
 
         .header-top {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 20px;
+            margin-bottom: 24px; /* Отступ от кнопок */
         }
 
         .brand-info h1 {
-            font-size: 18px;
+            font-size: 20px; /* Крупнее имя */
             font-weight: 800;
             letter-spacing: -0.5px;
             text-transform: uppercase;
-            background: linear-gradient(90deg, #1c1c1e, #555);
+            background: linear-gradient(90deg, #1c1c1e, #555); /* Градиент для текста */
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .brand-info p {
-            font-size: 10px;
-            font-weight: 500;
-            color: var(--text-sec);
+        .status-line {
+            display: flex;
+            align-items: center;
+            margin-top: 4px;
+        }
+
+        .online-indicator {
+            width: 8px;
+            height: 8px;
+            background-color: var(--online-green);
+            border-radius: 50%;
+            margin-right: 6px;
+            box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7); /* Тень для пульсации */
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(52, 199, 89, 0); }
+            100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(52, 199, 89, 0); }
+        }
+
+        .status-text {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--online-green);
             text-transform: uppercase;
-            letter-spacing: 1.2px;
-            margin-top: 2px;
+            letter-spacing: 0.8px;
         }
 
         .geo-tag {
             background: #fff;
-            padding: 6px 12px;
+            padding: 8px 14px; /* Увеличенный padding */
             border-radius: 100px;
             font-size: 9px;
             font-weight: 700;
@@ -83,104 +111,56 @@
             text-transform: uppercase;
         }
 
-        /* Главная кнопка действия */
+        /* --- Главная кнопка действия --- */
         .action-call {
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
-            padding: 18px;
+            padding: 20px; /* Увеличенный padding */
             background: var(--stihl-copper);
             border: none;
             border-radius: 18px;
             color: white;
-            font-size: 15px;
+            font-size: 16px; /* Крупнее текст */
             font-weight: 700;
             text-decoration: none;
-            margin-bottom: 16px;
-            box-shadow: 0 10px 20px rgba(255, 102, 0, 0.3);
+            margin-bottom: 20px; /* Отступ от мессенджеров */
+            box-shadow: 0 12px 25px rgba(255, 102, 0, 0.4); /* Более выраженная тень */
             transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .action-call:active {
             transform: scale(0.96);
+            background: var(--stihl-copper-active); /* Изменение цвета при нажатии */
             box-shadow: 0 4px 10px rgba(255, 102, 0, 0.2);
         }
 
-        /* Сетка мессенджеров */
+        /* --- Сетка мессенджеров --- */
         .messenger-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
+            gap: 16px; /* Увеличенный отступ между кнопками */
         }
 
         .messenger-btn {
             background: var(--panel-bg);
-            padding: 14px;
-            border-radius: 16px;
+            padding: 16px; /* Увеличенный padding */
+            border-radius: 20px; /* Более округлые */
             text-decoration: none;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             box-shadow: 
-                4px 4px 8px var(--shadow-dark), 
-                -4px -4px 8px var(--shadow-light);
+                6px 6px 12px var(--shadow-dark), 
+                -6px -6px 12px var(--shadow-light); /* Объемнее тени */
             border: 1px solid rgba(255,255,255,0.6);
             transition: 0.2s;
         }
 
         .messenger-btn:active {
             box-shadow: 
-                inset 2px 2px 5px var(--shadow-dark), 
-                inset -2px -2px 5px var(--shadow-light);
-            transform: scale(0.95);
-        }
-
-        .messenger-btn span {
-            font-size: 9px;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-top: 8px;
-            letter-spacing: 0.5px;
-        }
-
-        .icon { width: 22px; height: 22px; fill: #444; }
-
-    </style>
-</head>
-<body>
-
-<div class="app-container">
-    <header class="premium-header">
-        <div class="header-top">
-            <div class="brand-info">
-                <h1>Даниил Глухов</h1>
-                <p>Industrial Service</p>
-            </div>
-            <div class="geo-tag">Симферополь</div>
-        </div>
-
-        <a href="tel:+79785552114" class="action-call">
-            Позвонить мастеру
-        </a>
-
-        <div class="messenger-grid">
-            <a href="https://max.ru/u/f9LHodD0cOKq1RRxaWPLcyQOAe5XjdOFacwTLVOWL4Tk0TUldTlooT-0r5g" class="messenger-btn">
-                <svg class="icon" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z"/></svg>
-                <span>MAX</span>
-            </a>
-            <a href="https://t.me/daniil_glukhov17" class="messenger-btn">
-                <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
-                <span>TG</span>
-            </a>
-            <a href="https://vk.com/daniil_glukhov17" class="messenger-btn">
-                <svg class="icon" viewBox="0 0 24 24"><path d="M15.07 2H8.93C3.33 2 2 3.33 2 8.93v6.14C2 20.67 3.33 22 8.93 22h6.14c5.6 0 6.93-1.33 6.93-6.93V8.93C22 3.33 20.67 2 15.07 2zm3.12 13.51h-1.33c-.41 0-.54-.33-1.29-1.08-.65-.63-.94-.71-1.1-.71-.22 0-.29.06-.29.37v1c0 .27-.09.42-.81.42-1.2 0-2.54-.73-3.49-2.09-1.43-2.02-1.83-2.13-1.83-2.4 0-.13.06-.25.33-.25h1.33c.24 0 .32.11.41.36.65 1.91 1.48 2.58 1.72 2.58.11 0 .16-.05.16-.31V10.8c0-.43-.24-.46-.24-.63 0-.08.07-.17.18-.17h2.1c.21 0 .28.11.28.36v2.33c0 .25.11.31.18.31.11 0 .21-.05.41-.25.96-1.11 1.4-2.29 1.4-2.29.06-.13.15-.22.4-.22h1.33c.36 0 .43.18.36.36-.14.36-1.51 2.61-1.51 2.61a.52.52 0 000 .69s.34.46 1.09 1.34c.57.65.81.99.74 1.29-.07.31-.34.31-.34.31z"/></svg>
-                <span>VK</span>
-            </a>
-        </div>
-    </header>
-</div>
-
-</body>
-</html>
+                inset 3px 3px 7px var(--shadow-dark), 
+                inset -3px -3px 7px var(--shadow-light); /* Эффект "нажатия" */
+            transform: scale(0.

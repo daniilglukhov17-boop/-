@@ -7,192 +7,218 @@
     <style>
         :root {
             --lime: #DFFF11; 
-            --obsidian: rgba(10, 10, 12, 0.95);
-            --bg: #F8F8FA;
+            --deep-space: #050505;
+            --glass-border: rgba(255, 255, 255, 0.15);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body { 
-            background: var(--bg); 
+            background: #0f0f11; /* Темный фон, чтобы стекло "заиграло" */
             font-family: 'Inter', sans-serif; 
             min-height: 100vh;
             display: flex;
-            justify-content: center;
+            align-items: flex-start;
+            padding-top: 50px;
+            background-image: radial-gradient(circle at 50% 0%, #1a1a1f 0%, #050505 100%);
         }
 
-        /* Контейнер шапки */
-        .header-anchor {
-            position: fixed;
-            top: 20px;
-            left: 12px;
-            right: 12px;
-            z-index: 10000;
-            max-width: 600px; /* Для красоты на десктопе */
+        .premium-wrapper {
+            width: 100%;
+            padding: 0 16px;
+            max-width: 500px;
             margin: 0 auto;
         }
 
-        .obsidian-panel {
-            background: linear-gradient(145deg, rgba(20, 20, 25, 0.98), rgba(5, 5, 5, 1));
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border-radius: 28px;
-            padding: 8px 10px 8px 24px;
+        /* ПАНЕЛЬ "ЖИДКИЙ УГЛЕРОД" */
+        .master-panel {
+            position: relative;
+            background: linear-gradient(165deg, rgba(30,30,35,0.9) 0%, rgba(10,10,12,1) 100%);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-radius: 32px;
+            padding: 12px 14px 12px 28px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            /* Бриллиантовая грань */
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid var(--glass-border);
             box-shadow: 
-                0 30px 60px rgba(0, 0, 0, 0.3),
-                inset 0 1px 1px rgba(255, 255, 255, 0.1);
+                0 40px 80px rgba(0,0,0,0.6),
+                inset 0 1px 2px rgba(255,255,255,0.1); /* Эффект фаски */
+            overflow: hidden;
         }
 
-        .brand-info { display: flex; flex-direction: column; gap: 2px; }
+        /* Динамический блик на стекле */
+        .master-panel::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            transform: skewX(-30deg);
+            animation: shine 6s infinite;
+        }
 
-        /* ВЫРАЖЕННАЯ ПУЛЬСАЦИЯ */
-        .status-container {
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 200%; }
+            100% { left: 200%; }
+        }
+
+        .text-section { display: flex; flex-direction: column; gap: 4px; z-index: 2; }
+
+        /* ИНДИКАТОР SUPERNOVA */
+        .status-line {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 10px;
+            font-weight: 800;
+            color: rgba(255,255,255,0.3);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .core-engine {
+            position: relative;
+            width: 12px;
+            height: 12px;
+        }
+
+        .core-point {
+            position: absolute;
+            width: 8px; height: 8px;
+            background: var(--lime);
+            border-radius: 50%;
+            top: 2px; left: 2px;
+            box-shadow: 0 0 20px var(--lime);
+            animation: supernova-pulse 1.2s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+        }
+
+        @keyframes supernova-pulse {
+            0% { transform: scale(1); filter: brightness(1) blur(0px); box-shadow: 0 0 10px var(--lime); }
+            50% { transform: scale(1.3); filter: brightness(2) blur(1px); box-shadow: 0 0 30px var(--lime), 0 0 50px var(--lime); }
+            100% { transform: scale(1); filter: brightness(1) blur(0px); box-shadow: 0 0 10px var(--lime); }
+        }
+
+        .core-aura {
+            position: absolute;
+            width: 100%; height: 100%;
+            border: 1px solid var(--lime);
+            border-radius: 50%;
+            animation: aura-expand 2.4s infinite ease-out;
+        }
+
+        @keyframes aura-expand {
+            0% { transform: scale(0.5); opacity: 1; }
+            100% { transform: scale(5); opacity: 0; }
+        }
+
+        .name-h1 {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+        }
+
+        /* ВПУКЛАЯ КНОПКА CNC */
+        .cnc-btn {
+            background: var(--lime);
+            height: 56px;
+            padding: 0 28px;
+            border-radius: 22px;
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 9px;
-            font-weight: 800;
-            color: rgba(255, 255, 255, 0.4);
-            letter-spacing: 1.2px;
-            text-transform: uppercase;
-        }
-
-        .heartbeat {
-            position: relative;
-            width: 10px;
-            height: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .neon-dot {
-            width: 7px;
-            height: 7px;
-            background: var(--lime);
-            border-radius: 50%;
-            z-index: 5;
-            box-shadow: 0 0 15px var(--lime), 0 0 30px var(--lime);
-            animation: core-glow 1.5s infinite alternate;
-        }
-
-        @keyframes core-glow {
-            from { transform: scale(1); filter: brightness(1); }
-            to { transform: scale(1.1); filter: brightness(1.3); }
-        }
-
-        .neon-wave {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border: 2px solid var(--lime);
-            border-radius: 50%;
-            opacity: 0;
-            animation: blast 2s infinite cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-
-        @keyframes blast {
-            0% { transform: scale(0.8); opacity: 0.8; }
-            100% { transform: scale(4); opacity: 0; }
-        }
-
-        .master-label {
-            color: #fff;
-            font-size: 16px;
-            font-weight: 900;
-            letter-spacing: -0.2px;
-            text-transform: uppercase;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        }
-
-        /* ВПУКЛАЯ КНОПКА (The Milled Button) */
-        .milled-btn {
-            background: var(--lime);
-            height: 52px;
-            padding: 0 26px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
             text-decoration: none;
             border: none;
             position: relative;
-            /* Эффект глубокой впадины */
-            box-shadow: 
-                inset 6px 6px 12px rgba(0, 0, 0, 0.35), 
-                inset -4px -4px 10px rgba(255, 255, 255, 0.5),
-                0 10px 20px rgba(223, 255, 17, 0.15);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .milled-btn:active {
-            transform: scale(0.94);
-            filter: brightness(1.1);
+            /* Экстремально впуклая тень */
             box-shadow: 
                 inset 8px 8px 16px rgba(0, 0, 0, 0.4), 
-                inset -5px -5px 12px rgba(255, 255, 255, 0.6);
+                inset -6px -6px 12px rgba(255, 255, 255, 0.4),
+                0 0 0 1px rgba(0,0,0,0.1);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .milled-btn span {
+        .cnc-btn:active {
+            transform: scale(0.92);
+            box-shadow: 
+                inset 12px 12px 24px rgba(0, 0, 0, 0.5), 
+                inset -8px -8px 16px rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-text {
             color: #000;
-            font-size: 13px;
-            font-weight: 900;
+            font-size: 14px;
+            font-weight: 950;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
         }
 
-        .icon-phone { width: 16px; height: 16px; fill: #000; }
+        .icon-svg { width: 18px; height: 18px; fill: #000; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2)); }
 
     </style>
 </head>
 <body>
 
-    <div class="header-anchor">
-        <header class="obsidian-panel">
-            <div class="brand-info">
-                <div class="status-container">
-                    <div class="heartbeat">
-                        <div class="neon-dot"></div>
-                        <div class="neon-wave"></div>
+    <div class="premium-wrapper">
+        <header class="master-panel">
+            <div class="text-section">
+                <div class="status-line">
+                    <div class="core-engine">
+                        <div class="core-point"></div>
+                        <div class="core-aura"></div>
                     </div>
-                    <span>На связи • Симферополь</span>
+                    <span>LIVE • SIMFEROPOL</span>
                 </div>
-                <span class="master-label">Даниил Глухов</span>
+                <h1 class="name-h1">Даниил Глухов</h1>
             </div>
 
-            <a href="tel:+79785552114" class="milled-btn" onclick="playHaptic(event)">
-                <svg class="icon-phone" viewBox="0 0 24 24">
+            <a href="tel:+79785552114" class="cnc-btn" onclick="triggerCyberClick(event)">
+                <svg class="icon-svg" viewBox="0 0 24 24">
                     <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1v3.5c0 .55-.45 1-1 1C10.74 21 3 13.26 3 3.5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                 </svg>
-                <span>Вызвать</span>
+                <span class="btn-text">Call</span>
             </a>
         </header>
     </div>
 
     <script>
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-        function playHaptic(e) {
-            // Виброотклик
-            if (navigator.vibrate) navigator.vibrate([15, 30, 15]);
+        function triggerCyberClick(e) {
+            // Haptic (короткий двойной удар)
+            if (navigator.vibrate) navigator.vibrate([10, 30, 10]);
 
-            // Механический клик
-            const osc = ctx.createOscillator();
-            const g = ctx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(1200, ctx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(20, ctx.currentTime + 0.1);
-            g.gain.setValueAtTime(0.3, ctx.currentTime);
-            g.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
-            osc.connect(g);
-            g.connect(ctx.destination);
-            osc.start();
-            osc.stop(ctx.currentTime + 0.1);
+            // СЛОЖНЫЙ ЗВУК: Саб-удар + Механический тик
+            const now = audioContext.currentTime;
+
+            // 1. Саб-составляющая (Вес кнопки)
+            const subOsc = audioContext.createOscillator();
+            const subGain = audioContext.createGain();
+            subOsc.type = 'sine';
+            subOsc.frequency.setValueAtTime(150, now);
+            subOsc.frequency.exponentialRampToValueAtTime(0.01, now + 0.2);
+            subGain.gain.setValueAtTime(0.4, now);
+            subGain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+            subOsc.connect(subGain);
+            subGain.connect(audioContext.destination);
+
+            // 2. Механический "Клац" (Металл)
+            const clickOsc = audioContext.createOscillator();
+            const clickGain = audioContext.createGain();
+            clickOsc.type = 'square';
+            clickOsc.frequency.setValueAtTime(1800, now);
+            clickOsc.frequency.exponentialRampToValueAtTime(800, now + 0.05);
+            clickGain.gain.setValueAtTime(0.1, now);
+            clickGain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+            clickOsc.connect(clickGain);
+            clickGain.connect(audioContext.destination);
+
+            subOsc.start(); subOsc.stop(now + 0.2);
+            clickOsc.start(); clickOsc.stop(now + 0.05);
         }
     </script>
 

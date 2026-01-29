@@ -1,2 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Спил деревьев Расчистка участка Покос травы Вывоз веток и мусора | Премиальный сервис</title>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        premium: { emerald: '#059669', dark: '#020617' }
+                    }
+                }
+            }
+        }
+
+        // --- ТОЛЬКО МЕТРИКА И UTM ---
+        const YA_METRIKA_ID = 00000000; // Твой ID
+
+        function sendGoal(goalName) {
+            if (typeof ym !== 'undefined') {
+                ym(YA_METRIKA_ID, 'reachGoal', goalName);
+            }
+        }
+
+        // Функция для чтения UTM-меток из URL (если понадобится для скриптов)
+        const getUTM = () => {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                source: params.get('utm_source'),
+                medium: params.get('utm_medium'),
+                campaign: params.get('utm_campaign')
+            };
+        };
+
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+        }
+
+        function toggleMessengers(event) {
+            event.stopPropagation();
+            const menu = document.getElementById('messenger-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        window.onclick = function(event) {
+            const menu = document.getElementById('messenger-menu');
+            const btn = document.getElementById('messenger-btn');
+            if (menu && !menu.classList.contains('hidden')) {
+                if (!btn.contains(event.target) && !menu.contains(event.target)) {
+                    menu.classList.add('hidden');
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            transition: background-color 0.6s ease, color 0.6s ease;
+        }
+
+        .glass-header {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 
+                0 4px 6px -1px rgba(0, 0, 0, 0.05), 
+                0 10px 15px -3px rgba(0, 0, 0, 0.1),
+                0 20px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        .dark .glass-header {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.1); }
+        }
+        .status-dot { animation: pulse-soft 2s infinite ease-in-out; }
+
+        @keyframes hint-pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0px rgba(16, 185, 129, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 15px 5px rgba(16, 185, 129, 0.2); }
+        }
+        .btn-hint { animation: hint-pulse 3s infinite ease-in-out; }
+
+        .mesh-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-slate-100 min-h-screen">
+    <div class="mesh-bg"></div>
+
+    <header class="fixed top-6 left-4 right-4 z-50">
+        <div class="max-w-6xl mx-auto glass-header rounded-[2.5rem] p-2 md:p-3">
+            <div class="flex items-center justify-between gap-2">
+                
+                <div class="flex flex-col pl-4 md:pl-6">
+                    <span class="text-base md:text-xl font-extrabold tracking-tighter leading-none dark:text-white uppercase">
+                        Даниил<span class="text-emerald-600 italic">.</span>Глухов
+                    </span>
+                    <div class="flex items-center gap-1.5 mt-1">
+                        <span class="status-dot h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                        <span class="text-[8px] font-black uppercase tracking-widest text-emerald-600/80">На связи</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-1.5 md:gap-3">
+                    
+                    <button onclick="toggleTheme(); sendGoal('theme_toggle')" class="flex items-center gap-2 px-3 py-2 md:px-5 md:py-2.5 rounded-full transition-all bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 border border-black/5 dark:border-white/5 shadow-inner">
+                        <span class="dark:hidden text-[9px] md:text-[10px] font-black uppercase tracking-tight text-slate-700">Дневной режим</span>
+                        <span class="hidden dark:inline text-[9px] md:text-[10px] font-black uppercase tracking-tight text-white">Ночной режим</span>
+                        <div class="w-4 h-4 flex items-center justify-center">
+                            <svg class="dark:hidden text-orange-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path></svg>
+                            <svg class="hidden dark:block text-yellow-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        </div>
+                    </button>
+
+                    <div class="relative">
+                        <button id="messenger-btn" onclick="toggleMessengers(event); sendGoal('open_menu')" class="btn-hint w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-emerald-600/10 text-emerald-600 hover:bg-emerald-600/20 transition-all border border-emerald-600/20 active:scale-90 relative">
+                            <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                            <span class="absolute -top-1 -right-1 w-4 h-4 md:w-5 md:h-5 bg-emerald-600 text-white text-[8px] md:text-[10px] font-black rounded-full flex items-center justify-center border-2 border-white dark:border-slate-800">4</span>
+                        </button>
+                        
+                        <div id="messenger-menu" class="hidden absolute right-0 mt-5 w-64 bg-white dark:bg-slate-800 rounded-[2.5rem] shadow-2xl border border-black/5 dark:border-white/10 p-3 overflow-hidden">
+                            <div class="px-4 pt-3 pb-2">
+                                <span class="text-[9px] font-black uppercase tracking-widest text-gray-400">Выберите способ связи</span>
+                            </div>
+
+                            <a href="tel:+79785552114" onclick="sendGoal('call_menu')" class="flex items-center gap-4 p-3 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-3xl transition group">
+                                <div class="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-lg">📞</div>
+                                <div class="flex flex-col text-left">
+                                    <span class="text-[10px] font-black uppercase tracking-wider dark:text-gray-200">Позвонить</span>
+                                    <span class="text-[9px] text-gray-400 font-bold">+7 978 555-21-14</span>
+                                </div>
+                            </a>
+                            
+                            <div class="h-[1px] bg-gray-100 dark:bg-white/5 my-1 mx-4"></div>
+
+                            <a href="https://t.me/daniil_glukhov17" onclick="sendGoal('tg_click')" class="flex items-center gap-4 p-3 hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded-3xl transition group">
+                                <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-lg">✈️</div>
+                                <span class="text-[10px] font-black uppercase tracking-wider dark:text-gray-200">Telegram</span>
+                            </a>
+
+                            <a href="https://vk.com/daniil_glukhov17" onclick="sendGoal('vk_click')" class="flex items-center gap-4 p-3 hover:bg-indigo-50 dark:hover:bg-indigo-900/10 rounded-3xl transition group">
+                                <div class="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/40 flex items-center justify-center text-lg">💙</div>
+                                <span class="text-[10px] font-black uppercase tracking-wider dark:text-gray-200">ВКонтакте</span>
+                            </a>
+
+                            <a href="https://max.ru/u/ gap-4 p-3 hover:bg-emerald-50 dark:hover:bg-emerald-900/10 rounded-3xl transition group">
+                                <div class="w-10 h-10 rounded-full bg-emerald-50/50 dark:bg-emerald-900/20 flex items-center justify-center text-lg">💎</div>
+                                <span class="text-[10px] font-black uppercase tracking-wider dark:text-gray-200">MAX Messenger</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <a href="tel:+79785552114" onclick="sendGoal('main_call_btn')" class="hidden md:flex bg-slate-900 dark:bg-emerald-600 text-white px-7 py-3 rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-lg active:scale-95 transition-all">
+                        Вызов
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="min-h-screen pt-40 px-6">
+        </main>
+
+</body>
+</html>
 
 

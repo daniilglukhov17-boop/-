@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Inter:wght@300;400;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --stihl-orange: #FF6600;
-            --obsidian: rgba(10, 10, 12, 0.95);
-            --line-color: rgba(255, 102, 0, 0.8);
+            --deep-obsidian: rgba(5, 5, 7, 0.98);
+            --neon-glow: rgba(255, 102, 0, 0.5);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -17,157 +17,205 @@
             background: #ffffff; 
             font-family: 'Inter', sans-serif;
             min-height: 200vh;
+            overflow-x: hidden;
         }
 
-        /* Контейнер шапки */
-        .header-container {
+        /* Контейнер всей системы */
+        .system-hub {
             position: fixed;
-            top: 20px;
+            top: 25px;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 1000;
+            z-index: 2000;
             width: 90%;
-            max-width: 400px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            max-width: 420px;
+            perspective: 1000px;
         }
 
-        /* Сама нить (The Minimalist Pulse) */
-        .pulse-line {
+        /* Ультра-технологичная нить */
+        .blade-trigger {
             width: 100%;
-            height: 2px;
-            background: var(--line-color);
-            border-radius: 10px;
-            box-shadow: 0 0 15px var(--stihl-orange);
+            height: 4px;
+            background: var(--deep-obsidian);
+            border-radius: 2px;
             cursor: pointer;
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
             position: relative;
-            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 0 1px rgba(255,255,255,0.05);
         }
 
-        /* Анимация пульсации */
-        .pulse-line::after {
-            content: '';
+        /* Оранжевый "сердечник" нити */
+        .blade-core {
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
+            width: 40%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, #fff, transparent);
-            animation: scan 3s infinite;
+            background: var(--stihl-orange);
+            box-shadow: 0 0 20px var(--neon-glow);
+            filter: blur(1px);
+            transition: 0.5s;
         }
 
-        @keyframes scan {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        /* Состояние "Раскрыто" */
-        .header-container.active .pulse-line {
-            height: 70px;
-            background: var(--obsidian);
-            backdrop-filter: blur(20px);
+        /* Состояние: Раскрыто */
+        .system-hub.active .blade-trigger {
+            height: 90px;
+            border-radius: 24px;
+            padding: 15px;
             border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
         }
 
-        /* Контент внутри линии (скрыт по умолчанию) */
-        .header-content {
+        .system-hub.active .blade-core {
+            width: 0;
             opacity: 0;
+        }
+
+        /* Контент внутри */
+        .interface-wrap {
+            opacity: 0;
+            visibility: hidden;
             display: flex;
             align-items: center;
             justify-content: space-between;
             width: 100%;
-            height: 100%;
-            padding: 0 20px;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
+            transform: translateY(10px);
+            transition: all 0.5s 0.2s;
         }
 
-        .header-container.active .header-content {
+        .system-hub.active .interface-wrap {
             opacity: 1;
-            pointer-events: auto;
+            visibility: visible;
+            transform: translateY(0);
         }
 
-        .name-side {
+        /* Левая часть: Датчики */
+        .telemetry {
             display: flex;
             flex-direction: column;
         }
 
-        .name-side h1 {
+        .master-id {
+            font-family: 'Orbitron', sans-serif;
             color: #fff;
             font-size: 14px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        .status-tag {
+        .live-status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
             font-size: 8px;
             color: var(--stihl-orange);
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-top: 2px;
-        }
-
-        /* Кнопка действия внутри раскрытой шапки */
-        .action-btn {
-            background: #fff;
-            color: #000;
-            padding: 8px 16px;
-            border-radius: 12px;
-            font-size: 10px;
             font-weight: 800;
             text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        .pulse-dot {
+            width: 4px;
+            height: 4px;
+            background: #32D74B;
+            border-radius: 50%;
+            animation: blink 1s infinite;
+        }
+
+        /* Правая часть: Управление */
+        .control-panel {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .circular-btn {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.3s;
             text-decoration: none;
         }
 
-        /* Подсказка под линией */
-        .hint {
-            color: #ccc;
-            font-size: 9px;
-            margin-top: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: 0.3s;
+        .circular-btn:active {
+            background: var(--stihl-orange);
+            transform: scale(0.9);
         }
 
-        .header-container.active .hint {
+        /* Декор в свернутом виде (микро-текст по бокам) */
+        .micro-data {
+            position: absolute;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 6px;
+            color: rgba(0,0,0,0.3);
+            top: -12px;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .system-hub.active .micro-data {
             opacity: 0;
+        }
+
+        @keyframes blink { 
+            0%, 100% { opacity: 1; } 
+            50% { opacity: 0.3; } 
         }
 
     </style>
 </head>
 <body>
 
-    <div class="header-container" id="mainHeader">
-        <div class="pulse-line" onclick="toggleHeader()">
-            <div class="header-content">
-                <div class="name-side">
-                    <h1>Даниил Глухов</h1>
-                    <span class="status-tag">System Online • 5.0</span>
+    <div class="system-hub" id="hub">
+        <div class="micro-data" style="left: 0;">System: Ready</div>
+        <div class="micro-data" style="right: 0;">Master: D.Glukhov</div>
+
+        <div class="blade-trigger" onclick="toggleSystem()">
+            <div class="blade-core"></div>
+            
+            <div class="interface-wrap">
+                <div class="telemetry">
+                    <span class="master-id">GLUKHOV.SYS</span>
+                    <div class="live-status">
+                        <div class="pulse-dot"></div>
+                        <span>Industrial Arborist • Online</span>
+                    </div>
                 </div>
-                <a href="tel:+79785552114" class="action-btn">Call Master</a>
+
+                <div class="control-panel">
+                    <div class="circular-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                    </div>
+                    <a href="tel:+79785552114" class="circular-btn" style="background: var(--stihl-orange); border: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1v3.5c0 .55-.45 1-1 1C10.74 21 3 13.26 3 3.5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                    </a>
+                </div>
             </div>
         </div>
-        <div class="hint">Tap to engage</div>
     </div>
 
     <script>
-        function toggleHeader() {
-            document.getElementById('mainHeader').classList.toggle('active');
+        function toggleSystem() {
+            document.getElementById('hub').classList.toggle('active');
         }
+
+        // Эффект дрожания при скролле
+        window.onscroll = function() {
+            let hub = document.getElementById('hub');
+            if(!hub.classList.contains('active')) {
+                hub.style.transform = `translateX(-50%) skewX(${window.scrollY * 0.01}deg)`;
+                setTimeout(() => { hub.style.transform = `translateX(-50%) skewX(0deg)`; }, 50);
+            }
+        };
     </script>
 
-    <div style="padding: 150px 30px;">
-        <p style="color: #999; font-size: 14px; line-height: 2;">
-            Это пространство вашего будущего приложения. 
-            Минималистичная шапка выше — это ваш цифровой подтекст. 
-            Она не мешает контенту, но всегда готова к действию.
-        </p>
+    <div style="padding: 200px 30px; text-align: center;">
+        <h2 style="font-weight: 300; color: #ccc;">Scroll & Tap the Blade</h2>
     </div>
 
 </body>

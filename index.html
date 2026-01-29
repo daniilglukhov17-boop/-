@@ -1,178 +1,57 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --obsidian: rgba(15, 15, 18, 0.88); /* Глубокая тонировка */
-            --stihl-orange: #FF6600;
-            --white: #FFFFFF;
-            --border: rgba(255, 255, 255, 0.12);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body { 
-            background: var(--white); /* Идеально белый фон за шапкой */
-            font-family: 'Inter', sans-serif;
-            min-height: 200vh;
-        }
-
-        /* Парящая тонированная шапка */
-        .header-wrap {
-            position: fixed;
-            top: 15px; /* Отступ сверху */
-            left: 12px;
-            right: 12px;
-            z-index: 1000;
-        }
-
-        .obsidian-glass {
-            background: var(--obsidian);
-            backdrop-filter: blur(25px) saturate(160%);
-            -webkit-backdrop-filter: blur(25px) saturate(160%);
-            border-radius: 24px; /* Сильное скругление люкс-класса */
-            padding: 12px 18px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border: 1px solid var(--border);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Инфо блок */
-        .info-side {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .name-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .name {
-            color: var(--white);
-            font-size: 14px;
-            font-weight: 800;
-            letter-spacing: -0.2px;
-            text-transform: uppercase;
-        }
-
-        .online-dot {
-            width: 6px;
-            height: 6px;
-            background: #32D74B;
-            border-radius: 50%;
-            box-shadow: 0 0 12px #32D74B;
-            animation: breathe 2.5s infinite ease-in-out;
-        }
-
-        @keyframes breathe {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.2); }
-        }
-
-        .tagline {
-            color: rgba(255, 255, 255, 0.45);
-            font-size: 9px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        /* Блок кнопок */
-        .btns-side {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .action-link {
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* Кнопка MAX - эффект полированного металла */
-        .max-chip {
-            background: var(--white);
-            color: #000;
-            font-size: 10px;
-            font-weight: 900;
-            padding: 9px 15px;
-            border-radius: 14px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        .max-chip:active { transform: scale(0.92); }
-
-        /* Компактный звонок в стиле STIHL */
-        .call-trigger {
-            width: 44px;
-            height: 44px;
-            background: var(--stihl-orange);
-            border-radius: 16px;
-            box-shadow: 0 5px 15px rgba(255, 102, 0, 0.4);
-        }
-
-        .call-trigger:active { transform: scale(0.9); }
-
-        .svg-icon {
-            width: 20px;
-            height: 20px;
-            fill: var(--white);
-        }
-
-        /* Мини-иконка мессенджера */
-        .mini-msg {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 14px;
-            border: 1px solid var(--border);
-        }
-
-    </style>
-</head>
-<body>
-
-    <div class="header-wrap">
-        <header class="obsidian-glass">
-            <div class="info-side">
-                <div class="name-row">
-                    <span class="name">Даниил Глухов</span>
-                    <div class="online-dot"></div>
-                </div>
-                <span class="tagline">Premium Service</span>
-            </div>
-
-            <div class="btns-side">
-                <a href="https://t.me/daniil_glukhov17" class="action-link mini-msg">
-                    <svg class="svg-icon" style="opacity: 0.7;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
-                </a>
-                
-                <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="action-link max-chip">MAX</a>
-
-                <a href="tel:+79785552114" class="action-link call-trigger">
-                    <svg class="svg-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1v3.5c0 .55-.45 1-1 1C10.74 21 3 13.26 3 3.5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                </a>
-            </div>
-        </header>
+<header class="obsidian-glass">
+    <div class="info-side">
+        <div class="name-row">
+            <span class="name">Даниил Глухов</span>
+            <div class="online-dot"></div>
+        </div>
+        <span class="tagline">Industrial Arborist • 5.0 ★</span>
     </div>
 
-    <div style="padding: 120px 25px;">
-        <h1 style="font-size: 32px; color: #111; font-weight: 800; letter-spacing: -1px;">Расчистка участков</h1>
-        <p style="margin-top: 15px; color: #666; line-height: 1.6; font-size: 16px;">
-            Профессиональный подход к каждому дереву. Мы используем только топовое оборудование STIHL для достижения идеального результата.
-        </p>
+    <div class="btns-side">
+        <div class="experience-badge">
+            <span class="exp-num">8</span>
+            <span class="exp-text">ЛЕТ<br>ОПЫТА</span>
+        </div>
+        
+        <div class="menu-trigger">
+            <div class="line"></div>
+            <div class="line" style="width: 12px;"></div>
+        </div>
     </div>
+</header>
 
-</body>
-</html>
+<style>
+    /* Дополнение к твоему стилю для новых элементов */
+    .experience-badge {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding-right: 15px;
+        border-right: 1px solid rgba(255,255,255,0.1);
+        margin-right: 5px;
+    }
+    .exp-num {
+        color: var(--stihl-orange);
+        font-size: 20px;
+        font-weight: 800;
+    }
+    .exp-text {
+        color: rgba(255,255,255,0.5);
+        font-size: 7px;
+        line-height: 1;
+        font-weight: 700;
+    }
+    .menu-trigger {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        align-items: flex-end;
+        cursor: pointer;
+    }
+    .line {
+        height: 2px;
+        width: 20px;
+        background: var(--white);
+        border-radius: 2px;
+    }
+</style>

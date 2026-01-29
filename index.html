@@ -3,70 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Даниил Глухов | Спил деревьев и Расчистка (Premium)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* Цвета и переменные */
         :root {
-            --stihl-orange: #FF6600;
-            --stihl-grey: #222222;
+            --premium-orange-start: #FF7E00; /* Более глубокий оранжевый */
+            --premium-orange-end: #FFA500;   /* Светлый оранжевый/золотистый */
+            --glass-bg-dark: rgba(20, 20, 20, 0.7); /* Темный полупрозрачный фон */
+            --glass-border: rgba(255, 255, 255, 0.1); /* Тонкий белый бордер */
             --white: #ffffff;
+            --light-grey: #e0e0e0;
             --tg-color: #24A1DE;
             --vk-color: #4C75A3;
             --max-color: #0056b3;
         }
 
+        /* Общие стили и шрифт */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Arial Black', sans-serif; }
+        body {
+            font-family: 'Montserrat', sans-serif; /* Подключаем Монтсеррат */
+            background: linear-gradient(135deg, #1a1a1a, #333333); /* Темный фон для контраста */
+            min-height: 100vh; /* Чтобы видеть эффект стекла */
+            color: var(--light-grey);
+        }
 
+        /* Header - Премиальная шапка */
         .header {
-            background: var(--stihl-grey);
-            border-bottom: 4px solid var(--stihl-orange);
+            background: var(--glass-bg-dark); /* Полупрозрачный фон */
+            backdrop-filter: blur(15px); /* Эффект размытого стекла */
+            -webkit-backdrop-filter: blur(15px); /* Для Safari */
+            border-bottom: 1px solid var(--glass-border); /* Тонкая нижняя граница */
             color: var(--white);
-            padding: 12px 10px;
+            padding: 15px 12px;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* Глубокая тень */
+            /* Добавляем легкое внутреннее свечение сверху для эффекта дорогой панели */
+            box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.1), 0 8px 20px rgba(0, 0, 0, 0.5);
         }
 
         .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
-            padding: 0 5px 8px 5px;
-            border-bottom: 1px solid #3d3d3d;
+            margin-bottom: 15px;
+            padding: 0 5px 10px 5px;
+            border-bottom: 0.5px solid rgba(255, 255, 255, 0.1); /* Очень тонкая линия */
         }
 
         .location {
             font-size: 10px;
             text-transform: uppercase;
-            color: var(--stihl-orange);
-            letter-spacing: 1px;
+            color: var(--premium-orange-end); /* Золотистый оттенок */
+            letter-spacing: 1.5px; /* Увеличенный интервал */
+            font-weight: 700;
+            display: flex;
+            align-items: center;
         }
+        .location svg { margin-right: 5px; width: 14px; height: 14px; fill: var(--premium-orange-end); }
 
         .user-name {
-            font-size: 12px;
+            font-size: 13px;
             text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            color: var(--light-grey);
         }
 
-        /* Кнопка звонка на всю ширину */
+        /* Кнопка звонка - Металлический градиент */
         .btn-call {
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--stihl-orange);
+            background: linear-gradient(45deg, var(--premium-orange-start), var(--premium-orange-end)); /* Металлический градиент */
             color: var(--white);
             text-decoration: none;
-            padding: 14px;
-            border-radius: 4px;
+            padding: 16px;
+            border-radius: 6px;
             font-size: 16px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(255, 126, 0, 0.4); /* Мягкая тень под кнопкой */
+            border: 0.5px solid rgba(255, 255, 255, 0.3); /* Тонкая обводка */
+            /* Внутреннее свечение для объема */
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.2), 0 4px 15px rgba(255, 126, 0, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
+        .btn-call:active { transform: translateY(1px); box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.1), 0 2px 8px rgba(255, 126, 0, 0.3); }
+
+        .btn-call svg { margin-right: 8px; width: 20px; height: 20px; fill: var(--white); }
 
         /* Контейнер мессенджеров */
         .messenger-row {
             display: flex;
-            gap: 8px;
+            gap: 10px;
         }
 
         .m-btn {
@@ -74,46 +108,81 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 10px;
-            border-radius: 4px;
+            padding: 12px;
+            border-radius: 5px;
             text-decoration: none;
             font-size: 11px;
-            color: white;
-            font-weight: bold;
+            color: var(--white);
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.3px;
+            border: 0.5px solid rgba(255, 255, 255, 0.2); /* Тонкая обводка */
+            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1); /* Легкое внутреннее свечение */
+            transition: background 0.2s ease, transform 0.2s ease;
         }
+        .m-btn:active { transform: translateY(1px); box-shadow: inset 0 0px 1px rgba(255, 255, 255, 0.1); }
 
-        .m-max { background: var(--max-color); }
-        .m-tg  { background: var(--tg-color); }
-        .m-vk  { background: var(--vk-color); }
+        .m-max { background-color: var(--max-color); }
+        .m-tg  { background-color: var(--tg-color); }
+        .m-vk  { background-color: var(--vk-color); }
 
-        .m-btn span { margin-left: 4px; }
+        .m-btn svg { margin-right: 6px; width: 16px; height: 16px; fill: var(--white); }
     </style>
 </head>
 <body>
 
 <header class="header">
     <div class="header-top">
-        <div class="location">📍 Симферополь и район</div>
+        <div class="location">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
+            </svg>
+            Симферополь и район
+        </div>
         <div class="user-name">Даниил Глухов</div>
     </div>
     
     <a href="tel:+79785552114" class="btn-call">
-        📞 Позвонить +7 978 555 21 14
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1v3.5c0 .55-.45 1-1 1C10.74 21 3 13.26 3 3.5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+        </svg>
+        Позвонить +7 978 555 21 14
     </a>
 
     <div class="messenger-row">
         <a href="https://max.ru/u/f9LHodD0cOKq1RRxaWPLcyQOAe5XjdOFacwTLVOWL4Tk0TUldTlooT-0r5g" class="m-btn m-max">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+            </svg>
             MAX
         </a>
         <a href="https://t.me/daniil_glukhov17" class="m-btn m-tg">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.3 8.35L8.71 14.5c-.71.39-1.21.05-1.21-.86V9.45c0-.9.5-1.25 1.21-.86l7.59 4.15c.71.39.71 1.07 0 1.46z"/>
+            </svg>
             TG
         </a>
         <a href="https://vk.com/daniil_glukhov17" class="m-btn m-vk">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 16h2v-6h-2v6zm0-8h2V7h-2v3z"/>
+            </svg>
             VK
         </a>
     </div>
 </header>
+
+<main style="padding: 20px;">
+    <p style="margin-bottom: 20px;">
+        <img src="https://images.unsplash.com/photo-1590412200988-a436bb70501f?q=80&w=1000&auto=format&fit=crop" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+    </p>
+    <p style="font-family: 'Montserrat', sans-serif; line-height: 1.8; color: var(--light-grey); font-weight: 400;">
+        Мы выполняем полный спектр услуг по уходу за деревьями и расчистке территорий в Симферополе и Симферопольском районе. Наша команда использует только профессиональное оборудование, гарантируя безопасность и качество выполненных работ. 
+        Мы специализируемся на удалении опасных деревьев, санитарной обрезке, расчистке участков от поросли и кустарников, а также на покосе травы любой сложности. 
+        Обращаясь к нам, вы получаете не только чистый и ухоженный участок, но и уверенность в надежности и оперативности наших услуг. 
+        За годы работы мы накопили обширный опыт в решении самых сложных задач, что позволяет нам эффективно работать даже в стесненных условиях и на труднодоступных объектах.
+        Доверьте свои задачи профессионалам!
+    </p>
+</main>
 
 </body>
 </html>

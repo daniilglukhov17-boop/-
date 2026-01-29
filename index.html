@@ -3,157 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #F2F2F7;
-            --glass: rgba(255, 255, 255, 0.7);
+            --toning-dark: rgba(20, 20, 22, 0.85); /* Тонировка */
             --stihl-orange: #FF6600;
-            --text-black: #1C1C1E;
-            --shadow: rgba(0,0,0,0.08);
+            --white: #FFFFFF;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body { background: var(--bg); padding-top: 80px; }
+        body { 
+            background: var(--white); /* Белый фон под шапкой */
+            font-family: 'Inter', sans-serif;
+            min-height: 200vh; /* Чтобы проверить скролл и прозрачность */
+        }
 
-        /* Ультра-компактная шапка */
-        .header-mini {
+        /* Тонированная шапка */
+        .header-toning {
             position: fixed;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 8px 16px;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--toning-dark);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border: 0.5px solid rgba(255,255,255,0.4);
-            box-shadow: 0 4px 15px var(--shadow);
+            padding: 0 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             z-index: 1000;
         }
 
-        /* Блок профиля */
-        .profile {
+        /* Блок имени и статуса */
+        .user-block {
             display: flex;
             flex-direction: column;
         }
 
-        .name-row {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .name {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-black);
-            letter-spacing: -0.3px;
-        }
-
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            background: #34C759;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #34C759;
-            animation: pulse 2s infinite;
-        }
-
-        .sub-text {
-            font-size: 9px;
-            color: #8E8E93;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 500;
-        }
-
-        /* Блок кнопок в ряд */
-        .actions {
+        .name-wrapper {
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            transition: 0.2s;
-        }
-
-        /* Кнопка MAX - теперь компактный круг или овал */
-        .btn-max {
-            background: var(--text-black);
-            color: white;
-            font-size: 9px;
+        .name {
+            color: var(--white);
+            font-size: 14px;
             font-weight: 800;
-            padding: 6px 10px;
-            border-radius: 12px;
+            letter-spacing: -0.2px;
+            text-transform: uppercase;
         }
 
-        /* Иконки мессенджеров */
-        .icon-btn {
-            width: 34px;
-            height: 34px;
-            background: white;
-            border-radius: 12px;
+        .status-pulse {
+            width: 7px;
+            height: 7px;
+            background: #32D74B;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #32D74B;
+            position: relative;
+        }
+
+        .status-pulse::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            border-radius: inherit;
+            animation: ripple 2s infinite;
+        }
+
+        @keyframes ripple {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
+        .sub-label {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        /* Кнопки управления */
+        .action-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-link {
+            text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: 0.2s ease;
         }
 
-        .icon-btn img, .icon-btn svg {
-            width: 18px;
-            height: 18px;
+        /* Стиль MAX */
+        .max-btn {
+            background: var(--white);
+            color: #000;
+            font-size: 10px;
+            font-weight: 900;
+            padding: 8px 14px;
+            border-radius: 8px;
+            letter-spacing: 0.5px;
         }
 
-        /* Главная кнопка Звонок - теперь это иконка в круге STIHL */
-        .btn-call {
+        /* Иконка звонка */
+        .call-circle {
+            width: 42px;
+            height: 42px;
+            background: var(--stihl-orange);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(255, 102, 0, 0.4);
+        }
+
+        .icon-svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--white);
+        }
+
+        /* Иконка мессенджера (универсальная/ТГ) */
+        .msg-icon {
             width: 38px;
             height: 38px;
-            background: var(--stihl-orange);
-            border-radius: 50%;
-            box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.4; }
-            100% { opacity: 1; }
-        }
     </style>
 </head>
 <body>
 
-    <header class="header-mini">
-        <div class="profile">
-            <div class="name-row">
+    <header class="header-toning">
+        <div class="user-block">
+            <div class="name-wrapper">
                 <span class="name">Даниил Глухов</span>
-                <div class="status-dot"></div>
+                <div class="status-pulse"></div>
             </div>
-            <span class="sub-text">Industrial Service</span>
+            <span class="sub-label">Simferopol • Premium</span>
         </div>
 
-        <div class="actions">
-            <a href="https://t.me/daniil_glukhov17" class="icon-btn">
-                <svg viewBox="0 0 24 24" fill="#24A1DE"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+        <div class="action-group">
+            <a href="https://t.me/daniil_glukhov17" class="nav-link msg-icon">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
             </a>
             
-            <a href="https://max.ru/u/..." class="btn btn-max">MAX</a>
+            <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="nav-link max-btn">MAX</a>
 
-            <a href="tel:+79785552114" class="btn btn-call">
-                <svg viewBox="0 0 24 24" fill="white" width="20" height="20">
-                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1v3.5c0 .55-.45 1-1 1C10.74 21 3 13.26 3 3.5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                </svg>
+            <a href="tel:+79785552114" class="nav-link call-circle">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1v3.5c0 .55-.45 1-1 1C10.74 21 3 13.26 3 3.5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
             </a>
         </div>
     </header>
+
+    <div style="padding-top: 100px; padding: 100px 20px;">
+        <h2 style="color: #1c1c1e; font-size: 24px; margin-bottom: 20px;">Премиальный сервис расчистки</h2>
+        <p style="color: #8e8e93; line-height: 1.6;">Здесь начнется твой основной контент. Благодаря тонированной шапке, белый фон снизу выглядит очень свежо и контрастно.</p>
+    </div>
 
 </body>
 </html>

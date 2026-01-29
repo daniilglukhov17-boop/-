@@ -6,125 +6,132 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --glass-bg: rgba(10, 10, 10, 0.75);
-            --white: #ffffff;
-            --accent-green: #32D74B;
+            --lime: #DFFF11; /* Кислотный лайм */
+            --glass: rgba(15, 15, 15, 0.95);
+            --border: rgba(255, 255, 255, 0.08);
         }
 
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-            -webkit-tap-highlight-color: transparent; 
-        }
-
-        body, html {
-            height: 100%;
-            width: 100%;
-            margin: 0;
-            background-color: #000;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body { 
-            /* Используем качественное фото с инструментом */
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-                        url('https://images.unsplash.com/photo-1590846083693-f23fdede3a74?q=80&w=1974&auto=format&fit=crop') no-repeat center center fixed;
-            background-size: cover;
+            background: #000; /* Чистый черный фон, чтобы шапка "горела" */
             font-family: 'Inter', sans-serif; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
         }
 
-        .premium-header {
+        /* Шапка-монолит */
+        .top-header {
             position: fixed;
             top: 20px;
             left: 15px;
             right: 15px;
             z-index: 10000;
-            background: var(--glass-bg);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-radius: 22px;
-            padding: 12px 14px 12px 22px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 10px 10px 10px 22px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
         }
 
-        .text-group { display: flex; flex-direction: column; gap: 2px; }
+        .brand-box { display: flex; flex-direction: column; gap: 2px; }
 
-        .location-badge {
+        .status-label {
             display: flex;
             align-items: center;
             gap: 6px;
             font-size: 8px;
-            font-weight: 700;
-            color: rgba(255, 255, 255, 0.5);
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.4);
             letter-spacing: 1.5px;
             text-transform: uppercase;
         }
 
-        .status-pulse {
-            width: 5px; height: 5px; background: var(--accent-green); border-radius: 50%;
-            box-shadow: 0 0 10px var(--accent-green); animation: soft-pulse 2s infinite;
-        }
-
-        @keyframes soft-pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.4); opacity: 0.6; }
+        .status-dot {
+            width: 5px; height: 5px; background: var(--lime); border-radius: 50%;
+            box-shadow: 0 0 12px var(--lime);
         }
 
         .master-name {
-            color: var(--white); font-size: 16px; font-weight: 900;
-            letter-spacing: -0.2px; text-transform: uppercase;
+            color: #fff; font-size: 16px; font-weight: 900;
+            letter-spacing: -0.3px; text-transform: uppercase;
         }
 
-        .btn-stealth {
-            background: rgba(255, 255, 255, 0.1);
-            height: 44px; padding: 0 20px; border-radius: 14px;
-            display: flex; align-items: center; gap: 10px;
-            text-decoration: none; border: 1px solid rgba(255, 255, 255, 0.15);
-            transition: 0.3s ease;
+        /* Кнопка с Лаймом */
+        .call-action {
+            background: var(--lime);
+            height: 48px;
+            padding: 0 24px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+            cursor: pointer;
         }
 
-        .btn-label { color: var(--white); font-size: 11px; font-weight: 800; text-transform: uppercase; }
+        .call-action:active { transform: scale(0.94); }
 
-        .icon-svg { width: 14px; height: 14px; fill: var(--white); }
-
-        .hero-title { text-align: center; color: white; z-index: 1; }
-
-        .hero-title h1 {
-            font-size: 46px; font-weight: 900; line-height: 0.85;
-            letter-spacing: -2px; text-transform: uppercase;
+        .call-text {
+            color: #000; font-size: 12px; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 0.5px;
         }
+
+        .call-icon { width: 14px; height: 14px; fill: #000; }
+
     </style>
 </head>
 <body>
 
-    <header class="premium-header">
-        <div class="text-group">
-            <div class="location-badge">
-                <div class="status-pulse"></div>
+    <header class="top-header">
+        <div class="brand-box">
+            <div class="status-label">
+                <div class="status-dot"></div>
                 <span>На связи • Крым</span>
             </div>
             <span class="master-name">Даниил Глухов</span>
         </div>
 
-        <a href="tel:+79785552114" class="btn-stealth">
-            <svg class="icon-svg" viewBox="0 0 24 24">
+        <a href="tel:+79785552114" class="call-action" onclick="playClick(event)">
+            <svg class="call-icon" viewBox="0 0 24 24">
                 <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1v3.5c0 .55-.45 1-1 1C10.74 21 3 13.26 3 3.5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
             </svg>
-            <span class="btn-label">Вызвать</span>
+            <span class="call-text">Вызвать</span>
         </a>
     </header>
 
-    <div class="hero-title">
-        <h1>СДЕЛАЕМ<br>ЧИСТО</h1>
-    </div>
+    <script>
+        // Создаем аудио-контекст для сочного клика
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playClick(e) {
+            // Вибрация (для Android/Chrome на мобильных)
+            if (navigator.vibrate) {
+                navigator.vibrate(15); 
+            }
+
+            // Синтезируем быстрый механический "тык"
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(10, audioCtx.currentTime + 0.1);
+            
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+        }
+    </script>
 
 </body>
 </html>

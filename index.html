@@ -51,9 +51,9 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 8px; /* Выточенный размер */
+            font-size: 8px; /* Тот самый выточенный размер */
             font-weight: 900;
-            color: rgba(255, 255, 255, 0.9); /* Четкий белый */
+            color: rgba(255, 255, 255, 0.9);
             letter-spacing: 2.5px;
             text-transform: uppercase;
             margin-bottom: 2px;
@@ -68,7 +68,6 @@
             justify-content: center;
         }
 
-        /* Само ядро с плавной пульсацией */
         .glow-dot {
             width: 6px;
             height: 6px;
@@ -83,7 +82,6 @@
             50% { opacity: 1; transform: scale(1.1); filter: blur(0px); box-shadow: 0 0 20px var(--lime); }
         }
 
-        /* Мягкая волна */
         .soft-wave {
             position: absolute;
             width: 100%;
@@ -117,7 +115,6 @@
             gap: 10px;
             text-decoration: none;
             border: none;
-            /* Эффект штамповки */
             box-shadow: 
                 inset 6px 6px 12px rgba(0, 0, 0, 0.4), 
                 inset -4px -4px 10px rgba(255, 255, 255, 0.5);
@@ -171,33 +168,36 @@
         const audio = new (window.AudioContext || window.webkitAudioContext)();
 
         function heavyClick(e) {
-            // Вибрация
-            if (navigator.vibrate) navigator.vibrate([20, 40]);
+            // 1. Физическая тактильность (двойной короткий импульс)
+            if (navigator.vibrate) {
+                navigator.vibrate([10, 30, 10]); 
+            }
 
             const t = audio.currentTime;
             
-            // Низкий удар
+            // 2. Звук "Тяжелый затвор"
+            // Слой 1: Низкочастотный удар (Вес кнопки)
             const osc1 = audio.createOscillator();
             const g1 = audio.createGain();
             osc1.type = 'sine';
-            osc1.frequency.setValueAtTime(130, t);
-            osc1.frequency.exponentialRampToValueAtTime(0.01, t + 0.2);
-            g1.gain.setValueAtTime(0.5, t);
-            g1.gain.exponentialRampToValueAtTime(0.01, t + 0.2);
+            osc1.frequency.setValueAtTime(110, t);
+            osc1.frequency.exponentialRampToValueAtTime(0.01, t + 0.15);
+            g1.gain.setValueAtTime(0.6, t);
+            g1.gain.exponentialRampToValueAtTime(0.01, t + 0.15);
             osc1.connect(g1); g1.connect(audio.destination);
 
-            // Металлический "тик"
+            // Слой 2: Металлический щелчок (Механика)
             const osc2 = audio.createOscillator();
             const g2 = audio.createGain();
-            osc2.type = 'triangle';
-            osc2.frequency.setValueAtTime(1400, t);
-            osc2.frequency.exponentialRampToValueAtTime(400, t + 0.05);
-            g2.gain.setValueAtTime(0.1, t);
-            g2.gain.exponentialRampToValueAtTime(0.01, t + 0.05);
+            osc2.type = 'square';
+            osc2.frequency.setValueAtTime(1800, t);
+            osc2.frequency.exponentialRampToValueAtTime(600, t + 0.04);
+            g2.gain.setValueAtTime(0.08, t);
+            g2.gain.linearRampToValueAtTime(0, t + 0.04);
             osc2.connect(g2); g2.connect(audio.destination);
 
-            osc1.start(); osc1.stop(t + 0.2);
-            osc2.start(); osc2.stop(t + 0.05);
+            osc1.start(); osc1.stop(t + 0.15);
+            osc2.start(); osc2.stop(t + 0.04);
         }
     </script>
 

@@ -194,213 +194,134 @@
         }
     </script>
 <style>
-    /* МОБИЛЬНЫЙ HERO-БЛОК (ПРЕМИУМ МИНИМАЛИЗМ) */
-    .hero-mobile {
-        margin-top: 100px; /* Идеальный отступ под обсидиановую шапку */
-        padding: 0 16px 30px 16px;
+    /* PREMIUN MINIMALIST HERO */
+    .hero-premium {
+        margin-top: 110px;
+        padding: 0 24px;
         background: #FFFFFF;
-        max-width: 100%;
     }
 
-    .hero-label {
-        font-size: 8px;
-        font-weight: 950;
+    /* Маленький технический индикатор сверху */
+    .hero-index {
+        font-size: 10px;
+        font-weight: 900;
         text-transform: uppercase;
-        letter-spacing: 2px;
-        color: rgba(0,0,0,0.3);
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .hero-label i {
-        width: 12px;
-        height: 1px;
-        background: var(--lime);
+        letter-spacing: 4px;
+        color: #000;
+        margin-bottom: 30px;
+        opacity: 0.3;
     }
 
     .hero-h1 {
-        /* Динамический размер, чтобы текст не рвал края */
-        font-size: clamp(22px, 7.5vw, 32px); 
-        line-height: 1.1;
+        font-size: clamp(26px, 8.5vw, 40px);
+        line-height: 1.05;
         font-weight: 900;
         color: #000;
         text-transform: uppercase;
-        letter-spacing: -0.5px;
-        margin-bottom: 18px;
+        letter-spacing: -1px;
+        margin-bottom: 30px;
     }
 
-    .accent-box {
-        background: var(--lime);
-        padding: 0 4px;
-        display: inline;
-        box-shadow: inset 1px 1px 3px rgba(0,0,0,0.1);
+    /* Тонкий, изящный акцент вместо грубой плашки */
+    .hero-h1 span {
+        color: #BADA55; /* Тот самый лайм, но чуть благороднее */
+        position: relative;
     }
 
-    .hero-desc {
-        font-size: 14px;
-        line-height: 1.5;
-        font-weight: 500;
-        color: #444;
-        border-left: 2px solid #000;
-        padding-left: 12px;
-        margin-bottom: 22px;
-    }
-
-    .hero-desc b {
-        color: #000;
-        font-weight: 900;
-    }
-
-    /* СТИЛЬНЫЙ ТЕГ СОСТОЯНИЯ */
-    .engine-tag {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 10px 16px;
-        background: #000;
-        border-radius: 12px;
-        color: #fff;
-        font-size: 9px;
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-    .engine-tag span {
-        color: var(--lime);
-    }
-</style>
-
-<section class="hero-mobile">
-    <div class="hero-label"><i></i> Инженерная подготовка</div>
-    
-    <h1 class="hero-h1">
-        Профессиональный спил деревьев и <br>
-        <span class="accent-box">полная расчистка</span> <br>
-        участков
-    </h1>
-
-    <p class="hero-desc">
-        Комплексная работа с вывозом веток и мусора. <br>
-        Сдаем объект идеально чистым <b>за один день</b>.
-    </p>
-
-    <div class="engine-tag">
-        Service: <span>Работаем по всему Крыму</span>
-    </div>
-</section>
-<style>
-    .contact-section {
-        padding: 0 16px 40px 16px;
-        background: #FFFFFF;
-    }
-
-    .offer-box {
-        background: #F8F8F8;
-        border-radius: 20px;
-        padding: 20px;
-        margin-bottom: 20px;
-        border: 1px solid #EEE;
-        /* Выточенный эффект для карточки */
-        box-shadow: inset 2px 2px 5px rgba(0,0,0,0.02);
-    }
-
-    .offer-title {
-        font-size: 11px;
-        font-weight: 950;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        color: #000;
-        margin-bottom: 8px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .offer-text {
-        font-size: 13px;
+    .hero-sub {
+        font-size: 16px;
+        line-height: 1.6;
+        font-weight: 400;
         color: #666;
-        line-height: 1.4;
-        margin-bottom: 0;
+        margin-bottom: 40px;
+        max-width: 280px; /* Чтобы текст красиво ломался на мобилке */
     }
 
-    /* СЕТКА КНОПОК */
-    .messenger-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr; /* Две колонки */
+    .hero-sub b {
+        color: #000;
+        font-weight: 900;
+    }
+
+    /* КНОПКИ СВЯЗИ: СТРОГИЙ СТИЛЬ */
+    .contact-minimal {
+        display: flex;
+        flex-direction: column;
         gap: 12px;
     }
 
-    .max-btn-wide {
-        grid-column: span 2; /* Кнопка MAX на всю ширину */
+    .main-action {
         background: #000;
         color: #FFF;
-    }
-
-    .messenger-btn {
-        height: 54px;
+        height: 60px;
         border-radius: 18px;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
         text-decoration: none;
-        font-size: 11px;
+        font-size: 12px;
         font-weight: 900;
         text-transform: uppercase;
+        letter-spacing: 2px;
+        /* Только одна мощная кнопка, остальное — контуром */
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .secondary-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .outline-btn {
+        height: 54px;
+        border-radius: 16px;
+        border: 1px solid #EEE;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 10px;
+        font-weight: 900;
+        color: #000;
+        text-transform: uppercase;
         letter-spacing: 1px;
-        transition: all 0.2s ease;
-        /* Эффект вдавливания как у основной кнопки */
-        box-shadow: 
-            inset 4px 4px 8px rgba(0,0,0,0.1), 
-            0 4px 10px rgba(0,0,0,0.05);
+        transition: background 0.3s;
     }
 
-    .messenger-btn:active {
-        transform: scale(0.96);
-        box-shadow: inset 8px 8px 16px rgba(0,0,0,0.2);
-    }
-
-    /* Цвета мессенджеров */
-    .tg-btn { background: #F0F7FF; color: #229ED9; border: 1px solid #DDEBFF; }
-    .vk-btn { background: #F0F4F8; color: #0077FF; border: 1px solid #E2E9F0; }
-    
-    .btn-dot {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: var(--lime);
-        box-shadow: 0 0 10px var(--lime);
+    .outline-btn:active {
+        background: #F5F5F5;
     }
 </style>
 
-<section class="contact-section">
-    <div class="offer-box">
-        <div class="offer-title">
-            <div class="btn-dot"></div>
-            Быстрая оценка по фото
-        </div>
-        <p class="offer-text">
-            Пришлите фото или видео участка в мессенджер — рассчитаем точную стоимость за 10 минут.
-        </p>
-    </div>
+<section class="hero-premium">
+    <div class="hero-index">Крым / 2026</div>
+    
+    <h1 class="hero-h1">
+        Профессиональный <br>
+        спил деревьев и <br>
+        <span>полная расчистка</span> <br>
+        участков
+    </h1>
 
-    <div class="messenger-grid">
+    <p class="hero-sub">
+        Комплексная работа. <br>
+        Идеальный порядок <b>за один день</b>.
+    </p>
+
+    <div class="contact-minimal">
         <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" 
-           class="messenger-btn max-btn-wide" onclick="heavyClick(event)">
-            <span>Написать в MAX</span>
-            <div class="btn-dot"></div>
+           class="main-action" onclick="masterClick(event)">
+            Написать в MAX
         </a>
 
-        <a href="https://t.me/daniil_glukhov17" class="messenger-btn tg-btn" onclick="heavyClick(event)">
-            TG: @daniil_17
-        </a>
-
-        <a href="https://vk.com/daniil_glukhov17" class="messenger-btn vk-btn" onclick="heavyClick(event)">
-            Вконтакте
-        </a>
+        <div class="secondary-actions">
+            <a href="https://t.me/daniil_glukhov17" class="outline-btn" onclick="masterClick(event)">
+                Telegram
+            </a>
+            <a href="https://vk.com/daniil_glukhov17" class="outline-btn" onclick="masterClick(event)">
+                Вконтакте
+            </a>
+        </div>
     </div>
 </section>
 

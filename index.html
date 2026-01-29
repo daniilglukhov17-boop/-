@@ -194,106 +194,104 @@
         }
     </script>
 <style>
-    /* СТИЛИ ДЛЯ ГЛАВНОГО БЛОКА */
-    .hero-section {
-        margin-top: 120px; /* Отступ под шапку */
-        padding: 0 24px;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: left;
+    /* МОБИЛЬНЫЙ HERO-БЛОК */
+    .hero-mobile {
+        margin-top: 105px; /* Идеальный отступ под нашу шапку */
+        padding: 0 20px 40px 20px;
+        background: #FFFFFF;
     }
 
-    .hero-category {
-        font-size: 10px;
+    .hero-badge {
+        font-size: 9px;
         font-weight: 900;
         text-transform: uppercase;
-        letter-spacing: 3px;
-        color: rgba(0,0,0,0.3);
-        margin-bottom: 16px;
+        letter-spacing: 2px;
+        color: rgba(0,0,0,0.4);
+        margin-bottom: 12px;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
     }
 
-    .hero-category::before {
-        content: '';
-        width: 30px;
+    .hero-badge i {
+        width: 12px;
         height: 1px;
         background: var(--lime);
     }
 
-    .main-title {
-        font-size: 42px;
-        line-height: 0.95;
+    .hero-h1 {
+        font-size: 34px; /* Оптимально для мобильных экранов */
+        line-height: 1;
         font-weight: 900;
         color: #000;
         text-transform: uppercase;
-        letter-spacing: -1.5px;
-        margin-bottom: 24px;
+        letter-spacing: -1px;
+        margin-bottom: 20px;
     }
 
-    .highlight-lime {
-        color: #000;
+    .hero-h1 span {
+        display: block; /* Складываем слова друг на друга */
+    }
+
+    .lime-highlight {
         background: var(--lime);
-        padding: 0 6px;
+        padding: 2px 4px;
         display: inline-block;
-        /* Эффект впечатанного текста */
-        box-shadow: inset 2px 2px 4px rgba(0,0,0,0.1);
+        box-shadow: inset 2px 2px 5px rgba(0,0,0,0.05);
     }
 
-    .hero-description {
-        font-size: 16px;
-        line-height: 1.5;
+    .hero-subtext {
+        font-size: 15px;
+        line-height: 1.4;
         font-weight: 500;
-        color: #444;
-        max-width: 90%;
+        color: #555;
         border-left: 2px solid #000;
-        padding-left: 16px;
+        padding-left: 14px;
+        margin-bottom: 25px;
     }
 
-    .feature-tag {
-        margin-top: 30px;
+    .hero-subtext b {
+        color: #000;
+        font-weight: 900;
+    }
+
+    /* МОБИЛЬНЫЙ ИНДИКАТОР СКОРОСТИ */
+    .speed-tag {
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        padding: 8px 16px;
-        background: #f0f0f0;
-        border-radius: 100px;
-        font-size: 11px;
+        padding: 10px 18px;
+        background: #000;
+        border-radius: 14px;
+        color: #fff;
+        font-size: 10px;
         font-weight: 900;
         text-transform: uppercase;
         letter-spacing: 1px;
-        /* Выточенный эффект */
-        box-shadow: inset 1px 1px 3px rgba(0,0,0,0.1);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     }
 
-    .feature-tag .dot-lime {
-        width: 6px;
-        height: 6px;
-        background: var(--lime);
-        border-radius: 50%;
-        box-shadow: 0 0 8px var(--lime);
+    .speed-tag span {
+        color: var(--lime);
     }
 </style>
 
-<section class="hero-section">
-    <div class="hero-category">Спецтехника & Сервис</div>
+<section class="hero-mobile">
+    <div class="hero-badge"><i></i> Спецтехника Крыма</div>
     
-    <h1 class="main-title">
-        Профессиональный <br>
-        спил деревьев и <br>
-        <span class="highlight-lime">полная расчистка</span>
+    <h1 class="hero-h1">
+        <span>Профессиональный</span>
+        <span class="lime-highlight">спил деревьев</span>
+        <span>и расчистка</span>
     </h1>
 
-    <p class="hero-description">
-        Комплексная подготовка участков с вывозом веток и строительного мусора. 
-        Работаем «под ключ» — сдаем чистый объект <b>за один день</b>.
+    <p class="hero-subtext">
+        Полная подготовка участков с вывозом мусора. <br>
+        Сдаем объект чистым <b>за один день</b>.
     </p>
 
-    <div class="feature-tag">
-        <div class="dot-lime"></div>
-        Гарантия чистоты 100%
+    <div class="speed-tag">
+        Статус: <span>Выполнение в день обращения</span>
     </div>
 </section>
 

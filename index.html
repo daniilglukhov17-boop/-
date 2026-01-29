@@ -291,6 +291,118 @@
         Service: <span>Работаем по всему Крыму</span>
     </div>
 </section>
+<style>
+    .contact-section {
+        padding: 0 16px 40px 16px;
+        background: #FFFFFF;
+    }
+
+    .offer-box {
+        background: #F8F8F8;
+        border-radius: 20px;
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #EEE;
+        /* Выточенный эффект для карточки */
+        box-shadow: inset 2px 2px 5px rgba(0,0,0,0.02);
+    }
+
+    .offer-title {
+        font-size: 11px;
+        font-weight: 950;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: #000;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .offer-text {
+        font-size: 13px;
+        color: #666;
+        line-height: 1.4;
+        margin-bottom: 0;
+    }
+
+    /* СЕТКА КНОПОК */
+    .messenger-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Две колонки */
+        gap: 12px;
+    }
+
+    .max-btn-wide {
+        grid-column: span 2; /* Кнопка MAX на всю ширину */
+        background: #000;
+        color: #FFF;
+    }
+
+    .messenger-btn {
+        height: 54px;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        text-decoration: none;
+        font-size: 11px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.2s ease;
+        /* Эффект вдавливания как у основной кнопки */
+        box-shadow: 
+            inset 4px 4px 8px rgba(0,0,0,0.1), 
+            0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .messenger-btn:active {
+        transform: scale(0.96);
+        box-shadow: inset 8px 8px 16px rgba(0,0,0,0.2);
+    }
+
+    /* Цвета мессенджеров */
+    .tg-btn { background: #F0F7FF; color: #229ED9; border: 1px solid #DDEBFF; }
+    .vk-btn { background: #F0F4F8; color: #0077FF; border: 1px solid #E2E9F0; }
+    
+    .btn-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--lime);
+        box-shadow: 0 0 10px var(--lime);
+    }
+</style>
+
+<section class="contact-section">
+    <div class="offer-box">
+        <div class="offer-title">
+            <div class="btn-dot"></div>
+            Быстрая оценка по фото
+        </div>
+        <p class="offer-text">
+            Пришлите фото или видео участка в мессенджер — рассчитаем точную стоимость за 10 минут.
+        </p>
+    </div>
+
+    <div class="messenger-grid">
+        <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" 
+           class="messenger-btn max-btn-wide" onclick="heavyClick(event)">
+            <span>Написать в MAX</span>
+            <div class="btn-dot"></div>
+        </a>
+
+        <a href="https://t.me/daniil_glukhov17" class="messenger-btn tg-btn" onclick="heavyClick(event)">
+            TG: @daniil_17
+        </a>
+
+        <a href="https://vk.com/daniil_glukhov17" class="messenger-btn vk-btn" onclick="heavyClick(event)">
+            Вконтакте
+        </a>
+    </div>
+</section>
 
 </body>
 </html>

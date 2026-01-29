@@ -3,132 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultra Transparent Header</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>Stihl Premium Light</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Полная прозрачность с легким бликом */
-            --glass-surface: rgba(255, 255, 255, 0.01); 
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --text-main: #ffffff;
             --stihl-orange: #FF6600;
+            --premium-white: #ffffff;
+            --steel-grey: #e2e2e7;
+            --text-dark: #1d1d1f;
+            --glass-white: rgba(255, 255, 255, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.8);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: #000; /* Черный фон, чтобы видеть прозрачность */
+            /* Светлый премиальный фон с мягким градиентом */
+            background: radial-gradient(circle at top right, #ffffff, #f5f5f7);
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
-            /* Световые пятна на фоне, чтобы подчеркнуть работу блюра */
-            background-image: 
-                radial-gradient(circle at 10% 20%, #1a1a1a 0%, transparent 50%),
-                radial-gradient(circle at 90% 80%, #111 0%, transparent 50%);
         }
 
-        .header-transparent {
+        .header-premium-light {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             padding: 20px 15px;
-            /* Фон полностью прозрачный, работает только размытие */
-            background: transparent;
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            /* Тонкая грань снизу */
-            border-bottom: 0.5px solid var(--glass-border);
+            /* Эффект матового белого стекла */
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            /* Двойная обводка: светлая сверху и стальная снизу */
+            border-bottom: 1px solid var(--steel-grey);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
             z-index: 1000;
         }
 
-        .top-info {
+        .top-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
-        .geo-label {
+        .location-badge {
             font-size: 10px;
-            letter-spacing: 2px;
+            font-weight: 800;
             text-transform: uppercase;
+            letter-spacing: 1.5px;
             color: var(--stihl-orange);
-            font-weight: 700;
+            display: flex;
+            align-items: center;
         }
 
-        .name-label {
+        .location-badge::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: var(--stihl-orange);
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .master-name {
             font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-dark);
+            opacity: 0.6;
+        }
+
+        /* Кнопка звонка - чистый белый глянец с оранжевым текстом */
+        .call-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 16px;
+            background: #ffffff;
+            border: 1px solid var(--glass-border);
+            border-radius: 4px;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 14px;
             letter-spacing: 1px;
             text-transform: uppercase;
-            color: rgba(255,255,255,0.5);
-        }
-
-        /* Кнопка телефона - прозрачная со светящейся обводкой */
-        .btn-phone {
-            display: block;
-            width: 100%;
-            padding: 18px;
-            background: var(--glass-surface);
-            border: 0.5px solid rgba(255, 255, 255, 0.3);
-            border-radius: 2px; /* Острые премиальные углы */
-            color: #fff;
-            text-decoration: none;
-            text-align: center;
-            font-weight: 700;
-            font-size: 14px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
             margin-bottom: 12px;
-            box-shadow: 0 0 20px rgba(255,255,255,0.05);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
         }
 
-        /* Мессенджеры - только тонкие рамки */
-        .social-grid {
+        .call-action:active {
+            transform: scale(0.98);
+            background: #f9f9f9;
+        }
+
+        /* Мессенджеры - минималистичные стальные блоки */
+        .messenger-bar {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            gap: 8px;
         }
 
-        .social-item {
+        .messenger-btn {
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 12px;
-            background: transparent;
-            border: 0.5px solid var(--glass-border);
-            border-radius: 2px;
-            color: #fff;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid var(--steel-grey);
+            border-radius: 4px;
+            color: var(--text-dark);
             text-decoration: none;
-            font-size: 10px;
-            font-weight: 500;
-            letter-spacing: 1px;
-            transition: 0.3s;
+            font-size: 11px;
+            font-weight: 600;
+            transition: 0.2s;
         }
 
-        .social-item:active {
-            background: rgba(255,255,255,0.1);
-            border-color: #fff;
+        .messenger-btn:active {
+            background: var(--steel-grey);
         }
 
+        /* Декоративная линия STIHL в самом низу шапки */
+        .stihl-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30%;
+            height: 3px;
+            background: var(--stihl-orange);
+        }
     </style>
 </head>
 <body>
 
-    <header class="header-transparent">
-        <div class="top-info">
-            <div class="geo-label">Simferopol District</div>
-            <div class="name-label">Daniil Glukhov</div>
+    <header class="header-premium-light">
+        <div class="top-row">
+            <div class="location-badge">Симферополь и район</div>
+            <div class="master-name">Даниил Глухов</div>
         </div>
 
-        <a href="tel:+79785552114" class="btn-phone">
-            Call +7 978 555 21 14
+        <a href="tel:+79785552114" class="call-action">
+            Позвонить +7 978 555 21 14
         </a>
 
-        <div class="social-grid">
-            <a href="https://max.ru/u/f9LHodD0cOKq1RRxaWPLcyQOAe5XjdOFacwTLVOWL4Tk0TUldTlooT-0r5g" class="social-item">MAX</a>
-            <a href="https://t.me/daniil_glukhov17" class="social-item">TG</a>
-            <a href="https://vk.com/daniil_glukhov17" class="social-item">VK</a>
+        <div class="messenger-bar">
+            <a href="https://max.ru/u/f9LHodD0cOKq1RRxaWPLcyQOAe5XjdOFacwTLVOWL4Tk0TUldTlooT-0r5g" class="messenger-btn">MAX</a>
+            <a href="https://t.me/daniil_glukhov17" class="messenger-btn">TG</a>
+            <a href="https://vk.com/daniil_glukhov17" class="messenger-btn">VK</a>
         </div>
+        
+        <div class="stihl-line"></div>
     </header>
 
 </body>

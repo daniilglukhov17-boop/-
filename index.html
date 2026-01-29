@@ -1,57 +1,174 @@
-<header class="obsidian-glass">
-    <div class="info-side">
-        <div class="name-row">
-            <span class="name">Даниил Глухов</span>
-            <div class="online-dot"></div>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --stihl-orange: #FF6600;
+            --obsidian: rgba(10, 10, 12, 0.95);
+            --line-color: rgba(255, 102, 0, 0.8);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { 
+            background: #ffffff; 
+            font-family: 'Inter', sans-serif;
+            min-height: 200vh;
+        }
+
+        /* Контейнер шапки */
+        .header-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 90%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Сама нить (The Minimalist Pulse) */
+        .pulse-line {
+            width: 100%;
+            height: 2px;
+            background: var(--line-color);
+            border-radius: 10px;
+            box-shadow: 0 0 15px var(--stihl-orange);
+            cursor: pointer;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Анимация пульсации */
+        .pulse-line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, #fff, transparent);
+            animation: scan 3s infinite;
+        }
+
+        @keyframes scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Состояние "Раскрыто" */
+        .header-container.active .pulse-line {
+            height: 70px;
+            background: var(--obsidian);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Контент внутри линии (скрыт по умолчанию) */
+        .header-content {
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 100%;
+            padding: 0 20px;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .header-container.active .header-content {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .name-side {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .name-side h1 {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .status-tag {
+            font-size: 8px;
+            color: var(--stihl-orange);
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        /* Кнопка действия внутри раскрытой шапки */
+        .action-btn {
+            background: #fff;
+            color: #000;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+
+        /* Подсказка под линией */
+        .hint {
+            color: #ccc;
+            font-size: 9px;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+
+        .header-container.active .hint {
+            opacity: 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="header-container" id="mainHeader">
+        <div class="pulse-line" onclick="toggleHeader()">
+            <div class="header-content">
+                <div class="name-side">
+                    <h1>Даниил Глухов</h1>
+                    <span class="status-tag">System Online • 5.0</span>
+                </div>
+                <a href="tel:+79785552114" class="action-btn">Call Master</a>
+            </div>
         </div>
-        <span class="tagline">Industrial Arborist • 5.0 ★</span>
+        <div class="hint">Tap to engage</div>
     </div>
 
-    <div class="btns-side">
-        <div class="experience-badge">
-            <span class="exp-num">8</span>
-            <span class="exp-text">ЛЕТ<br>ОПЫТА</span>
-        </div>
-        
-        <div class="menu-trigger">
-            <div class="line"></div>
-            <div class="line" style="width: 12px;"></div>
-        </div>
-    </div>
-</header>
+    <script>
+        function toggleHeader() {
+            document.getElementById('mainHeader').classList.toggle('active');
+        }
+    </script>
 
-<style>
-    /* Дополнение к твоему стилю для новых элементов */
-    .experience-badge {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        padding-right: 15px;
-        border-right: 1px solid rgba(255,255,255,0.1);
-        margin-right: 5px;
-    }
-    .exp-num {
-        color: var(--stihl-orange);
-        font-size: 20px;
-        font-weight: 800;
-    }
-    .exp-text {
-        color: rgba(255,255,255,0.5);
-        font-size: 7px;
-        line-height: 1;
-        font-weight: 700;
-    }
-    .menu-trigger {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        align-items: flex-end;
-        cursor: pointer;
-    }
-    .line {
-        height: 2px;
-        width: 20px;
-        background: var(--white);
-        border-radius: 2px;
-    }
-</style>
+    <div style="padding: 150px 30px;">
+        <p style="color: #999; font-size: 14px; line-height: 2;">
+            Это пространство вашего будущего приложения. 
+            Минималистичная шапка выше — это ваш цифровой подтекст. 
+            Она не мешает контенту, но всегда готова к действию.
+        </p>
+    </div>
+
+</body>
+</html>

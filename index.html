@@ -7,8 +7,8 @@
     <style>
         :root {
             --lime: #DFFF11; 
-            --glass: rgba(10, 10, 12, 0.92);
-            --bg: #F5F5F7;
+            --glass-base: rgba(15, 15, 15, 0.4); /* Прозрачнее */
+            --bg: #F0F0F2;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -17,132 +17,148 @@
             background: var(--bg); 
             font-family: 'Inter', sans-serif; 
             min-height: 100vh;
+            /* Сделаем легкий градиент на фоне для проверки прозрачности */
+            background: radial-gradient(circle at top right, #ffffff, #e6e6e8);
         }
 
-        /* Контейнер шапки */
-        .header-wrap {
+        .header-container {
             position: fixed;
-            top: 20px;
+            top: 25px;
             left: 15px;
             right: 15px;
             z-index: 10000;
         }
 
-        .main-header {
-            background: var(--glass);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-radius: 24px;
-            padding: 10px 10px 10px 22px;
+        .glass-panel {
+            background: var(--glass-base);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border-radius: 26px;
+            padding: 10px 12px 10px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
         }
 
-        .brand-unit { display: flex; flex-direction: column; gap: 3px; }
+        .info-group { display: flex; flex-direction: column; gap: 2px; }
 
         /* ТОПОВАЯ ПУЛЬСАЦИЯ */
-        .status-box {
+        .status-meta {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             font-size: 8px;
             font-weight: 800;
-            color: rgba(255, 255, 255, 0.4);
-            letter-spacing: 1.2px;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 1.5px;
             text-transform: uppercase;
         }
 
-        .indicator {
+        .pulse-engine {
             position: relative;
-            width: 6px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .dot-core {
-            position: absolute;
-            width: 100%;
-            height: 100%;
+        .dot-main {
+            width: 6px;
+            height: 6px;
             background: var(--lime);
             border-radius: 50%;
-            z-index: 2;
+            z-index: 3;
             box-shadow: 0 0 10px var(--lime);
         }
 
-        /* Волны пульсации */
-        .pulse-wave {
+        .wave {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 6px;
-            height: 6px;
-            border: 1.5px solid var(--lime);
+            border: 1px solid var(--lime);
             border-radius: 50%;
             opacity: 0;
-            animation: wave-anim 2s infinite ease-out;
+            animation: ripple 2.5s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        .wave-2 { animation-delay: 1s; }
+        .w2 { animation-delay: 0.8s; }
+        .w3 { animation-delay: 1.6s; }
 
-        @keyframes wave-anim {
-            0% { width: 6px; height: 6px; opacity: 0.8; }
-            100% { width: 25px; height: 25px; opacity: 0; }
+        @keyframes ripple {
+            0% { width: 6px; height: 6px; opacity: 0.6; }
+            100% { width: 30px; height: 30px; opacity: 0; }
         }
 
-        .master-name {
+        .name-tag {
             color: #fff;
-            font-size: 16px;
+            font-size: 17px;
             font-weight: 900;
-            letter-spacing: -0.2px;
+            letter-spacing: -0.4px;
             text-transform: uppercase;
         }
 
-        /* Кнопка */
-        .action-btn {
+        /* ВПУКЛАЯ КНОПКА (Indented) */
+        .indented-btn {
             background: var(--lime);
-            height: 48px;
-            padding: 0 22px;
-            border-radius: 18px;
+            height: 50px;
+            padding: 0 24px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
             text-decoration: none;
-            transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
             border: none;
+            position: relative;
+            /* Эффект впадины за счет внутренних теней */
+            box-shadow: 
+                inset 4px 4px 8px rgba(0, 0, 0, 0.2), 
+                inset -2px -2px 6px rgba(255, 255, 255, 0.4);
+            transition: all 0.15s ease;
         }
 
-        .action-btn:active { transform: scale(0.92); filter: brightness(1.1); }
+        .indented-btn:active {
+            transform: scale(0.96);
+            /* При нажатии "впадина" становится глубже */
+            box-shadow: 
+                inset 6px 6px 12px rgba(0, 0, 0, 0.3), 
+                inset -3px -3px 8px rgba(255, 255, 255, 0.5);
+        }
 
-        .btn-txt { color: #000; font-size: 12px; font-weight: 900; text-transform: uppercase; }
+        .btn-label { 
+            color: #000; 
+            font-size: 12px; 
+            font-weight: 900; 
+            text-transform: uppercase; 
+            letter-spacing: 0.3px;
+        }
 
-        .btn-svg { width: 15px; height: 15px; fill: #000; }
+        .btn-icon { width: 16px; height: 16px; fill: #000; opacity: 0.9; }
 
     </style>
 </head>
 <body>
 
-    <div class="header-wrap">
-        <header class="main-header">
-            <div class="brand-unit">
-                <div class="status-box">
-                    <div class="indicator">
-                        <div class="dot-core"></div>
-                        <div class="pulse-wave wave-1"></div>
-                        <div class="pulse-wave wave-2"></div>
+    <div class="header-container">
+        <header class="glass-panel">
+            <div class="info-group">
+                <div class="status-meta">
+                    <div class="pulse-engine">
+                        <div class="dot-main"></div>
+                        <div class="wave w1"></div>
+                        <div class="wave w2"></div>
+                        <div class="wave w3"></div>
                     </div>
-                    <span>На связи • Крым</span>
+                    <span>На связи • Симферополь</span>
                 </div>
-                <span class="master-name">Даниил Глухов</span>
+                <span class="name-tag">Даниил Глухов</span>
             </div>
 
-            <a href="tel:+79785552114" class="action-btn" onclick="triggerEffect(event)">
-                <svg class="btn-svg" viewBox="0 0 24 24">
+            <a href="tel:+79785552114" class="indented-btn" onclick="playFeedback(event)">
+                <svg class="btn-icon" viewBox="0 0 24 24">
                     <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1v3.5c0 .55-.45 1-1 1C10.74 21 3 13.26 3 3.5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                 </svg>
-                <span class="btn-txt">Вызвать</span>
+                <span class="btn-label">Вызвать</span>
             </a>
         </header>
     </div>
@@ -150,22 +166,26 @@
     <script>
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-        function triggerEffect(e) {
-            // Вибрация
-            if (navigator.vibrate) navigator.vibrate(20);
+        function playFeedback(e) {
+            // Вибрация (Haptic)
+            if (navigator.vibrate) navigator.vibrate(25);
 
-            // Звук механического клика
+            // Сочный механический клик
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
+            
             osc.type = 'sine';
-            osc.frequency.setValueAtTime(900, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(20, audioCtx.currentTime + 0.12);
-            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.12);
+            osc.frequency.setValueAtTime(1000, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.1);
+            
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+            
             osc.connect(gain);
             gain.connect(audioCtx.destination);
+            
             osc.start();
-            osc.stop(audioCtx.currentTime + 0.12);
+            osc.stop(audioCtx.currentTime + 0.1);
         }
     </script>
 

@@ -3,164 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Header Concept</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Ultra Transparent Header</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.12);
+            /* Полная прозрачность с легким бликом */
+            --glass-surface: rgba(255, 255, 255, 0.01); 
+            --glass-border: rgba(255, 255, 255, 0.15);
             --text-main: #ffffff;
-            --text-dim: #a0a0a0;
-            --stihl-orange: #FF6600; /* Единственный акцент */
+            --stihl-orange: #FF6600;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: #0a0a0a; /* Глубокий черный фон */
+            background: #000; /* Черный фон, чтобы видеть прозрачность */
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
-            /* Временный фон-градиент, чтобы видеть прозрачность стекла */
+            /* Световые пятна на фоне, чтобы подчеркнуть работу блюра */
             background-image: 
-                radial-gradient(circle at 20% 30%, #1c1c1c 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, #141414 0%, transparent 40%);
+                radial-gradient(circle at 10% 20%, #1a1a1a 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, #111 0%, transparent 50%);
         }
 
-        /* Контейнер шапки */
-        .header-glass {
+        .header-transparent {
             position: fixed;
-            top: 15px;
-            left: 10px;
-            right: 10px;
-            padding: 15px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 15px;
+            /* Фон полностью прозрачный, работает только размытие */
+            background: transparent;
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            /* Тонкая грань снизу */
+            border-bottom: 0.5px solid var(--glass-border);
             z-index: 1000;
         }
 
-        /* Верхняя инфо-строка */
-        .top-bar {
+        .top-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-            padding: 0 5px;
+            margin-bottom: 20px;
         }
 
-        .loc-tag {
-            font-size: 9px;
-            font-weight: 700;
-            text-transform: uppercase;
+        .geo-label {
+            font-size: 10px;
             letter-spacing: 2px;
-            color: var(--text-dim);
-            border-left: 2px solid var(--stihl-orange);
-            padding-left: 8px;
+            text-transform: uppercase;
+            color: var(--stihl-orange);
+            font-weight: 700;
         }
 
-        .name-tag {
-            font-size: 11px;
-            font-weight: 400;
-            color: var(--text-main);
+        .name-label {
+            font-size: 10px;
             letter-spacing: 1px;
             text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
         }
 
-        /* Кнопка звонка - Главный акцент */
-        .main-call-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* Кнопка телефона - прозрачная со светящейся обводкой */
+        .btn-phone {
+            display: block;
             width: 100%;
-            padding: 16px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
+            padding: 18px;
+            background: var(--glass-surface);
+            border: 0.5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 2px; /* Острые премиальные углы */
             color: #fff;
             text-decoration: none;
+            text-align: center;
             font-weight: 700;
             font-size: 14px;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             text-transform: uppercase;
             margin-bottom: 12px;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 20px rgba(255,255,255,0.05);
         }
 
-        .main-call-btn:active {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(0.98);
-        }
-
-        /* Ряд мессенджеров */
-        .messenger-grid {
+        /* Мессенджеры - только тонкие рамки */
+        .social-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 10px;
         }
 
-        .msg-link {
+        .social-item {
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
+            padding: 12px;
+            background: transparent;
+            border: 0.5px solid var(--glass-border);
+            border-radius: 2px;
+            color: #fff;
             text-decoration: none;
-            color: var(--text-dim);
-            font-size: 9px;
-            font-weight: 700;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 1px;
             transition: 0.3s;
         }
 
-        .msg-link span {
-            margin-top: 4px;
-        }
-
-        .msg-link svg {
-            width: 18px;
-            height: 18px;
-            fill: currentColor;
-            opacity: 0.7;
-        }
-
-        .msg-link:active {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.3);
-            color: #fff;
+        .social-item:active {
+            background: rgba(255,255,255,0.1);
+            border-color: #fff;
         }
 
     </style>
 </head>
 <body>
 
-    <header class="header-glass">
-        <div class="top-bar">
-            <div class="loc-tag">Симферополь / Район</div>
-            <div class="name-tag">Даниил Глухов</div>
+    <header class="header-transparent">
+        <div class="top-info">
+            <div class="geo-label">Simferopol District</div>
+            <div class="name-label">Daniil Glukhov</div>
         </div>
 
-        <a href="tel:+79785552114" class="main-call-btn">
-            Позвонить +7 978 555 21 14
+        <a href="tel:+79785552114" class="btn-phone">
+            Call +7 978 555 21 14
         </a>
 
-        <div class="messenger-grid">
-            <a href="https://max.ru/u/f9LHodD0cOKq1RRxaWPLcyQOAe5XjdOFacwTLVOWL4Tk0TUldTlooT-0r5g" class="msg-link">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-                <span>MAX</span>
-            </a>
-            <a href="https://t.me/daniil_glukhov17" class="msg-link">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
-                <span>Telegram</span>
-            </a>
-            <a href="https://vk.com/daniil_glukhov17" class="msg-link">
-                <svg viewBox="0 0 24 24"><path d="M15.07 2H8.93C3.33 2 2 3.33 2 8.93v6.14C2 20.67 3.33 22 8.93 22h6.14c5.6 0 6.93-1.33 6.93-6.93V8.93C22 3.33 20.67 2 15.07 2zm3.12 13.51h-1.33c-.41 0-.54-.33-1.29-1.08-.65-.63-.94-.71-1.1-.71-.22 0-.29.06-.29.37v1c0 .27-.09.42-.81.42-1.2 0-2.54-.73-3.49-2.09-1.43-2.02-1.83-2.13-1.83-2.4 0-.13.06-.25.33-.25h1.33c.24 0 .32.11.41.36.65 1.91 1.48 2.58 1.72 2.58.11 0 .16-.05.16-.31V10.8c0-.43-.24-.46-.24-.63 0-.08.07-.17.18-.17h2.1c.21 0 .28.11.28.36v2.33c0 .25.11.31.18.31.11 0 .21-.05.41-.25.96-1.11 1.4-2.29 1.4-2.29.06-.13.15-.22.4-.22h1.33c.36 0 .43.18.36.36-.14.36-1.51 2.61-1.51 2.61a.52.52 0 000 .69s.34.46 1.09 1.34c.57.65.81.99.74 1.29-.07.31-.34.31-.34.31z"/></svg>
-                <span>Vkontakte</span>
-            </a>
+        <div class="social-grid">
+            <a href="https://max.ru/u/f9LHodD0cOKq1RRxaWPLcyQOAe5XjdOFacwTLVOWL4Tk0TUldTlooT-0r5g" class="social-item">MAX</a>
+            <a href="https://t.me/daniil_glukhov17" class="social-item">TG</a>
+            <a href="https://vk.com/daniil_glukhov17" class="social-item">VK</a>
         </div>
     </header>
 

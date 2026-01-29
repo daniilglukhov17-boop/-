@@ -194,95 +194,97 @@
         }
     </script>
 <style>
-    /* МОБИЛЬНЫЙ HERO-БЛОК */
+    /* МОБИЛЬНЫЙ HERO-БЛОК (ADAPTIVE PREMIUM) */
     .hero-mobile {
-        margin-top: 105px; /* Идеальный отступ под нашу шапку */
-        padding: 0 20px 40px 20px;
+        /* Отступ чуть меньше, чтобы поднять контент выше */
+        margin-top: 100px; 
+        padding: 0 16px 30px 16px;
         background: #FFFFFF;
+        max-width: 100%;
+        overflow: hidden; /* Чтобы ничего не вылетало */
     }
 
     .hero-badge {
-        font-size: 9px;
-        font-weight: 900;
+        font-size: 8px;
+        font-weight: 950;
         text-transform: uppercase;
         letter-spacing: 2px;
-        color: rgba(0,0,0,0.4);
-        margin-bottom: 12px;
+        color: rgba(0,0,0,0.3);
+        margin-bottom: 8px;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
     }
 
     .hero-badge i {
-        width: 12px;
+        width: 10px;
         height: 1px;
         background: var(--lime);
     }
 
     .hero-h1 {
-        font-size: 34px; /* Оптимально для мобильных экранов */
-        line-height: 1;
+        /* Умный размер: минимум 24px, максимум 36px в зависимости от экрана */
+        font-size: clamp(24px, 8vw, 36px); 
+        line-height: 1.1;
         font-weight: 900;
         color: #000;
         text-transform: uppercase;
-        letter-spacing: -1px;
-        margin-bottom: 20px;
-    }
-
-    .hero-h1 span {
-        display: block; /* Складываем слова друг на друга */
+        letter-spacing: -0.5px;
+        margin-bottom: 16px;
+        word-wrap: break-word; /* Защита от вылетов */
     }
 
     .lime-highlight {
         background: var(--lime);
-        padding: 2px 4px;
-        display: inline-block;
-        box-shadow: inset 2px 2px 5px rgba(0,0,0,0.05);
+        padding: 0 4px;
+        display: inline; /* Не рвет строку */
+        box-shadow: inset 1px 1px 3px rgba(0,0,0,0.05);
     }
 
     .hero-subtext {
-        font-size: 15px;
+        font-size: 14px;
         line-height: 1.4;
         font-weight: 500;
-        color: #555;
+        color: #444;
         border-left: 2px solid #000;
-        padding-left: 14px;
-        margin-bottom: 25px;
+        padding-left: 12px;
+        margin-bottom: 20px;
+        max-width: 100%;
     }
 
     .hero-subtext b {
         color: #000;
         font-weight: 900;
+        white-space: nowrap; /* Чтобы "за один день" не разрывалось */
     }
 
-    /* МОБИЛЬНЫЙ ИНДИКАТОР СКОРОСТИ */
-    .speed-tag {
+    /* ФУНКЦИОНАЛЬНЫЙ ТЕГ */
+    .status-tag {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        padding: 10px 18px;
+        gap: 6px;
+        padding: 8px 14px;
         background: #000;
-        border-radius: 14px;
+        border-radius: 10px;
         color: #fff;
-        font-size: 10px;
+        font-size: 9px;
         font-weight: 900;
         text-transform: uppercase;
         letter-spacing: 1px;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     }
 
-    .speed-tag span {
+    .status-tag span {
         color: var(--lime);
     }
 </style>
 
 <section class="hero-mobile">
-    <div class="hero-badge"><i></i> Спецтехника Крыма</div>
+    <div class="hero-badge"><i></i> Спецтехника & Арбористика</div>
     
     <h1 class="hero-h1">
-        <span>Профессиональный</span>
-        <span class="lime-highlight">спил деревьев</span>
-        <span>и расчистка</span>
+        Профессиональный <br>
+        <span class="lime-highlight">спил деревьев</span> <br>
+        и расчистка
     </h1>
 
     <p class="hero-subtext">
@@ -290,8 +292,8 @@
         Сдаем объект чистым <b>за один день</b>.
     </p>
 
-    <div class="speed-tag">
-        Статус: <span>Выполнение в день обращения</span>
+    <div class="status-tag">
+        Status: <span>Готовы к выезду сегодня</span>
     </div>
 </section>
 

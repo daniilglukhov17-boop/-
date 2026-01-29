@@ -6,127 +6,135 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Тот самый "интересный" цвет — Электрический лайм */
-            --accent-color: #DFFF11; 
-            --glass-bg: rgba(0, 0, 0, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.12);
+            /* Цвет полированной стали с легким блеском */
+            --metal-btn: rgba(255, 255, 255, 0.1); 
+            --glass-bg: rgba(10, 10, 10, 0.7);
+            --white: #ffffff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body { 
-            /* Фон просто для проверки прозрачности шапки */
+            /* Фоновое фото для теста — теперь шапка будет в него "вписываться" */
             background: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2026&auto=format&fit=crop') no-repeat center center fixed;
             background-size: cover;
             font-family: 'Inter', sans-serif; 
         }
 
-        /* Парящая прозрачная шапка */
-        .glass-header {
+        /* Шапка-монолит из дымчатого хрусталя */
+        .premium-header {
             position: fixed;
             top: 20px;
             left: 15px;
             right: 15px;
             z-index: 10000;
             
-            /* Эффект матового тонированного стекла */
             background: var(--glass-bg);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            backdrop-filter: blur(30px) saturate(150%);
+            -webkit-backdrop-filter: blur(30px) saturate(150%);
             
-            border-radius: 24px;
-            padding: 10px 14px 10px 20px;
+            border-radius: 20px;
+            padding: 12px 14px 12px 22px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
         }
 
-        .info-unit {
+        .text-group {
             display: flex;
             flex-direction: column;
             gap: 2px;
         }
 
-        .meta-line {
+        .location-badge {
             display: flex;
             align-items: center;
             gap: 6px;
             font-size: 8px;
-            font-weight: 800;
+            font-weight: 700;
             color: rgba(255, 255, 255, 0.4);
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
         }
 
-        .alive-dot {
+        /* Индикатор жизни — теперь мягкий белый пульс */
+        .status-pulse {
             width: 5px;
             height: 5px;
-            background: var(--accent-color);
+            background: var(--white);
             border-radius: 50%;
-            box-shadow: 0 0 10px var(--accent-color);
+            box-shadow: 0 0 10px var(--white);
+            animation: soft-pulse 2s infinite;
         }
 
-        .name-label {
-            color: #fff;
-            font-size: 15px;
+        @keyframes soft-pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.4; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .master-name {
+            color: var(--white);
+            font-size: 16px;
             font-weight: 900;
             letter-spacing: -0.2px;
             text-transform: uppercase;
         }
 
-        /* Кнопка "Лайм" */
-        .btn-action {
-            background: var(--accent-color);
-            height: 46px;
+        /* Кнопка "Стелс" — полупрозрачный металл */
+        .btn-stealth {
+            background: var(--metal-btn);
+            height: 44px;
             padding: 0 22px;
-            border-radius: 18px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             gap: 10px;
             text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 20px rgba(223, 255, 17, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
         }
 
-        /* Эффект при нажатии */
-        .btn-action:active {
-            transform: scale(0.92);
+        .btn-stealth:active {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .btn-label {
-            color: #000;
+            color: var(--white);
             font-size: 11px;
-            font-weight: 900;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
         }
 
-        .phone-svg {
+        .icon-svg {
             width: 14px;
             height: 14px;
-            fill: #000;
+            fill: var(--white);
         }
 
     </style>
 </head>
 <body>
 
-    <header class="glass-header">
-        <div class="info-unit">
-            <div class="meta-line">
-                <div class="alive-dot"></div>
+    <header class="premium-header">
+        <div class="text-group">
+            <div class="location-badge">
+                <div class="status-pulse"></div>
                 <span>На связи • Симферополь</span>
             </div>
-            <span class="name-label">Даниил Глухов</span>
+            <span class="master-name">Даниил Глухов</span>
         </div>
 
-        <a href="tel:+79785552114" class="btn-action">
-            <svg class="phone-svg" viewBox="0 0 24 24">
+        <a href="tel:+79785552114" class="btn-stealth">
+            <svg class="icon-svg" viewBox="0 0 24 24">
                 <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1v3.5c0 .55-.45 1-1 1C10.74 21 3 13.26 3 3.5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
             </svg>
-            <span class="btn-label">Связаться</span>
+            <span class="btn-label">Вызвать</span>
         </a>
     </header>
 

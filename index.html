@@ -160,97 +160,33 @@
         </header>
     </div>
 <style>
-    /* HERO-БЛОК: ПРЕМИУМ ФИНИШ */
-    .hero-clean {
-        margin-top: 110px;
-        padding: 0 24px 40px;
-        background: #FFFFFF;
-    }
-
-    .service-no {
-        font-size: 10px;
-        font-weight: 900;
-        letter-spacing: 3px;
-        color: #000;
-        margin-bottom: 20px;
-        display: block;
-        opacity: 0.3;
-    }
-
-    .hero-h1 {
-        font-size: 32px;
-        line-height: 1.0;
-        font-weight: 900;
-        color: #000;
-        text-transform: uppercase;
-        letter-spacing: -1.5px;
-        margin-bottom: 30px;
-    }
-
-    .hero-h1 span {
-        display: block;
-        font-weight: 400;
-        font-size: 24px;
-        letter-spacing: 0;
-        margin-top: 5px;
-    }
-
-    .benefit-row {
-        display: flex;
-        align-items: flex-start;
-        gap: 15px;
-        margin-bottom: 20px;
-        padding-top: 15px;
-        border-top: 1px solid #EEE;
-    }
-
-    .benefit-marker {
-        width: 12px;
-        height: 12px;
-        background: var(--lime);
-        margin-top: 4px;
-        flex-shrink: 0;
-    }
-
-    .benefit-content strong {
-        display: block;
-        font-size: 14px;
-        font-weight: 900;
-        text-transform: uppercase;
-    }
-
-    /* КНОПКИ: СУПЕР ПРЕМИУМ */
-    .sticky-contact {
-        margin-top: 40px;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .btn-super {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-        transition: all 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
-
-    /* Кнопка MAX */
+    /* КНОПКА MAX: ВОЗВРАТ НЕОНОВОЙ М + ВИБРАЦИЯ */
     .btn-max-top {
         background: linear-gradient(180deg, #121212 0%, #000000 100%);
         height: 72px;
         border-radius: 24px;
         box-shadow: 0 15px 35px rgba(0,0,0,0.25);
         border: 1px solid rgba(255,255,255,0.05);
+        display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
         gap: 2px;
+        transition: all 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
     .max-content {
         display: flex;
         align-items: center;
         gap: 12px;
+    }
+
+    /* Та самая неоновая М */
+    .max-logo-neon {
+        width: 24px;
+        height: 24px;
+        filter: drop-shadow(0 0 8px var(--lime)) drop-shadow(0 0 2px var(--lime));
     }
 
     .btn-text {
@@ -268,85 +204,41 @@
         text-transform: uppercase;
         letter-spacing: 3px;
         opacity: 0.8;
-        margin-left: 36px;
+        /* Выравнивание, чтобы было ровно под текстом */
+        margin-left: 36px; 
     }
 
-    /* Второстепенные */
-    .sub-links-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-    }
-
-    .btn-secondary-top {
-        height: 60px;
-        background: #FFFFFF;
-        border-radius: 20px;
-        border: 1px solid #EAEAEA;
-        color: #000;
-        font-size: 11px;
-        font-weight: 950;
-        text-transform: uppercase;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.03);
-        gap: 10px;
-    }
-
-    .btn-super:active {
+    .btn-max-top:active {
         transform: scale(0.96) translateY(4px);
-        box-shadow: inset 0 8px 20px rgba(0,0,0,0.6);
+        box-shadow: inset 0 8px 20px rgba(0,0,0,0.7);
     }
-
-    .m-icon { width: 22px; height: 22px; object-fit: contain; }
 </style>
 
-<section class="hero-clean">
-    <span class="service-no">№ 0978-555</span>
+<div class="sticky-contact">
+    <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D0%B8%D1%88%D1%83%20%D0%B2%D0%B0%D0%BC%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%2C%20%D0%BD%D1%83%D0%B6%D0%BD%D0%BE%20%D0%BE%D1%86%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%83" 
+       class="btn-max-top" onclick="hapticClick(event)">
+        <div class="max-content">
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/m.png" class="max-logo-neon" alt="MAX">
+            <span class="btn-text">Написать в MAX</span>
+        </div>
+        <span class="online-status">● SYSTEM ONLINE</span>
+    </a>
     
-    <h1 class="hero-h1">
-        СПИЛ ДЕРЕВЬЕВ
-        <span>И ПОЛНАЯ РАСЧИСТКА УЧАСТКОВ</span>
-    </h1>
-
-    <div class="benefit-row">
-        <div class="benefit-marker"></div>
-        <div class="benefit-content">
-            <strong>За один рабочий день</strong>
-            <p>Сдаем объект идеально чистым под строительство или продажу.</p>
-        </div>
     </div>
 
-    <div class="benefit-row">
-        <div class="benefit-marker"></div>
-        <div class="benefit-content">
-            <strong>Свой парк техники</strong>
-            <p>Вывоз веток и мусора собственными самосвалами без посредников.</p>
-        </div>
-    </div>
-
-    <div class="sticky-contact">
-        <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D0%B8%D1%88%D1%83%20%D0%B2%D0%B0%D0%BC%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%2C%20%D0%BD%D1%83%D0%B6%D0%BD%D0%BE%20%D0%BE%D1%86%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%83" 
-           class="btn-super btn-max-top" onclick="hapticClick(event)">
-            <div class="max-content">
-                <img src="https://img.icons8.com/ios-filled/50/ffffff/m.png" class="m-icon" alt="MAX">
-                <span class="btn-text">Написать в MAX</span>
-            </div>
-            <span class="online-status">● SYSTEM ONLINE</span>
-        </a>
-
-        <div class="sub-links-row">
-            <a href="https://t.me/daniil_glukhov17?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D0%B8%D1%88%D1%83%20%D0%B2%D0%B0%D0%BC%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%2C%20%D0%BD%D1%83%D0%B6%D0%BD%D0%BE%20%D0%BE%D1%86%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%83" 
-               class="btn-super btn-secondary-top" onclick="hapticClick(event)">
-                <img src="https://img.icons8.com/ios-filled/50/000000/telegram-app.png" class="m-icon" alt="TG">
-                Telegram
-            </a>
-            <a href="https://vk.com/daniil_glukhov17" 
-               class="btn-super btn-secondary-top" onclick="hapticClick(event)">
-                <img src="https://img.icons8.com/ios-filled/50/000000/vkontakte.png" class="m-icon" alt="VK">
-                Вконтакте
-            </a>
-        </div>
-    </div>
-</section>
+<script>
+    function hapticClick(e) {
+        // Мощная вибрация для премиального отклика
+        if (navigator.vibrate) {
+            navigator.vibrate([30, 10, 30]); // Двойной короткий импульс (как haptic engine)
+        }
+        
+        // Воспроизведение звука клика (если функция masterClick определена в коде)
+        if (typeof masterClick === 'function') {
+            masterClick(e);
+        }
+    }
+</script>
 
 </body>
 </html>

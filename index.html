@@ -6,151 +6,129 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --stihl-orange: #FF6600;
-            --deep-black: #0D0D0D;
-            --glass-border: rgba(255, 255, 255, 0.1);
+            /* Тот самый "интересный" цвет — Электрический лайм */
+            --accent-color: #DFFF11; 
+            --glass-bg: rgba(0, 0, 0, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.12);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-        body { background: #ffffff; font-family: 'Inter', sans-serif; color: #111; }
+        body { 
+            /* Фон просто для проверки прозрачности шапки */
+            background: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2026&auto=format&fit=crop') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Inter', sans-serif; 
+        }
 
-        /* Парящий Монолит */
-        .header-monolith {
+        /* Парящая прозрачная шапка */
+        .glass-header {
             position: fixed;
-            top: 15px;
+            top: 20px;
             left: 15px;
             right: 15px;
             z-index: 10000;
-            background: var(--deep-black);
-            border-radius: 20px;
-            padding: 12px 16px;
+            
+            /* Эффект матового тонированного стекла */
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            
+            border-radius: 24px;
+            padding: 10px 14px 10px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
             border: 1px solid var(--glass-border);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
         }
 
-        /* Блок информации */
-        .master-info {
+        .info-unit {
             display: flex;
             flex-direction: column;
             gap: 2px;
         }
 
-        .status-line {
+        .meta-line {
             display: flex;
             align-items: center;
             gap: 6px;
-            font-size: 9px;
-            font-weight: 700;
-            color: rgba(255, 255, 255, 0.5);
-            letter-spacing: 0.5px;
+            font-size: 8px;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 1px;
             text-transform: uppercase;
         }
 
-        .dot {
-            width: 6px;
-            height: 6px;
-            background: #32D74B;
+        .alive-dot {
+            width: 5px;
+            height: 5px;
+            background: var(--accent-color);
             border-radius: 50%;
-            box-shadow: 0 0 10px #32D74B;
-            animation: breathe 2s infinite;
+            box-shadow: 0 0 10px var(--accent-color);
         }
 
-        @keyframes breathe {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.1); }
-        }
-
-        .master-name {
+        .name-label {
             color: #fff;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 900;
             letter-spacing: -0.2px;
             text-transform: uppercase;
         }
 
-        /* Кнопка связи */
-        .btn-connect {
-            background: var(--stihl-orange);
-            height: 42px;
-            padding: 0 18px;
-            border-radius: 12px;
+        /* Кнопка "Лайм" */
+        .btn-action {
+            background: var(--accent-color);
+            height: 46px;
+            padding: 0 22px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             text-decoration: none;
-            border: none;
-            box-shadow: 0 8px 15px rgba(255, 102, 0, 0.2);
-            transition: 0.2s;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 20px rgba(223, 255, 17, 0.2);
         }
 
-        .btn-connect:active {
-            transform: scale(0.96);
-            filter: brightness(1.1);
+        /* Эффект при нажатии */
+        .btn-action:active {
+            transform: scale(0.92);
         }
 
-        .btn-text {
-            color: #fff;
-            font-size: 12px;
-            font-weight: 800;
+        .btn-label {
+            color: #000;
+            font-size: 11px;
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.5px;
         }
 
-        /* Иконка звонка */
-        .icon-phone {
+        .phone-svg {
             width: 14px;
             height: 14px;
-            fill: #fff;
+            fill: #000;
         }
 
-        /* Подпись снизу (локация) */
-        .geo-label {
-            position: absolute;
-            bottom: -18px;
-            left: 10px;
-            font-size: 8px;
-            color: #999;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
     </style>
 </head>
 <body>
 
-    <header class="header-monolith">
-        <div class="master-info">
-            <div class="status-line">
-                <div class="dot"></div>
-                <span>На связи • Крым</span>
+    <header class="glass-header">
+        <div class="info-unit">
+            <div class="meta-line">
+                <div class="alive-dot"></div>
+                <span>На связи • Симферополь</span>
             </div>
-            <span class="master-name">Даниил Глухов</span>
+            <span class="name-label">Даниил Глухов</span>
         </div>
 
-        <a href="tel:+79785552114" class="btn-connect">
-            <svg class="icon-phone" viewBox="0 0 24 24">
+        <a href="tel:+79785552114" class="btn-action">
+            <svg class="phone-svg" viewBox="0 0 24 24">
                 <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1v3.5c0 .55-.45 1-1 1C10.74 21 3 13.26 3 3.5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
             </svg>
-            <span class="btn-text">Вызвать</span>
+            <span class="btn-label">Связаться</span>
         </a>
-
-        <div class="geo-label">Симферополь и область</div>
     </header>
-
-    <div style="padding-top: 130px; padding-inline: 20px;">
-        <h1 style="font-size: 34px; font-weight: 900; line-height: 0.95; letter-spacing: -1.5px; color: #000;">
-            Расчистка <br>
-            <span style="color: var(--stihl-orange);">участков</span>
-        </h1>
-        <p style="margin-top: 20px; font-size: 16px; color: #666; line-height: 1.4; font-weight: 400; max-width: 280px;">
-            Профессиональная подготовка территории к строительству и ландшафту.
-        </p>
-    </div>
 
 </body>
 </html>

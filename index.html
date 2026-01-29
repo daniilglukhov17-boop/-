@@ -160,27 +160,26 @@
         </header>
     </div>
 <style>
-    /* HIGH-CONTRAST OUTDOOR PREMIUM */
+    /* HERO-БЛОК: ADAPTIVE PREMIUM */
     .hero-clean {
-        margin-top: 110px;
-        padding: 0 24px;
+        margin-top: 110px; /* Отступ под обсидиановую шапку */
+        padding: 0 20px 40px 20px;
         background: #FFFFFF;
     }
 
-    /* Маленький технический номер услуги */
     .service-no {
-        font-size: 10px;
-        font-weight: 900;
-        letter-spacing: 3px;
+        font-size: 9px;
+        font-weight: 950;
+        letter-spacing: 4px;
         color: #000;
-        margin-bottom: 20px;
+        opacity: 0.25;
+        margin-bottom: 24px;
         display: block;
     }
 
     .hero-h1 {
-        /* Умеренный размер, чтобы не рвало экран */
-        font-size: 32px;
-        line-height: 1.0;
+        font-size: clamp(28px, 9vw, 38px);
+        line-height: 0.95;
         font-weight: 900;
         color: #000;
         text-transform: uppercase;
@@ -188,122 +187,188 @@
         margin-bottom: 30px;
     }
 
-    /* Тонкий акцент */
     .hero-h1 span {
         display: block;
         font-weight: 400;
-        font-size: 24px;
+        font-size: 0.7em;
         letter-spacing: 0;
-        margin-top: 5px;
+        color: #555;
+        margin-top: 4px;
     }
 
-    /* Блок преимуществ: без рамок, только линии */
-    .benefit-row {
+    /* ПРЕИМУЩЕСТВА С ТОНКИМИ ЛИНИЯМИ */
+    .benefit-item {
         display: flex;
-        align-items: flex-start;
-        gap: 15px;
-        margin-bottom: 20px;
-        padding-top: 15px;
-        border-top: 1px solid #EEE;
+        gap: 16px;
+        padding: 20px 0;
+        border-top: 1px solid #F0F0F0;
     }
 
-    .benefit-marker {
+    .benefit-mark {
         width: 12px;
         height: 12px;
         background: var(--lime);
-        margin-top: 4px;
-        flex-shrink: 0;
+        border-radius: 2px;
+        margin-top: 3px;
+        box-shadow: 0 0 10px rgba(223, 255, 17, 0.4);
     }
 
-    .benefit-content strong {
+    .benefit-text strong {
         display: block;
         font-size: 14px;
         font-weight: 900;
         text-transform: uppercase;
-        color: #000;
+        margin-bottom: 4px;
     }
 
-    .benefit-content p {
+    .benefit-text p {
         font-size: 13px;
-        color: #666;
-        line-height: 1.3;
+        color: #777;
+        line-height: 1.4;
     }
 
-    /* КНОПКА СВЯЗИ: ЧИСТЫЙ ФУНКЦИОНАЛ */
-    .sticky-contact {
+    /* --- КНОПКИ: ТОП МУПЕР ПУПЕР --- */
+    .btn-container {
         margin-top: 40px;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 12px;
     }
 
-    .btn-max-black {
+    /* КНОПКА MAX — ФЛАГМАН */
+    .btn-max-top {
+        position: relative;
+        height: 72px;
         background: #000;
-        color: #FFF;
-        height: 60px;
+        border-radius: 24px;
         display: flex;
         align-items: center;
         justify-content: center;
         text-decoration: none;
-        font-size: 12px;
+        transition: all 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        
+        /* Внешний объем */
+        box-shadow: 
+            0 15px 35px rgba(0,0,0,0.2),
+            inset 0 1px 1px rgba(255,255,255,0.15);
+    }
+
+    .btn-max-top:active {
+        transform: scale(0.96) translateY(3px);
+        /* Эффект глубокого вжатия в корпус */
+        box-shadow: 
+            0 4px 10px rgba(0,0,0,0.1),
+            inset 0 8px 20px rgba(0,0,0,0.8);
+    }
+
+    .btn-max-top span {
+        color: #FFF;
+        font-size: 14px;
         font-weight: 900;
         text-transform: uppercase;
         letter-spacing: 2px;
-        border-radius: 4px; /* Почти острые углы — стиль "техно" */
+        z-index: 2;
     }
 
-    .other-links {
+    /* Лаймовый индикатор (как на премиум тачках) */
+    .btn-max-top::after {
+        content: '';
+        position: absolute;
+        right: 25px;
+        width: 6px;
+        height: 6px;
+        background: var(--lime);
+        border-radius: 50%;
+        box-shadow: 0 0 15px var(--lime);
+        animation: led-glow 1.5s infinite alternate;
+    }
+
+    @keyframes led-glow {
+        from { opacity: 0.4; transform: scale(0.8); }
+        to { opacity: 1; transform: scale(1.1); }
+    }
+
+    /* ВТОРОСТЕПЕННЫЕ КНОПКИ (TG / VK) */
+    .sub-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 10px;
+        gap: 12px;
     }
 
-    .btn-outline {
-        height: 50px;
-        border: 2px solid #000;
+    .btn-sub-top {
+        height: 60px;
+        background: #FFFFFF;
+        border-radius: 22px;
+        border: 1px solid #EBEBEB;
         display: flex;
         align-items: center;
         justify-content: center;
         text-decoration: none;
         color: #000;
-        font-size: 10px;
+        font-size: 11px;
         font-weight: 900;
         text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+        transition: all 0.1s;
+    }
+
+    .btn-sub-top:active {
+        transform: scale(0.95);
+        background: #FAFAFA;
+        box-shadow: inset 2px 4px 10px rgba(0,0,0,0.06);
+        border-color: #DDD;
+    }
+
+    /* Маленькая точка-акцент для стиля */
+    .btn-sub-top::before {
+        content: '';
+        width: 4px;
+        height: 4px;
+        background: #000;
+        border-radius: 50%;
+        margin-right: 8px;
+        opacity: 0.2;
     }
 </style>
 
 <section class="hero-clean">
-    <span class="service-no">№ 0978-555</span>
+    <span class="service-no">MOD: 2026 / ID: 0978</span>
     
     <h1 class="hero-h1">
-        СПИЛ ДЕРЕВЬЕВ
+        Спил деревьев
         <span>И ПОЛНАЯ РАСЧИСТКА УЧАСТКОВ</span>
     </h1>
 
-    <div class="benefit-row">
-        <div class="benefit-marker"></div>
-        <div class="benefit-content">
-            <strong>За один рабочий день</strong>
-            <p>Сдаем объект идеально чистым под строительство или продажу.</p>
+    <div class="benefit-item">
+        <div class="benefit-mark"></div>
+        <div class="benefit-text">
+            <strong>За один день</strong>
+            <p>Сдаем идеально чистую территорию под ключ.</p>
         </div>
     </div>
 
-    <div class="benefit-row">
-        <div class="benefit-marker"></div>
-        <div class="benefit-content">
-            <strong>Свой парк техники</strong>
-            <p>Вывоз веток и мусора собственными самосвалами без переплат.</p>
+    <div class="benefit-item">
+        <div class="benefit-mark"></div>
+        <div class="benefit-text">
+            <strong>Оценка по фото</strong>
+            <p>Пришлите снимки в MAX и узнайте точную цену.</p>
         </div>
     </div>
 
-    <div class="sticky-contact">
+    <div class="btn-container">
         <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" 
-           class="btn-max-black" onclick="masterClick(event)">
-            Написать в MAX — Расчет по фото
+           class="btn-max-top" onclick="masterClick(event)">
+            <span>Написать в MAX</span>
         </a>
-        <div class="other-links">
-            <a href="https://t.me/daniil_glukhov17" class="btn-outline" onclick="masterClick(event)">Telegram</a>
-            <a href="https://vk.com/daniil_glukhov17" class="btn-outline" onclick="masterClick(event)">Вконтакте</a>
+
+        <div class="sub-grid">
+            <a href="https://t.me/daniil_glukhov17" class="btn-sub-top" onclick="masterClick(event)">
+                Telegram
+            </a>
+            <a href="https://vk.com/daniil_glukhov17" class="btn-sub-top" onclick="masterClick(event)">
+                Вконтакте
+            </a>
         </div>
     </div>
 </section>

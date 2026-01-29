@@ -6,44 +6,50 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --toning-dark: rgba(20, 20, 22, 0.85); /* Тонировка */
+            --obsidian: rgba(15, 15, 18, 0.88); /* Глубокая тонировка */
             --stihl-orange: #FF6600;
             --white: #FFFFFF;
+            --border: rgba(255, 255, 255, 0.12);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body { 
-            background: var(--white); /* Белый фон под шапкой */
+            background: var(--white); /* Идеально белый фон за шапкой */
             font-family: 'Inter', sans-serif;
-            min-height: 200vh; /* Чтобы проверить скролл и прозрачность */
+            min-height: 200vh;
         }
 
-        /* Тонированная шапка */
-        .header-toning {
+        /* Парящая тонированная шапка */
+        .header-wrap {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 70px;
-            background: var(--toning-dark);
-            backdrop-filter: blur(25px) saturate(180%);
-            -webkit-backdrop-filter: blur(25px) saturate(180%);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            top: 15px; /* Отступ сверху */
+            left: 12px;
+            right: 12px;
             z-index: 1000;
         }
 
-        /* Блок имени и статуса */
-        .user-block {
+        .obsidian-glass {
+            background: var(--obsidian);
+            backdrop-filter: blur(25px) saturate(160%);
+            -webkit-backdrop-filter: blur(25px) saturate(160%);
+            border-radius: 24px; /* Сильное скругление люкс-класса */
+            padding: 12px 18px;
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid var(--border);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
         }
 
-        .name-wrapper {
+        /* Инфо блок */
+        .info-side {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .name-row {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -57,118 +63,115 @@
             text-transform: uppercase;
         }
 
-        .status-pulse {
-            width: 7px;
-            height: 7px;
+        .online-dot {
+            width: 6px;
+            height: 6px;
             background: #32D74B;
             border-radius: 50%;
-            box-shadow: 0 0 10px #32D74B;
-            position: relative;
+            box-shadow: 0 0 12px #32D74B;
+            animation: breathe 2.5s infinite ease-in-out;
         }
 
-        .status-pulse::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: inherit;
-            border-radius: inherit;
-            animation: ripple 2s infinite;
+        @keyframes breathe {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
         }
 
-        @keyframes ripple {
-            0% { transform: scale(1); opacity: 0.6; }
-            100% { transform: scale(3); opacity: 0; }
-        }
-
-        .sub-label {
-            color: rgba(255, 255, 255, 0.5);
+        .tagline {
+            color: rgba(255, 255, 255, 0.45);
             font-size: 9px;
             font-weight: 600;
-            text-transform: uppercase;
             letter-spacing: 1px;
-            margin-top: 2px;
+            text-transform: uppercase;
         }
 
-        /* Кнопки управления */
-        .action-group {
+        /* Блок кнопок */
+        .btns-side {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
-        .nav-link {
+        .action-link {
             text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Стиль MAX */
-        .max-btn {
+        /* Кнопка MAX - эффект полированного металла */
+        .max-chip {
             background: var(--white);
             color: #000;
             font-size: 10px;
             font-weight: 900;
-            padding: 8px 14px;
-            border-radius: 8px;
-            letter-spacing: 0.5px;
+            padding: 9px 15px;
+            border-radius: 14px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        /* Иконка звонка */
-        .call-circle {
-            width: 42px;
-            height: 42px;
+        .max-chip:active { transform: scale(0.92); }
+
+        /* Компактный звонок в стиле STIHL */
+        .call-trigger {
+            width: 44px;
+            height: 44px;
             background: var(--stihl-orange);
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(255, 102, 0, 0.4);
+            border-radius: 16px;
+            box-shadow: 0 5px 15px rgba(255, 102, 0, 0.4);
         }
 
-        .icon-svg {
+        .call-trigger:active { transform: scale(0.9); }
+
+        .svg-icon {
             width: 20px;
             height: 20px;
             fill: var(--white);
         }
 
-        /* Иконка мессенджера (универсальная/ТГ) */
-        .msg-icon {
-            width: 38px;
-            height: 38px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        /* Мини-иконка мессенджера */
+        .mini-msg {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            border: 1px solid var(--border);
         }
 
     </style>
 </head>
 <body>
 
-    <header class="header-toning">
-        <div class="user-block">
-            <div class="name-wrapper">
-                <span class="name">Даниил Глухов</span>
-                <div class="status-pulse"></div>
+    <div class="header-wrap">
+        <header class="obsidian-glass">
+            <div class="info-side">
+                <div class="name-row">
+                    <span class="name">Даниил Глухов</span>
+                    <div class="online-dot"></div>
+                </div>
+                <span class="tagline">Premium Service</span>
             </div>
-            <span class="sub-label">Simferopol • Premium</span>
-        </div>
 
-        <div class="action-group">
-            <a href="https://t.me/daniil_glukhov17" class="nav-link msg-icon">
-                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
-            </a>
-            
-            <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="nav-link max-btn">MAX</a>
+            <div class="btns-side">
+                <a href="https://t.me/daniil_glukhov17" class="action-link mini-msg">
+                    <svg class="svg-icon" style="opacity: 0.7;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+                </a>
+                
+                <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="action-link max-chip">MAX</a>
 
-            <a href="tel:+79785552114" class="nav-link call-circle">
-                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1v3.5c0 .55-.45 1-1 1C10.74 21 3 13.26 3 3.5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-            </a>
-        </div>
-    </header>
+                <a href="tel:+79785552114" class="action-link call-trigger">
+                    <svg class="svg-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1v3.5c0 .55-.45 1-1 1C10.74 21 3 13.26 3 3.5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                </a>
+            </div>
+        </header>
+    </div>
 
-    <div style="padding-top: 100px; padding: 100px 20px;">
-        <h2 style="color: #1c1c1e; font-size: 24px; margin-bottom: 20px;">Премиальный сервис расчистки</h2>
-        <p style="color: #8e8e93; line-height: 1.6;">Здесь начнется твой основной контент. Благодаря тонированной шапке, белый фон снизу выглядит очень свежо и контрастно.</p>
+    <div style="padding: 120px 25px;">
+        <h1 style="font-size: 32px; color: #111; font-weight: 800; letter-spacing: -1px;">Расчистка участков</h1>
+        <p style="margin-top: 15px; color: #666; line-height: 1.6; font-size: 16px;">
+            Профессиональный подход к каждому дереву. Мы используем только топовое оборудование STIHL для достижения идеального результата.
+        </p>
     </div>
 
 </body>

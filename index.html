@@ -2,193 +2,141 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --lime: #E6FF00;
-            --obsidian-deep: #050505;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --obsidian: #050505;
+            --glass: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
-            background: var(--obsidian-deep);
+            background: #000;
             font-family: 'Inter', sans-serif;
             color: #fff;
-            overflow-x: hidden;
+            line-height: 1.2;
         }
 
-        /* PREMIUM HEADER */
-        .header-wrap {
+        /* КОМПАКТНАЯ ШАПКА */
+        .m-header {
             position: fixed;
-            top: 0; left: 0; width: 100%;
-            z-index: 1000;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            background: rgba(0, 0, 0, 0.5);
-            border-bottom: 1px solid var(--glass-border);
+            top: 0; width: 100%; z-index: 1000;
+            padding: 14px 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
-        .header-content {
-            padding: 16px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .m-brand { font-size: 10px; font-weight: 900; letter-spacing: 3px; opacity: 0.6; text-transform: uppercase; }
 
-        .brand {
-            font-size: 10px;
-            font-weight: 900;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        /* HERO SECTION */
-        .premium-hero {
+        /* HERO ПОД МОБИЛКУ */
+        .m-hero {
             position: relative;
             height: 100vh;
             width: 100%;
+            background: url('IMG_20260130_223057_886.jpg') center center / cover no-repeat;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
-            background: url('IMG_20260130_223057_886.jpg') center center / cover no-repeat;
+            justify-content: flex-end; /* Весь контент внизу под палец */
         }
 
-        .premium-hero::before {
+        .m-hero::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, 
-                rgba(5, 5, 5, 0.4) 0%, 
-                rgba(5, 5, 5, 0) 50%, 
-                rgba(5, 5, 5, 0.9) 100%);
+            background: linear-gradient(to bottom, 
+                rgba(0,0,0,0.2) 0%, 
+                rgba(0,0,0,0.5) 50%, 
+                rgba(0,0,0,0.95) 90%, 
+                #000 100%);
             z-index: 1;
         }
 
-        .content-layer {
+        .m-content {
             position: relative;
             z-index: 2;
-            padding: 0 24px 50px;
+            padding: 0 20px 30px; /* Нижний отступ для безопасности */
         }
 
-        /* OFFER TAG */
-        .offer-badge {
+        /* ОФФЕР */
+        .m-badge {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 6px 12px;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 100px;
+            gap: 6px;
+            padding: 5px 10px;
+            background: rgba(230, 255, 0, 0.1);
+            border: 1px solid rgba(230, 255, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .m-badge span { font-size: 9px; font-weight: 900; color: var(--lime); text-transform: uppercase; letter-spacing: 1px; }
+
+        .m-title {
+            font-size: 40px;
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 0.85;
+            text-transform: uppercase;
             margin-bottom: 20px;
         }
 
-        .badge-dot {
-            width: 5px; height: 5px;
-            background: var(--lime);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--lime);
-        }
-
-        .badge-text {
-            font-size: 9px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--lime);
-        }
-
-        /* MAIN HEADLINE */
-        .headline {
-            font-size: 46px;
-            font-weight: 900;
-            line-height: 0.85;
-            letter-spacing: -2.5px;
-            text-transform: uppercase;
-            margin-bottom: 25px;
-        }
-
-        .headline span {
-            display: block;
-            font-size: 18px;
-            font-weight: 400;
-            letter-spacing: -0.5px;
+        .m-subtitle {
+            font-size: 16px;
             color: rgba(255, 255, 255, 0.5);
-            margin-top: 12px;
-            text-transform: none;
+            margin-bottom: 25px;
+            font-weight: 400;
+            max-width: 90%;
         }
 
-        /* KEY BENEFITS (Glass cards) */
-        .benefit-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 35px;
-        }
-
-        .b-card {
-            padding: 16px;
+        /* КАРТОЧКИ УСЛУГ */
+        .m-benefit {
             background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
-        .b-icon {
-            font-size: 20px;
-            opacity: 0.9;
-        }
+        .m-benefit b { font-size: 12px; font-weight: 900; text-transform: uppercase; }
 
-        .b-info h3 {
-            font-size: 13px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .b-info p {
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.4);
-            margin-top: 2px;
-        }
-
-        /* ACTION BUTTONS */
-        .cta-main {
-            height: 75px;
+        /* КНОПКИ ПОД БОЛЬШОЙ ПАЛЕЦ */
+        .m-btn-max {
+            height: 72px;
             background: var(--lime);
-            border-radius: 24px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
             text-decoration: none;
             color: #000;
-            box-shadow: 0 20px 40px rgba(230, 255, 0, 0.2);
-            transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 15px;
+            box-shadow: 0 10px 30px rgba(230, 255, 0, 0.2);
         }
 
-        .cta-main:active { transform: scale(0.96); }
+        .m-btn-max b { font-size: 16px; font-weight: 900; text-transform: uppercase; }
 
-        .cta-text { display: flex; flex-direction: column; }
-        .cta-text b { font-size: 16px; font-weight: 900; text-transform: uppercase; }
-        .cta-text span { font-size: 9px; font-weight: 700; opacity: 0.7; text-transform: uppercase; }
-
-        .cta-secondary {
-            margin-top: 12px;
-            display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+        .m-socials {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
         }
 
-        .btn-sub {
-            height: 60px;
+        .m-btn-sub {
+            height: 56px;
             background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -197,69 +145,50 @@
             font-size: 11px;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
+
+        .m-btn-max:active, .m-btn-sub:active { transform: scale(0.97); opacity: 0.9; }
+
     </style>
 </head>
 <body>
 
-    <header class="header-wrap">
-        <div class="header-content">
-            <div class="brand">Arborist Premium</div>
-            <div class="badge-dot"></div>
-        </div>
+    <header class="m-header">
+        <div class="m-brand">Premium Arborist</div>
+        <div style="width: 8px; height: 8px; background: var(--lime); border-radius: 50%; box-shadow: 0 0 10px var(--lime);"></div>
     </header>
 
-    <section class="premium-hero">
-        <div class="content-layer">
+    <section class="m-hero">
+        <div class="m-content">
             
-            <div class="offer-badge">
-                <div class="badge-dot"></div>
-                <div class="badge-text">Simferopol • Online Now</div>
+            <div class="m-badge">
+                <span>● Simferopol Online</span>
             </div>
 
-            <h1 class="headline">
-                ПРОФЕССИОНАЛЬНЫЙ<br>АРБОРИЗМ
-                <span>Превращаем запущенные участки в идеальное пространство для жизни</span>
-            </h1>
+            <h1 class="m-title">БЕЗУПРЕЧНЫЙ<br>УЧАСТОК</h1>
+            <p class="m-subtitle">Профессиональный спил и расчистка за 1 день с гарантией безопасности.</p>
 
-            <div class="benefit-grid">
-                <div class="b-card">
-                    <span class="b-icon">⚡</span>
-                    <div class="b-info">
-                        <h3>Оценка по фото</h3>
-                        <p>Точная стоимость за 5 минут в мессенджере</p>
-                    </div>
-                </div>
-                <div class="b-card">
-                    <span class="b-icon">🏗️</span>
-                    <div class="b-info">
-                        <h3>Своя спецтехника</h3>
-                        <p>Работаем без посредников и лишних переплат</p>
-                    </div>
-                </div>
+            <div class="m-benefit">
+                <span style="font-size: 18px;">📸</span>
+                <b>Оценка по фото за 5 мин</b>
             </div>
 
-            <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="cta-main" onclick="masterClick(event)">
-                <img src="https://img.icons8.com/ios-filled/50/000000/m.png" width="24" alt="MAX">
-                <div class="cta-text">
-                    <b>Написать в MAX</b>
-                    <span>Получить расчет стоимости</span>
-                </div>
+            <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="m-btn-max" onclick="haptic(event)">
+                <img src="https://img.icons8.com/ios-filled/50/000000/m.png" width="22" alt="M">
+                <b>Написать в MAX</b>
             </a>
 
-            <div class="cta-secondary">
-                <a href="https://t.me/daniil_glukhov17" class="btn-sub" onclick="masterClick(event)">Telegram</a>
-                <a href="https://vk.com/daniil_glukhov17" class="btn-sub" onclick="masterClick(event)">Вконтакте</a>
+            <div class="m-socials">
+                <a href="https://t.me/daniil_glukhov17" class="m-btn-sub" onclick="haptic(event)">Telegram</a>
+                <a href="https://vk.com/daniil_glukhov17" class="m-btn-sub" onclick="haptic(event)">Вконтакте</a>
             </div>
 
         </div>
     </section>
 
     <script>
-        function masterClick(e) {
-            if (navigator.vibrate) navigator.vibrate(25);
-            // Твой аудио-контекст здесь (оставил для чистоты кода)
+        function haptic(e) {
+            if (navigator.vibrate) navigator.vibrate(20); // Короткий премиальный клик
         }
     </script>
 </body>

@@ -441,274 +441,169 @@
     }
 </script>
 <style>
-    :root {
-        --lime: #DFFF11;
-    }
-
-    /* ИСПРАВЛЕННЫЙ HERO-БЛОК */
-    .hero-clean {
-        /* Убираем margin-top и используем padding, чтобы не было нахлеста */
-        padding: 120px 24px 40px; 
+    /* БЛОК ПОРТФОЛИО */
+    .portfolio-horizontal {
+        padding: 20px 24px 60px;
         background: #FFFFFF;
         font-family: 'Inter', sans-serif;
-        display: block;
+    }
+
+    .portfolio-header {
+        margin-bottom: 20px;
+    }
+
+    .portfolio-header h2 {
+        font-size: 22px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: -1px;
+        margin: 0;
+        color: #000;
+    }
+
+    /* КОНТЕЙНЕР СЛАЙДЕРА (СООТНОШЕНИЕ 4:3) */
+    .h-compare-container {
         position: relative;
-        /* Гарантируем, что блок не будет слипаться с другими */
-        overflow: hidden; 
+        width: 100%;
+        aspect-ratio: 4 / 3; /* То самое идеальное соотношение */
+        border-radius: 24px;
+        overflow: hidden;
+        background: #F0F0F0;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        touch-action: pan-y;
     }
 
-    /* Чтобы точно ничего не залезло под шапку, добавим этот фикс */
-    @media (max-width: 768px) {
-        .hero-clean {
-            padding-top: 100px; /* Подстрой под высоту своей шапки */
-        }
+    .h-after, .h-before {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background-size: cover;
+        background-position: center;
     }
 
-    .service-no {
-        font-size: 10px;
-        font-weight: 900;
-        letter-spacing: 3px;
-        color: #000;
-        margin-bottom: 20px;
-        display: block;
-        opacity: 0.3;
+    /* ФОТО: Замени на свои ссылки */
+    .h-after { 
+        background-image: url('https://placehold.co/800x600/000000/FFFFFF?text=ПОСЛЕ'); 
+    }
+    .h-before { 
+        background-image: url('https://placehold.co/800x600/666666/FFFFFF?text=ДО'); 
+        width: 50%; 
+        border-right: 2px solid var(--lime);
     }
 
-    .hero-h1 {
-        font-size: 32px;
-        line-height: 1.0;
-        font-weight: 900;
-        color: #000;
-        text-transform: uppercase;
-        letter-spacing: -1.5px;
-        margin-bottom: 30px;
-    }
-
-    .hero-h1 span {
-        display: block;
-        font-weight: 400;
-        font-size: 24px;
-        letter-spacing: 0;
-        margin-top: 5px;
-        color: #444;
-    }
-
-    /* ПРЕИМУЩЕСТВА */
-    .benefit-row {
-        display: flex;
-        align-items: flex-start;
-        gap: 15px;
-        margin-bottom: 20px;
-        padding-top: 15px;
-        border-top: 1px solid #EEE;
-    }
-
-    .benefit-marker {
-        width: 12px;
-        height: 12px;
+    /* ПОЛЗУНОК */
+    .h-handle {
+        position: absolute;
+        top: 0; bottom: 0;
+        left: 50%;
+        width: 2px;
         background: var(--lime);
-        margin-top: 4px;
-        flex-shrink: 0;
+        z-index: 10;
+        pointer-events: none;
     }
 
-    .benefit-content strong {
-        display: block;
-        font-size: 14px;
+    .h-handle-btn {
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 44px; height: 44px;
+        background: #000;
+        border: 2px solid var(--lime);
+        border-radius: 12px;
+        display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    }
+
+    .h-handle-btn::before {
+        content: '↔';
+        color: var(--lime);
+        font-weight: 900;
+        font-size: 18px;
+    }
+
+    /* МЕТКИ */
+    .h-tag {
+        position: absolute;
+        bottom: 15px;
+        padding: 4px 10px;
+        background: rgba(0,0,0,0.6);
+        backdrop-filter: blur(4px);
+        color: #FFF;
+        font-size: 8px;
         font-weight: 900;
         text-transform: uppercase;
-        color: #000;
+        border-radius: 5px;
     }
+    .tag-do { left: 15px; }
+    .tag-posle { right: 15px; }
 
-    .benefit-content p {
+    /* ОПИСАНИЕ ОБЪЕКТА */
+    .object-desc {
+        margin-top: 15px;
         font-size: 13px;
         color: #666;
         line-height: 1.4;
     }
-
-    /* КОНТЕЙНЕР КНОПОК */
-    .sticky-contact {
-        margin-top: 35px;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    /* ВЫДЕЛЕННАЯ ПЛАШКА: ОЦЕНКА ПО ФОТО */
-    .speed-tag {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 6px;
-        padding: 8px 14px;
-        background: linear-gradient(90deg, rgba(223, 255, 17, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
-        border-radius: 12px;
-        border-left: 3px solid var(--lime);
-        width: fit-content;
-    }
-
-    .speed-tag span {
-        font-size: 11px;
-        font-weight: 950;
-        text-transform: uppercase;
-        letter-spacing: 1px;
+    .object-desc strong {
         color: #000;
+        display: block;
+        margin-bottom: 4px;
     }
-
-    .speed-tag i {
-        width: 18px;
-        height: 18px;
-        background: #000;
-        border-radius: 6px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 0 10px rgba(223, 255, 17, 0.3);
-    }
-
-    /* Анимация тикающих часов */
-    .speed-tag i::after {
-        content: '';
-        width: 7px;
-        height: 7px;
-        border: 1.5px solid var(--lime);
-        border-radius: 50%;
-        border-top-color: transparent;
-        animation: spin-watch 1.5s linear infinite;
-    }
-
-    @keyframes spin-watch { to { transform: rotate(360deg); } }
-
-    /* КНОПКИ: ОБЩИЙ СТИЛЬ */
-    .btn-super {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-        transition: all 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
-
-    /* КНОПКА MAX (ФЛАГМАН С НЕОНОМ) */
-    .btn-max-top {
-        background: linear-gradient(180deg, #121212 0%, #000000 100%);
-        height: 72px;
-        border-radius: 24px;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-        border: 1px solid rgba(255,255,255,0.05);
-        flex-direction: column;
-        gap: 2px;
-    }
-
-    .max-content {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .max-logo-neon {
-        width: 24px;
-        height: 24px;
-        filter: drop-shadow(0 0 8px var(--lime)) drop-shadow(0 0 2px var(--lime));
-    }
-
-    .btn-text {
-        color: #FFF;
-        font-size: 13px;
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-    }
-
-    .online-status {
-        font-size: 7px;
-        font-weight: 900;
-        color: var(--lime);
-        text-transform: uppercase;
-        letter-spacing: 3px;
-        opacity: 0.8;
-        margin-left: 36px;
-    }
-
-    /* КНОПКИ TG / VK */
-    .sub-links-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-    }
-
-    .btn-secondary-top {
-        height: 60px;
-        background: #FFFFFF;
-        border-radius: 20px;
-        border: 1px solid #EAEAEA;
-        color: #000;
-        font-size: 11px;
-        font-weight: 950;
-        text-transform: uppercase;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.03);
-        gap: 10px;
-    }
-
-    /* ЭФФЕКТ НАЖАТИЯ */
-    .btn-super:active {
-        transform: scale(0.96) translateY(4px);
-        box-shadow: inset 0 8px 20px rgba(0,0,0,0.7);
-    }
-
-    .m-icon { width: 22px; height: 22px; object-fit: contain; }
 </style>
 
-<section class="hero-clean">
-    <span class="service-no">№ 0978-555</span>
-    
-    <h1 class="hero-h1">
-        СПИЛ ДЕРЕВЬЕВ
-        <span>И ПОЛНАЯ РАСЧИСТКА УЧАСТКОВ</span>
-    </h1>
+<section class="portfolio-horizontal">
+    <div class="portfolio-header">
+        <h2>Масштаб работ</h2>
+    </div>
 
-    <div class="benefit-row">
-        <div class="benefit-marker"></div>
-        <div class="benefit-content">
-            <strong>За один рабочий день</strong>
-            <p>Сдаем объект идеально чистым под строительство или продажу.</p>
+    <div class="h-compare-container" id="h-slider">
+        <div class="h-after"></div>
+        <div class="h-before" id="h-before-layer"></div>
+        
+        <div class="h-tag tag-do">До расчистки</div>
+        <div class="h-tag tag-posle">Результат</div>
+
+        <div class="h-handle" id="h-handle-bar">
+            <div class="h-handle-btn"></div>
         </div>
     </div>
 
-    <div class="benefit-row">
-        <div class="benefit-marker"></div>
-        <div class="benefit-content">
-            <strong>Свой парк техники</strong>
-            <p>Вывоз веток и мусора собственным транспортом без посредников.</p>
-        </div>
-    </div>
-
-    <div class="sticky-contact">
-        <div class="speed-tag">
-            <i></i>
-            <span>Оценка по фото за 5 мин</span>
-        </div>
-
-        <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" 
-           class="btn-super btn-max-top" onclick="hapticClick(event)">
-            <div class="max-content">
-                <img src="https://img.icons8.com/ios-filled/50/ffffff/m.png" class="max-logo-neon" alt="MAX">
-                <span class="btn-text">Написать в MAX</span>
-            </div>
-            <span class="online-status">● Сейчас ОНЛАЙН</span>
-        </a>
-
-        <div class="sub-links-row">
-            <a href="https://t.me/daniil_glukhov17" class="btn-super btn-secondary-top" onclick="hapticClick(event)">
-                <img src="https://img.icons8.com/ios-filled/50/000000/telegram-app.png" class="m-icon" alt="TG">
-                Telegram
-            </a>
-            <a href="https://vk.com/daniil_glukhov17" class="btn-super btn-secondary-top" onclick="hapticClick(event)">
-                <img src="https://img.icons8.com/ios-filled/50/000000/vkontakte.png" class="m-icon" alt="VK">
-                Вконтакте
-            </a>
-        </div>
+    <div class="object-desc">
+        <strong>Объект: Расчистка 12 соток</strong>
+        Срок выполнения: 8 часов. Вывезено 4 самосвала мусора и веток.
     </div>
 </section>
+
+<script>
+    const hContainer = document.getElementById('h-slider');
+    const hBefore = document.getElementById('h-before-layer');
+    const hHandle = document.getElementById('h-handle-bar');
+
+    const hMove = (e) => {
+        // Учитываем тач-события и мышь
+        let clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+        let rect = hContainer.getBoundingClientRect();
+        
+        // Расчет позиции в процентах
+        let x = clientX - rect.left;
+        let pos = (x / rect.width) * 100;
+
+        // Ограничители
+        if (pos < 0) pos = 0;
+        if (pos > 100) pos = 100;
+
+        hBefore.style.width = pos + '%';
+        hHandle.style.left = pos + '%';
+        
+        // Микро-вибрация на 50% (центр)
+        if (navigator.vibrate && Math.round(pos) === 50) {
+            navigator.vibrate(10);
+        }
+    };
+
+    hContainer.addEventListener('mousemove', hMove);
+    hContainer.addEventListener('touchmove', hMove, { passive: true });
+</script>
 
 </body>
 </html>

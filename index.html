@@ -442,27 +442,6 @@
     
     <div class="hero-footer"></div>
 </section>
-
-<script>
-    function hapticClick(e) {
-        if (navigator.vibrate) navigator.vibrate([30, 15, 30]);
-        
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        if (AudioContext) {
-            const ctx = new AudioContext();
-            const t = ctx.currentTime;
-            const osc = ctx.createOscillator();
-            const g = ctx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(125, t);
-            osc.frequency.exponentialRampToValueAtTime(0.01, t + 0.1);
-            g.gain.setValueAtTime(0.2, t);
-            g.gain.exponentialRampToValueAtTime(0.01, t + 0.1);
-            osc.connect(g); g.connect(ctx.destination);
-            osc.start(); osc.stop(t + 0.1);
-        }
-    }
-</script>
 <section class="p-wrap">
     <style>
         :root { --lime: #DFFF11; }
@@ -662,6 +641,7 @@
         const track = document.getElementById('pTrack');
         const bar = document.getElementById('pBar');
         let currentIdx = 0;
+        let lastVibratedIdx = 0;
 
         function pMove(e) {
             if (e.pointerType === 'mouse' && e.buttons !== 1) return;
@@ -674,6 +654,7 @@
             if (pos >= 0 && pos <= 100) {
                 before.style.width = pos + '%';
                 handle.style.left = pos + '%';
+                // Вибрация при движении ползунка (мягкая)
                 if (navigator.vibrate && Math.round(pos) % 4 === 0) navigator.vibrate(5);
             }
         }
@@ -682,12 +663,22 @@
             currentIdx = Math.max(0, Math.min(4, currentIdx + dir));
             const targetCard = document.getElementById('c' + (currentIdx + 1));
             targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            // Вибрация при клике на кнопку (четкая)
+            if (navigator.vibrate) navigator.vibrate(15);
         }
 
         track.addEventListener('scroll', () => {
             const index = Math.round(track.scrollLeft / track.querySelector('.p-card').offsetWidth);
-            currentIdx = index;
-            bar.style.left = (index * 20) + '%';
+            
+            // Если индекс изменился в процессе скролла
+            if (index !== lastVibratedIdx) {
+                lastVibratedIdx = index;
+                currentIdx = index;
+                bar.style.left = (index * 20) + '%';
+                
+                // Вибрация при фиксации на новой карточке
+                if (navigator.vibrate) navigator.vibrate(10);
+            }
         });
     </script>
 </section>

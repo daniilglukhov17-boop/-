@@ -468,6 +468,170 @@
         }
     }
 </script>
+<section class="p-wrap">
+    <style>
+        :root { --lime: #DFFF11; }
+        .p-wrap {
+            width: 100%; max-width: 500px; margin: 0 auto;
+            padding: 0 0 60px; background: #fff; font-family: 'Inter', sans-serif; overflow: hidden;
+        } 
+
+        .p-header { padding: 0 24px 20px; }
+        .p-header h2 {
+            font-size: 32px; font-weight: 900; text-transform: uppercase; letter-spacing: -1.5px; margin: 0;
+            display: inline-block; background: linear-gradient(90deg, #000 70%, var(--lime) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .p-header .neon-line {
+            height: 4px; width: 50px; background: var(--lime); border-radius: 10px;
+            box-shadow: 0 0 15px var(--lime); margin-top: 5px;
+        } 
+
+        .p-slider { position: relative; width: 100%; }
+        .p-track {
+            display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch; scrollbar-width: none; padding: 0 24px 25px; gap: 15px;
+        }
+        .p-track::-webkit-scrollbar { display: none; } 
+
+        .p-card { min-width: calc(100vw - 48px); max-width: 452px; scroll-snap-align: center; flex-shrink: 0; } 
+
+        .p-img-area {
+            position: relative; width: 100%; aspect-ratio: 4/3; border-radius: 26px;
+            overflow: hidden; background: #000; touch-action: pan-y; box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        } 
+
+        .p-img-full { position: absolute; inset: 0; background-size: cover; background-position: center; pointer-events: none; }
+        .p-img-before { z-index: 2; width: 50%; border-right: 2px solid var(--lime); }
+        
+        .p-handle { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: var(--lime); z-index: 10; transform: translateX(-50%); pointer-events: none; }
+        .p-knob {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 46px; height: 46px; background: #000; border: 2px solid var(--lime);
+            border-radius: 14px; display: flex; align-items: center; justify-content: center;
+        }
+        .p-knob::after { content: '↔'; color: var(--lime); font-weight: 900; } 
+
+        .p-footer { margin-top: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .p-footer strong { font-size: 16px; font-weight: 900; text-transform: uppercase; }
+        .p-footer span { font-family: monospace; font-size: 14px; font-weight: 900; color: #BBB; } 
+
+        .p-controls { margin: 10px 24px 0; display: flex; align-items: center; background: #f8f8f8; padding: 8px; border-radius: 20px; gap: 10px; } 
+
+        .p-btn {
+            width: 40px; height: 40px; background: #fff; border-radius: 15px;
+            display: flex; align-items: center; justify-content: center; font-weight: 900; cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); user-select: none;
+        }
+        .p-btn:active { background: var(--lime); } 
+
+        .p-bar-bg { flex: 1; height: 6px; background: #eee; border-radius: 10px; position: relative; overflow: hidden; }
+        .p-bar-fill { position: absolute; height: 100%; width: 20%; background: #000; border-radius: 10px; transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1); } 
+
+        .p-live { position: absolute; top: 20px; right: 20px; background: var(--lime); color: #000; padding: 5px 12px; border-radius: 10px; font-size: 10px; font-weight: 900; z-index: 5; }
+    </style> 
+
+    <div class="p-header">
+        <h2>Портфолио</h2>
+        <div class="neon-line"></div>
+    </div> 
+
+    <div class="p-slider">
+        <div class="p-track" id="portTrack">
+            <div class="p-card" id="pc1">
+                <div class="p-img-area" onpointermove="portImgMove(event)">
+                    <div class="p-img-full" style="background-image: url('1_ПОСЛЕ.jpg');"></div>
+                    <div class="p-img-full p-img-before" style="background-image: url('1_ДО.jpg');"></div>
+                    <div class="p-handle"><div class="p-knob"></div></div>
+                </div>
+                <div class="p-footer"><strong>Удаление деревьев</strong><span>01/05</span></div>
+            </div> 
+
+            <div class="p-card" id="pc2">
+                <div class="p-img-area" onpointermove="portImgMove(event)">
+                    <div class="p-img-full" style="background-image: url('2_ПОСЛЕ.jpg');"></div>
+                    <div class="p-img-full p-img-before" style="background-image: url('2_ДО.jpg');"></div>
+                    <div class="p-handle"><div class="p-knob"></div></div>
+                </div>
+                <div class="p-footer"><strong>Расчистка участка</strong><span>02/05</span></div>
+            </div> 
+
+            <div class="p-card" id="pc3">
+                <div class="p-img-area" onpointermove="portImgMove(event)">
+                    <div class="p-img-full" style="background-image: url('3_ПОСЛЕ.jpg');"></div>
+                    <div class="p-img-full p-img-before" style="background-image: url('3_ДО.jpg');"></div>
+                    <div class="p-handle"><div class="p-knob"></div></div>
+                </div>
+                <div class="p-footer"><strong>Обрезка веток</strong><span>03/05</span></div>
+            </div> 
+
+            <div class="p-card" id="pc4">
+                <div class="p-img-area" onpointermove="portImgMove(event)">
+                    <div class="p-img-full" style="background-image: url('4_ПОСЛЕ.jpg');"></div>
+                    <div class="p-img-full p-img-before" style="background-image: url('4_ДО.jpg');"></div>
+                    <div class="p-handle"><div class="p-knob"></div></div>
+                </div>
+                <div class="p-footer"><strong>Корчевание пней</strong><span>04/05</span></div>
+            </div> 
+
+            <div class="p-card" id="pc5">
+                <div class="p-img-area">
+                    <div class="p-live">LIVE PROCESS</div>
+                    <div class="p-img-full" style="background-image: url('LIVE_ФОТО.jpg');"></div>
+                </div>
+                <div class="p-footer"><strong>Наша работа</strong><span>05/05</span></div>
+            </div>
+        </div>
+    </div> 
+
+    <div class="p-controls">
+        <div class="p-btn" onclick="portBtnGo(-1)">‹</div>
+        <div class="p-bar-bg"><div class="p-bar-fill" id="portBarFill"></div></div>
+        <div class="p-btn" onclick="portBtnGo(1)">›</div>
+    </div> 
+
+    <script>
+        const pTrk = document.getElementById('portTrack');
+        const pBF = document.getElementById('portBarFill');
+        let pCurIdx = 0;
+        let pLastVibIdx = 0; 
+
+        // Изолированная функция движения шторки
+        function portImgMove(e) {
+            if (e.pointerType === 'mouse' && e.buttons !== 1) return;
+            const b = e.currentTarget;
+            const bef = b.querySelector('.p-img-before');
+            const hnd = b.querySelector('.p-handle');
+            const r = b.getBoundingClientRect();
+            let x = e.clientX - r.left;
+            let p = (x / r.width) * 100;
+            if (p >= 0 && p <= 100) {
+                bef.style.width = p + '%';
+                hnd.style.left = p + '%';
+                if (navigator.vibrate && Math.round(p) % 4 === 0) navigator.vibrate(5);
+            }
+        } 
+
+        // Изолированная функция кнопок
+        function portBtnGo(d) {
+            pCurIdx = Math.max(0, Math.min(4, pCurIdx + d));
+            const target = document.getElementById('pc' + (pCurIdx + 1));
+            target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            if (navigator.vibrate) navigator.vibrate(15);
+        } 
+
+        // Изолированный скролл
+        pTrk.addEventListener('scroll', () => {
+            const idx = Math.round(pTrk.scrollLeft / pTrk.querySelector('.p-card').offsetWidth);
+            if (idx !== pLastVibIdx) {
+                pLastVibIdx = idx;
+                pCurIdx = idx;
+                pBF.style.left = (idx * 20) + '%';
+                if (navigator.vibrate) navigator.vibrate(10);
+            }
+        });
+    </script>
+</section>
 
 </body>
 </html>

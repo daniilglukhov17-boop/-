@@ -47,4 +47,132 @@
 
         /* ЛОГО И СТАТУС */
         .header { display: flex; justify-content: space-between; align-items: flex-start; }
-        .brand { font-family: 'Oswald'; font-size: 20px; letter-spacing: 2
+        .brand { font-family: 'Oswald'; font-size: 20px; letter-spacing: 2px; text-transform: uppercase; }
+        .coord { font-size: 9px; text-align: right; opacity: 0.5; line-height: 1.2; font-weight: 600; }
+
+        /* ТЕКСТОВЫЙ БЛОК */
+        .main-content { position: relative; z-index: 5; margin-top: -40px; }
+        
+        .tag-line { 
+            font-size: 10px; 
+            font-weight: 900; 
+            text-transform: uppercase; 
+            letter-spacing: 5px; 
+            margin-bottom: 10px; 
+            color: var(--dark);
+        }
+
+        .main-title {
+            font-family: 'Oswald';
+            font-size: clamp(54px, 18vw, 90px);
+            line-height: 0.82;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            margin-bottom: 30px;
+        }
+
+        .description {
+            font-size: 14px;
+            line-height: 1.5;
+            max-width: 260px;
+            border-left: 3px solid var(--lime);
+            padding-left: 15px;
+            font-weight: 400;
+        }
+
+        /* КНОПКА (НИЗ) */
+        .footer { width: 100%; }
+        .cta-btn {
+            width: 100%;
+            height: 80px;
+            background: var(--dark);
+            color: #fff;
+            border-radius: 4px; /* Острые углы — это брутально */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            text-decoration: none;
+            font-weight: 900;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .cta-btn span { color: var(--lime); font-size: 24px; }
+
+        /* КНОПКИ СВЯЗИ */
+        .side-dock {
+            position: fixed;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .circle {
+            width: 50px;
+            height: 50px;
+            background: var(--glass);
+            border: 1px solid rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            border-radius: 2px; /* Почти квадратные — тактильнее */
+        }
+        .circle img { width: 20px; filter: grayscale(1); }
+        .circle.max { border: 2px solid var(--lime); }
+        .circle.max img { filter: none; }
+        .circle:active { background: var(--lime); transform: scale(0.9); }
+
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <div class="header">
+            <div class="brand">Premium<br>Arborist</div>
+            <div class="coord">44.9521° N<br>34.1024° E<br>CRIMEA 2026</div>
+        </div>
+
+        <div class="main-content">
+            <div class="tag-line">Under Control</div>
+            <h1 class="main-title">ПОРЯДОК<br>ПОД КЛЮЧ</h1>
+            <p class="description">
+                Удаляем деревья любой сложности. <b>Расчистка, дробление и вывоз.</b> Фиксируем цену до начала работ.
+            </p>
+        </div>
+
+        <div class="footer">
+            <a href="#" class="cta-btn" onclick="haptic()">
+                Расчет стоимости <span>→</span>
+            </a>
+        </div>
+
+        <div class="side-dock">
+            <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="circle max" onclick="haptic()">
+                <img src="https://img.icons8.com/material-rounded/48/000000/m.png" alt="M">
+            </a>
+            <a href="https://t.me/daniil_glukhov17" class="circle" onclick="haptic()">
+                <img src="https://img.icons8.com/material-rounded/48/000000/telegram-app.png" alt="TG">
+            </a>
+            <a href="https://vk.com/daniil_glukhov17" class="circle" onclick="haptic()">
+                <img src="https://img.icons8.com/material-rounded/48/000000/vkontakte.png" alt="VK">
+            </a>
+            <a href="tel:+79785552114" class="circle" style="background: var(--lime); border: none;" onclick="haptic()">
+                <img src="https://img.icons8.com/material-rounded/48/000000/phone.png" alt="Call">
+            </a>
+        </div>
+    </section>
+
+    <script>
+        function haptic() {
+            if (navigator.vibrate) navigator.vibrate(40);
+        }
+    </script>
+</body>
+</html>

@@ -6,16 +6,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --lime: #DFFF11; 
-            /* Насыщенный цвет для неона */
-            --max-neon-solid: #DFFF11;
+            /* Тот самый голубой из MAX */
+            --max-blue: #00D1FF;
+            --max-glow: rgba(0, 209, 255, 0.6);
+            --panel-bg: #0A0A0B;
         } 
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; } 
 
         body { background: #FFFFFF; font-family: 'Inter', sans-serif; min-height: 200vh; } 
 
-        /* Скрытие/появление шапки */
+        /* Контейнер шапки */
         .header-container {
             position: fixed;
             top: 25px; left: 14px; right: 14px;
@@ -27,6 +28,7 @@
 
         .header-hidden { transform: translateY(-130%); opacity: 0; }
 
+        /* ОСНОВНАЯ ПАНЕЛЬ С НЕОНОВОЙ ОБВОДКОЙ */
         .obsidian-panel {
             background: linear-gradient(165deg, #18181B 0%, #000000 100%);
             border-radius: 26px;
@@ -34,9 +36,14 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
             position: relative;
+            
+            /* Неоновая рамка блока */
+            border: 1.5px solid var(--max-blue);
+            box-shadow: 
+                0 0 15px rgba(0, 209, 255, 0.4), /* Внешний ореол */
+                inset 0 0 10px rgba(0, 209, 255, 0.2), /* Внутренний мягкий свет */
+                0 25px 50px rgba(0, 0, 0, 0.5);
         } 
 
         .text-stack { display: flex; flex-direction: column; gap: 1px; } 
@@ -52,15 +59,14 @@
             margin-bottom: 2px;
         } 
 
-        /* СТАТИЧНОЕ СВЕЧЕНИЕ "КАК В MAX" */
+        /* СВЕЧЕНИЕ ТЕКСТА КАК В MAX (ГОЛУБОЙ) */
         .status-line span {
-            color: var(--max-neon-solid);
-            /* Четырехуровневый drop-shadow для максимальной плотности света */
+            color: var(--max-blue);
+            /* Плотный неоновый фильтр */
             filter: 
-                drop-shadow(0 0 1px var(--max-neon-solid))
-                drop-shadow(0 0 3px var(--max-neon-solid))
-                drop-shadow(0 0 7px var(--max-neon-solid))
-                drop-shadow(0 0 12px rgba(223, 255, 17, 0.6));
+                drop-shadow(0 0 1px var(--max-blue))
+                drop-shadow(0 0 4px var(--max-blue))
+                drop-shadow(0 0 10px var(--max-glow));
             -webkit-font-smoothing: antialiased;
         }
 
@@ -72,16 +78,15 @@
 
         .glow-dot {
             width: 6px; height: 6px;
-            background: var(--lime);
+            background: var(--max-blue);
             border-radius: 50%;
-            /* Точка тоже светится статично и ярко */
-            filter: drop-shadow(0 0 5px var(--lime)) drop-shadow(0 0 10px var(--lime));
+            filter: drop-shadow(0 0 5px var(--max-blue));
         } 
 
         .soft-wave {
             position: absolute;
             width: 100%; height: 100%;
-            border: 1px solid var(--lime);
+            border: 1px solid var(--max-blue);
             border-radius: 50%;
             animation: wave-out 3s infinite linear;
         } 
@@ -99,8 +104,9 @@
             text-transform: uppercase;
         } 
 
+        /* КНОПКА В ТОМ ЖЕ ЦВЕТЕ */
         .indented-btn {
-            background: var(--lime);
+            background: var(--max-blue);
             height: 50px;
             padding: 0 24px;
             border-radius: 20px;
@@ -110,6 +116,7 @@
             text-decoration: none;
             border: none;
             box-shadow: 
+                0 0 15px rgba(0, 209, 255, 0.3),
                 inset 4px 4px 8px rgba(0, 0, 0, 0.2), 
                 inset -3px -3px 6px rgba(255, 255, 255, 0.4);
             transition: 0.1s;
@@ -149,7 +156,6 @@
     </div> 
 
     <script>
-        // Звук и вибрация
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); 
         function handleInteraction(e) {
             if (navigator.vibrate) navigator.vibrate(30); 
@@ -162,7 +168,6 @@
             osc.start(); osc.stop(t + 0.1);
         }
 
-        // Скролл-логика
         let lastScrollY = window.scrollY;
         const header = document.getElementById('mainHeader');
         window.addEventListener('scroll', () => {

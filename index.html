@@ -463,80 +463,107 @@
         }
     }
 </script>
-<section class="premium-portfolio">
+<section class="tech-portfolio">
     <style>
         :root { --lime: #DFFF11; }
 
-        .premium-portfolio {
+        .tech-portfolio {
             width: 100%;
             max-width: 500px;
-            padding: 50px 0;
+            padding: 60px 0;
             background: #FFFFFF;
             font-family: 'Inter', sans-serif;
+            overflow: hidden;
         }
 
-        /* ЧИСТЫЙ ПРЕМИАЛЬНЫЙ ЗАГОЛОВОК */
-        .portfolio-title-wrap {
+        /* ТЕХНО-ЗАГОЛОВОК */
+        .portfolio-label {
             padding: 0 24px;
-            margin-bottom: 35px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
         }
 
-        .portfolio-title-wrap h2 {
-            font-size: 42px;
-            font-weight: 950;
+        .label-line {
+            width: 40px;
+            height: 3px;
+            background: var(--lime);
+            display: inline-block;
+        }
+
+        .portfolio-label h2 {
+            font-size: 32px;
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: -2px;
-            line-height: 0.8;
+            letter-spacing: -1px;
             color: #000;
+            margin: 0;
         }
 
-        .portfolio-title-wrap h2::after {
-            content: '.';
-            color: var(--lime);
-        }
-
-        .portfolio-title-wrap p {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
+        .case-count {
+            font-family: monospace;
+            font-size: 14px;
             font-weight: 700;
             color: #BBB;
-            margin-top: 10px;
         }
 
-        /* КАРУСЕЛЬ */
-        .cards-container {
+        /* СТОРИЗ-НАВИГАЦИЯ */
+        .tech-nav {
             display: flex;
-            gap: 15px;
+            gap: 4px;
+            padding: 0 24px;
+            margin-bottom: 25px;
+        }
+
+        .nav-bar {
+            height: 2px;
+            flex: 1;
+            background: #F0F0F0;
+            position: relative;
+        }
+
+        .nav-fill {
+            position: absolute;
+            top: 0; left: 0; height: 100%;
+            width: 0%;
+            background: #000;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-bar.active .nav-fill { width: 100%; }
+
+        /* КАРУСЕЛЬ */
+        .work-stream {
+            display: flex;
+            gap: 14px;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
-            padding: 0 24px 40px;
+            padding: 0 24px 30px;
             scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
         }
-        .cards-container::-webkit-scrollbar { display: none; }
+        .work-stream::-webkit-scrollbar { display: none; }
 
-        .portfolio-card {
+        .work-node {
             min-width: 88vw;
             max-width: 420px;
             scroll-snap-align: center;
-            position: relative;
         }
 
-        /* РАМКА 4:3 */
-        .compare-stage {
+        /* ФРЕЙМ 4:3 */
+        .viewport-4-3 {
             position: relative;
             width: 100%;
             aspect-ratio: 4 / 3;
-            border-radius: 30px;
+            border-radius: 24px; /* Чуть строже скругление */
             overflow: hidden;
             background: #000;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-            /* Убираем конфликты скролла */
-            touch-action: pan-y; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            touch-action: pan-y;
         }
 
-        .img-layer {
+        .img-data {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover;
@@ -544,175 +571,157 @@
             pointer-events: none;
         }
 
-        .img-before-overlay {
+        .img-before-data {
             z-index: 2;
             width: 50%;
-            border-right: 2px solid var(--lime);
+            border-right: 1.5px solid var(--lime);
         }
 
-        /* ПОЛЗУНОК */
-        .slider-bar {
+        /* ТЕХНО-ПОЛЗУНОК */
+        .aim-line {
             position: absolute;
             top: 0; bottom: 0; left: 50%;
-            width: 2px; background: var(--lime);
-            z-index: 10; transform: translateX(-50%);
+            width: 1.5px;
+            background: var(--lime);
+            z-index: 10;
+            transform: translateX(-50%);
             pointer-events: none;
         }
 
-        .slider-knob {
+        .aim-target {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 50px; height: 50px;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(10px);
-            border: 2px solid var(--lime);
-            border-radius: 16px;
+            width: 44px; height: 44px;
+            background: #000;
+            border: 1px solid var(--lime);
+            border-radius: 50%; /* Круглый матовый элемент */
             display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 20px rgba(223, 255, 17, 0.2);
         }
 
-        .slider-knob::after {
-            content: '↔'; color: var(--lime); font-weight: 900; font-size: 18px;
+        .aim-target::after {
+            content: '';
+            width: 6px; height: 6px;
+            background: var(--lime);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--lime);
         }
 
-        /* ПОДПИСЬ */
-        .card-info {
-            margin-top: 18px;
+        /* ИНФО */
+        .node-footer {
+            margin-top: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 5px;
         }
 
-        .card-info .text h3 {
-            font-size: 17px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: -0.5px;
-        }
+        .node-footer h3 { font-size: 14px; font-weight: 900; text-transform: uppercase; color: #000; }
+        .node-tag { font-size: 10px; font-weight: 800; color: #BBB; letter-spacing: 1px; }
 
-        .card-info .tag {
-            font-size: 10px;
-            font-weight: 900;
-            background: #000;
-            color: #FFF;
-            padding: 4px 10px;
-            border-radius: 7px;
-        }
-
-        /* НАВИГАЦИЯ (ЛИНИЯ ПРОГРЕССА) */
-        .progress-nav {
-            display: flex;
-            gap: 6px;
-            padding: 0 24px;
-            margin-top: -10px;
-        }
-
-        .progress-bar {
-            height: 3px;
-            flex: 1;
-            background: #EEE;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-fill {
+        /* LIVE PROCESS МЕТКА */
+        .live-scanner {
             position: absolute;
-            top: 0; left: 0; height: 100%;
-            width: 0%;
-            background: #000;
-            transition: width 0.3s ease;
+            top: 15px; left: 15px;
+            display: flex; align-items: center; gap: 8px;
+            background: rgba(0,0,0,0.6);
+            padding: 5px 10px;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
         }
+        .scanner-dot {
+            width: 6px; height: 6px;
+            background: #FF3B30;
+            border-radius: 50%;
+            animation: blink 1s infinite;
+        }
+        .live-scanner span { color: #FFF; font-size: 9px; font-weight: 900; text-transform: uppercase; }
+        @keyframes blink { 50% { opacity: 0; } }
     </style>
 
-    <div class="portfolio-title-wrap">
-        <p>Наши работы</p>
+    <div class="portfolio-label">
+        <span class="label-line"></span>
         <h2>Портфолио</h2>
+        <span class="case-count">[05]</span>
     </div>
 
-    <div class="cards-container" id="pCards">
-        
-        <div class="portfolio-card">
-            <div class="compare-stage" onpointermove="doCompare(event)">
-                <div class="img-layer" style="background-image: url('ФОТО_1_ПОСЛЕ.jpg');"></div>
-                <div class="img-layer img-before-overlay" style="background-image: url('ФОТО_1_ДО.jpg');"></div>
-                <div class="slider-bar"><div class="slider-knob"></div></div>
-            </div>
-            <div class="card-info">
-                <div class="text"><h3>Спил в Симферополе</h3></div>
-                <div class="tag">01</div>
-            </div>
-        </div>
-
-        <div class="portfolio-card">
-            <div class="compare-stage" onpointermove="doCompare(event)">
-                <div class="img-layer" style="background-image: url('ФОТО_2_ПОСЛЕ.jpg');"></div>
-                <div class="img-layer img-before-overlay" style="background-image: url('ФОТО_2_ДО.jpg');"></div>
-                <div class="slider-bar"><div class="slider-knob"></div></div>
-            </div>
-            <div class="card-info">
-                <div class="text"><h3>Расчистка участка</h3></div>
-                <div class="tag">02</div>
-            </div>
-        </div>
-
-        <div class="portfolio-card">
-            <div class="compare-stage">
-                <div class="img-layer" style="background-image: url('ФОТО_ПРОЦЕССА.jpg');"></div>
-                <div style="position:absolute; top:20px; right:20px; background:var(--lime); color:#000; padding:5px 12px; border-radius:10px; font-size:10px; font-weight:900; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">LIVE PROCESS</div>
-            </div>
-            <div class="card-info">
-                <div class="text"><h3>Работаем сейчас</h3></div>
-                <div class="tag">05</div>
-            </div>
-        </div>
-
+    <div class="tech-nav" id="techNav">
+        <div class="nav-bar active"><div class="nav-fill"></div></div>
+        <div class="nav-bar"><div class="nav-fill"></div></div>
+        <div class="nav-bar"><div class="nav-fill"></div></div>
+        <div class="nav-bar"><div class="nav-fill"></div></div>
+        <div class="nav-bar"><div class="nav-fill"></div></div>
     </div>
 
-    <div class="progress-nav" id="pNav">
-        <div class="progress-bar"><div class="progress-fill" style="width: 20%"></div></div>
-        <div class="progress-bar"><div class="progress-fill"></div></div>
-        <div class="progress-bar"><div class="progress-fill"></div></div>
-        <div class="progress-bar"><div class="progress-fill"></div></div>
-        <div class="progress-bar"><div class="progress-fill"></div></div>
+    <div class="work-stream" id="workStream">
+        <div class="work-node">
+            <div class="viewport-4-3" onpointermove="techCompare(event)">
+                <div class="img-data" style="background-image: url('ФОТО_1_ПОСЛЕ.jpg');"></div>
+                <div class="img-data img-before-data" style="background-image: url('ФОТО_1_ДО.jpg');"></div>
+                <div class="aim-line"><div class="aim-target"></div></div>
+            </div>
+            <div class="node-footer">
+                <h3>Спил дерева • Симферополь</h3>
+                <span class="node-tag">CASE_01</span>
+            </div>
+        </div>
+
+        <div class="work-node">
+            <div class="viewport-4-3" onpointermove="techCompare(event)">
+                <div class="img-data" style="background-image: url('ФОТО_2_ПОСЛЕ.jpg');"></div>
+                <div class="img-data img-before-data" style="background-image: url('ФОТО_2_ДО.jpg');"></div>
+                <div class="aim-line"><div class="aim-target"></div></div>
+            </div>
+            <div class="node-footer">
+                <h3>Расчистка участка</h3>
+                <span class="node-tag">CASE_02</span>
+            </div>
+        </div>
+
+        <div class="work-node">
+            <div class="viewport-4-3">
+                <div class="img-data" style="background-image: url('ФОТО_ПРОЦЕССА.jpg');"></div>
+                <div class="live-scanner">
+                    <div class="scanner-dot"></div>
+                    <span>Live Process</span>
+                </div>
+            </div>
+            <div class="node-footer">
+                <h3>Работа на объекте</h3>
+                <span class="node-tag">CASE_05</span>
+            </div>
+        </div>
     </div>
 
     <script>
-        function doCompare(e) {
-            // Чтобы не мешать скроллу, срабатывает только при зажатии или таче
+        function techCompare(e) {
             if (e.pointerType === 'mouse' && e.buttons !== 1) return;
             
-            const stage = e.currentTarget;
-            const before = stage.querySelector('.img-before-overlay');
-            const bar = stage.querySelector('.slider-bar');
+            const frame = e.currentTarget;
+            const overlay = frame.querySelector('.img-before-data');
+            const line = frame.querySelector('.aim-line');
             
-            const rect = stage.getBoundingClientRect();
+            const rect = frame.getBoundingClientRect();
             let x = e.clientX - rect.left;
             let pos = (x / rect.width) * 100;
 
             if (pos >= 0 && pos <= 100) {
-                before.style.width = pos + '%';
-                bar.style.left = pos + '%';
+                overlay.style.width = pos + '%';
+                line.style.left = pos + '%';
                 
-                // Haptic Feedback
-                if (navigator.vibrate && Math.round(pos) % 3 === 0) {
+                if (navigator.vibrate && Math.round(pos) % 2 === 0) {
                     navigator.vibrate(5);
                 }
             }
         }
 
-        // Индикатор прогресса
-        const container = document.getElementById('pCards');
-        const fills = document.querySelectorAll('.progress-fill');
+        const stream = document.getElementById('workStream');
+        const bars = document.querySelectorAll('.nav-bar');
 
-        container.addEventListener('scroll', () => {
-            const scrollPos = container.scrollLeft;
-            const cardWidth = container.offsetWidth;
-            const index = Math.round(scrollPos / cardWidth);
-            
-            fills.forEach((fill, i) => {
-                fill.style.width = i === index ? '100%' : '0%';
+        stream.addEventListener('scroll', () => {
+            const index = Math.round(stream.scrollLeft / (stream.offsetWidth * 0.8));
+            bars.forEach((bar, i) => {
+                bar.classList.toggle('active', i === index);
             });
         });
     </script>

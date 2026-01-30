@@ -463,144 +463,228 @@
         }
     }
 </script>
-<section class="portfolio-container">
+<section class="portfolio-section">
     <style>
-        .portfolio-container {
+        .portfolio-section {
             width: 100%;
-            padding: 20px 24px 40px;
+            max-width: 500px;
+            padding: 30px 0 50px; /* Отступы сверху/снизу */
             background: #FFFFFF;
-            font-family: 'Inter', sans-serif;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            overflow: hidden;
         }
 
-        .portfolio-title {
-            font-size: 24px;
+        .portfolio-header {
+            padding: 0 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .portfolio-header h2 {
+            font-size: 26px;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
             color: #000;
-            line-height: 1;
         }
 
-        /* КОНТЕЙНЕР ДО/ПОСЛЕ 4:3 */
-        .work-slider {
+        /* КОНТЕЙНЕР ДЛЯ СКРОЛЛА */
+        .portfolio-carousel {
+            display: flex;
+            gap: 16px;
+            overflow-x: scroll;
+            padding: 0 24px 20px;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none; /* Скрываем скроллбар в Firefox */
+        }
+
+        .portfolio-carousel::-webkit-scrollbar { display: none; } /* Скрываем в Chrome */
+
+        /* КАРТОЧКА РАБОТЫ */
+        .work-card {
+            min-width: 85vw; /* Карточка почти на весь экран */
+            max-width: 400px;
+            scroll-snap-align: center;
+            position: relative;
+        }
+
+        .compare-box {
             position: relative;
             width: 100%;
             aspect-ratio: 4 / 3;
-            border-radius: 24px;
+            border-radius: 28px;
             overflow: hidden;
-            background: #111;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            touch-action: pan-y; /* Чтобы скролл страницы работал, а слайдер только по горизонту */
+            background: #f0f0f0;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            touch-action: pan-y;
         }
 
-        .img-wrap {
+        .img-layer {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
             background-size: cover;
             background-position: center;
+            pointer-events: none;
         }
 
-        /* ПОСЛЕ (Нижний слой) */
-        .img-after {
-            background-image: url('https://clck.ru/388888'); /* ТУТ ССЫЛКА НА ФОТО "ПОСЛЕ" */
-        }
-
-        /* ДО (Верхний слой) */
-        .img-before {
-            background-image: url('https://clck.ru/399999'); /* ТУТ ССЫЛКА НА ФОТО "ДО" */
-            width: 50%;
-            border-right: 3px solid var(--lime);
+        /* Специфические стили для слоев "ДО" */
+        .before-layer {
             z-index: 2;
+            width: 50%;
+            border-right: 2px solid var(--lime);
         }
 
         /* ПОЛЗУНОК */
-        .drag-line {
+        .handle-line {
             position: absolute;
-            top: 0; bottom: 0;
-            left: 50%;
-            width: 3px;
-            background: var(--lime);
-            z-index: 10;
+            top: 0; bottom: 0; left: 50%;
+            width: 2px; background: var(--lime);
+            z-index: 10; transform: translateX(-50%);
             pointer-events: none;
-            transform: translateX(-50%);
         }
 
-        .drag-handle {
+        .handle-circle {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 46px; height: 46px;
+            width: 40px; height: 40px;
             background: #000;
             border: 3px solid var(--lime);
-            border-radius: 14px;
+            border-radius: 12px;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 20px rgba(0,0,0,0.4);
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
         }
 
-        .drag-handle::after {
-            content: '↔';
-            color: var(--lime);
+        .handle-circle::after {
+            content: '↔'; color: var(--lime); font-weight: 900;
+        }
+
+        /* ПОДПИСЬ ПОД КАРТОЧКОЙ */
+        .work-info {
+            margin-top: 15px;
+            padding: 0 5px;
+        }
+
+        .work-info strong {
+            display: block;
+            font-size: 14px;
+            text-transform: uppercase;
             font-weight: 900;
-            font-size: 18px;
         }
 
-        .label-before, .label-after {
+        .work-info span {
+            font-size: 12px;
+            color: #777;
+        }
+
+        /* КАРТОЧКА ПРОЦЕССА (5-я) */
+        .process-card .compare-box { border: 3px solid #000; }
+        .live-tag {
             position: absolute;
-            bottom: 15px;
-            padding: 5px 10px;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(5px);
+            top: 15px; right: 15px;
+            background: #ff0000;
             color: #fff;
+            padding: 4px 10px;
+            border-radius: 6px;
             font-size: 10px;
             font-weight: 900;
-            text-transform: uppercase;
-            border-radius: 8px;
-            z-index: 5;
+            animation: pulse-live 1.5s infinite;
+        }
+
+        @keyframes pulse-live {
+            0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; }
         }
     </style>
 
-    <h2 class="portfolio-title">Результат работы</h2>
+    <div class="portfolio-header">
+        <h2>Портфолио</h2>
+        <div style="font-size: 10px; font-weight: 900; opacity: 0.3;">ЛИСТАЙТЕ ↔</div>
+    </div>
 
-    <div class="work-slider" id="compareSlider">
-        <div class="img-wrap img-after"></div>
-        <div class="img-wrap img-before" id="beforeLayer"></div>
+    <div class="portfolio-carousel">
         
-        <div class="drag-line" id="dragLine">
-            <div class="drag-handle"></div>
+        <div class="work-card">
+            <div class="compare-box" onmousemove="initCompare(event)" ontouchmove="initCompare(event)">
+                <div class="img-layer" style="background-image: url('ФОТО_1_ПОСЛЕ.jpg');"></div>
+                <div class="img-layer before-layer" style="background-image: url('ФОТО_1_ДО.jpg');"></div>
+                <div class="handle-line" style="left: 50%;"><div class="handle-circle"></div></div>
+            </div>
+            <div class="work-info">
+                <strong>Спил сложной сосны</strong>
+                <span>Удаление над крышей дома</span>
+            </div>
         </div>
 
-        <div class="label-before" style="left: 15px;">До</div>
-        <div class="label-after" style="right: 15px;">После</div>
+        <div class="work-card">
+            <div class="compare-box" onmousemove="initCompare(event)" ontouchmove="initCompare(event)">
+                <div class="img-layer" style="background-image: url('ФОТО_2_ПОСЛЕ.jpg');"></div>
+                <div class="img-layer before-layer" style="background-image: url('ФОТО_2_ДО.jpg');"></div>
+                <div class="handle-line" style="left: 50%;"><div class="handle-circle"></div></div>
+            </div>
+            <div class="work-info">
+                <strong>Расчистка участка</strong>
+                <span>6 соток за 8 часов</span>
+            </div>
+        </div>
+
+        <div class="work-card">
+            <div class="compare-box" onmousemove="initCompare(event)" ontouchmove="initCompare(event)">
+                <div class="img-layer" style="background-image: url('ФОТО_3_ПОСЛЕ.jpg');"></div>
+                <div class="img-layer before-layer" style="background-image: url('ФОТО_3_ДО.jpg');"></div>
+                <div class="handle-line" style="left: 50%;"><div class="handle-circle"></div></div>
+            </div>
+            <div class="work-info">
+                <strong>Обрезка сада</strong>
+                <span>Омоложение 12 деревьев</span>
+            </div>
+        </div>
+
+        <div class="work-card">
+            <div class="compare-box" onmousemove="initCompare(event)" ontouchmove="initCompare(event)">
+                <div class="img-layer" style="background-image: url('ФОТО_4_ПОСЛЕ.jpg');"></div>
+                <div class="img-layer before-layer" style="background-image: url('ФОТО_4_ДО.jpg');"></div>
+                <div class="handle-line" style="left: 50%;"><div class="handle-circle"></div></div>
+            </div>
+            <div class="work-info">
+                <strong>Удаление пней</strong>
+                <span>Дробление фрезой ниже уровня земли</span>
+            </div>
+        </div>
+
+        <div class="work-card process-card">
+            <div class="compare-box">
+                <div class="img-layer" style="background-image: url('ФОТО_ПРОЦЕССА.jpg');"></div>
+                <div class="live-tag">PROCESS</div>
+            </div>
+            <div class="work-info">
+                <strong>Как мы работаем</strong>
+                <span>Используем снаряжение и автовышку</span>
+            </div>
+        </div>
+
     </div>
 
     <script>
-        (function() {
-            const slider = document.getElementById('compareSlider');
-            const before = document.getElementById('beforeLayer');
-            const line = document.getElementById('dragLine');
+        function initCompare(e) {
+            const box = e.currentTarget;
+            const before = box.querySelector('.before-layer');
+            const line = box.querySelector('.handle-line');
+            
+            const rect = box.getBoundingClientRect();
+            const x = (e.type.includes('touch') ? e.touches[0].clientX : e.clientX) - rect.left;
+            
+            let pos = (x / rect.width) * 100;
+            if (pos < 0) pos = 0;
+            if (pos > 100) pos = 100;
 
-            const move = (e) => {
-                const rect = slider.getBoundingClientRect();
-                const x = (e.type.includes('touch') ? e.touches[0].clientX : e.clientX) - rect.left;
-                
-                let position = (x / rect.width) * 100;
-                if (position < 0) position = 0;
-                if (position > 100) position = 100;
-
-                before.style.width = position + '%';
-                line.style.left = position + '%';
-
-                // Если хочешь вибро при движении:
-                // if (navigator.vibrate) navigator.vibrate(5);
-            };
-
-            slider.addEventListener('mousemove', move);
-            slider.addEventListener('touchmove', move, { passive: true });
-        })();
+            before.style.width = pos + '%';
+            line.style.left = pos + '%';
+            
+            // Если есть твоя функция вибрации — можно добавить:
+            // if(navigator.vibrate) navigator.vibrate(2);
+        }
     </script>
 </section>
 

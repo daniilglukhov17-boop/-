@@ -7,14 +7,15 @@
     <style>
         :root {
             --lime: #DFFF11; 
-            /* Глубокий неоновый оттенок для подложки */
-            --max-neon: rgba(223, 255, 17, 0.9);
+            /* Насыщенный цвет для неона */
+            --max-neon-solid: #DFFF11;
         } 
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; } 
 
         body { background: #FFFFFF; font-family: 'Inter', sans-serif; min-height: 200vh; } 
 
+        /* Скрытие/появление шапки */
         .header-container {
             position: fixed;
             top: 25px; left: 14px; right: 14px;
@@ -51,29 +52,16 @@
             margin-bottom: 2px;
         } 
 
-        /* ЭФФЕКТ "БУКВА MAX": Интенсивное неоновое свечение */
+        /* СТАТИЧНОЕ СВЕЧЕНИЕ "КАК В MAX" */
         .status-line span {
-            color: var(--lime);
-            /* Используем drop-shadow для эффекта заливки светом */
-            filter: drop-shadow(0 0 2px var(--max-neon)) 
-                    drop-shadow(0 0 8px var(--max-neon));
-            animation: max-neon-throb 2.5s infinite ease-in-out;
-            will-change: filter, opacity;
-        }
-
-        @keyframes max-neon-throb {
-            0%, 100% {
-                opacity: 1;
-                filter: drop-shadow(0 0 2px var(--max-neon)) 
-                        drop-shadow(0 0 10px var(--max-neon))
-                        brightness(1.2);
-            }
-            50% {
-                opacity: 0.85;
-                filter: drop-shadow(0 0 1px var(--max-neon)) 
-                        drop-shadow(0 0 5px var(--max-neon))
-                        brightness(1);
-            }
+            color: var(--max-neon-solid);
+            /* Четырехуровневый drop-shadow для максимальной плотности света */
+            filter: 
+                drop-shadow(0 0 1px var(--max-neon-solid))
+                drop-shadow(0 0 3px var(--max-neon-solid))
+                drop-shadow(0 0 7px var(--max-neon-solid))
+                drop-shadow(0 0 12px rgba(223, 255, 17, 0.6));
+            -webkit-font-smoothing: antialiased;
         }
 
         .pulse-box {
@@ -86,13 +74,8 @@
             width: 6px; height: 6px;
             background: var(--lime);
             border-radius: 50%;
-            filter: drop-shadow(0 0 5px var(--lime));
-            animation: breathe 2.5s infinite ease-in-out;
-        } 
-
-        @keyframes breathe {
-            0%, 100% { opacity: 0.5; transform: scale(0.9); }
-            50% { opacity: 1; transform: scale(1.1); }
+            /* Точка тоже светится статично и ярко */
+            filter: drop-shadow(0 0 5px var(--lime)) drop-shadow(0 0 10px var(--lime));
         } 
 
         .soft-wave {
@@ -166,6 +149,7 @@
     </div> 
 
     <script>
+        // Звук и вибрация
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); 
         function handleInteraction(e) {
             if (navigator.vibrate) navigator.vibrate(30); 
@@ -178,6 +162,7 @@
             osc.start(); osc.stop(t + 0.1);
         }
 
+        // Скролл-логика
         let lastScrollY = window.scrollY;
         const header = document.getElementById('mainHeader');
         window.addEventListener('scroll', () => {

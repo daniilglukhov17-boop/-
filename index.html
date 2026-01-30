@@ -468,56 +468,89 @@
         .portfolio-section {
             width: 100%;
             max-width: 500px;
-            padding: 30px 0 50px; /* Отступы сверху/снизу */
+            padding: 40px 0;
             background: #FFFFFF;
-            overflow: hidden;
+            font-family: 'Inter', sans-serif;
         }
 
+        /* КРАСИВЫЙ ЗАГОЛОВОК */
         .portfolio-header {
             padding: 0 24px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: #000;
+            color: var(--lime);
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
         }
 
         .portfolio-header h2 {
-            font-size: 26px;
+            font-size: 34px;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: -1.5px;
+            line-height: 0.9;
             color: #000;
         }
 
-        /* КОНТЕЙНЕР ДЛЯ СКРОЛЛА */
-        .portfolio-carousel {
-            display: flex;
-            gap: 16px;
-            overflow-x: scroll;
-            padding: 0 24px 20px;
-            scroll-snap-type: x mandatory;
-            scrollbar-width: none; /* Скрываем скроллбар в Firefox */
+        .portfolio-header h2 span {
+            color: #EEE;
+            -webkit-text-stroke: 1px #000;
         }
 
-        .portfolio-carousel::-webkit-scrollbar { display: none; } /* Скрываем в Chrome */
+        /* КАРУСЕЛЬ */
+        .portfolio-carousel {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 0 24px 30px;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+        }
+        .portfolio-carousel::-webkit-scrollbar { display: none; }
 
-        /* КАРТОЧКА РАБОТЫ */
         .work-card {
-            min-width: 85vw; /* Карточка почти на весь экран */
-            max-width: 400px;
+            min-width: 88vw;
+            max-width: 420px;
             scroll-snap-align: center;
-            position: relative;
         }
 
         .compare-box {
             position: relative;
             width: 100%;
             aspect-ratio: 4 / 3;
-            border-radius: 28px;
+            border-radius: 32px;
             overflow: hidden;
-            background: #f0f0f0;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            background: #111;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
             touch-action: pan-y;
+        }
+
+        /* ПОДСКАЗКА (Анимированная рука) */
+        .drag-hint {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+        .hand-icon {
+            font-size: 40px;
+            animation: hand-move 2s infinite ease-in-out;
+        }
+        @keyframes hand-move {
+            0%, 100% { transform: translateX(-30px) opacity(0); }
+            50% { transform: translateX(30px) opacity(1); }
         }
 
         .img-layer {
@@ -529,14 +562,12 @@
             pointer-events: none;
         }
 
-        /* Специфические стили для слоев "ДО" */
         .before-layer {
             z-index: 2;
             width: 50%;
             border-right: 2px solid var(--lime);
         }
 
-        /* ПОЛЗУНОК */
         .handle-line {
             position: absolute;
             top: 0; bottom: 0; left: 50%;
@@ -549,131 +580,104 @@
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 40px; height: 40px;
-            background: #000;
-            border: 3px solid var(--lime);
-            border-radius: 12px;
+            width: 54px; height: 54px;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--lime);
+            border-radius: 18px;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 15px rgba(0,0,0,0.3);
         }
 
         .handle-circle::after {
-            content: '↔'; color: var(--lime); font-weight: 900;
+            content: '↔'; color: var(--lime); font-weight: 900; font-size: 20px;
         }
 
-        /* ПОДПИСЬ ПОД КАРТОЧКОЙ */
-        .work-info {
-            margin-top: 15px;
-            padding: 0 5px;
-        }
-
-        .work-info strong {
-            display: block;
-            font-size: 14px;
-            text-transform: uppercase;
-            font-weight: 900;
-        }
-
-        .work-info span {
-            font-size: 12px;
-            color: #777;
-        }
-
-        /* КАРТОЧКА ПРОЦЕССА (5-я) */
-        .process-card .compare-box { border: 3px solid #000; }
-        .live-tag {
+        /* МЕТКИ ДО/ПОСЛЕ */
+        .side-label {
             position: absolute;
-            top: 15px; right: 15px;
-            background: #ff0000;
-            color: #fff;
-            padding: 4px 10px;
-            border-radius: 6px;
+            top: 20px;
+            padding: 6px 14px;
+            border-radius: 12px;
             font-size: 10px;
             font-weight: 900;
-            animation: pulse-live 1.5s infinite;
+            text-transform: uppercase;
+            backdrop-filter: blur(10px);
+            z-index: 5;
+        }
+        .label-before { left: 20px; background: rgba(255,255,255,0.2); color: #FFF; }
+        .label-after { right: 20px; background: rgba(223, 255, 17, 0.2); color: var(--lime); }
+
+        .card-footer {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
         }
 
-        @keyframes pulse-live {
-            0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; }
-        }
+        .work-title { font-size: 16px; font-weight: 900; text-transform: uppercase; }
+        .work-num { font-size: 12px; font-weight: 900; opacity: 0.2; }
     </style>
 
     <div class="portfolio-header">
-        <h2>Портфолио</h2>
-        <div style="font-size: 10px; font-weight: 900; opacity: 0.3;">ЛИСТАЙТЕ ↔</div>
+        <div class="header-badge">Real Projects</div>
+        <h2>РЕЗУЛЬТАТЫ <span>РАБОТЫ</span></h2>
     </div>
 
-    <div class="portfolio-carousel">
+    <div class="portfolio-carousel" id="pCarousel">
         
         <div class="work-card">
-            <div class="compare-box" onmousemove="initCompare(event)" ontouchmove="initCompare(event)">
+            <div class="compare-box" onpointermove="handleWorkMove(event)" onpointerdown="hideHint(this)">
+                <div class="drag-hint"><div class="hand-icon">↔️</div></div>
                 <div class="img-layer" style="background-image: url('ФОТО_1_ПОСЛЕ.jpg');"></div>
-                <div class="img-layer before-layer" style="background-image: url('ФОТО_1_ДО.jpg');"></div>
-                <div class="handle-line" style="left: 50%;"><div class="handle-circle"></div></div>
+                <div class="img-layer before-layer"></div>
+                <div class="handle-line"><div class="handle-circle"></div></div>
+                <div class="side-label label-before">До</div>
+                <div class="side-label label-after">После</div>
             </div>
-            <div class="work-info">
-                <strong>Спил сложной сосны</strong>
-                <span>Удаление над крышей дома</span>
+            <div class="card-footer">
+                <span class="work-title">Сложный спил сосны</span>
+                <span class="work-num">01 / 05</span>
             </div>
         </div>
 
         <div class="work-card">
-            <div class="compare-box" onmousemove="initCompare(event)" ontouchmove="initCompare(event)">
+            <div class="compare-box" onpointermove="handleWorkMove(event)">
                 <div class="img-layer" style="background-image: url('ФОТО_2_ПОСЛЕ.jpg');"></div>
-                <div class="img-layer before-layer" style="background-image: url('ФОТО_2_ДО.jpg');"></div>
-                <div class="handle-line" style="left: 50%;"><div class="handle-circle"></div></div>
+                <div class="img-layer before-layer"></div>
+                <div class="handle-line"><div class="handle-circle"></div></div>
+                <div class="side-label label-before">До</div>
+                <div class="side-label label-after">После</div>
             </div>
-            <div class="work-info">
-                <strong>Расчистка участка</strong>
-                <span>6 соток за 8 часов</span>
-            </div>
-        </div>
-
-        <div class="work-card">
-            <div class="compare-box" onmousemove="initCompare(event)" ontouchmove="initCompare(event)">
-                <div class="img-layer" style="background-image: url('ФОТО_3_ПОСЛЕ.jpg');"></div>
-                <div class="img-layer before-layer" style="background-image: url('ФОТО_3_ДО.jpg');"></div>
-                <div class="handle-line" style="left: 50%;"><div class="handle-circle"></div></div>
-            </div>
-            <div class="work-info">
-                <strong>Обрезка сада</strong>
-                <span>Омоложение 12 деревьев</span>
+            <div class="card-footer">
+                <span class="work-title">Расчистка участка</span>
+                <span class="work-num">02 / 05</span>
             </div>
         </div>
 
         <div class="work-card">
-            <div class="compare-box" onmousemove="initCompare(event)" ontouchmove="initCompare(event)">
-                <div class="img-layer" style="background-image: url('ФОТО_4_ПОСЛЕ.jpg');"></div>
-                <div class="img-layer before-layer" style="background-image: url('ФОТО_4_ДО.jpg');"></div>
-                <div class="handle-line" style="left: 50%;"><div class="handle-circle"></div></div>
-            </div>
-            <div class="work-info">
-                <strong>Удаление пней</strong>
-                <span>Дробление фрезой ниже уровня земли</span>
-            </div>
-        </div>
-
-        <div class="work-card process-card">
             <div class="compare-box">
                 <div class="img-layer" style="background-image: url('ФОТО_ПРОЦЕССА.jpg');"></div>
-                <div class="live-tag">PROCESS</div>
+                <div style="position:absolute; top:20px; left:20px; background:red; color:#fff; padding:5px 10px; border-radius:8px; font-size:10px; font-weight:900;">LIVE PROCESS</div>
             </div>
-            <div class="work-info">
-                <strong>Как мы работаем</strong>
-                <span>Используем снаряжение и автовышку</span>
+            <div class="card-footer">
+                <span class="work-title">Наша команда в деле</span>
+                <span class="work-num">05 / 05</span>
             </div>
         </div>
 
     </div>
 
     <script>
-        function initCompare(e) {
+        function handleWorkMove(e) {
+            if (e.buttons !== 1 && e.pointerType === 'mouse') return;
+            
             const box = e.currentTarget;
             const before = box.querySelector('.before-layer');
             const line = box.querySelector('.handle-line');
             
             const rect = box.getBoundingClientRect();
-            const x = (e.type.includes('touch') ? e.touches[0].clientX : e.clientX) - rect.left;
+            let x = e.clientX - rect.left;
             
             let pos = (x / rect.width) * 100;
             if (pos < 0) pos = 0;
@@ -681,9 +685,19 @@
 
             before.style.width = pos + '%';
             line.style.left = pos + '%';
-            
-            // Если есть твоя функция вибрации — можно добавить:
-            // if(navigator.vibrate) navigator.vibrate(2);
+
+            // ВИБРАЦИЯ (Haptic)
+            if (navigator.vibrate) {
+                // Вибрируем короткими импульсами при прохождении каждых 2% пути
+                if (Math.round(pos) % 2 === 0) {
+                    navigator.vibrate(5);
+                }
+            }
+        }
+
+        function hideHint(box) {
+            const hint = box.querySelector('.drag-hint');
+            if (hint) hint.style.opacity = '0';
         }
     </script>
 </section>

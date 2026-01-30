@@ -7,7 +7,7 @@
     <style>
         :root {
             --lime: #DFFF11;
-            --panel-bg: #0A0A0B;
+            --max-glow: rgba(223, 255, 17, 0.5);
         } 
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; } 
@@ -26,7 +26,7 @@
 
         .header-hidden { transform: translateY(-130%); opacity: 0; }
 
-        /* ПАНЕЛЬ С НЕОНОВОЙ ОБВОДКОЙ ПОД MAX */
+        /* ПАНЕЛЬ С ГЛУБОКОЙ НЕОНОВОЙ ОБВОДКОЙ */
         .obsidian-panel {
             background: linear-gradient(180deg, #121212 0%, #000000 100%);
             border-radius: 26px;
@@ -36,11 +36,13 @@
             justify-content: space-between;
             position: relative;
             
-            /* Обводка как в MAX */
-            border: 1px solid rgba(223, 255, 17, 0.3);
+            /* Та самая неоновая обводка */
+            border: 1.5px solid var(--lime); 
             box-shadow: 
-                0 0 12px rgba(223, 255, 17, 0.2), /* Внешний неон */
-                0 15px 35px rgba(0, 0, 0, 0.3); /* Тень блока */
+                0 0 15px var(--max-glow),          /* Внешнее мягкое свечение */
+                0 0 5px var(--lime),               /* Яркий контур */
+                inset 0 0 8px rgba(223, 255, 17, 0.1), /* Внутренний отсвет */
+                0 20px 40px rgba(0, 0, 0, 0.4);    /* Тень для объема */
         } 
 
         .text-stack { display: flex; flex-direction: column; gap: 1px; } 
@@ -56,10 +58,10 @@
             margin-bottom: 2px;
         } 
 
-        /* ТОЧНОЕ СВЕЧЕНИЕ БУКВЫ MAX */
+        /* СВЕЧЕНИЕ ТЕКСТА (БЕЛОЕ ЯДРО + ЛАЙМ ОРЕОЛ) */
         .status-line span {
-            color: #FFF; /* Текст белый, как иконка 'M' */
-            filter: drop-shadow(0 0 8px var(--lime)); /* Свечение из твоего Hero */
+            color: #FFF;
+            filter: drop-shadow(0 0 8px var(--lime));
             -webkit-font-smoothing: antialiased;
         }
 
@@ -73,7 +75,7 @@
             width: 6px; height: 6px;
             background: var(--lime);
             border-radius: 50%;
-            filter: drop-shadow(0 0 8px var(--lime));
+            filter: drop-shadow(0 0 6px var(--lime));
         } 
 
         .soft-wave {
@@ -95,10 +97,9 @@
             font-weight: 900;
             letter-spacing: -0.2px;
             text-transform: uppercase;
-            opacity: 0.9;
         } 
 
-        /* КНОПКА ВЫЗВАТЬ В СТИЛЕ ЛАЙМ */
+        /* КНОПКА "ВЫЗВАТЬ" */
         .indented-btn {
             background: var(--lime);
             height: 50px;
@@ -110,17 +111,17 @@
             text-decoration: none;
             border: none;
             box-shadow: 
-                0 0 15px rgba(223, 255, 17, 0.2),
-                inset 4px 4px 8px rgba(0, 0, 0, 0.1);
-            transition: 0.1s;
+                0 0 10px rgba(223, 255, 17, 0.3),
+                inset 4px 4px 8px rgba(0, 0, 0, 0.15);
+            transition: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
         } 
 
         .indented-btn:active {
-            transform: scale(0.96) translateY(2px);
-            box-shadow: inset 0 8px 20px rgba(0,0,0,0.2);
+            transform: scale(0.95) translateY(2px);
+            box-shadow: inset 0 8px 20px rgba(0,0,0,0.3);
         } 
 
-        .btn-label { color: #000; font-size: 11px; font-weight: 950; text-transform: uppercase; letter-spacing: 1px; } 
+        .btn-label { color: #000; font-size: 11px; font-weight: 950; text-transform: uppercase; letter-spacing: 0.5px; } 
         .btn-icon { width: 16px; height: 16px; fill: #000; } 
     </style>
 </head>
@@ -149,7 +150,7 @@
     </div> 
 
     <script>
-        // Используем твою функцию hapticHeroClick для единства звука и вибрации
+        // Твоя фирменная функция клика
         function hapticHeroClick(e) {
             if (typeof navigator !== "undefined" && navigator.vibrate) {
                 navigator.vibrate([30, 15, 30]);
@@ -172,12 +173,12 @@
             }
         }
 
-        // Скролл-логика
+        // Логика скролла
         let lastScrollY = window.scrollY;
         const header = document.getElementById('mainHeader');
         window.addEventListener('scroll', () => {
             const currentScrollY = window.scrollY;
-            if (currentScrollY > lastScrollY && currentScrollY > 80) {
+            if (currentScrollY > lastScrollY && currentScrollY > 100) {
                 header.classList.add('header-hidden');
             } else if (currentScrollY < lastScrollY) {
                 header.classList.remove('header-hidden');

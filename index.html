@@ -5,17 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --lime: #DFFF11; } 
+        :root {
+            --lime: #DFFF11; 
+            --glass-bg: #0A0A0B;
+        } 
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; } 
 
         body { 
             background: #FFFFFF; 
             font-family: 'Inter', sans-serif; 
-            /* Важно: страница должна быть длинной, чтобы был скролл */
-            min-height: 2000px; 
+            min-height: 200vh; /* Добавил высоту, чтобы было куда скроллить для теста */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         } 
 
+        /* Основной контейнер шапки */
         .header-container {
             position: fixed;
             top: 25px;
@@ -24,13 +30,13 @@
             z-index: 10000;
             max-width: 500px;
             margin: 0 auto;
-            /* Плавность движения */
-            transition: transform 0.4s ease-in-out, opacity 0.3s;
+            /* ПЛАВНОСТЬ: отвечает за мягкое исчезновение */
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
         } 
 
-        /* Когда этот класс добавляется, шапка улетает вверх */
+        /* ЭТОТ КЛАСС БУДЕТ ДОБАВЛЯТЬСЯ ПРИ СКРОЛЛЕ ВНИЗ */
         .header-hidden {
-            transform: translateY(-120px);
+            transform: translateY(-120%); /* Уводит шапку выше экрана */
             opacity: 0;
         }
 
@@ -43,77 +49,160 @@
             justify-content: space-between;
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.22);
+            position: relative;
         } 
 
-        .name-carved {
-            color: #fff;
-            font-size: 14px;
-            font-weight: 900;
-            text-transform: uppercase;
-        } 
+        .text-stack { display: flex; flex-direction: column; gap: 1px; } 
 
         .status-line {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 8px;
-            font-weight: 900;
-            color: rgba(255, 255, 255, 0.9);
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
+            display: flex; align-items: center; gap: 10px; font-size: 8px; font-weight: 900;
+            color: rgba(255, 255, 255, 0.9); letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 2px;
+        } 
+
+        .pulse-box {
+            position: relative; width: 8px; height: 8px;
+            display: flex; align-items: center; justify-content: center;
         } 
 
         .glow-dot {
-            width: 6px; height: 6px;
-            background: var(--lime);
-            border-radius: 50%;
-            box-shadow: 0 0 12px var(--lime);
-            animation: breathe 2.5s infinite ease-in-out;
+            width: 6px; height: 6px; background: var(--lime); border-radius: 50%;
+            box-shadow: 0 0 12px var(--lime); animation: breathe 2.5s infinite ease-in-out;
         } 
 
         @keyframes breathe {
-            0%, 100% { opacity: 0.4; transform: scale(0.9); }
-            50% { opacity: 1; transform: scale(1.1); }
+            0%, 100% { opacity: 0.4; transform: scale(0.9); filter: blur(0.5px); }
+            50% { opacity: 1; transform: scale(1.1); filter: blur(0px); box-shadow: 0 0 20px var(--lime); }
+        } 
+
+        .soft-wave {
+            position: absolute; width: 100%; height: 100%;
+            border: 1px solid var(--lime); border-radius: 50%; animation: wave-out 3s infinite linear;
+        } 
+
+        @keyframes wave-out {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(4); opacity: 0; }
+        } 
+
+        .name-carved {
+            color: #fff; font-size: 14px; font-weight: 900; letter-spacing: -0.2px; text-transform: uppercase;
         } 
 
         .indented-btn {
-            background: var(--lime);
-            height: 50px;
-            padding: 0 24px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.3);
+            background: var(--lime); height: 50px; padding: 0 24px; border-radius: 20px;
+            display: flex; align-items: center; gap: 10px; text-decoration: none; border: none;
+            box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.3), inset -3px -3px 6px rgba(255, 255, 255, 0.4);
+            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
         } 
 
-        .btn-label { color: #000; font-size: 12px; font-weight: 950; text-transform: uppercase; }
+        .indented-btn:active { transform: translateY(2px) scale(0.97); } 
+        .btn-label { color: #000; font-size: 12px; font-weight: 950; text-transform: uppercase; } 
+        .btn-icon { width: 16px; height: 16px; fill: #000; } 
     </style>
 </head>
 <body> 
 
-    <div class="header-container" id="mainHeader">
+    <div class="header-container" id="smartHeader">
         <header class="obsidian-panel">
             <div class="text-stack">
                 <div class="status-line">
-                    <div class="glow-dot"></div>
-                    <span>На связи</span>
+                    <div class="pulse-box">
+                        <div class="glow-dot"></div>
+                        <div class="soft-wave"></div>
+                    </div>
+                    <span>На связи • Симферополь</span>
                 </div>
                 <div class="name-carved">Даниил Глухов</div>
             </div> 
-            <a href="tel:+79785552114" class="indented-btn">
+
+            <a href="tel:+79785552114" class="indented-btn" onclick="masterClick(event)">
+                <svg class="btn-icon" viewBox="0 0 24 24">
+                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1v3.5c0 .55-.45 1-1 1C10.74 21 3 13.26 3 3.5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
                 <span class="btn-label">Вызвать</span>
             </a>
         </header>
     </div> 
 
-    <div style="margin-top: 200px; padding: 20px; text-align: center; color: #ccc;">
-        <h2>Листай вниз 👇</h2>
-        <p>(Шапка спрячется)</p>
-        <div style="height: 1500px;"></div>
-        <h2>Теперь листай вверх 👆</h2>
-        <p>(Шапка появится)</p>
+    <div style="margin-top: 150px; color: #ccc; text-align: center; width: 100%;">
+        <p>Листай вниз, чтобы шапка спряталась</p>
+        <div style="height: 1000px;"></div>
+        <p>Листай вверх, чтобы она вернулась</p>
+        <div style="height: 500px;"></div>
     </div>
+
+    <script>
+        // ЛОГИКА СКРОЛЛА
+        const header = document.getElementById('smartHeader');
+        let lastScrollY = window.scrollY;
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+
+            // Если скроллим вниз и проехали больше 80px (чтобы не дергалась в самом верху)
+            if (currentScrollY > lastScrollY && currentScrollY > 80) {
+                header.classList.add('header-hidden');
+            } 
+            // Если скроллим вверх
+            else {
+                header.classList.remove('header-hidden');
+            }
+
+            lastScrollY = currentScrollY;
+        });
+
+        // ТВОЙ ОСТАЛЬНОЙ СКРИПТ (ЗВУК И ВИБРАЦИЯ)
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); 
+
+        function masterClick(e) {
+            if (navigator.vibrate) navigator.vibrate(25); 
+            const t = audioCtx.currentTime;
+            const lowOsc = audioCtx.createOscillator();
+            const lowGain = audioCtx.createGain();
+            lowOsc.type = 'sine'; lowOsc.frequency.setValueAtTime(90, t); 
+            lowOsc.frequency.exponentialRampToValueAtTime(0.01, t + 0.15);
+            lowGain.gain.setValueAtTime(0.7, t);
+            lowGain.gain.exponentialRampToValueAtTime(0.01, t + 0.15);
+            lowOsc.connect(lowGain); lowGain.connect(audioCtx.destination); 
+            lowOsc.start(); lowOsc.stop(t + 0.15);
+        }
+    </script>
+</body>
+</html>
+
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); 
+
+        function masterClick(e) {
+            if (navigator.vibrate) navigator.vibrate(25); 
+
+            const t = audioCtx.currentTime;
+            
+            const lowOsc = audioCtx.createOscillator();
+            const lowGain = audioCtx.createGain();
+            lowOsc.type = 'sine';
+            lowOsc.frequency.setValueAtTime(90, t); 
+            lowOsc.frequency.exponentialRampToValueAtTime(0.01, t + 0.15);
+            lowGain.gain.setValueAtTime(0.7, t);
+            lowGain.gain.exponentialRampToValueAtTime(0.01, t + 0.15);
+            lowOsc.connect(lowGain); lowGain.connect(audioCtx.destination); 
+
+            const midOsc = audioCtx.createOscillator();
+            const midGain = audioCtx.createGain();
+            midOsc.type = 'triangle'; 
+            midOsc.frequency.setValueAtTime(400, t);
+            midOsc.frequency.exponentialRampToValueAtTime(100, t + 0.05);
+            midGain.gain.setValueAtTime(0.15, t);
+            midGain.gain.exponentialRampToValueAtTime(0.01, t + 0.05);
+            midOsc.connect(midGain); midGain.connect(audioCtx.destination); 
+
+            lowOsc.start(); lowOsc.stop(t + 0.15);
+            midOsc.start(); midOsc.stop(t + 0.05);
+        }
+    </script>
+</body>
+</html>
+
 
     <script>
         const header = document.getElementById('mainHeader');

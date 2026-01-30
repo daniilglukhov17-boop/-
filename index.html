@@ -1,198 +1,237 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --lime: #DFFF11; 
-            --dark-bg: #000000;
-        } 
-
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; } 
-
-        body { 
-            background: var(--dark-bg); 
-            font-family: 'Inter', sans-serif; 
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-bottom: 40px;
-        } 
-
-        /* ТВОЙ ХЕДЕР */
-        .header-container {
-            position: fixed;
-            top: 25px;
-            left: 14px;
-            right: 14px;
-            z-index: 10000;
-            max-width: 500px;
-            margin: 0 auto;
-        } 
-
-        .obsidian-panel {
-            background: linear-gradient(165deg, #18181B 0%, #000000 100%);
-            border-radius: 26px;
-            padding: 8px 10px 8px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.22);
-        } 
-
-        .name-carved { color: #fff; font-size: 14px; font-weight: 900; text-transform: uppercase; } 
-        .status-line { display: flex; align-items: center; gap: 10px; font-size: 8px; font-weight: 900; color: rgba(255, 255, 255, 0.9); letter-spacing: 2.5px; text-transform: uppercase; }
-        .glow-dot { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; box-shadow: 0 0 12px var(--lime); }
-
-        .indented-btn {
-            background: var(--lime);
-            height: 50px;
-            padding: 0 24px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        /* НОВЫЙ HERO-БЛОК */
-        .hero-section {
-            width: calc(100% - 28px);
-            max-width: 500px;
-            margin-top: 100px;
-            background: #111;
-            border-radius: 32px;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 30px 24px;
-            min-height: 500px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-        }
-
-        .hero-image {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://images.unsplash.com/photo-1542360663-803067868840?q=80&w=1000&auto=format&fit=crop') center/cover no-repeat;
-            opacity: 0.4;
-            z-index: 1;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, transparent 0%, #111 90%);
-            z-index: 2;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 3;
-        }
-
-        .hero-title {
-            color: #fff;
-            font-size: 32px;
-            font-weight: 900;
-            text-transform: uppercase;
-            line-height: 0.9;
-            margin-bottom: 20px;
-        }
-
-        .hero-title span {
-            display: block;
-            font-size: 18px;
-            color: var(--lime);
-            margin-top: 5px;
-            letter-spacing: 1px;
-        }
-
-        .hero-btn-max {
-            background: var(--lime);
-            display: block;
-            padding: 20px;
-            border-radius: 20px;
-            text-decoration: none;
-            text-align: center;
-            margin-bottom: 12px;
-        }
-
-        .hero-btn-max b { color: #000; display: block; font-size: 14px; font-weight: 900; }
-        .hero-btn-max span { color: rgba(0,0,0,0.5); font-size: 9px; font-weight: 700; text-transform: uppercase; }
-
-        .hero-socials { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .social-item {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: #fff;
-            padding: 15px;
-            border-radius: 18px;
-            text-align: center;
-            text-decoration: none;
-            font-size: 11px;
-            font-weight: 900;
-            text-transform: uppercase;
-        }
-
-        .btn-icon { width: 16px; height: 16px; fill: #000; }
-    </style>
-</head>
 <body> 
 
     <div class="header-container">
         <header class="obsidian-panel">
             <div class="text-stack">
                 <div class="status-line">
-                    <div class="glow-dot"></div>
+                    <div class="pulse-box">
+                        <div class="glow-dot"></div>
+                        <div class="soft-wave"></div>
+                    </div>
                     <span>На связи • Крым</span>
                 </div>
                 <div class="name-carved">Даниил Глухов</div>
             </div> 
             <a href="tel:+79785552114" class="indented-btn" onclick="masterClick(event)">
                 <svg class="btn-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1v3.5c0 .55-.45 1-1 1C10.74 21 3 13.26 3 3.5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                <span class="btn-label">Вызвать</span>
             </a>
         </header>
-    </div> 
+    </div>
 
-    <section class="hero-section">
-        <div class="hero-image"></div>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1 class="hero-title">Спил деревьев<span>РАСЧИСТКА УЧАСТКОВ</span></h1>
-            
-            <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="hero-btn-max" onclick="masterClick(event)">
-                <b>НАПИСАТЬ В MAX</b>
-                <span>Оценка стоимости по фото</span>
-            </a>
+    <section class="hero-clean">
+        <style>
+            .hero-clean {
+                margin-top: 100px; /* Отступ под хедер */
+                width: calc(100% - 28px);
+                max-width: 500px;
+                background: #FFF;
+                font-family: 'Inter', sans-serif;
+                position: relative;
+                border-radius: 32px;
+                overflow: hidden;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+                border: 1px solid #EEE;
+                padding-bottom: 25px;
+            }
 
-            <div class="hero-socials">
-                <a href="https://t.me/daniil_glukhov17" class="social-item" onclick="masterClick(event)">Telegram</a>
-                <a href="https://vk.com/daniil_glukhov17" class="social-item" onclick="masterClick(event)">Вконтакте</a>
+            /* Блок с картинкой */
+            .hero-visual-part {
+                width: 100%;
+                height: 280px;
+                position: relative;
+                background: #000;
+            }
+
+            .hero-img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                /* Фото работы арбориста */
+                background-image: url('https://images.unsplash.com/photo-1590130523215-63529897e937?q=80&w=1000&auto=format&fit=crop');
+                background-size: cover;
+                background-position: center;
+                opacity: 0.9;
+            }
+
+            .hero-img-overlay {
+                position: absolute;
+                bottom: 0; left: 0; right: 0;
+                height: 60%;
+                background: linear-gradient(0deg, #FFF 0%, transparent 100%);
+            }
+
+            .hero-text-part {
+                padding: 0 24px;
+                margin-top: -40px; /* Наплыв текста на фото */
+                position: relative;
+                z-index: 5;
+            }
+
+            .hero-h1 {
+                font-size: 32px;
+                line-height: 1.0;
+                font-weight: 900;
+                color: #000;
+                text-transform: uppercase;
+                letter-spacing: -1.5px;
+                margin-bottom: 25px;
+            }
+
+            .hero-h1 span {
+                display: block;
+                font-weight: 400;
+                font-size: 20px;
+                letter-spacing: 0;
+                margin-top: 5px;
+                color: #555;
+            }
+
+            .benefit-row {
+                display: flex;
+                align-items: flex-start;
+                gap: 15px;
+                margin-bottom: 18px;
+                padding-top: 15px;
+                border-top: 1px solid #F5F5F5;
+            }
+
+            .benefit-marker {
+                width: 10px; height: 10px;
+                background: var(--lime);
+                margin-top: 4px;
+                flex-shrink: 0;
+                border-radius: 2px;
+            }
+
+            .benefit-content strong { display: block; font-size: 13px; font-weight: 900; text-transform: uppercase; color: #000; }
+            .benefit-content p { font-size: 12px; color: #777; line-height: 1.4; margin-top: 2px; }
+
+            .sticky-contact { margin-top: 30px; display: flex; flex-direction: column; gap: 10px; }
+
+            .speed-tag {
+                display: flex; align-items: center; gap: 8px;
+                padding: 8px 14px;
+                background: #F9F9F9;
+                border-radius: 12px;
+                border-left: 3px solid var(--lime);
+                width: fit-content;
+                margin-bottom: 5px;
+            }
+
+            .speed-tag span { font-size: 10px; font-weight: 950; text-transform: uppercase; color: #000; }
+
+            /* Кнопки */
+            .btn-super {
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.1s;
+            }
+
+            .btn-max-top {
+                background: #000;
+                height: 70px;
+                border-radius: 22px;
+                flex-direction: column;
+                gap: 2px;
+            }
+
+            .btn-text { color: #FFF; font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
+            .online-status { font-size: 7px; font-weight: 900; color: var(--lime); text-transform: uppercase; letter-spacing: 2px; }
+
+            .sub-links-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+            .btn-secondary-top {
+                height: 55px;
+                background: #FFF;
+                border-radius: 18px;
+                border: 1px solid #EEE;
+                color: #000;
+                font-size: 11px;
+                font-weight: 900;
+                text-transform: uppercase;
+                gap: 8px;
+            }
+
+            .btn-super:active { transform: scale(0.97); }
+            .m-icon { width: 18px; height: 18px; }
+        </style>
+
+        <div class="hero-visual-part">
+            <div class="hero-img"></div>
+            <div class="hero-img-overlay"></div>
+        </div>
+
+        <div class="hero-text-part">
+            <h1 class="hero-h1">
+                СПИЛ ДЕРЕВЬЕВ
+                <span>И ПОЛНАЯ РАСЧИСТКА УЧАСТКОВ</span>
+            </h1> 
+
+            <div class="benefit-row">
+                <div class="benefit-marker"></div>
+                <div class="benefit-content">
+                    <strong>За один рабочий день</strong>
+                    <p>Сдаем объект чистым под строительство или продажу.</p>
+                </div>
+            </div> 
+
+            <div class="benefit-row" style="border:none; padding-top:0;">
+                <div class="benefit-marker"></div>
+                <div class="benefit-content">
+                    <strong>Свой парк техники</strong>
+                    <p>Вывоз мусора своим транспортом без посредников.</p>
+                </div>
+            </div> 
+
+            <div class="sticky-contact">
+                <div class="speed-tag">
+                    <span>Оценка по фото за 5 мин</span>
+                </div> 
+
+                <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" 
+                   class="btn-super btn-max-top" onclick="hapticHeroClick(event)">
+                    <span class="btn-text">Написать в MAX</span>
+                    <span class="online-status">● Сейчас ОНЛАЙН</span>
+                </a> 
+
+                <div class="sub-links-row">
+                    <a href="https://t.me/daniil_glukhov17" class="btn-super btn-secondary-top" onclick="hapticHeroClick(event)">
+                        <img src="https://img.icons8.com/ios-filled/50/000000/telegram-app.png" class="m-icon">
+                        TG
+                    </a>
+                    <a href="https://vk.com/daniil_glukhov17" class="btn-super btn-secondary-top" onclick="hapticHeroClick(event)">
+                        <img src="https://img.icons8.com/ios-filled/50/000000/vkontakte.png" class="m-icon">
+                        VK
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
     <script>
+        // Твоя функция звука из хедера (masterClick) и новая вибрация (hapticHeroClick)
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); 
+
         function masterClick(e) {
             if (navigator.vibrate) navigator.vibrate(25); 
+            // ... звук хедера ...
+        }
+
+        function hapticHeroClick(e) {
+            if (navigator.vibrate) navigator.vibrate([30, 15, 30]);
+            
             const t = audioCtx.currentTime;
-            const lowOsc = audioCtx.createOscillator();
-            const lowGain = audioCtx.createGain();
-            lowOsc.type = 'sine'; lowOsc.frequency.setValueAtTime(90, t); 
-            lowOsc.frequency.exponentialRampToValueAtTime(0.01, t + 0.15);
-            lowGain.gain.setValueAtTime(0.7, t);
-            lowGain.gain.exponentialRampToValueAtTime(0.01, t + 0.15);
-            lowOsc.connect(lowGain); lowGain.connect(audioCtx.destination); 
-            lowOsc.start(); lowOsc.stop(t + 0.15);
+            const osc = audioCtx.createOscillator();
+            const g = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(125, t);
+            osc.frequency.exponentialRampToValueAtTime(0.01, t + 0.1);
+            g.gain.setValueAtTime(0.2, t);
+            g.gain.exponentialRampToValueAtTime(0.01, t + 0.1);
+            osc.connect(g); g.connect(audioCtx.destination);
+            osc.start(); osc.stop(t + 0.1);
         }
     </script>
 </body>
-</html>

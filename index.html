@@ -3,175 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Inter:wght@300;400;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --lime: #D7FF00;
-            --dark: #121212;
+            --ink: #1A1C1E; /* Глубокий графит вместо черного */
             --glass: rgba(255, 255, 255, 0.85);
+            --blur: blur(40px);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body { 
-            background: #fff; 
+            background: #E0E0E0; 
             font-family: 'Inter', sans-serif; 
-            color: var(--dark); 
             overflow: hidden; 
+            height: 100vh;
         }
 
-        /* ГЛАВНЫЙ ЭКРАН */
-        .hero {
-            position: relative;
-            height: 100vh;
-            width: 100%;
+        /* ФОНОВОЕ ФОТО */
+        .bg-frame {
+            position: fixed;
+            inset: 0;
             background: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260130_232609_196.jpg') no-repeat center center;
             background-size: cover;
-            padding: 40px 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        /* Светлый фильтр на фото */
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: grayscale(20%);
+            transform: scale(1.1); /* Легкий зум для глубины */
             z-index: 1;
         }
 
-        .header, .footer, .side-dock { position: relative; z-index: 10; }
-
-        /* ЛОГО И СТАТУС */
-        .header { display: flex; justify-content: space-between; align-items: flex-start; }
-        .brand { font-family: 'Oswald'; font-size: 20px; letter-spacing: 2px; text-transform: uppercase; }
-        .coord { font-size: 9px; text-align: right; opacity: 0.5; line-height: 1.2; font-weight: 600; }
-
-        /* ТЕКСТОВЫЙ БЛОК */
-        .main-content { position: relative; z-index: 5; margin-top: -40px; }
-        
-        .tag-line { 
-            font-size: 10px; 
-            font-weight: 900; 
-            text-transform: uppercase; 
-            letter-spacing: 5px; 
-            margin-bottom: 10px; 
-            color: var(--dark);
-        }
-
-        .main-title {
-            font-family: 'Oswald';
-            font-size: clamp(54px, 18vw, 90px);
-            line-height: 0.82;
-            text-transform: uppercase;
-            letter-spacing: -2px;
-            margin-bottom: 30px;
-        }
-
-        .description {
-            font-size: 14px;
-            line-height: 1.5;
-            max-width: 260px;
-            border-left: 3px solid var(--lime);
-            padding-left: 15px;
-            font-weight: 400;
-        }
-
-        /* КНОПКА (НИЗ) */
-        .footer { width: 100%; }
-        .cta-btn {
-            width: 100%;
-            height: 80px;
-            background: var(--dark);
-            color: #fff;
-            border-radius: 4px; /* Острые углы — это брутально */
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 30px;
-            text-decoration: none;
-            font-weight: 900;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .cta-btn span { color: var(--lime); font-size: 24px; }
-
-        /* КНОПКИ СВЯЗИ */
-        .side-dock {
-            position: fixed;
-            right: 24px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .circle {
-            width: 50px;
-            height: 50px;
-            background: var(--glass);
-            border: 1px solid rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+        /* ГЛАВНЫЙ КОНТЕЙНЕР */
+        .hero {
+            position: relative;
+            z-index: 10;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-decoration: none;
-            border-radius: 2px; /* Почти квадратные — тактильнее */
+            padding: 20px;
         }
-        .circle img { width: 20px; filter: grayscale(1); }
-        .circle.max { border: 2px solid var(--lime); }
-        .circle.max img { filter: none; }
-        .circle:active { background: var(--lime); transform: scale(0.9); }
+
+        /* ПРЕМИУМ КАРТОЧКА (СТЕКЛО) */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            width: 100%;
+            max-width: 400px;
+            padding: 50px 30px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--ink);
+            color: var(--lime);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 25px;
+        }
+
+        .main-title {
+            color: var(--ink);
+            font-size: 46px;
+            font-weight: 900;
+            line-height: 0.9;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            color: rgba(26, 28, 30, 0.7);
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 35px;
+            font-weight: 500;
+        }
+
+        .description b { color: var(--ink); }
+
+        /* ГЛАВНАЯ КНОПКА */
+        .cta-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--ink);
+            color: #fff;
+            height: 70px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            margin-bottom: 30px;
+        }
+
+        .cta-button:active { transform: scale(0.96); }
+
+        /* СОЦСЕТИ (УБРАНЫ ВНИЗ КАРТОЧКИ) */
+        .social-dock {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .s-link {
+            width: 48px;
+            height: 48px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+        
+        .s-link img { width: 20px; opacity: 0.8; }
+        .s-link.max { background: rgba(215, 255, 0, 0.2); border: 1px solid var(--lime); }
+        .s-link:active { background: var(--lime); }
 
     </style>
 </head>
 <body>
 
+    <div class="bg-frame"></div>
+
     <section class="hero">
-        <div class="header">
-            <div class="brand">Premium<br>Arborist</div>
-            <div class="coord">44.9521° N<br>34.1024° E<br>CRIMEA 2026</div>
-        </div>
-
-        <div class="main-content">
-            <div class="tag-line">Under Control</div>
+        <div class="glass-card">
+            <div class="badge">Arborist Premium</div>
+            
             <h1 class="main-title">ПОРЯДОК<br>ПОД КЛЮЧ</h1>
+            
             <p class="description">
-                Удаляем деревья любой сложности. <b>Расчистка, дробление и вывоз.</b> Фиксируем цену до начала работ.
+                Профессионально удаляем деревья. <b>Расчищаем, дробим, вывозим.</b> Ни одной ветки после нашего отъезда.
             </p>
-        </div>
 
-        <div class="footer">
-            <a href="#" class="cta-btn" onclick="haptic()">
-                Расчет стоимости <span>→</span>
+            <a href="#" class="cta-button" onclick="haptic()">
+                Узнать стоимость →
             </a>
-        </div>
 
-        <div class="side-dock">
-            <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="circle max" onclick="haptic()">
-                <img src="https://img.icons8.com/material-rounded/48/000000/m.png" alt="M">
-            </a>
-            <a href="https://t.me/daniil_glukhov17" class="circle" onclick="haptic()">
-                <img src="https://img.icons8.com/material-rounded/48/000000/telegram-app.png" alt="TG">
-            </a>
-            <a href="https://vk.com/daniil_glukhov17" class="circle" onclick="haptic()">
-                <img src="https://img.icons8.com/material-rounded/48/000000/vkontakte.png" alt="VK">
-            </a>
-            <a href="tel:+79785552114" class="circle" style="background: var(--lime); border: none;" onclick="haptic()">
-                <img src="https://img.icons8.com/material-rounded/48/000000/phone.png" alt="Call">
-            </a>
+            <div class="social-dock">
+                <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="s-link max" onclick="haptic()">
+                    <img src="https://img.icons8.com/material-rounded/48/000000/m.png">
+                </a>
+                <a href="https://t.me/daniil_glukhov17" class="s-link" onclick="haptic()">
+                    <img src="https://img.icons8.com/material-rounded/48/000000/telegram-app.png">
+                </a>
+                <a href="https://vk.com/daniil_glukhov17" class="s-link" onclick="haptic()">
+                    <img src="https://img.icons8.com/material-rounded/48/000000/vkontakte.png">
+                </a>
+                <a href="tel:+79785552114" class="s-link" style="background: var(--lime);" onclick="haptic()">
+                    <img src="https://img.icons8.com/material-rounded/48/000000/phone.png">
+                </a>
+            </div>
         </div>
     </section>
 
     <script>
         function haptic() {
-            if (navigator.vibrate) navigator.vibrate(40);
+            if (navigator.vibrate) navigator.vibrate(30);
         }
     </script>
 </body>

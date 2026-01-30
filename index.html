@@ -159,7 +159,36 @@
     </div> 
 
     <script>
-       <style>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); 
+
+        function masterClick(e) {
+            if (navigator.vibrate) navigator.vibrate(25); 
+
+            const t = audioCtx.currentTime;
+            
+            const lowOsc = audioCtx.createOscillator();
+            const lowGain = audioCtx.createGain();
+            lowOsc.type = 'sine';
+            lowOsc.frequency.setValueAtTime(90, t); 
+            lowOsc.frequency.exponentialRampToValueAtTime(0.01, t + 0.15);
+            lowGain.gain.setValueAtTime(0.7, t);
+            lowGain.gain.exponentialRampToValueAtTime(0.01, t + 0.15);
+            lowOsc.connect(lowGain); lowGain.connect(audioCtx.destination); 
+
+            const midOsc = audioCtx.createOscillator();
+            const midGain = audioCtx.createGain();
+            midOsc.type = 'triangle'; 
+            midOsc.frequency.setValueAtTime(400, t);
+            midOsc.frequency.exponentialRampToValueAtTime(100, t + 0.05);
+            midGain.gain.setValueAtTime(0.15, t);
+            midGain.gain.exponentialRampToValueAtTime(0.01, t + 0.05);
+            midOsc.connect(midGain); midGain.connect(audioCtx.destination); 
+
+            lowOsc.start(); lowOsc.stop(t + 0.15);
+            midOsc.start(); midOsc.stop(t + 0.05);
+        }
+    </script>
+<style>
     :root {
         --lime: #DFFF11;
     } 
@@ -603,6 +632,6 @@
         });
     </script>
 </section>
- 
+
 </body>
 </html>

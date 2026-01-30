@@ -463,245 +463,231 @@
         }
     }
 </script>
-<section class="neo-portfolio">
+<section class="p-wrap">
     <style>
         :root { --lime: #DFFF11; }
-
-        .neo-portfolio {
+        .p-wrap {
             width: 100%;
             max-width: 500px;
             margin: 0 auto;
-            padding: 0 0 50px;
+            padding: 0 0 60px;
             background: #fff;
             font-family: 'Inter', sans-serif;
+            overflow: hidden;
         }
 
-        /* НЕОНОВЫЙ ЗАГОЛОВОК */
-        .neo-header {
-            padding: 0 24px 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
+        /* ПРЕМИАЛЬНЫЙ ЗАГОЛОВОК С НЕОНОМ */
+        .p-header {
+            padding: 0 24px 20px;
         }
-
-        .neo-header h2 {
-            font-size: 34px;
+        .p-header h2 {
+            font-size: 32px;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: -2px;
-            color: #000;
+            letter-spacing: -1.5px;
             margin: 0;
-            position: relative;
             display: inline-block;
+            background: linear-gradient(90deg, #000 70%, var(--lime) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
-        .neo-header h2 span {
-            display: block;
+        .p-header .neon-line {
             height: 4px;
-            width: 60px;
+            width: 50px;
             background: var(--lime);
+            border-radius: 10px;
+            box-shadow: 0 0 15px var(--lime);
             margin-top: 5px;
-            box-shadow: 0 0 15px var(--lime); /* Неоновое свечение */
-            border-radius: 2px;
         }
 
-        /* КОНТЕЙНЕР СЛАЙДЕРА */
-        .neo-viewport {
+        /* КОНТЕЙНЕР КАРТОЧЕК */
+        .p-slider {
             position: relative;
             width: 100%;
         }
-
-        .neo-track {
+        .p-track {
             display: flex;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
             scroll-behavior: smooth;
-            padding: 0 24px 25px;
-            gap: 12px;
+            -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
+            padding: 0 24px 25px;
+            gap: 15px;
         }
-        .neo-track::-webkit-scrollbar { display: none; }
+        .p-track::-webkit-scrollbar { display: none; }
 
-        .neo-card {
+        .p-card {
             min-width: calc(100vw - 48px);
             max-width: 452px;
             scroll-snap-align: center;
+            flex-shrink: 0;
         }
 
-        .neo-img-box {
+        .p-img-area {
             position: relative;
             width: 100%;
             aspect-ratio: 4/3;
-            border-radius: 28px;
+            border-radius: 26px;
             overflow: hidden;
             background: #000;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             touch-action: pan-y;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
 
-        /* ФУНКЦИЯ СРАВНЕНИЯ */
-        .neo-img { position: absolute; inset: 0; background-size: cover; background-position: center; pointer-events: none; }
-        .neo-before { z-index: 2; width: 50%; border-right: 2.5px solid var(--lime); }
+        .p-img-full { position: absolute; inset: 0; background-size: cover; background-position: center; pointer-events: none; }
+        .p-img-before { z-index: 2; width: 50%; border-right: 2px solid var(--lime); }
         
-        .neo-handle {
+        .p-handle {
             position: absolute;
             top: 0; bottom: 0; left: 50%;
-            width: 2.5px; background: var(--lime);
+            width: 2px; background: var(--lime);
             z-index: 10; transform: translateX(-50%);
             pointer-events: none;
         }
-
-        .neo-knob {
-            position: absolute;
-            top: 50%; left: 50%;
+        .p-knob {
+            position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 50px; height: 50px;
-            background: rgba(0,0,0,0.9);
-            border: 2px solid var(--lime);
-            border-radius: 16px;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            width: 46px; height: 46px;
+            background: #000; border: 2px solid var(--lime);
+            border-radius: 14px; display: flex; align-items: center; justify-content: center;
         }
-        .neo-knob::after { content: '↔'; color: var(--lime); font-weight: 900; font-size: 20px; }
+        .p-knob::after { content: '↔'; color: var(--lime); font-weight: 900; }
 
-        /* ИНФОРМАЦИЯ */
-        .neo-footer {
-            margin-top: 15px;
-            padding: 0 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .p-footer {
+            margin-top: 15px; display: flex; justify-content: space-between; align-items: center;
         }
-        .neo-footer strong { font-size: 16px; font-weight: 900; text-transform: uppercase; }
-        .neo-footer span { font-size: 12px; font-weight: 700; color: #BBB; }
+        .p-footer strong { font-size: 16px; font-weight: 900; text-transform: uppercase; }
+        .p-footer span { font-family: monospace; font-size: 14px; font-weight: 900; color: #BBB; }
 
-        /* НОВЫЙ НИЖНИЙ ПОЛЗУНОК УПРАВЛЕНИЯ */
-        .neo-controls {
-            padding: 0 24px;
+        /* ПАНЕЛЬ УПРАВЛЕНИЯ */
+        .p-controls {
+            margin: 10px 24px 0;
             display: flex;
             align-items: center;
-            gap: 15px;
+            background: #f8f8f8;
+            padding: 8px;
+            border-radius: 20px;
+            gap: 10px;
         }
 
-        .nav-btn {
-            width: 44px; height: 44px;
-            background: #F5F5F5;
-            border-radius: 12px;
+        .p-btn {
+            width: 40px; height: 40px;
+            background: #fff;
+            border-radius: 15px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 18px; font-weight: 900;
-            cursor: pointer;
-            transition: all 0.2s;
+            font-weight: 900; cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             user-select: none;
         }
-        .nav-btn:active { background: var(--lime); transform: scale(0.9); }
+        .p-btn:active { background: var(--lime); }
 
-        .progress-rail {
-            flex: 1;
-            height: 4px;
-            background: #F0F0F0;
-            border-radius: 10px;
-            position: relative;
-            overflow: hidden;
+        .p-bar-bg {
+            flex: 1; height: 6px; background: #eee; border-radius: 10px; position: relative; overflow: hidden;
+        }
+        .p-bar-fill {
+            position: absolute; height: 100%; width: 20%;
+            background: #000; border-radius: 10px;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        .progress-active {
-            position: absolute;
-            height: 100%; width: 20%;
-            background: #000;
-            left: 0;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-        }
-
-        .live-badge {
-            position: absolute;
-            top: 20px; left: 20px;
-            background: #000;
-            color: var(--lime);
-            padding: 5px 12px;
-            border-radius: 10px;
-            font-size: 10px;
-            font-weight: 900;
-            z-index: 5;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        .p-live {
+            position: absolute; top: 20px; right: 20px;
+            background: var(--lime); color: #000;
+            padding: 5px 12px; border-radius: 10px;
+            font-size: 10px; font-weight: 900; z-index: 5;
         }
     </style>
 
-    <div class="neo-header">
-        <h2>Портфолио<span></span></h2>
+    <div class="p-header">
+        <h2>Портфолио</h2>
+        <div class="neon-line"></div>
     </div>
 
-    <div class="neo-viewport">
-        <div class="neo-track" id="neoTrack">
-            
-            <div class="neo-card">
-                <div class="neo-img-box" onpointermove="neoComp(event)">
-                    <div class="neo-img" style="background-image: url('ФОТО_1_ПОСЛЕ.jpg');"></div>
-                    <div class="neo-img neo-before" style="background-image: url('ФОТО_1_ДО.jpg');"></div>
-                    <div class="neo-handle"><div class="neo-knob"></div></div>
+    <div class="p-slider">
+        <div class="p-track" id="pTrack">
+            <div class="p-card" id="c1">
+                <div class="p-img-area" onpointermove="pMove(event)">
+                    <div class="p-img-full" style="background-image: url('1_ПОСЛЕ.jpg');"></div>
+                    <div class="p-img-full p-img-before" style="background-image: url('1_ДО.jpg');"></div>
+                    <div class="p-handle"><div class="p-knob"></div></div>
                 </div>
-                <div class="neo-footer"><strong>Удаление сосен</strong><span>01 / 05</span></div>
+                <div class="p-footer"><strong>Удаление деревьев</strong><span>01/05</span></div>
             </div>
 
-            <div class="neo-card">
-                <div class="neo-img-box" onpointermove="neoComp(event)">
-                    <div class="neo-img" style="background-image: url('ФОТО_2_ПОСЛЕ.jpg');"></div>
-                    <div class="neo-img neo-before" style="background-image: url('ФОТО_2_ДО.jpg');"></div>
-                    <div class="neo-handle"><div class="neo-knob"></div></div>
+            <div class="p-card" id="c2">
+                <div class="p-img-area" onpointermove="pMove(event)">
+                    <div class="p-img-full" style="background-image: url('2_ПОСЛЕ.jpg');"></div>
+                    <div class="p-img-full p-img-before" style="background-image: url('2_ДО.jpg');"></div>
+                    <div class="p-handle"><div class="p-knob"></div></div>
                 </div>
-                <div class="neo-footer"><strong>Расчистка участка</strong><span>02 / 05</span></div>
+                <div class="p-footer"><strong>Расчистка участка</strong><span>02/05</span></div>
             </div>
 
-            <div class="neo-card">
-                <div class="neo-img-box">
-                    <div class="live-badge">LIVE ПРОЦЕСС</div>
-                    <div class="neo-img" style="background-image: url('LIVE_ФОТО.jpg');"></div>
+            <div class="p-card" id="c3">
+                <div class="p-img-area" onpointermove="pMove(event)">
+                    <div class="p-img-full" style="background-image: url('3_ПОСЛЕ.jpg');"></div>
+                    <div class="p-img-full p-img-before" style="background-image: url('3_ДО.jpg');"></div>
+                    <div class="p-handle"><div class="p-knob"></div></div>
                 </div>
-                <div class="neo-footer"><strong>Работа в Крыму</strong><span>05 / 05</span></div>
+                <div class="p-footer"><strong>Обрезка веток</strong><span>03/05</span></div>
             </div>
 
+            <div class="p-card" id="c4">
+                <div class="p-img-area" onpointermove="pMove(event)">
+                    <div class="p-img-full" style="background-image: url('4_ПОСЛЕ.jpg');"></div>
+                    <div class="p-img-full p-img-before" style="background-image: url('4_ДО.jpg');"></div>
+                    <div class="p-handle"><div class="p-knob"></div></div>
+                </div>
+                <div class="p-footer"><strong>Корчевание пней</strong><span>04/05</span></div>
+            </div>
+
+            <div class="p-card" id="c5">
+                <div class="p-img-area">
+                    <div class="p-live">LIVE PROCESS</div>
+                    <div class="p-img-full" style="background-image: url('LIVE_ФОТО.jpg');"></div>
+                </div>
+                <div class="p-footer"><strong>Наша работа</strong><span>05/05</span></div>
+            </div>
         </div>
     </div>
 
-    <div class="neo-controls">
-        <div class="nav-btn" onclick="neoScroll(-1)">‹</div>
-        <div class="progress-rail">
-            <div class="progress-active" id="neoBar"></div>
-        </div>
-        <div class="nav-btn" onclick="neoScroll(1)">›</div>
+    <div class="p-controls">
+        <div class="p-btn" onclick="pGo(-1)">‹</div>
+        <div class="p-bar-bg"><div class="p-bar-fill" id="pBar"></div></div>
+        <div class="p-btn" onclick="pGo(1)">›</div>
     </div>
 
     <script>
-        const nTrack = document.getElementById('neoTrack');
-        const nBar = document.getElementById('neoBar');
+        const track = document.getElementById('pTrack');
+        const bar = document.getElementById('pBar');
+        let currentIdx = 0;
 
-        function neoComp(e) {
+        function pMove(e) {
             if (e.pointerType === 'mouse' && e.buttons !== 1) return;
             const box = e.currentTarget;
-            const before = box.querySelector('.neo-before');
-            const handle = box.querySelector('.neo-handle');
-            if(!before) return;
-
+            const before = box.querySelector('.p-img-before');
+            const handle = box.querySelector('.p-handle');
             const rect = box.getBoundingClientRect();
             let x = e.clientX - rect.left;
             let pos = (x / rect.width) * 100;
-
             if (pos >= 0 && pos <= 100) {
                 before.style.width = pos + '%';
                 handle.style.left = pos + '%';
-                if (navigator.vibrate && Math.round(pos) % 3 === 0) navigator.vibrate(5);
+                if (navigator.vibrate && Math.round(pos) % 4 === 0) navigator.vibrate(5);
             }
         }
 
-        function neoScroll(dir) {
-            const cardW = nTrack.querySelector('.neo-card').offsetWidth + 12;
-            nTrack.scrollBy({ left: dir * cardW, behavior: 'smooth' });
+        function pGo(dir) {
+            currentIdx = Math.max(0, Math.min(4, currentIdx + dir));
+            const targetCard = document.getElementById('c' + (currentIdx + 1));
+            targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         }
 
-        nTrack.addEventListener('scroll', () => {
-            const index = Math.round(nTrack.scrollLeft / nTrack.offsetWidth);
-            nBar.style.left = (index * 20) + '%';
+        track.addEventListener('scroll', () => {
+            const index = Math.round(track.scrollLeft / track.querySelector('.p-card').offsetWidth);
+            currentIdx = index;
+            bar.style.left = (index * 20) + '%';
         });
     </script>
 </section>

@@ -15,23 +15,19 @@
         body { 
             background: #FFFFFF; 
             font-family: 'Inter', sans-serif; 
-            min-height: 100vh;
-            /* Убрал центрирование, чтобы не было лишних отступов */
         } 
 
         .header-container {
             position: fixed;
-            top: 10px; /* Минимальный зазор от верхнего края */
+            top: 10px; /* Минимальный отступ от верха экрана */
             left: 14px;
             right: 14px;
             z-index: 10000;
             max-width: 500px;
             margin: 0 auto;
-            /* Плавность исчезновения */
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
         } 
 
-        /* Класс для скрытия при скролле вниз */
         .header-hidden {
             transform: translateY(-120px);
             opacity: 0;
@@ -51,6 +47,7 @@
 
         .text-stack { display: flex; flex-direction: column; gap: 1px; } 
 
+        /* ВОЗВРАТ ТВОЕЙ ТОЧКИ */
         .status-line {
             display: flex;
             align-items: center;
@@ -112,21 +109,10 @@
             align-items: center;
             gap: 10px;
             text-decoration: none;
-            border: none;
-            position: relative;
             box-shadow: 
                 inset 4px 4px 8px rgba(0, 0, 0, 0.3), 
-                inset -3px -3px 6px rgba(255, 255, 255, 0.4),
-                0 4px 10px rgba(0, 0, 0, 0.1);
+                inset -3px -3px 6px rgba(255, 255, 255, 0.4);
             transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
-        } 
-
-        .indented-btn:active {
-            transform: translateY(2px) scale(0.97); 
-            box-shadow: 
-                inset 10px 10px 20px rgba(0, 0, 0, 0.5), 
-                inset -2px -2px 10px rgba(255, 255, 255, 0.3);
-            filter: brightness(0.9);
         } 
 
         .btn-label {
@@ -134,7 +120,6 @@
             font-size: 12px;
             font-weight: 950;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         } 
 
         .btn-icon { width: 16px; height: 16px; fill: #000; } 
@@ -168,29 +153,23 @@
         </div>
 
     <script>
-        // ЛОГИКА СКРЫТИЯ ШАПКИ
         const header = document.getElementById('mainHeader');
         let lastScrollY = window.scrollY;
 
         window.addEventListener('scroll', () => {
-            if (window.scrollY > lastScrollY && window.scrollY > 50) {
-                // Скроллим вниз — прячем
+            if (window.scrollY > lastScrollY && window.scrollY > 40) {
                 header.classList.add('header-hidden');
             } else {
-                // Скроллим вверх — показываем
                 header.classList.remove('header-hidden');
             }
             lastScrollY = window.scrollY;
         });
 
-        // ТВОЯ ОРИГИНАЛЬНАЯ ФУНКЦИЯ КЛИКА
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); 
 
         function masterClick(e) {
             if (navigator.vibrate) navigator.vibrate(25); 
-
             const t = audioCtx.currentTime;
-            
             const lowOsc = audioCtx.createOscillator();
             const lowGain = audioCtx.createGain();
             lowOsc.type = 'sine';
@@ -199,18 +178,7 @@
             lowGain.gain.setValueAtTime(0.7, t);
             lowGain.gain.exponentialRampToValueAtTime(0.01, t + 0.15);
             lowOsc.connect(lowGain); lowGain.connect(audioCtx.destination); 
-
-            const midOsc = audioCtx.createOscillator();
-            const midGain = audioCtx.createGain();
-            midOsc.type = 'triangle'; 
-            midOsc.frequency.setValueAtTime(400, t);
-            midOsc.frequency.exponentialRampToValueAtTime(100, t + 0.05);
-            midGain.gain.setValueAtTime(0.15, t);
-            midGain.gain.exponentialRampToValueAtTime(0.01, t + 0.05);
-            midOsc.connect(midGain); midGain.connect(audioCtx.destination); 
-
             lowOsc.start(); lowOsc.stop(t + 0.15);
-            midOsc.start(); midOsc.stop(t + 0.05);
         }
     </script>
 <style>

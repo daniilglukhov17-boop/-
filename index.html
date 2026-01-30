@@ -7,8 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-orange: #FF7F00;
-            --dark-bg: #1a1a1a;
+            --primary-orange: #FF7F00; /* Цвет куртки арбориста */
+            --dark-overlay: rgba(0, 0, 0, 0.65);
             --white: #ffffff;
         }
 
@@ -20,18 +20,19 @@
         }
 
         body {
-            background-color: var(--dark-bg);
+            background-color: #1a1a1a;
             color: var(--white);
             overflow-x: hidden;
         }
 
-        /* Фоновое изображение */
+        /* Главный экран с твоим фоном */
         .hero {
             position: relative;
             height: 100vh;
             width: 100%;
-            background: linear-gradient(to right, rgba(0,0,0,0.7) 30%, rgba(0,0,0,0.2) 100%), 
-                        url('651.jpg'); /* Убедись, что название файла совпадает */
+            /* Ссылка на твое фото из репозитория */
+            background: linear-gradient(to right, var(--dark-overlay) 30%, rgba(0,0,0,0.2) 100%), 
+                        url('https://raw.githubusercontent.com/Glukhov-Daniil/site/main/IMG_20260130_202829_851.jpg');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -43,9 +44,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 5%;
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.05);
+            padding: 20px 7%;
+            backdrop-filter: blur(15px);
+            background: rgba(0, 0, 0, 0.3);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: fixed;
             width: 100%;
@@ -54,130 +55,141 @@
 
         .logo {
             font-weight: 900;
-            font-size: 24px;
-            color: var(--primary-orange);
+            font-size: 22px;
+            color: var(--white);
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
+
+        .logo span { color: var(--primary-orange); }
 
         nav a {
             color: var(--white);
             text-decoration: none;
             margin: 0 15px;
             font-size: 14px;
-            font-weight: 700;
+            font-weight: 600;
             transition: 0.3s;
+            opacity: 0.8;
         }
 
-        nav a:hover {
-            color: var(--primary-orange);
-        }
-
-        .contact-info {
-            text-align: right;
-        }
+        nav a:hover { opacity: 1; color: var(--primary-orange); }
 
         .phone {
-            display: block;
             font-weight: 700;
             font-size: 18px;
             color: var(--white);
             text-decoration: none;
+            border: 1px solid var(--primary-orange);
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: 0.3s;
         }
 
-        /* Главный контент */
+        .phone:hover { background: var(--primary-orange); }
+
+        /* Контент */
         .hero-content {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 0 5%;
-            max-width: 800px;
+            padding: 0 7%;
+            max-width: 900px;
         }
 
-        h1 {
-            font-size: clamp(32px, 5vw, 64px);
-            line-height: 1.1;
+        .badge {
+            background: var(--primary-orange);
+            color: #000;
+            padding: 6px 15px;
+            font-weight: 900;
+            font-size: 12px;
+            width: fit-content;
             margin-bottom: 20px;
+            border-radius: 3px;
             text-transform: uppercase;
         }
 
-        h1 span {
-            color: var(--primary-orange);
+        h1 {
+            font-size: clamp(34px, 6vw, 68px);
+            line-height: 1.1;
+            margin-bottom: 25px;
+            font-weight: 900;
         }
+
+        h1 span { color: var(--primary-orange); }
 
         p {
             font-size: 18px;
             margin-bottom: 40px;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
         }
 
-        /* Та самая красивая кнопочка */
+        /* ТА САМАЯ КРАСИВАЯ КНОПОЧКА */
         .btn-main {
             display: inline-block;
-            padding: 20px 40px;
+            padding: 22px 45px;
             background: var(--primary-orange);
             color: white;
             text-decoration: none;
-            font-weight: 700;
+            font-weight: 800;
             border-radius: 50px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            box-shadow: 0 0 20px rgba(255, 127, 0, 0.4);
-            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 127, 0, 0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
-            width: fit-content;
         }
 
         .btn-main:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(255, 127, 0, 0.6);
-            background: #ff9500;
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 127, 0, 0.6);
         }
 
-        .btn-main::after {
+        /* Эффект сияния (блик) на кнопке */
+        .btn-main::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: rgba(255,255,255,0.2);
-            transform: rotate(45deg);
-            transition: 0.5s;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.6s;
         }
 
-        .btn-main:hover::after {
-            left: 120%;
+        .btn-main:hover::before {
+            left: 100%;
         }
 
-        /* Соцсети в футере или сбоку */
-        .social-fixed {
+        /* Соцсети внизу */
+        .socials {
             position: absolute;
             bottom: 40px;
-            left: 5%;
+            left: 7%;
             display: flex;
-            gap: 20px;
+            gap: 25px;
         }
 
-        .social-link {
-            color: white;
+        .socials a {
+            color: #fff;
             text-decoration: none;
-            font-size: 14px;
-            opacity: 0.6;
+            font-size: 13px;
+            font-weight: 700;
+            opacity: 0.5;
             transition: 0.3s;
+            text-transform: uppercase;
         }
 
-        .social-link:hover {
-            opacity: 1;
-            color: var(--primary-orange);
-        }
+        .socials a:hover { opacity: 1; color: var(--primary-orange); }
 
         @media (max-width: 768px) {
             nav { display: none; }
-            header { justify-content: space-between; }
+            .hero-content { text-align: center; align-items: center; }
+            header { padding: 15px 5%; }
         }
     </style>
 </head>
@@ -185,29 +197,27 @@
 
 <div class="hero">
     <header>
-        <div class="logo">TreeCut.PRO</div>
+        <div class="logo">Tree<span>Cut</span></div>
         <nav>
-            <a href="#">Услуги</a>
-            <a href="#">Цены</a>
-            <a href="#">Портфолио</a>
-            <a href="#">Контакты</a>
+            <a href="#services">Услуги</a>
+            <a href="#gallery">Наши работы</a>
+            <a href="#reviews">Отзывы</a>
         </nav>
-        <div class="contact-info">
-            <a href="tel:+79785552114" class="phone">+7 (978) 555-21-14</a>
-        </div>
+        <a href="tel:+79785552114" class="phone">+7 (978) 555-21-14</a>
     </header>
 
     <main class="hero-content">
-        <h1>ПРОФЕССИОНАЛЬНЫЙ <span>СПИЛ ДЕРЕВЬЕВ</span></h1>
-        <p>Безопасно удаляем аварийные деревья и расчищаем участки под строительство в Крыму. Выезд и оценка объекта — бесплатно.</p>
+        <div class="badge">Крым: работаем 24/7</div>
+        <h1>СПИЛ И ОБРЕЗКА <span>ДЕРЕВЬЕВ</span></h1>
+        <p>Арбористика любой сложности. Безопасно удаляем аварийные деревья, расчищаем участки под застройку, вывозим мусор.</p>
         
-        <a href="https://t.me/daniil_glukhov17" class="btn-main">Рассчитать стоимость</a>
+        <a href="https://t.me/daniil_glukhov17" class="btn-main">Узнать стоимость в Telegram</a>
     </main>
 
-    <div class="social-fixed">
-        <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="social-link" target="_blank">MAX ID</a>
-        <a href="https://vk.com/daniil_glukhov17" class="social-link" target="_blank">VKONTAKTE</a>
-        <a href="https://t.me/daniil_glukhov17" class="social-link" target="_blank">TELEGRAM</a>
+    <div class="socials">
+        <a href="https://vk.com/daniil_glukhov17" target="_blank">Вконтакте</a>
+        <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" target="_blank">MAX Messenger</a>
+        <a href="https://t.me/daniil_glukhov17" target="_blank">Telegram</a>
     </div>
 </div>
 

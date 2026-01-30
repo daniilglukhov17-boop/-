@@ -440,164 +440,132 @@
         }
     }
 </script>
-<style>
-    .portfolio-horizontal {
-        /* Эти свойства гарантируют, что блок встанет ниже всех остальных */
-        display: block;
-        clear: both; 
-        position: relative;
-        
-        padding: 40px 24px 60px;
-        background: #FFFFFF;
-        font-family: 'Inter', sans-serif;
-    }
+<div class="portfolio-spacer" style="clear: both; display: block; width: 100%; height: 20px;"></div>
 
-    .portfolio-header {
-        margin-bottom: 24px;
-    }
+<section class="portfolio-horizontal" id="portfolio-section">
+    <style>
+        .portfolio-horizontal {
+            display: block !important;
+            position: relative !important;
+            clear: both !important;
+            /* Если блок все еще высоко, увеличь это число (например, до 100px) */
+            margin-top: 40px; 
+            padding: 20px 24px 60px;
+            background: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            z-index: 5;
+        }
 
-    .portfolio-header h2 {
-        font-size: 24px;
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: -1px;
-        margin: 0;
-        color: #000;
-    }
+        .portfolio-header h2 {
+            font-size: 24px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            color: #000;
+        }
 
-    /* КОНТЕЙНЕР СЛАЙДЕРА (СООТНОШЕНИЕ 4:3) */
-    .h-compare-container {
-        position: relative;
-        width: 100%;
-        aspect-ratio: 4 / 3;
-        border-radius: 24px;
-        overflow: hidden;
-        background: #F0F0F0;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-        touch-action: pan-y; /* Важно для мобилок, чтобы скролл не дергался */
-        cursor: ew-resize;
-    }
+        .h-compare-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            border-radius: 24px;
+            overflow: hidden;
+            background: #F0F0F0;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            touch-action: pan-y;
+        }
 
-    .h-after, .h-before {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background-size: cover;
-        background-position: center;
-        pointer-events: none;
-    }
+        .h-after, .h-before {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
 
-    /* СЮДА ВСТАВЛЯЙ СВОИ ССЫЛКИ НА ФОТО */
-    .h-after { 
-        background-image: url('URL_ФОТО_ПОСЛЕ'); 
-    }
-    .h-before { 
-        background-image: url('URL_ФОТО_ДО'); 
-        width: 50%; 
-        border-right: 2px solid #DFFF11; /* Лаймовая линия разделения */
-    }
+        /* Твои фото */
+        .h-after { background-image: url('URL_ПОСЛЕ'); }
+        .h-before { 
+            background-image: url('URL_ДО'); 
+            width: 50%; 
+            border-right: 3px solid #DFFF11; 
+        }
 
-    /* ПОЛЗУНОК (КНОПКА) */
-    .h-handle {
-        position: absolute;
-        top: 0; bottom: 0;
-        left: 50%;
-        width: 2px;
-        background: #DFFF11;
-        z-index: 10;
-        pointer-events: none;
-    }
+        .h-handle {
+            position: absolute;
+            top: 0; bottom: 0;
+            left: 50%;
+            width: 2px;
+            background: #DFFF11;
+            z-index: 10;
+        }
 
-    .h-handle-btn {
-        position: absolute;
-        top: 50%; left: 50%;
-        transform: translate(-50%, -50%);
-        width: 46px; height: 46px;
-        background: #000;
-        border: 2px solid #DFFF11;
-        border-radius: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 0 20px rgba(0,0,0,0.4);
-    }
+        .h-handle-btn {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 48px; height: 48px;
+            background: #000;
+            border: 2px solid #DFFF11;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+        }
 
-    .h-handle-btn::after {
-        content: '↔';
-        color: #DFFF11;
-        font-weight: 900;
-        font-size: 20px;
-    }
+        .h-handle-btn::after {
+            content: '↔';
+            color: #DFFF11;
+            font-weight: 900;
+            font-size: 20px;
+        }
 
-    /* ТЕГИ "ДО / ПОСЛЕ" */
-    .h-tag {
-        position: absolute;
-        bottom: 15px;
-        padding: 5px 12px;
-        background: rgba(0,0,0,0.6);
-        backdrop-filter: blur(4px);
-        color: #FFF;
-        font-size: 9px;
-        font-weight: 900;
-        text-transform: uppercase;
-        border-radius: 6px;
-        pointer-events: none;
-    }
-    .tag-do { left: 15px; }
-    .tag-posle { right: 15px; }
-</style>
+        .h-tag {
+            position: absolute;
+            bottom: 15px;
+            padding: 5px 12px;
+            background: rgba(0,0,0,0.7);
+            color: #FFF;
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            border-radius: 6px;
+        }
+        .tag-do { left: 15px; }
+        .tag-posle { right: 15px; }
+    </style>
 
-<section class="portfolio-horizontal">
     <div class="portfolio-header">
         <h2>Масштаб работ</h2>
     </div>
 
-    <div class="h-compare-container" id="h-slider-block">
+    <div class="h-compare-container" id="slider-box">
         <div class="h-after"></div>
-        <div class="h-before" id="h-before-img"></div>
-        
-        <div class="h-handle" id="h-handle-line">
+        <div class="h-before" id="before-img"></div>
+        <div class="h-handle" id="handle-line">
             <div class="h-handle-btn"></div>
         </div>
-
-        <div class="h-tag tag-do">До работы</div>
-        <div class="h-tag tag-posle">Результат</div>
+        <div class="h-tag tag-do">До</div>
+        <div class="h-tag tag-posle">После</div>
     </div>
 </section>
 
 <script>
     (function() {
-        const container = document.getElementById('h-slider-block');
-        const beforeImg = document.getElementById('h-before-img');
-        const handleLine = document.getElementById('h-handle-line');
+        const box = document.getElementById('slider-box');
+        const img = document.getElementById('before-img');
+        const line = document.getElementById('handle-line');
 
-        const moveSlider = (e) => {
-            let clientX;
-            if (e.type.includes('touch')) {
-                clientX = e.touches[0].clientX;
-            } else {
-                clientX = e.clientX;
-            }
-
-            const rect = container.getBoundingClientRect();
-            let x = clientX - rect.left;
-            let position = (x / rect.width) * 100;
-
-            // Границы
-            if (position < 0) position = 0;
-            if (position > 100) position = 100;
-
-            beforeImg.style.width = position + '%';
-            handleLine.style.left = position + '%';
-
-            // Тактильный отклик на мобилках при проходе центра
-            if (navigator.vibrate && Math.round(position) === 50) {
-                navigator.vibrate(10);
-            }
+        const drag = (e) => {
+            let cx = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+            let r = box.getBoundingClientRect();
+            let p = ((cx - r.left) / r.width) * 100;
+            if (p < 0) p = 0; if (p > 100) p = 100;
+            img.style.width = p + '%';
+            line.style.left = p + '%';
         };
 
-        container.addEventListener('mousemove', moveSlider);
-        container.addEventListener('touchmove', moveSlider, { passive: true });
+        box.addEventListener('mousemove', drag);
+        box.addEventListener('touchmove', drag, { passive: true });
     })();
 </script>
 

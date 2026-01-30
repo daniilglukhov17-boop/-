@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --lime: #E6FF00;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.12);
+            --lime: #CCFF00; /* Более сочный лайм для светлого фона */
+            --dark: #1A1A1A;
+            --glass-white: rgba(255, 255, 255, 0.7);
+            --border: rgba(255, 255, 255, 0.4);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body { 
-            background: #000; 
+            background: #F4F4F4; 
             font-family: 'Inter', sans-serif; 
-            color: #fff; 
+            color: var(--dark); 
             overflow: hidden; 
         }
 
-        /* ОСНОВНОЙ ЭКРАН */
+        /* ГЛАВНЫЙ ЭКРАН */
         .hero {
             position: relative;
             height: 100vh;
@@ -30,15 +31,15 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            padding: 40px 24px 130px; /* Отступ снизу под кнопки */
+            padding: 40px 20px 140px;
         }
 
-        /* Градиент для эффекта "кино" */
-        .hero::after {
+        /* Светлая вуаль для чистоты */
+        .hero::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%);
+            background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.7) 100%);
             z-index: 1;
         }
 
@@ -46,92 +47,90 @@
 
         /* НАДЗАГОЛОВОК */
         .badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--lime);
-            margin-bottom: 15px;
-            display: block;
+            letter-spacing: 2px;
+            color: var(--dark);
+            margin-bottom: 12px;
         }
+        .badge::before { content: ''; width: 20px; height: 2px; background: var(--lime); }
 
-        /* ЗАГОЛОВОК */
+        /* ЗАГОЛОВОК - ТЕПЕРЬ ОН ГЛАВНЫЙ */
         .main-title {
-            font-size: clamp(42px, 14vw, 70px);
+            font-size: clamp(44px, 15vw, 75px);
             font-weight: 900;
-            line-height: 0.85;
+            line-height: 0.8;
             letter-spacing: -3px;
             text-transform: uppercase;
-            margin-bottom: 25px;
+            color: var(--dark);
+            margin-bottom: 20px;
         }
 
         /* ОФФЕР */
-        .description {
+        .hero-desc {
             font-size: 16px;
             line-height: 1.4;
-            color: rgba(255, 255, 255, 0.7);
             max-width: 320px;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
+            color: rgba(26, 26, 26, 0.8);
         }
+        .hero-desc b { color: var(--dark); font-weight: 600; }
 
-        .description b { color: #fff; font-weight: 500; }
-
-        /* КНОПКА КВИЗА */
-        .quiz-button {
+        /* КНОПКА КВИЗА (SOLID DARK) */
+        .main-btn {
             width: 100%;
-            height: 72px;
-            background: #fff;
-            color: #000;
-            border-radius: 24px;
+            height: 74px;
+            background: var(--dark);
+            color: #fff;
+            border-radius: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-decoration: none;
             font-weight: 900;
-            font-size: 15px;
             text-transform: uppercase;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            transition: 0.2s;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-decoration: none;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
 
-        .quiz-button:active { transform: scale(0.96); }
-
-        /* ПАНЕЛЬ С КРУЖОЧКАМИ (СКВИРКЛЫ) */
+        /* БОКОВЫЕ КНОПКИ (WHITE GLASS) */
         .side-dock {
             position: fixed;
             right: 20px;
-            top: 45%;
+            top: 40%;
             transform: translateY(-50%);
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
             z-index: 1000;
         }
 
         .dock-item {
-            width: 56px;
-            height: 56px;
-            background: var(--glass);
+            width: 58px;
+            height: 58px;
+            background: var(--glass-white);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border);
-            border-radius: 18px; /* Стиль Squircle */
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.2s;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
         }
 
-        .dock-item img { width: 22px; filter: invert(1); opacity: 0.8; }
+        .dock-item img { width: 24px; filter: contrast(0); } /* Делаем иконки темными */
         
-        /* Особый стиль для MAX и Телефона */
-        .dock-item.max { border: 1px solid var(--lime); }
-        .dock-item.max img { filter: none; opacity: 1; }
-        
+        .dock-item.max { border: 2px solid var(--lime); }
         .dock-item.phone { background: var(--lime); border: none; }
-        .dock-item.phone img { filter: none; opacity: 1; }
 
-        .dock-item:active { transform: scale(0.85); }
+        .dock-item:active { transform: scale(0.9); }
 
     </style>
 </head>
@@ -139,39 +138,38 @@
 
     <section class="hero">
         <div class="content">
-            <span class="badge">Ваш участок — наша ответственность</span>
+            <div class="badge">Ваш участок — наша ответственность</div>
             <h1 class="main-title">ПОРЯДОК<br>ПОД КЛЮЧ</h1>
             
-            <p class="description">
-                Профессионально удаляем деревья, которые мешают вам жить. <b>Расчищаем, дробим, вывозим.</b> Ни одной ветки после нашего отъезда.
+            <p class="hero-desc">
+                Профессионально удаляем деревья. <b>Расчищаем, дробим, вывозим.</b> Ни одной ветки после нашего отъезда.
             </p>
 
-            <a href="#" class="quiz-button" onclick="haptic()">
-                Получить расчет проекта →
+            <a href="#" class="main-btn" onclick="haptic()">
+                Рассчитать проект →
             </a>
         </div>
 
         <div class="side-dock">
             <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="dock-item max" onclick="haptic()">
-                <img src="https://img.icons8.com/ios-filled/50/ffffff/m.png" alt="MAX">
+                <img src="https://img.icons8.com/material-rounded/48/000000/m.png" alt="MAX">
             </a>
             <a href="https://t.me/daniil_glukhov17" class="dock-item" onclick="haptic()">
-                <img src="https://img.icons8.com/ios-filled/50/ffffff/telegram-app.png" alt="TG">
+                <img src="https://img.icons8.com/material-rounded/48/000000/telegram-app.png" alt="TG">
             </a>
             <a href="https://vk.com/daniil_glukhov17" class="dock-item" onclick="haptic()">
-                <img src="https://img.icons8.com/ios-filled/50/ffffff/vkontakte.png" alt="VK">
+                <img src="https://img.icons8.com/material-rounded/48/000000/vkontakte.png" alt="VK">
             </a>
             <a href="tel:+79785552114" class="dock-item phone" onclick="haptic()">
-                <img src="https://img.icons8.com/ios-filled/50/000000/phone.png" alt="Call">
+                <img src="https://img.icons8.com/material-rounded/48/000000/phone.png" alt="Call">
             </a>
         </div>
     </section>
 
     <script>
         function haptic() {
-            if (navigator.vibrate) navigator.vibrate(40);
+            if (navigator.vibrate) navigator.vibrate(35);
         }
     </script>
-
 </body>
 </html>

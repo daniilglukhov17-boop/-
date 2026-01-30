@@ -2,478 +2,151 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Спил деревьев в Крыму</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --lime: #DFFF11;
-            --max-glow: rgba(223, 255, 17, 0.5);
-        } 
+            --primary: #FF8C00; /* Оранжевый */
+            --dark: #1a1a1a;
+            --white: #ffffff;
+            --gray: #f4f4f4;
+        }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; } 
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
 
-        /* ДОБАВИЛ ОТСТУП ЗДЕСЬ, чтобы Hero-блок не заезжал под шапку */
-        body { 
-            background: #FFFFFF; 
-            font-family: 'Inter', sans-serif; 
-            min-height: 200vh; 
-            padding-top: 130px; 
-        } 
+        body { background-color: var(--dark); color: var(--white); }
 
-        /* Контейнер шапки */
-        .header-container {
+        /* --- ШАПКА --- */
+        header {
             position: fixed;
-            top: 25px; 
-            left: 14px; 
-            right: 14px;
-            z-index: 10000;
-            max-width: 500px;
-            margin: 0 auto;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
-        }
-
-        .header-hidden { transform: translateY(-130%); opacity: 0; }
-
-        /* ПАНЕЛЬ С НЕОНОВОЙ ОБВОДКОЙ КАК В MAX */
-        .obsidian-panel {
-            background: linear-gradient(180deg, #121212 0%, #000000 100%);
-            border-radius: 26px;
-            padding: 8px 10px 8px 24px;
+            top: 0; width: 100%;
+            padding: 15px 20px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            position: relative;
-            
-            /* Твоя неоновая обводка */
-            border: 1.5px solid var(--lime); 
-            box-shadow: 
-                0 0 15px var(--max-glow),          /* Внешнее мягкое свечение */
-                0 0 5px var(--lime),               /* Яркий контур */
-                inset 0 0 8px rgba(223, 255, 17, 0.1), 
-                0 20px 40px rgba(0, 0, 0, 0.4);
-        } 
-
-        .text-stack { display: flex; flex-direction: column; gap: 1px; } 
-
-        .status-line {
-            display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 8px;
-            font-weight: 900;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            margin-bottom: 2px;
-        } 
-
-        /* СВЕЧЕНИЕ БУКВЫ MAX (БЕЛОЕ ЯДРО + ОРЕОЛ) */
-        .status-line span {
-            color: #FFF;
-            filter: drop-shadow(0 0 8px var(--lime));
-            -webkit-font-smoothing: antialiased;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        .pulse-box {
-            position: relative;
-            width: 8px; height: 8px;
-            display: flex; align-items: center; justify-content: center;
-        } 
+        .logo { font-weight: 900; font-size: 1.2rem; letter-spacing: 1px; }
+        .logo span { color: var(--primary); }
 
-        .glow-dot {
-            width: 6px; height: 6px;
-            background: var(--lime);
+        .call-btn {
+            background: var(--primary);
+            color: white;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            filter: drop-shadow(0 0 6px var(--lime));
-        } 
-
-        .soft-wave {
-            position: absolute;
-            width: 100%; height: 100%;
-            border: 1px solid var(--lime);
-            border-radius: 50%;
-            animation: wave-out 3s infinite linear;
-        } 
-
-        @keyframes wave-out {
-            0% { transform: scale(1); opacity: 0.5; }
-            100% { transform: scale(4); opacity: 0; }
-        } 
-
-        .name-carved {
-            color: #fff;
-            font-size: 14px;
-            font-weight: 900;
-            letter-spacing: -0.2px;
-            text-transform: uppercase;
-        } 
-
-        /* КНОПКА "ВЫЗВАТЬ" */
-        .indented-btn {
-            background: var(--lime);
-            height: 50px;
-            padding: 0 24px;
-            border-radius: 20px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
             text-decoration: none;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 140, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 140, 0, 0); }
+        }
+
+        /* --- ХЕРО-БЛОК --- */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)), 
+                        url('https://images.unsplash.com/photo-1590496793907-39b7f523f972?auto=format&fit=crop&q=80') center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero h4 { color: var(--primary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; font-size: 0.9rem; }
+        .hero h1 { font-size: 2.2rem; line-height: 1.2; margin-bottom: 20px; }
+        .hero p { font-size: 1.1rem; color: #ccc; margin-bottom: 30px; max-width: 400px; }
+
+        /* --- КРАСИВАЯ КНОПКА СВЯЗИ --- */
+        .cta-container { width: 100%; max-width: 320px; }
+
+        .main-btn {
+            background: var(--primary);
+            color: white;
+            padding: 18px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
             border: none;
-            box-shadow: 
-                0 0 10px rgba(223, 255, 17, 0.3),
-                inset 4px 4px 8px rgba(0, 0, 0, 0.15);
-            transition: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-        } 
+            width: 100%;
+            cursor: pointer;
+        }
 
-        .indented-btn:active {
-            transform: scale(0.95) translateY(2px);
-            box-shadow: inset 0 8px 20px rgba(0,0,0,0.3);
-        } 
+        .social-links {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
 
-        .btn-label { color: #000; font-size: 11px; font-weight: 950; text-transform: uppercase; letter-spacing: 0.5px; } 
-        .btn-icon { width: 16px; height: 16px; fill: #000; } 
+        .social-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .social-btn i { font-size: 1.2rem; }
+        .social-btn.max { border-color: #007bff; }
+        .social-btn.tg { border-color: #26A5E4; }
+        .social-btn.vk { border-color: #4C75A3; }
+
     </style>
 </head>
-<body> 
+<body>
 
-    <div class="header-container" id="mainHeader">
-        <header class="obsidian-panel">
-            <div class="text-stack">
-                <div class="status-line">
-                    <div class="pulse-box">
-                        <div class="glow-dot"></div>
-                        <div class="soft-wave"></div>
-                    </div>
-                    <span>На связи • Симферополь</span>
-                </div>
-                <div class="name-carved">Даниил Глухов</div>
-            </div> 
+    <header>
+        <div class="logo">АРБОРИСТ<span>КРЫМ</span></div>
+        <a href="tel:+79785552114" class="call-btn">
+            <i class="fas fa-phone"></i>
+        </a>
+    </header>
 
-            <a href="tel:+79785552114" class="indented-btn" onclick="hapticHeroClick(event)">
-                <svg class="btn-icon" viewBox="0 0 24 24">
-                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1v3.5c0 .55-.45 1-1 1C10.74 21 3 13.26 3 3.5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                </svg>
-                <span class="btn-label">Вызвать</span>
-            </a>
-        </header>
-    </div> 
+    <section class="hero">
+        <h4>Работаем по всему Крыму</h4>
+        <h1>Безопасный спил деревьев любой сложности</h1>
+        <p>Оценка стоимости по фото за 5 минут. Несем полную ответственность за ваше имущество.</p>
 
-    <script>
-        // Твоя фирменная функция вибрации и звука
-        function hapticHeroClick(e) {
-            if (typeof navigator !== "undefined" && navigator.vibrate) {
-                navigator.vibrate([30, 15, 30]);
-            }
-            const AudioContext = window.AudioContext || window.webkitAudioContext;
-            if (AudioContext) {
-                try {
-                    const ctx = new AudioContext();
-                    const t = ctx.currentTime;
-                    const osc = ctx.createOscillator();
-                    const g = ctx.createGain();
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(125, t);
-                    osc.frequency.exponentialRampToValueAtTime(0.01, t + 0.1);
-                    g.gain.setValueAtTime(0.2, t);
-                    g.gain.exponentialRampToValueAtTime(0.01, t + 0.1);
-                    osc.connect(g); g.connect(ctx.destination);
-                    osc.start(); osc.stop(t + 0.1);
-                } catch (err) { }
-            }
-        }
-
-        // Логика исчезновения шапки при скролле
-        let lastScrollY = window.scrollY;
-        const header = document.getElementById('mainHeader');
-        window.addEventListener('scroll', () => {
-            const currentScrollY = window.scrollY;
-            if (currentScrollY > lastScrollY && currentScrollY > 100) {
-                header.classList.add('header-hidden');
-            } else if (currentScrollY < lastScrollY) {
-                header.classList.remove('header-hidden');
-            }
-            lastScrollY = currentScrollY;
-        }, { passive: true });
-    </script>
-<style>
-    :root {
-        --lime: #DFFF11;
-    } 
-
-    .hero-clean {
-        margin-top: 85px; 
-        padding: 0 24px 30px;
-        background: #FFFFFF;
-        font-family: 'Inter', sans-serif;
-        display: block;
-        clear: both;
-        position: relative;
-    } 
-
-    .service-no {
-        font-size: 10px;
-        font-weight: 900;
-        letter-spacing: 3px;
-        color: #000;
-        margin-bottom: 20px;
-        display: block;
-        opacity: 0.3;
-    } 
-
-    .hero-h1 {
-        font-size: 32px;
-        line-height: 1.0;
-        font-weight: 900;
-        color: #000;
-        text-transform: uppercase;
-        letter-spacing: -1.5px;
-        margin-bottom: 30px;
-    } 
-
-    .hero-h1 span {
-        display: block;
-        font-weight: 400;
-        font-size: 24px;
-        letter-spacing: 0;
-        margin-top: 5px;
-        color: #444;
-    } 
-
-    .benefit-row {
-        display: flex;
-        align-items: flex-start;
-        gap: 15px;
-        margin-bottom: 20px;
-        padding-top: 15px;
-        border-top: 1px solid #EEE;
-    } 
-
-    .benefit-marker {
-        width: 12px;
-        height: 12px;
-        background: var(--lime);
-        margin-top: 4px;
-        flex-shrink: 0;
-    } 
-
-    .benefit-content strong {
-        display: block;
-        font-size: 14px;
-        font-weight: 900;
-        text-transform: uppercase;
-        color: #000;
-    } 
-
-    .benefit-content p {
-        font-size: 13px;
-        color: #666;
-        line-height: 1.4;
-    } 
-
-    .sticky-contact {
-        margin-top: 35px;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    } 
-
-    .speed-tag {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 6px;
-        padding: 8px 14px;
-        background: linear-gradient(90deg, rgba(223, 255, 17, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
-        border-radius: 12px;
-        border-left: 3px solid var(--lime);
-        width: fit-content;
-    } 
-
-    .speed-tag span {
-        font-size: 11px;
-        font-weight: 950;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        color: #000;
-    } 
-
-    .speed-tag i {
-        width: 18px;
-        height: 18px;
-        background: #000;
-        border-radius: 6px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 0 10px rgba(223, 255, 17, 0.3);
-    } 
-
-    .speed-tag i::after {
-        content: '';
-        width: 7px;
-        height: 7px;
-        border: 1.5px solid var(--lime);
-        border-radius: 50%;
-        border-top-color: transparent;
-        animation: spin-watch 1.5s linear infinite;
-    } 
-
-    @keyframes spin-watch { to { transform: rotate(360deg); } } 
-
-    .btn-super {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-        transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
-    } 
-
-    .btn-max-top {
-        background: linear-gradient(180deg, #121212 0%, #000000 100%);
-        height: 72px;
-        border-radius: 24px;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-        border: 1px solid rgba(255,255,255,0.05);
-        flex-direction: column;
-        gap: 2px;
-    } 
-
-    .max-content { display: flex; align-items: center; gap: 12px; } 
-
-    .max-logo-neon {
-        width: 24px;
-        height: 24px;
-        filter: drop-shadow(0 0 8px var(--lime));
-    } 
-
-    .btn-text {
-        color: #FFF;
-        font-size: 13px;
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-    } 
-
-    .online-status {
-        font-size: 7px;
-        font-weight: 900;
-        color: var(--lime);
-        text-transform: uppercase;
-        letter-spacing: 3px;
-        opacity: 0.8;
-        margin-left: 36px;
-    } 
-
-    .sub-links-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-    } 
-
-    .btn-secondary-top {
-        height: 60px;
-        background: #FFFFFF;
-        border-radius: 20px;
-        border: 1px solid #EAEAEA;
-        color: #000;
-        font-size: 11px;
-        font-weight: 950;
-        text-transform: uppercase;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.03);
-        gap: 10px;
-    } 
-
-    .btn-super:active {
-        transform: scale(0.96) translateY(4px);
-        box-shadow: inset 0 8px 20px rgba(0,0,0,0.7);
-    } 
-
-    .m-icon { width: 22px; height: 22px; object-fit: contain; } 
-
-    .hero-footer { clear: both; padding-top: 10px; }
-</style> 
-
-<section class="hero-clean">
-    <span class="service-no"></span>
-    
-    <h1 class="hero-h1">
-        СПИЛ ДЕРЕВЬЕВ
-        <span>И ПОЛНАЯ РАСЧИСТКА УЧАСТКОВ</span>
-    </h1> 
-
-    <div class="benefit-row">
-        <div class="benefit-marker"></div>
-        <div class="benefit-content">
-            <strong>За один рабочий день</strong>
-            <p>Сдаем объект идеально чистым под строительство или продажу.</p>
-        </div>
-    </div> 
-
-    <div class="benefit-row">
-        <div class="benefit-marker"></div>
-        <div class="benefit-content">
-            <strong>Свой парк техники</strong>
-            <p>Вывоз веток и мусора собственным транспортом без посредников.</p>
-        </div>
-    </div> 
-
-    <div class="sticky-contact">
-        <div class="speed-tag">
-            <i></i>
-            <span>Оценка по фото за 5 мин</span>
-        </div> 
-
-        <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D0%B8%D1%88%D1%83%20%D0%B2%D0%B0%D0%BC%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0" 
-           class="btn-super btn-max-top" onclick="hapticHeroClick(event)">
-            <div class="max-content">
-                <img src="https://img.icons8.com/ios-filled/50/ffffff/m.png" class="max-logo-neon" alt="MAX">
-                <span class="btn-text">Написать в MAX</span>
+        <div class="cta-container">
+            <button class="main-btn" onclick="document.getElementById('socials').scrollIntoView({behavior: 'smooth'})">
+                УЗНАТЬ ЦЕНУ ПО ФОТО
+            </button>
+            
+            <div class="social-links" id="socials">
+                <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="social-btn max">
+                    <i class="fas fa-comment-dots"></i> MAX
+                </a>
+                <a href="https://t.me/daniil_glukhov17" class="social-btn tg">
+                    <i class="fab fa-telegram-plane"></i> TG
+                </a>
+                <a href="https://vk.com/daniil_glukhov17" class="social-btn vk">
+                    <i class="fab fa-vk"></i> VK
+                </a>
             </div>
-            <span class="online-status">● Сейчас ОНЛАЙН</span>
-        </a> 
-
-        <div class="sub-links-row">
-            <a href="https://t.me/daniil_glukhov17" class="btn-super btn-secondary-top" onclick="hapticHeroClick(event)">
-                <img src="https://img.icons8.com/ios-filled/50/000000/telegram-app.png" class="m-icon" alt="TG">
-                Telegram
-            </a>
-            <a href="https://vk.com/daniil_glukhov17" class="btn-super btn-secondary-top" onclick="hapticHeroClick(event)">
-                <img src="https://img.icons8.com/ios-filled/50/000000/vkontakte.png" class="m-icon" alt="VK">
-                Вконтакте
-            </a>
         </div>
-    </div>
-    
-    <div class="hero-footer"></div>
-</section> 
-
-<script>
-    // Изолированная функция вибрации для Hero-блока
-    function hapticHeroClick(e) {
-        // Вибрация
-        if (typeof navigator !== "undefined" && navigator.vibrate) {
-            navigator.vibrate([30, 15, 30]);
-        }
-        
-        // Звуковой отклик (Bass Click)
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        if (AudioContext) {
-            try {
-                const ctx = new AudioContext();
-                const t = ctx.currentTime;
-                const osc = ctx.createOscillator();
-                const g = ctx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(125, t);
-                osc.frequency.exponentialRampToValueAtTime(0.01, t + 0.1);
-                g.gain.setValueAtTime(0.2, t);
-                g.gain.exponentialRampToValueAtTime(0.01, t + 0.1);
-                osc.connect(g); g.connect(ctx.destination);
-                osc.start(); osc.stop(t + 0.1);
-            } catch (err) { console.log('Audio init skipped'); }
-        }
-    }
-</script>
+    </section>
 
 </body>
 </html>

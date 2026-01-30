@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@700;900&family=Inter:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --lime: #D7FF00;
+            --lime: #E6FF00; /* Чуть ярче лайм для контраста */
             --white: #FFFFFF;
         }
 
@@ -28,90 +28,116 @@
             background-size: cover;
             display: flex;
             flex-direction: column;
-            /* Центрируем всё по вертикали и горизонтали */
             justify-content: center;
             align-items: center;
             padding: 30px 20px;
-            text-align: center; /* Главное оружие против "кривизны" */
+            text-align: center;
         }
 
-        /* Умный градиент: затемняет центр и края, чтобы выделить текст */
+        /* Усиленное затемнение для максимального контраста */
         .hero::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.8) 100%);
+            /* Более глубокое затемнение по всей площади + виньетка */
+            background: rgba(0,0,0,0.3);
+            background-image: radial-gradient(circle at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 90%);
             z-index: 1;
         }
 
-        .content { position: relative; z-index: 5; width: 100%; max-width: 500px; }
-
-        /* ВЕРХНИЙ БЕЙДЖ */
-        .badge {
-            display: inline-block;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--lime);
-            margin-bottom: 20px;
-            /* Тень для бейджа */
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        /* ШАПКА САЙТА */
+        .header {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
         }
 
-        /* ЗАГОЛОВОК - ТЕПЕРЬ ИДЕАЛЬНО ЧИТАЕМЫЙ */
+        .logo {
+            font-family: 'Inter Tight', sans-serif;
+            font-weight: 900;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+        .logo span { color: var(--lime); }
+
+        .header-btn {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 12px; font-weight: 700; text-transform: uppercase;
+            color: var(--white); text-decoration: none;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 16px; border-radius: 100px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .header-btn img { width: 14px; filter: invert(1); }
+
+        /* КОНТЕНТ ПО ЦЕНТРУ */
+        .content { position: relative; z-index: 5; width: 100%; max-width: 500px; margin-top: 40px; }
+
+        /* БЕЙДЖ */
+        .badge {
+            display: inline-block;
+            font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px;
+            color: var(--lime);
+            margin-bottom: 20px;
+            /* Двойная тень для четкости */
+            text-shadow: 0 1px 2px rgba(0,0,0,1), 0 0 15px rgba(230, 255, 0, 0.4);
+        }
+
+        /* ГЛАВНЫЙ ЗАГОЛОВОК - ИСПРАВЛЕННЫЙ */
         .main-title {
             font-family: 'Inter Tight', sans-serif;
-            font-size: clamp(48px, 16vw, 90px);
+            font-size: clamp(46px, 15vw, 85px);
             font-weight: 900;
-            line-height: 0.9;
-            letter-spacing: -2px;
+            /* Увеличили высоту строки, чтобы не слипалось */
+            line-height: 1.05;
+            /* Убрали отрицательный спейсинг */
+            letter-spacing: 0px;
             text-transform: uppercase;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             color: #FFFFFF;
-            /* СЕКРЕТ ЧИТАЕМОСТИ: Мягкая, глубокая тень */
-            text-shadow: 0 4px 30px rgba(0, 0, 0, 1);
+            /* ДВОЙНАЯ ТЕНЬ: Жесткий контур + мягкое свечение */
+            text-shadow: 
+                0 3px 6px rgba(0, 0, 0, 0.9),
+                0 10px 30px rgba(0, 0, 0, 0.6);
         }
 
         /* ОФФЕР */
         .description {
-            font-size: 16px;
-            line-height: 1.5;
-            font-weight: 400;
-            color: rgba(255,255,255,0.95);
+            font-size: 17px; line-height: 1.6; font-weight: 500;
+            color: rgba(255,255,255,1); /* Максимальная яркость */
             margin-bottom: 40px;
-            /* Тень для мелкого текста */
-            text-shadow: 0 2px 15px rgba(0,0,0,0.8);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.9);
         }
-        .description b { color: var(--lime); font-weight: 600; }
+        .description b { color: var(--lime); font-weight: 700; }
 
         /* ГЛАВНАЯ КНОПКА */
         .main-btn {
-            width: 100%;
-            height: 74px;
-            background: var(--lime);
-            color: #000;
+            width: 100%; height: 76px;
+            background: var(--lime); color: #000;
             border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 16px;
-            text-transform: uppercase;
-            text-decoration: none;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5); /* Мощная тень кнопки */
-            margin-bottom: 30px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 16px; text-transform: uppercase; text-decoration: none;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 20px rgba(230, 255, 0, 0.4);
+            margin-bottom: 35px;
         }
 
-        /* СОЦСЕТИ ВНИЗУ ПО ЦЕНТРУ */
-        .socials { display: flex; justify-content: center; gap: 20px; }
-        .s-link img { width: 22px; filter: invert(1); opacity: 0.7; }
-        .s-link.active img { filter: none; opacity: 1; }
-        .s-link.active { position: relative; }
-        /* Лаймовая точка под активной иконкой */
-        .s-link.active::after {
-            content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
-            width: 5px; height: 5px; background: var(--lime); border-radius: 50%;
+        /* СОЦСЕТИ */
+        .socials { display: flex; justify-content: center; gap: 25px; }
+        .s-link img { width: 24px; filter: invert(1); opacity: 0.8; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)); }
+        .s-link.active img { opacity: 1; filter: invert(0); }
+        .s-link.active { 
+            background: var(--lime);
+            width: 44px; height: 44px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(230, 255, 0, 0.3);
         }
 
     </style>
@@ -119,24 +145,32 @@
 <body>
 
     <section class="hero">
+        <header class="header">
+            <div class="logo">Arborist <span>Pro</span></div>
+            <a href="tel:+79785552114" class="header-btn" onclick="haptic()">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/phone.png">
+                Позвонить
+            </a>
+        </header>
+
         <div class="content">
-            <span class="badge">Профессиональный Арборизм</span>
-            <h1 class="main-title">ПОРЯДОК<br>ПОД КЛЮЧ</h1>
+            <span class="badge">Крым • Работаем под ключ</span>
+            <h1 class="main-title">ПОРЯДОК<br>НА УЧАСТКЕ</h1>
             
             <p class="description">
-                Удаляем сложные деревья. <b>Расчищаем, дробим и вывозим.</b> Участок готов к строительству.
+                Спил сложных деревьев. <b>Расчистка, дробление и вывоз.</b> Идеальная чистота после работ.
             </p>
 
             <a href="#" class="main-btn" onclick="haptic()">
-                Рассчитать стоимость
+                Рассчитать стоимость проекта
             </a>
 
             <div class="socials">
-                <a href="tel:+79785552114" class="s-link active" onclick="haptic()">
-                    <img src="https://img.icons8.com/ios-filled/50/000000/phone.png">
+                <a href="https://t.me/daniil_glukhov17" class="s-link active" onclick="haptic()">
+                    <img src="https://img.icons8.com/ios-filled/50/000000/telegram-app.png">
                 </a>
-                <a href="https://t.me/daniil_glukhov17" class="s-link" onclick="haptic()">
-                    <img src="https://img.icons8.com/ios-filled/50/ffffff/telegram-app.png">
+                <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="s-link" onclick="haptic()">
+                    <img src="https://img.icons8.com/ios-filled/50/ffffff/m.png">
                 </a>
                 <a href="https://vk.com/daniil_glukhov17" class="s-link" onclick="haptic()">
                     <img src="https://img.icons8.com/ios-filled/50/ffffff/vkontakte.png">

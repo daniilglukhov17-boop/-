@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --lime: #E6FF00;
-            --glass: rgba(0, 0, 0, 0.4);
+            --white: #FFFFFF;
+            --glass: rgba(255, 255, 255, 0.03);
             --border: rgba(255, 255, 255, 0.1);
         }
 
@@ -16,26 +17,11 @@
         body { 
             background: #000; 
             font-family: 'Inter', sans-serif; 
-            color: #fff; 
+            color: var(--white); 
             overflow: hidden; 
         }
 
-        /* ТОПОВАЯ ШАПКА */
-        .premium-header {
-            position: fixed;
-            top: 0; width: 100%; z-index: 1000;
-            padding: 20px 24px;
-            display: flex; justify-content: space-between; align-items: center;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .logo { font-weight: 900; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; }
-        .status { display: flex; align-items: center; gap: 8px; font-size: 10px; font-weight: 600; opacity: 0.6; }
-        .dot { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; box-shadow: 0 0 10px var(--lime); }
-
-        /* ГЛАВНЫЙ ЭКРАН */
+        /* ЭФФЕКТ ПОГРУЖЕНИЯ */
         .hero {
             position: relative;
             height: 100vh;
@@ -44,144 +30,147 @@
             background-size: cover;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Текст по центру для премиальности */
-            padding: 0 24px;
+            justify-content: flex-end; /* Контент прижат к низу для удобства пальца */
+            padding: 40px 20px 140px;
         }
 
-        .hero::before {
+        /* Сложное освещение кадра */
+        .hero::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
+            background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.2) 100%);
             z-index: 1;
         }
 
-        .content { position: relative; z-index: 2; margin-top: 40px; }
+        .content { position: relative; z-index: 2; }
 
-        /* ПРЕМИУМ ОФФЕР */
-        .title {
-            font-size: clamp(38px, 12vw, 56px);
+        /* ОФФЕР КОТОРЫЙ ЦЕПЛЯЕТ */
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--lime);
+            color: #000;
+            font-size: 10px;
             font-weight: 900;
-            line-height: 0.85;
-            letter-spacing: -3px;
             text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 4px;
             margin-bottom: 20px;
         }
 
-        .services-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-
-        .service-tag {
-            font-size: 11px;
-            font-weight: 600;
+        .main-title {
+            font-size: clamp(48px, 15vw, 80px);
+            font-weight: 900;
+            line-height: 0.8;
+            letter-spacing: -4px;
             text-transform: uppercase;
-            padding: 6px 12px;
-            border: 1px solid var(--border);
-            border-radius: 100px;
-            background: var(--glass);
-            letter-spacing: 1px;
+            margin-bottom: 25px;
         }
 
-        .service-tag span { color: var(--lime); margin-right: 5px; }
+        .hero-desc {
+            font-size: 16px;
+            line-height: 1.4;
+            max-width: 300px;
+            margin-bottom: 40px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.7);
+        }
 
-        /* КНОПКА КВИЗА */
-        .premium-btn {
-            background: var(--lime);
+        .hero-desc b { color: var(--white); }
+
+        /* КНОПКА КВИЗА — НОВЫЙ УРОВЕНЬ */
+        .cta-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .main-btn {
+            flex: 1;
+            height: 70px;
+            background: var(--white);
             color: #000;
-            padding: 22px 32px;
-            border-radius: 24px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: 900;
             text-transform: uppercase;
             font-size: 14px;
-            border: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 15px 40px rgba(230, 255, 0, 0.25);
+            text-decoration: none;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
-        /* 4 КРУЖОЧКА СПРАВА */
-        .side-dock {
+        /* ПРАВЫЕ КНОПКИ — ТОНКИЙ СТЕКЛОМОРФИЗМ */
+        .side-panel {
             position: fixed;
             right: 20px;
-            bottom: 40px;
+            top: 50%;
+            transform: translateY(-50%);
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
             z-index: 1000;
         }
 
-        .circle {
-            width: 62px;
-            height: 62px;
+        .action-circle {
+            width: 52px;
+            height: 52px;
+            border-radius: 18px; /* Квадрат со скруглением — это свежее */
             background: var(--glass);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--border);
-            border-radius: 50%;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .circle img { width: 24px; filter: invert(1); }
-        .circle.call-main { background: var(--lime); border: none; }
-        .circle.call-main img { filter: none; }
-        .circle:active { transform: scale(0.85); }
+        .action-circle img { width: 22px; filter: invert(1); opacity: 0.8; }
+        .action-circle.call { background: var(--lime); border: none; }
+        .action-circle.call img { filter: none; opacity: 1; }
 
     </style>
 </head>
 <body>
 
-    <header class="premium-header">
-        <div class="logo">Premium Arborist</div>
-        <div class="status">
-            <div class="dot"></div>
-            Online 24/7
-        </div>
-    </header>
-
     <section class="hero">
         <div class="content">
-            <h1 class="title">ЭСТЕТИКА<br>ВАШЕЙ ЗЕМЛИ</h1>
+            <div class="badge">Крым • Арборизм</div>
+            <h1 class="main-title">ПОЛНАЯ<br>ЗАЧИСТКА</h1>
             
-            <div class="services-list">
-                <div class="service-tag"><span>/</span> Расчистка</div>
-                <div class="service-tag"><span>/</span> Спил</div>
-                <div class="service-tag"><span>/</span> Вывоз мусора</div>
-            </div>
+            <p class="hero-desc">
+                Премиальный спил деревьев, <b>расчистка территорий</b> и моментальный вывоз мусора. Порядок без компромиссов.
+            </p>
 
-            <button class="premium-btn" onclick="haptic()">
-                Узнать стоимость
-                <span style="font-size: 20px;">→</span>
-            </button>
+            <div class="cta-box">
+                <a href="#" class="main-btn" onclick="haptic()">
+                    Рассчитать проект →
+                </a>
+            </div>
+        </div>
+
+        <div class="side-panel">
+            <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="action-circle" style="border: 1px solid var(--lime)" onclick="haptic()">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/m.png" style="filter: none;">
+            </a>
+            <a href="https://t.me/daniil_glukhov17" class="action-circle" onclick="haptic()">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/telegram-app.png">
+            </a>
+            <a href="https://vk.com/daniil_glukhov17" class="action-circle" onclick="haptic()">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/vkontakte.png">
+            </a>
+            <a href="tel:+79785552114" class="action-circle call" onclick="haptic()">
+                <img src="https://img.icons8.com/ios-filled/50/000000/phone.png">
+            </a>
         </div>
     </section>
 
-    <div class="side-dock">
-        <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="circle" style="border-color: var(--lime);" onclick="haptic()">
-            <img src="https://img.icons8.com/ios-filled/50/ffffff/m.png" style="filter: none;">
-        </a>
-        <a href="https://t.me/daniil_glukhov17" class="circle" onclick="haptic()">
-            <img src="https://img.icons8.com/ios-filled/50/ffffff/telegram-app.png">
-        </a>
-        <a href="https://vk.com/daniil_glukhov17" class="circle" onclick="haptic()">
-            <img src="https://img.icons8.com/ios-filled/50/ffffff/vkontakte.png">
-        </a>
-        <a href="tel:+79785552114" class="circle call-main" onclick="haptic()">
-            <img src="https://img.icons8.com/ios-filled/50/000000/phone.png">
-        </a>
-    </div>
-
     <script>
         function haptic() {
-            if (navigator.vibrate) navigator.vibrate(40);
+            if (navigator.vibrate) navigator.vibrate(50);
         }
     </script>
 </body>

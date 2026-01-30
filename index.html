@@ -463,82 +463,71 @@
         }
     }
 </script>
-<section class="cases-section">
+<section class="p-port">
     <style>
-        .cases-section {
+        .p-port {
             width: 100%;
             max-width: 500px;
-            padding: 40px 0;
+            padding: 0 0 60px; /* Убрал верхний отступ */
             background: #fff;
             font-family: 'Inter', sans-serif;
             overflow: hidden;
         }
 
-        /* ДИНАМИЧЕСКИЙ ЗАГОЛОВОК */
-        .cases-header {
-            padding: 0 24px;
+        /* ЧИСТЫЙ ЗАГОЛОВОК */
+        .p-head {
+            padding: 0 24px 25px;
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 25px;
+            align-items: center;
         }
 
-        .cases-header h2 {
-            font-size: 45px;
+        .p-head h2 {
+            font-size: 28px;
             font-weight: 900;
-            letter-spacing: -3px;
             text-transform: uppercase;
-            line-height: 0.8;
+            letter-spacing: -1.5px;
             margin: 0;
+            color: #000;
         }
 
-        .case-switcher {
-            font-variant-numeric: tabular-nums;
-            font-weight: 900;
-            font-size: 16px;
-            color: var(--lime);
-            background: #000;
-            padding: 5px 12px;
-            border-radius: 12px;
+        .p-head span {
+            font-size: 11px;
+            font-weight: 800;
+            color: #888;
+            letter-spacing: 2px;
         }
 
-        /* ГЛАВНЫЙ КОНТЕЙНЕР */
-        .slider-container {
-            position: relative;
-            width: 100%;
-        }
-
-        .cards-scroll {
+        /* ГЛАВНЫЙ СЛАЙДЕР (ИСПРАВЛЕННЫЙ) */
+        .p-track {
             display: flex;
-            overflow-x: auto;
+            overflow-x: scroll;
             scroll-snap-type: x mandatory;
-            gap: 12px;
-            padding: 0 24px 30px;
+            gap: 10px;
+            padding: 0 24px;
             scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
         }
-        .cards-scroll::-webkit-scrollbar { display: none; }
+        .p-track::-webkit-scrollbar { display: none; }
 
-        .card-frame {
-            min-width: calc(100vw - 48px);
-            max-width: 452px;
+        .p-item {
+            min-width: calc(100% - 10px); /* Четкая ширина для фикса скролла */
             scroll-snap-align: center;
             position: relative;
         }
 
-        /* ОБЛАСТЬ СРАВНЕНИЯ */
-        .compare-ui {
+        /* ФОРМАТ 4:3 */
+        .p-frame {
             position: relative;
             width: 100%;
             aspect-ratio: 4/3;
-            border-radius: 28px;
+            border-radius: 20px;
             overflow: hidden;
-            background: #111;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            touch-action: pan-y; /* Важно: разрешает скролл страницы */
+            background: #000;
+            touch-action: pan-y; /* Позволяет листать страницу по вертикали */
         }
 
-        .img-item {
+        .p-img {
             position: absolute;
             inset: 0;
             background-size: cover;
@@ -546,178 +535,161 @@
             pointer-events: none;
         }
 
-        .img-before {
+        .p-before {
             z-index: 2;
             width: 50%;
-            border-right: 2px solid var(--lime);
+            border-right: 1px solid rgba(223, 255, 17, 0.8);
         }
 
-        /* КНОПКА УПРАВЛЕНИЯ (БОЛЕЕ ЗАМЕТНАЯ) */
-        .handle {
+        /* МИНИМАЛИСТИЧНЫЙ ПОЛЗУНОК */
+        .p-line {
             position: absolute;
             top: 0; bottom: 0; left: 50%;
-            width: 2px; background: var(--lime);
+            width: 1px; background: var(--lime);
             z-index: 10; transform: translateX(-50%);
             pointer-events: none;
         }
 
-        .handle-button {
+        .p-knob {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 56px; height: 56px;
+            width: 44px; height: 44px;
             background: #000;
-            border: 2px solid var(--lime);
-            border-radius: 20px;
+            border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 25px rgba(0,0,0,0.4);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
         }
 
-        .handle-button svg {
-            width: 24px; height: 24px; fill: var(--lime);
-        }
-
-        /* ПОДПИСИ */
-        .card-footer {
-            margin-top: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .card-footer strong { font-size: 16px; text-transform: uppercase; font-weight: 900; }
-        .card-footer .sep { width: 20px; height: 2px; background: #EEE; }
-        .card-footer span { font-size: 13px; color: #888; }
-
-        /* МЕТКА ДЛЯ 5-ОГО ФОТО */
-        .process-badge {
-            position: absolute;
-            top: 20px; left: 20px;
+        .p-knob::after {
+            content: '';
+            width: 4px; height: 4px;
             background: var(--lime);
-            color: #000;
-            padding: 6px 14px;
-            border-radius: 12px;
-            font-size: 11px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--lime);
+        }
+
+        /* ПОДПИСЬ КЕЙСА */
+        .p-meta {
+            margin-top: 15px;
+            padding: 0 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .p-meta strong { font-size: 15px; text-transform: uppercase; font-weight: 900; }
+        .p-meta em { font-style: normal; font-size: 12px; color: #BBB; font-weight: 700; }
+
+        /* ИНДИКАТОР ПРОГРЕССА (APPLE STYLE) */
+        .p-nav-line {
+            width: calc(100% - 48px);
+            height: 2px;
+            background: #f0f0f0;
+            margin: 25px auto 0;
+            position: relative;
+            border-radius: 2px;
+        }
+
+        .p-nav-fill {
+            position: absolute;
+            height: 100%;
+            width: 20%;
+            background: #000;
+            left: 0;
+            transition: left 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .live-tag {
+            position: absolute;
+            top: 15px; left: 15px;
+            background: #000;
+            color: var(--lime);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 9px;
             font-weight: 900;
             text-transform: uppercase;
         }
     </style>
 
-    <div class="cases-header">
-        <h2>Кейсы</h2>
-        <div class="case-switcher" id="counter">01 / 05</div>
+    <div class="p-head">
+        <h2>Портфолио</h2>
+        <span id="pNum">01 / 05</span>
     </div>
 
-    <div class="slider-container">
-        <div class="cards-scroll" id="mainScroll">
-            
-            <div class="card-frame">
-                <div class="compare-ui" onpointermove="moveCompare(event)">
-                    <div class="img-item" style="background-image: url('ФОТО_1_ПОСЛЕ.jpg');"></div>
-                    <div class="img-item img-before" style="background-image: url('ФОТО_1_ДО.jpg');"></div>
-                    <div class="handle"><div class="handle-button">
-                        <svg viewBox="0 0 24 24"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"/></svg>
-                    </div></div>
-                </div>
-                <div class="card-footer">
-                    <strong>Спил сосны</strong>
-                    <div class="sep"></div>
-                    <span>Симферополь</span>
-                </div>
+    <div class="p-track" id="pTrack">
+        <div class="p-item">
+            <div class="p-frame" onpointermove="pComp(event)">
+                <div class="p-img" style="background-image: url('ФОТО_1_ПОСЛЕ.jpg');"></div>
+                <div class="p-img p-before" style="background-image: url('ФОТО_1_ДО.jpg');"></div>
+                <div class="p-line"><div class="p-knob"></div></div>
             </div>
+            <div class="p-meta"><strong>Сложное удаление</strong><em>Крым</em></div>
+        </div>
 
-            <div class="card-frame">
-                <div class="compare-ui" onpointermove="moveCompare(event)">
-                    <div class="img-item" style="background-image: url('ФОТО_2_ПОСЛЕ.jpg');"></div>
-                    <div class="img-item img-before" style="background-image: url('ФОТО_2_ДО.jpg');"></div>
-                    <div class="handle"><div class="handle-button">
-                        <svg viewBox="0 0 24 24"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"/></svg>
-                    </div></div>
-                </div>
-                <div class="card-footer">
-                    <strong>Расчистка</strong>
-                    <div class="sep"></div>
-                    <span>Севастополь</span>
-                </div>
+        <div class="p-item">
+            <div class="p-frame" onpointermove="pComp(event)">
+                <div class="p-img" style="background-image: url('ФОТО_2_ПОСЛЕ.jpg');"></div>
+                <div class="p-img p-before" style="background-image: url('ФОТО_2_ДО.jpg');"></div>
+                <div class="p-line"><div class="p-knob"></div></div>
             </div>
+            <div class="p-meta"><strong>Расчистка участка</strong><em>ЮБК</em></div>
+        </div>
 
-            <div class="card-frame">
-                <div class="compare-ui" onpointermove="moveCompare(event)">
-                    <div class="img-item" style="background-image: url('ФОТО_3_ПОСЛЕ.jpg');"></div>
-                    <div class="img-item img-before" style="background-image: url('ФОТО_3_ДО.jpg');"></div>
-                    <div class="handle"><div class="handle-button">
-                        <svg viewBox="0 0 24 24"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"/></svg>
-                    </div></div>
-                </div>
-                <div class="card-footer">
-                    <strong>Обрезка</strong>
-                    <div class="sep"></div>
-                    <span>Ялта</span>
-                </div>
+        <div class="p-item">
+            <div class="p-frame" onpointermove="pComp(event)">
+                <div class="p-img" style="background-image: url('ФОТО_3_ПОСЛЕ.jpg');"></div>
+                <div class="p-img p-before" style="background-image: url('ФОТО_3_ДО.jpg');"></div>
+                <div class="p-line"><div class="p-knob"></div></div>
             </div>
+            <div class="p-meta"><strong>Обрезка деревьев</strong><em>Ялта</em></div>
+        </div>
 
-            <div class="card-frame">
-                <div class="compare-ui" onpointermove="moveCompare(event)">
-                    <div class="img-item" style="background-image: url('ФОТО_4_ПОСЛЕ.jpg');"></div>
-                    <div class="img-item img-before" style="background-image: url('ФОТО_4_ДО.jpg');"></div>
-                    <div class="handle"><div class="handle-button">
-                        <svg viewBox="0 0 24 24"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"/></svg>
-                    </div></div>
-                </div>
-                <div class="card-footer">
-                    <strong>Пни</strong>
-                    <div class="sep"></div>
-                    <span>Алушта</span>
-                </div>
+        <div class="p-item">
+            <div class="p-frame" onpointermove="pComp(event)">
+                <div class="p-img" style="background-image: url('ФОТО_4_ПОСЛЕ.jpg');"></div>
+                <div class="p-img p-before" style="background-image: url('ФОТО_4_ДО.jpg');"></div>
+                <div class="p-line"><div class="p-knob"></div></div>
             </div>
+            <div class="p-meta"><strong>Корчевание пней</strong><em>Севастополь</em></div>
+        </div>
 
-            <div class="card-frame">
-                <div class="compare-ui">
-                    <div class="img-item" style="background-image: url('ФОТО_ПРОЦЕССА.jpg');"></div>
-                    <div class="process-badge">Live Процесс</div>
-                </div>
-                <div class="card-footer">
-                    <strong>Команда в деле</strong>
-                    <div class="sep"></div>
-                    <span>Объект #42</span>
-                </div>
+        <div class="p-item">
+            <div class="p-frame">
+                <div class="p-img" style="background-image: url('ФОТО_ПРОЦЕССА.jpg');"></div>
+                <div class="live-tag">Live процесс</div>
             </div>
-
+            <div class="p-meta"><strong>Наша команда</strong><em>В работе</em></div>
         </div>
     </div>
 
+    <div class="p-nav-line"><div class="p-nav-fill" id="pFill"></div></div>
+
     <script>
-        // Слайдер сравнения (До/После)
-        function moveCompare(e) {
-            // Реагируем только если зажато (клик или тач)
+        function pComp(e) {
             if (e.pointerType === 'mouse' && e.buttons !== 1) return;
-            
-            const box = e.currentTarget;
-            const before = box.querySelector('.img-before');
-            const handle = box.querySelector('.handle');
-            
-            const rect = box.getBoundingClientRect();
+            const frame = e.currentTarget;
+            const before = frame.querySelector('.p-before');
+            const line = frame.querySelector('.p-line');
+            const rect = frame.getBoundingClientRect();
             let x = e.clientX - rect.left;
             let pos = (x / rect.width) * 100;
-
             if (pos >= 0 && pos <= 100) {
                 before.style.width = pos + '%';
-                handle.style.left = pos + '%';
-                
-                // Вибрация (Haptic)
-                if (navigator.vibrate && Math.round(pos) % 2 === 0) {
-                    navigator.vibrate(8);
-                }
+                line.style.left = pos + '%';
+                if (navigator.vibrate && Math.round(pos) % 2 === 0) navigator.vibrate(8);
             }
         }
 
-        // Обновление счетчика при скролле
-        const scroller = document.getElementById('mainScroll');
-        const counter = document.getElementById('counter');
+        const track = document.getElementById('pTrack');
+        const fill = document.getElementById('pFill');
+        const num = document.getElementById('pNum');
 
-        scroller.addEventListener('scroll', () => {
-            const index = Math.round(scroller.scrollLeft / scroller.offsetWidth);
-            counter.innerText = `0${index + 1} / 05`;
+        track.addEventListener('scroll', () => {
+            const index = Math.round(track.scrollLeft / track.offsetWidth);
+            fill.style.left = (index * 20) + '%';
+            num.innerText = `0${index + 1} / 05`;
         });
     </script>
 </section>

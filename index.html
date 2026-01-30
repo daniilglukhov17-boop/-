@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+    <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -15,13 +16,13 @@
         body { 
             background: #FFFFFF; 
             font-family: 'Inter', sans-serif; 
-            min-height: 200vh; /* Чтобы было куда скроллить для теста */
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
         } 
 
-        /* ДОБАВИЛ ПЛАВНОСТЬ В ТВОЙ КЛАСС */
+        /* Шапка с анимацией */
         .header-container {
             position: fixed;
             top: 25px;
@@ -34,7 +35,7 @@
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
         } 
 
-        /* НОВЫЙ КЛАСС ДЛЯ СКРЫТИЯ */
+        /* Состояние "скрыто" */
         .header-hidden {
             transform: translateY(-130px);
             opacity: 0;
@@ -124,22 +125,8 @@
             transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
         } 
 
-        .indented-btn:active {
-            transform: translateY(2px) scale(0.97); 
-            box-shadow: 
-                inset 10px 10px 20px rgba(0, 0, 0, 0.5), 
-                inset -2px -2px 10px rgba(255, 255, 255, 0.3);
-            filter: brightness(0.9);
-        } 
-
-        .btn-label {
-            color: #000;
-            font-size: 12px;
-            font-weight: 950;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        } 
-
+        .indented-btn:active { transform: translateY(2px) scale(0.97); } 
+        .btn-label { color: #000; font-size: 12px; font-weight: 950; text-transform: uppercase; } 
         .btn-icon { width: 16px; height: 16px; fill: #000; } 
     </style>
 </head>
@@ -167,31 +154,25 @@
         </header>
     </div> 
 
-    <div style="height: 2000px; padding-top: 150px; text-align: center; color: #ccc;">
-        <p>Листай вниз — шапка спрячется</p>
-        <p>Листай вверх — шапка появится</p>
-    </div>
-
     <script>
-        // ЛОГИКА СКРОЛЛА
         const header = document.getElementById('mainHeader');
         let lastScrollY = window.scrollY;
 
         window.addEventListener('scroll', () => {
+            // Если скроллим вниз и проехали больше 100px — прячем
             if (window.scrollY > lastScrollY && window.scrollY > 100) {
                 header.classList.add('header-hidden');
-            } else {
+            } 
+            // Если скроллим вверх — показываем
+            else {
                 header.classList.remove('header-hidden');
             }
             lastScrollY = window.scrollY;
         });
 
-        // ТВОЯ КНОПКА
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); 
-
         function masterClick(e) {
             if (navigator.vibrate) navigator.vibrate(25); 
-
             const t = audioCtx.currentTime;
             const lowOsc = audioCtx.createOscillator();
             const lowGain = audioCtx.createGain();
@@ -201,44 +182,11 @@
             lowGain.gain.setValueAtTime(0.7, t);
             lowGain.gain.exponentialRampToValueAtTime(0.01, t + 0.15);
             lowOsc.connect(lowGain); lowGain.connect(audioCtx.destination); 
-
-            const midOsc = audioCtx.createOscillator();
-            const midGain = audioCtx.createGain();
-            midOsc.type = 'triangle'; 
-            midOsc.frequency.setValueAtTime(400, t);
-            midOsc.frequency.exponentialRampToValueAtTime(100, t + 0.05);
-            midGain.gain.setValueAtTime(0.15, t);
-            midGain.gain.exponentialRampToValueAtTime(0.01, t + 0.05);
-            midOsc.connect(midGain); midGain.connect(audioCtx.destination); 
-
             lowOsc.start(); lowOsc.stop(t + 0.15);
-            midOsc.start(); midOsc.stop(t + 0.05);
         }
     </script>
 </body>
 </html>
-
-    <div class="header-container" id="smartHeader">
-        <header class="obsidian-panel">
-            <div class="text-stack">
-                <div class="status-line">
-                    <div class="pulse-box">
-                        <div class="glow-dot"></div>
-                        <div class="soft-wave"></div>
-                    </div>
-                    <span>На связи • Симферополь</span>
-                </div>
-                <div class="name-carved">Даниил Глухов</div>
-            </div> 
-
-            <a href="tel:+79785552114" class="indented-btn" onclick="masterClick(event)">
-                <svg class="btn-icon" viewBox="0 0 24 24">
-                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1v3.5c0 .55-.45 1-1 1C10.74 21 3 13.26 3 3.5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                </svg>
-                <span class="btn-label">Вызвать</span>
-            </a>
-        </header>
-    </div> 
 
     <div style="margin-top: 150px; color: #ccc; text-align: center; width: 100%;">
         <p>Листай вниз, чтобы шапка спряталась</p>

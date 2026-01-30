@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --lime: #E6FF00;
-            --glass: rgba(0, 0, 0, 0.6);
+            --glass: rgba(0, 0, 0, 0.4);
             --border: rgba(255, 255, 255, 0.1);
         }
 
@@ -20,115 +20,153 @@
             overflow: hidden; 
         }
 
+        /* ТОПОВАЯ ШАПКА */
+        .premium-header {
+            position: fixed;
+            top: 0; width: 100%; z-index: 1000;
+            padding: 20px 24px;
+            display: flex; justify-content: space-between; align-items: center;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo { font-weight: 900; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; }
+        .status { display: flex; align-items: center; gap: 8px; font-size: 10px; font-weight: 600; opacity: 0.6; }
+        .dot { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; box-shadow: 0 0 10px var(--lime); }
+
         /* ГЛАВНЫЙ ЭКРАН */
         .hero {
             position: relative;
             height: 100vh;
             width: 100%;
-            /* Твоё актуальное фото с текстурой дерева */
             background: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260130_232609_196.jpg') no-repeat center center;
             background-size: cover;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
-            padding: 60px 24px;
+            justify-content: center; /* Текст по центру для премиальности */
+            padding: 0 24px;
         }
 
-        /* Мягкий градиент, чтобы не портить вид дерева, но подсветить текст */
         .hero::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 40%, rgba(0,0,0,0.3) 100%);
+            background: radial-gradient(circle at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
             z-index: 1;
         }
 
-        .content { position: relative; z-index: 2; }
+        .content { position: relative; z-index: 2; margin-top: 40px; }
 
+        /* ПРЕМИУМ ОФФЕР */
         .title {
-            font-size: 38px;
+            font-size: clamp(38px, 12vw, 56px);
             font-weight: 900;
-            line-height: 0.9;
-            letter-spacing: -1.5px;
+            line-height: 0.85;
+            letter-spacing: -3px;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
-        .subtitle {
-            font-size: 14px;
-            opacity: 0.8;
-            max-width: 230px;
-            margin-bottom: 25px;
-            font-weight: 400;
+        .services-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
         }
+
+        .service-tag {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            background: var(--glass);
+            letter-spacing: 1px;
+        }
+
+        .service-tag span { color: var(--lime); margin-right: 5px; }
 
         /* КНОПКА КВИЗА */
-        .quiz-btn {
+        .premium-btn {
             background: var(--lime);
             color: #000;
-            border: none;
-            padding: 16px 22px;
-            border-radius: 16px;
+            padding: 22px 32px;
+            border-radius: 24px;
             font-weight: 900;
             text-transform: uppercase;
-            font-size: 11px;
-            display: flex;
+            font-size: 14px;
+            border: none;
+            display: inline-flex;
             align-items: center;
-            gap: 10px;
-            box-shadow: 0 10px 25px rgba(230, 255, 0, 0.2);
+            gap: 15px;
+            box-shadow: 0 15px 40px rgba(230, 255, 0, 0.25);
         }
 
-        /* ТВОИ 4 КРУЖОЧКА СПРАВА */
+        /* 4 КРУЖОЧКА СПРАВА */
         .side-dock {
             position: fixed;
-            right: 16px;
-            bottom: 30px;
+            right: 20px;
+            bottom: 40px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 15px;
             z-index: 1000;
         }
 
         .circle {
-            width: 54px;
-            height: 54px;
+            width: 62px;
+            height: 62px;
             background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--border);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .circle img { width: 20px; filter: invert(1); }
-        .circle.active-call { background: var(--lime); border: none; }
-        .circle.active-call img { filter: none; }
-        .circle.max-btn { border: 1.5px solid var(--lime); }
-
-        .circle:active { transform: scale(0.9); }
+        .circle img { width: 24px; filter: invert(1); }
+        .circle.call-main { background: var(--lime); border: none; }
+        .circle.call-main img { filter: none; }
+        .circle:active { transform: scale(0.85); }
 
     </style>
 </head>
 <body>
 
+    <header class="premium-header">
+        <div class="logo">Premium Arborist</div>
+        <div class="status">
+            <div class="dot"></div>
+            Online 24/7
+        </div>
+    </header>
+
     <section class="hero">
         <div class="content">
-            <h1 class="title">ЧИСТАЯ<br>РАБОТА</h1>
-            <p class="subtitle">Безопасный спил деревьев любой сложности. Идеальный срез, порядок на участке.</p>
+            <h1 class="title">ЭСТЕТИКА<br>ВАШЕЙ ЗЕМЛИ</h1>
             
-            <button class="quiz-btn" onclick="haptic()">
-                <span>Расчет стоимости</span>
-                <span style="font-size: 18px;">→</span>
+            <div class="services-list">
+                <div class="service-tag"><span>/</span> Расчистка</div>
+                <div class="service-tag"><span>/</span> Спил</div>
+                <div class="service-tag"><span>/</span> Вывоз мусора</div>
+            </div>
+
+            <button class="premium-btn" onclick="haptic()">
+                Узнать стоимость
+                <span style="font-size: 20px;">→</span>
             </button>
         </div>
     </section>
 
     <div class="side-dock">
-        <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="circle max-btn" onclick="haptic()">
-            <img src="https://img.icons8.com/ios-filled/50/ffffff/m.png">
+        <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="circle" style="border-color: var(--lime);" onclick="haptic()">
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/m.png" style="filter: none;">
         </a>
         <a href="https://t.me/daniil_glukhov17" class="circle" onclick="haptic()">
             <img src="https://img.icons8.com/ios-filled/50/ffffff/telegram-app.png">
@@ -136,16 +174,15 @@
         <a href="https://vk.com/daniil_glukhov17" class="circle" onclick="haptic()">
             <img src="https://img.icons8.com/ios-filled/50/ffffff/vkontakte.png">
         </a>
-        <a href="tel:+79785552114" class="circle active-call" onclick="haptic()">
+        <a href="tel:+79785552114" class="circle call-main" onclick="haptic()">
             <img src="https://img.icons8.com/ios-filled/50/000000/phone.png">
         </a>
     </div>
 
     <script>
         function haptic() {
-            if (navigator.vibrate) navigator.vibrate(25);
+            if (navigator.vibrate) navigator.vibrate(40);
         }
     </script>
-
 </body>
 </html>

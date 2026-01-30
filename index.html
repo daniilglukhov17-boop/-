@@ -15,50 +15,46 @@
         body { 
             background: #FFFFFF; 
             font-family: 'Inter', sans-serif; 
-            min-height: 200vh; /* Чтобы можно было поскроллить и увидеть эффект парения */
+            min-height: 200vh; /* Чтобы можно было скроллить */
+            padding-top: 80px; /* Отступ сверху, чтобы контент не залез под шапку */
         } 
 
-        /* Шапка на всю ширину */
+        /* Шапка на всю ширину экрана */
         .header-full-width {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 10000;
-            /* Эффект парения над контентом */
-            background: rgba(255, 255, 255, 0.01); 
-            backdrop-filter: blur(8px);
-            padding: 10px 0; /* Небольшой отступ сверху/снизу */
+            /* Эффект матового стекла под шапкой */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
-        /* Контейнер для центрирования содержимого */
+        /* Панель, которая растянута, но "парит" за счет тени */
         .obsidian-panel {
-            max-width: 1200px; /* Ограничиваем ширину контента для десктопов */
-            margin: 0 auto;
-            width: calc(100% - 28px); /* Оставляем небольшие зазоры по бокам для изящности */
-            
             background: linear-gradient(165deg, #18181B 0%, #000000 100%);
-            border-radius: 26px;
-            padding: 8px 10px 8px 24px;
+            width: 100%;
+            padding: 12px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            /* Тень, создающая эффект парения */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
         } 
 
-        .text-stack { display: flex; flex-direction: column; gap: 1px; } 
+        .text-stack { display: flex; flex-direction: column; gap: 2px; } 
 
         .status-line {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             font-size: 8px;
             font-weight: 900;
-            color: rgba(255, 255, 255, 0.9);
-            letter-spacing: 2.5px;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 2px;
             text-transform: uppercase;
-            margin-bottom: 2px;
         } 
 
         .pulse-box {
@@ -76,8 +72,8 @@
         } 
 
         @keyframes breathe {
-            0%, 100% { opacity: 0.4; transform: scale(0.9); filter: blur(0.5px); }
-            50% { opacity: 1; transform: scale(1.1); filter: blur(0px); box-shadow: 0 0 20px var(--lime); }
+            0%, 100% { opacity: 0.4; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.1); box-shadow: 0 0 20px var(--lime); }
         } 
 
         .soft-wave {
@@ -95,46 +91,41 @@
 
         .name-carved {
             color: #fff;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 900;
-            letter-spacing: -0.2px;
+            letter-spacing: -0.3px;
             text-transform: uppercase;
         } 
 
         .indented-btn {
             background: var(--lime);
-            height: 50px;
-            padding: 0 24px;
-            border-radius: 20px;
+            height: 46px;
+            padding: 0 20px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             text-decoration: none;
             border: none;
             box-shadow: 
-                inset 4px 4px 8px rgba(0, 0, 0, 0.3), 
-                inset -3px -3px 6px rgba(255, 255, 255, 0.4),
-                0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+                inset 2px 2px 4px rgba(0, 0, 0, 0.2), 
+                0 4px 15px rgba(223, 255, 17, 0.2);
+            transition: all 0.15s ease;
         } 
 
         .indented-btn:active {
-            transform: translateY(2px) scale(0.97); 
-            box-shadow: 
-                inset 10px 10px 20px rgba(0, 0, 0, 0.5), 
-                inset -2px -2px 10px rgba(255, 255, 255, 0.3);
+            transform: scale(0.95);
             filter: brightness(0.9);
         } 
 
         .btn-label {
             color: #000;
-            font-size: 12px;
-            font-weight: 950;
+            font-size: 11px;
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         } 
 
-        .btn-icon { width: 16px; height: 16px; fill: #000; } 
+        .btn-icon { width: 14px; height: 14px; fill: #000; } 
     </style>
 </head>
 <body> 
@@ -162,33 +153,27 @@
     </header>
 
     <script>
+        // Твой скрипт для звука и вибрации
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); 
 
         function masterClick(e) {
-            if (navigator.vibrate) navigator.vibrate(25); 
+            if (navigator.vibrate) navigator.vibrate(30); 
 
             const t = audioCtx.currentTime;
-            
             const lowOsc = audioCtx.createOscillator();
             const lowGain = audioCtx.createGain();
+            
             lowOsc.type = 'sine';
             lowOsc.frequency.setValueAtTime(90, t); 
             lowOsc.frequency.exponentialRampToValueAtTime(0.01, t + 0.15);
-            lowGain.gain.setValueAtTime(0.7, t);
+            lowGain.gain.setValueAtTime(0.5, t);
             lowGain.gain.exponentialRampToValueAtTime(0.01, t + 0.15);
-            lowOsc.connect(lowGain); lowGain.connect(audioCtx.destination); 
+            
+            lowOsc.connect(lowGain); 
+            lowGain.connect(audioCtx.destination); 
 
-            const midOsc = audioCtx.createOscillator();
-            const midGain = audioCtx.createGain();
-            midOsc.type = 'triangle'; 
-            midOsc.frequency.setValueAtTime(400, t);
-            midOsc.frequency.exponentialRampToValueAtTime(100, t + 0.05);
-            midGain.gain.setValueAtTime(0.15, t);
-            midGain.gain.exponentialRampToValueAtTime(0.01, t + 0.05);
-            midOsc.connect(midGain); midGain.connect(audioCtx.destination); 
-
-            lowOsc.start(); lowOsc.stop(t + 0.15);
-            midOsc.start(); midOsc.stop(t + 0.05);
+            lowOsc.start(); 
+            lowOsc.stop(t + 0.15);
         }
     </script>
 </body>

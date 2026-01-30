@@ -15,12 +15,13 @@
         body { 
             background: #FFFFFF; 
             font-family: 'Inter', sans-serif; 
-            min-height: 100vh;
+            min-height: 200vh; /* Чтобы было куда скроллить */
             display: flex;
             flex-direction: column;
             align-items: center;
         } 
 
+        /* ШАПКА С ДОБАВЛЕННЫМ ТРАНЗИШНОМ */
         .header-container {
             position: fixed;
             top: 25px;
@@ -29,7 +30,14 @@
             z-index: 10000;
             max-width: 500px;
             margin: 0 auto;
+            /* Плавность исчезновения */
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         } 
+
+        /* КЛАСС ДЛЯ СКРЫТИЯ (ДОБАВЛЯЕТСЯ СКРИПТОМ) */
+        .header-hidden {
+            transform: translateY(-150%);
+        }
 
         .obsidian-panel {
             background: linear-gradient(165deg, #18181B 0%, #000000 100%);
@@ -133,6 +141,77 @@
 
         .btn-icon { width: 16px; height: 16px; fill: #000; } 
     </style>
+</head>
+<body> 
+
+    <div class="header-container" id="mainHeader">
+        <header class="obsidian-panel">
+            <div class="text-stack">
+                <div class="status-line">
+                    <div class="pulse-box">
+                        <div class="glow-dot"></div>
+                        <div class="soft-wave"></div>
+                    </div>
+                    <span>На связи • Симферополь</span>
+                </div>
+                <div class="name-carved">Даниил Глухов</div>
+            </div> 
+
+            <a href="tel:+79785552114" class="indented-btn" onclick="masterClick(event)">
+                <svg class="btn-icon" viewBox="0 0 24 24">
+                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1v3.5c0 .55-.45 1-1 1C10.74 21 3 13.26 3 3.5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
+                <span class="btn-label">Вызвать</span>
+            </a>
+        </header>
+    </div> 
+
+    <script>
+        // ЛОГИКА ИСЧЕЗНОВЕНИЯ ШАПКИ
+        let lastScrollY = window.scrollY;
+        const header = document.getElementById('mainHeader');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > lastScrollY && window.scrollY > 150) {
+                // Листаем вниз — прячем
+                header.classList.add('header-hidden');
+            } else {
+                // Листаем вверх — показываем
+                header.classList.remove('header-hidden');
+            }
+            lastScrollY = window.scrollY;
+        });
+
+        // ТВОЙ ЗВУК И ВИБРАЦИЯ НА КНОПКЕ
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); 
+
+        function masterClick(e) {
+            if (navigator.vibrate) navigator.vibrate(25); 
+
+            const t = audioCtx.currentTime;
+            
+            const lowOsc = audioCtx.createOscillator();
+            const lowGain = audioCtx.createGain();
+            lowOsc.type = 'sine';
+            lowOsc.frequency.setValueAtTime(90, t); 
+            lowOsc.frequency.exponentialRampToValueAtTime(0.01, t + 0.15);
+            lowGain.gain.setValueAtTime(0.7, t);
+            lowGain.gain.exponentialRampToValueAtTime(0.01, t + 0.15);
+            lowOsc.connect(lowGain); lowGain.connect(audioCtx.destination); 
+
+            const midOsc = audioCtx.createOscillator();
+            const midGain = audioCtx.createGain();
+            midOsc.type = 'triangle'; 
+            midOsc.frequency.setValueAtTime(400, t);
+            midOsc.frequency.exponentialRampToValueAtTime(100, t + 0.05);
+            midGain.gain.setValueAtTime(0.15, t);
+            midGain.gain.exponentialRampToValueAtTime(0.01, t + 0.05);
+            midOsc.connect(midGain); midGain.connect(audioCtx.destination); 
+
+            lowOsc.start(); lowOsc.stop(t + 0.15);
+            midOsc.start(); midOsc.stop(t + 0.05);
+        }
+    </script>
 </head>
 <body> 
 

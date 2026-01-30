@@ -463,242 +463,254 @@
         }
     }
 </script>
-<section class="portfolio-section">
+<section class="pro-portfolio">
     <style>
-        .portfolio-section {
+        .pro-portfolio {
             width: 100%;
             max-width: 500px;
-            padding: 40px 0;
+            padding: 60px 0;
             background: #FFFFFF;
             font-family: 'Inter', sans-serif;
+            overflow: hidden;
         }
 
-        /* КРАСИВЫЙ ЗАГОЛОВОК */
-        .portfolio-header {
+        /* ЗАГОЛОВОК С ЭФФЕКТОМ ГЛУБИНЫ */
+        .section-label {
             padding: 0 24px;
-            margin-bottom: 25px;
+            position: relative;
+            margin-bottom: 40px;
         }
 
-        .header-badge {
-            display: inline-block;
-            background: #000;
-            color: var(--lime);
-            padding: 4px 12px;
-            border-radius: 100px;
-            font-size: 10px;
+        .bg-text {
+            position: absolute;
+            top: -20px;
+            left: 10px;
+            font-size: 70px;
             font-weight: 900;
+            color: #F5F5F5;
+            z-index: 1;
+            letter-spacing: -4px;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 8px;
         }
 
-        .portfolio-header h2 {
-            font-size: 34px;
+        .main-title {
+            position: relative;
+            z-index: 2;
+            font-size: 32px;
             font-weight: 900;
+            color: #000;
             text-transform: uppercase;
             letter-spacing: -1.5px;
-            line-height: 0.9;
-            color: #000;
+            line-height: 1;
         }
 
-        .portfolio-header h2 span {
-            color: #EEE;
-            -webkit-text-stroke: 1px #000;
+        .main-title span {
+            display: block;
+            color: var(--lime);
+            background: #000;
+            width: fit-content;
+            padding: 0 10px;
+            margin-top: 5px;
         }
 
-        /* КАРУСЕЛЬ */
-        .portfolio-carousel {
+        /* СЛАЙДЕР */
+        .slider-wrapper {
+            position: relative;
+            padding: 0 24px;
+        }
+
+        .cards-viewport {
             display: flex;
             gap: 20px;
             overflow-x: auto;
-            padding: 0 24px 30px;
             scroll-snap-type: x mandatory;
             scrollbar-width: none;
+            padding-bottom: 30px;
         }
-        .portfolio-carousel::-webkit-scrollbar { display: none; }
+        .cards-viewport::-webkit-scrollbar { display: none; }
 
-        .work-card {
-            min-width: 88vw;
-            max-width: 420px;
+        .work-item {
+            min-width: 100%;
             scroll-snap-align: center;
+            perspective: 1000px;
         }
 
-        .compare-box {
+        .frame-4-3 {
             position: relative;
             width: 100%;
             aspect-ratio: 4 / 3;
-            border-radius: 32px;
+            border-radius: 35px;
             overflow: hidden;
-            background: #111;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            touch-action: pan-y;
+            background: #000;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+            transform: translateZ(0);
         }
 
-        /* ПОДСКАЗКА (Анимированная рука) */
-        .drag-hint {
+        .img-base {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 20;
-            pointer-events: none;
-            transition: opacity 0.5s;
-        }
-        .hand-icon {
-            font-size: 40px;
-            animation: hand-move 2s infinite ease-in-out;
-        }
-        @keyframes hand-move {
-            0%, 100% { transform: translateX(-30px) opacity(0); }
-            50% { transform: translateX(30px) opacity(1); }
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
         }
 
-        .img-layer {
+        .img-reveal {
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-size: cover;
-            background-position: center;
-            pointer-events: none;
-        }
-
-        .before-layer {
+            top: 0; left: 0; width: 50%; height: 100%;
+            background-size: cover; background-position: center;
             z-index: 2;
-            width: 50%;
-            border-right: 2px solid var(--lime);
+            border-right: 3px solid var(--lime);
         }
 
-        .handle-line {
+        /* ПРЕМИАЛЬНЫЙ ПОЛЗУНОК */
+        .ultra-handle {
             position: absolute;
             top: 0; bottom: 0; left: 50%;
-            width: 2px; background: var(--lime);
-            z-index: 10; transform: translateX(-50%);
+            width: 4px;
+            z-index: 10;
+            transform: translateX(-50%);
             pointer-events: none;
         }
 
-        .handle-circle {
+        .glass-trigger {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 54px; height: 54px;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
-            border: 2px solid var(--lime);
-            border-radius: 18px;
+            width: 60px; height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 22px;
             display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .handle-circle::after {
-            content: '↔'; color: var(--lime); font-weight: 900; font-size: 20px;
+        .glass-trigger::before {
+            content: '';
+            width: 20px; height: 2px;
+            background: var(--lime);
+            box-shadow: 0 0 10px var(--lime);
         }
 
-        /* МЕТКИ ДО/ПОСЛЕ */
-        .side-label {
-            position: absolute;
-            top: 20px;
-            padding: 6px 14px;
-            border-radius: 12px;
-            font-size: 10px;
-            font-weight: 900;
-            text-transform: uppercase;
-            backdrop-filter: blur(10px);
-            z-index: 5;
+        /* ИНДИКАТОРЫ ЛИСТАНИЯ (Dots) */
+        .nav-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
         }
-        .label-before { left: 20px; background: rgba(255,255,255,0.2); color: #FFF; }
-        .label-after { right: 20px; background: rgba(223, 255, 17, 0.2); color: var(--lime); }
 
-        .card-footer {
-            margin-top: 15px;
+        .dot {
+            width: 8px; height: 8px;
+            background: #EEE;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            width: 30px;
+            background: #000;
+        }
+
+        /* ПОДПИСЬ */
+        .work-meta {
+            margin-top: 20px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 0 10px;
+            align-items: flex-start;
         }
 
-        .work-title { font-size: 16px; font-weight: 900; text-transform: uppercase; }
-        .work-num { font-size: 12px; font-weight: 900; opacity: 0.2; }
+        .work-info h3 { font-size: 18px; font-weight: 900; text-transform: uppercase; margin: 0; }
+        .work-info p { font-size: 13px; color: #888; margin: 5px 0 0; }
+
+        .case-tag {
+            font-size: 10px;
+            font-weight: 950;
+            background: var(--lime);
+            padding: 5px 12px;
+            border-radius: 8px;
+            text-transform: uppercase;
+        }
     </style>
 
-    <div class="portfolio-header">
-        <div class="header-badge">Real Projects</div>
-        <h2>РЕЗУЛЬТАТЫ <span>РАБОТЫ</span></h2>
+    <div class="section-label">
+        <div class="bg-text">WORKS</div>
+        <h2 class="main-title">Кейсы <span>Результаты</span></h2>
     </div>
 
-    <div class="portfolio-carousel" id="pCarousel">
-        
-        <div class="work-card">
-            <div class="compare-box" onpointermove="handleWorkMove(event)" onpointerdown="hideHint(this)">
-                <div class="drag-hint"><div class="hand-icon">↔️</div></div>
-                <div class="img-layer" style="background-image: url('ФОТО_1_ПОСЛЕ.jpg');"></div>
-                <div class="img-layer before-layer"></div>
-                <div class="handle-line"><div class="handle-circle"></div></div>
-                <div class="side-label label-before">До</div>
-                <div class="side-label label-after">После</div>
+    <div class="slider-wrapper">
+        <div class="cards-viewport" id="viewport">
+            
+            <div class="work-item">
+                <div class="frame-4-3" onpointermove="ultraCompare(event)">
+                    <div class="img-base" style="background-image: url('https://clck.ru/388888');"></div>
+                    <div class="img-reveal" style="background-image: url('https://clck.ru/399999');"></div>
+                    <div class="ultra-handle"><div class="glass-trigger"></div></div>
+                </div>
+                <div class="work-meta">
+                    <div class="work-info">
+                        <h3>Сложное удаление</h3>
+                        <p>Симферополь • 4 часа</p>
+                    </div>
+                    <div class="case-tag">01</div>
+                </div>
             </div>
-            <div class="card-footer">
-                <span class="work-title">Сложный спил сосны</span>
-                <span class="work-num">01 / 05</span>
-            </div>
-        </div>
 
-        <div class="work-card">
-            <div class="compare-box" onpointermove="handleWorkMove(event)">
-                <div class="img-layer" style="background-image: url('ФОТО_2_ПОСЛЕ.jpg');"></div>
-                <div class="img-layer before-layer"></div>
-                <div class="handle-line"><div class="handle-circle"></div></div>
-                <div class="side-label label-before">До</div>
-                <div class="side-label label-after">После</div>
+            <div class="work-item">
+                <div class="frame-4-3" onpointermove="ultraCompare(event)">
+                    <div class="img-base" style="background-image: url('ФОТО_2_ПОСЛЕ.jpg');"></div>
+                    <div class="img-reveal" style="background-image: url('ФОТО_2_ДО.jpg');"></div>
+                    <div class="ultra-handle"><div class="glass-trigger"></div></div>
+                </div>
+                <div class="work-meta">
+                    <div class="work-info">
+                        <h3>Расчистка под ключ</h3>
+                        <p>Севастополь • 1 день</p>
+                    </div>
+                    <div class="case-tag">02</div>
+                </div>
             </div>
-            <div class="card-footer">
-                <span class="work-title">Расчистка участка</span>
-                <span class="work-num">02 / 05</span>
-            </div>
-        </div>
 
-        <div class="work-card">
-            <div class="compare-box">
-                <div class="img-layer" style="background-image: url('ФОТО_ПРОЦЕССА.jpg');"></div>
-                <div style="position:absolute; top:20px; left:20px; background:red; color:#fff; padding:5px 10px; border-radius:8px; font-size:10px; font-weight:900;">LIVE PROCESS</div>
             </div>
-            <div class="card-footer">
-                <span class="work-title">Наша команда в деле</span>
-                <span class="work-num">05 / 05</span>
-            </div>
-        </div>
 
+        <div class="nav-dots" id="dotsContainer">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
     </div>
 
     <script>
-        function handleWorkMove(e) {
-            if (e.buttons !== 1 && e.pointerType === 'mouse') return;
+        function ultraCompare(e) {
+            const frame = e.currentTarget;
+            const reveal = frame.querySelector('.img-reveal');
+            const handle = frame.querySelector('.ultra-handle');
             
-            const box = e.currentTarget;
-            const before = box.querySelector('.before-layer');
-            const line = box.querySelector('.handle-line');
-            
-            const rect = box.getBoundingClientRect();
+            const rect = frame.getBoundingClientRect();
             let x = e.clientX - rect.left;
-            
             let pos = (x / rect.width) * 100;
-            if (pos < 0) pos = 0;
-            if (pos > 100) pos = 100;
 
-            before.style.width = pos + '%';
-            line.style.left = pos + '%';
-
-            // ВИБРАЦИЯ (Haptic)
-            if (navigator.vibrate) {
-                // Вибрируем короткими импульсами при прохождении каждых 2% пути
-                if (Math.round(pos) % 2 === 0) {
-                    navigator.vibrate(5);
+            if (pos >= 0 && pos <= 100) {
+                reveal.style.width = pos + '%';
+                handle.style.left = pos + '%';
+                
+                // Тот самый тактильный отклик (Haptic)
+                if (navigator.vibrate && Math.round(pos) % 2 === 0) {
+                    navigator.vibrate(8);
                 }
             }
         }
 
-        function hideHint(box) {
-            const hint = box.querySelector('.drag-hint');
-            if (hint) hint.style.opacity = '0';
-        }
+        // Логика активных точек (Dots)
+        const viewport = document.getElementById('viewport');
+        const dots = document.querySelectorAll('.dot');
+
+        viewport.addEventListener('scroll', () => {
+            const index = Math.round(viewport.scrollLeft / viewport.offsetWidth);
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        });
     </script>
 </section>
 

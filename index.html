@@ -7,152 +7,101 @@
     <style>
         :root {
             --lime: #DFFF00;
-            --white: #F2F2F7;
-            --graphite: #1C1C1E;
-            --glass-border: rgba(255, 255, 255, 0.12);
+            --white: #FFFFFF;
             --font: 'Inter Tight', sans-serif;
+            --card-bg: #1C1C1E;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-        body { 
-            background: #000; 
-            font-family: var(--font); 
-            height: 100vh;
-            overflow: hidden;
-            color: var(--white);
-        }
+        body { background: #000; font-family: var(--font); height: 100vh; overflow: hidden; color: var(--white); }
 
         /* ГЛАВНЫЙ ЭКРАН */
         .hero {
-            position: relative;
-            height: 100vh;
-            width: 100%;
+            position: relative; height: 100vh; width: 100%;
             background: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260131_002727_993.jpg') no-repeat center center;
-            background-size: cover;
-            display: flex;
-            flex-direction: column;
-            padding: 35px 24px 60px;
-            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background-size: cover; display: flex; flex-direction: column; padding: 35px 24px 60px;
         }
-
         .hero::after {
-            content: '';
-            position: absolute; inset: 0;
-            background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.95) 100%);
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.95) 100%);
             z-index: 1;
         }
 
-        /* ШАПКА */
-        .header { position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center; }
-        .status-tag { 
-            display: flex; align-items: center; gap: 10px; padding: 8px 16px; 
-            background: rgba(28, 28, 30, 0.6); border: 1px solid var(--glass-border); 
-            border-radius: 100px; font-size: 11px; font-weight: 800; text-transform: uppercase; 
-            letter-spacing: 1px; backdrop-filter: blur(15px); 
+        /* ПЛАШКА "ОЦЕНКА" - FLOAT GLASS */
+        .evaluation-badge {
+            position: relative; z-index: 5; align-self: center;
+            display: inline-flex; align-items: center; padding: 18px 36px;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px;
+            margin: auto 0 35px; text-decoration: none;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3); transition: 0.3s;
         }
-        .radar { width: 8px; height: 8px; background: var(--lime); border-radius: 50%; box-shadow: 0 0 12px var(--lime); position: relative; }
-        .radar::before { content: ''; position: absolute; inset: 0; background: var(--lime); border-radius: 50%; animation: wave 2.5s infinite linear; }
-        @keyframes wave { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(5); opacity: 0; } }
-        
-        .phone-top { text-decoration: none; color: white; font-size: 14px; font-weight: 800; display: block; }
-        .work-time { font-size: 10px; color: var(--lime); font-weight: 700; text-transform: uppercase; text-align: right; display: block; }
+        .evaluation-badge:active { transform: scale(0.96); border-color: var(--lime); }
+        .ev-text { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 4px; color: var(--white); }
+        .ev-text span { margin: 0 15px; width: 1px; height: 12px; background: var(--lime); display: inline-block; vertical-align: middle; box-shadow: 0 0 10px var(--lime); }
 
         /* КОНТЕНТ */
-        .main-box { position: relative; z-index: 5; margin: auto 0; text-align: center; }
-        .main-title { font-size: clamp(40px, 12vw, 82px); font-weight: 900; line-height: 1.02; letter-spacing: -0.03em; text-transform: uppercase; margin-bottom: 25px; }
-
-        /* ПРЕМИАЛЬНАЯ ПЛАШКА "ОЦЕНКА" */
-        .evaluation-badge {
-            display: inline-flex; align-items: center; padding: 16px 32px;
-            background: linear-gradient(145deg, rgba(44, 44, 46, 0.8), rgba(28, 28, 30, 0.8));
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border); border-radius: 24px;
-            margin-bottom: 40px; text-decoration: none; transition: 0.3s;
-        }
-        .evaluation-badge:active { transform: scale(0.95); border-color: var(--lime); }
-        .evaluation-text { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 3px; color: var(--white); }
-        .evaluation-text span { color: var(--lime); opacity: 0.5; margin: 0 8px; }
-
+        .main-box { position: relative; z-index: 5; text-align: center; }
+        .main-title { font-size: clamp(40px, 12vw, 80px); font-weight: 900; line-height: 1.02; letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 25px; }
         .desc { font-size: 16px; line-height: 1.6; max-width: 340px; margin: 0 auto 40px; font-weight: 500; color: rgba(255,255,255,0.9); }
-        .trigger-line { display: block; margin-top: 15px; color: var(--white); font-weight: 800; text-transform: uppercase; font-size: 12px; }
-        .trigger-line b { color: var(--lime); }
+        .trigger-line { display: block; margin-top: 15px; color: var(--lime); font-weight: 800; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
 
-        /* КНОПКА КВИЗА */
-        .cta-btn { 
-            display: inline-flex; align-items: center; gap: 15px; background: var(--white); 
-            color: #000; padding: 24px 48px; border-radius: 20px; text-decoration: none; 
-            font-weight: 900; font-size: 15px; text-transform: uppercase; letter-spacing: 1px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5); 
-        }
-
-        /* ЭЛИТНЫЙ ПОПАП */
-        #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(15px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.4s; }
+        /* ПОПАП - GRAPHITE PRESTIGE */
+        #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(15px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.5s; }
         #popup { 
             position: fixed; bottom: -100%; left: 0; width: 100%; 
-            background: var(--graphite); border-top: 1px solid var(--glass-border); 
-            border-radius: 32px 32px 0 0; padding: 45px 24px 50px; z-index: 101; 
-            transition: 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+            background: #111112; border-top: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 35px 35px 0 0; padding: 45px 24px 60px; z-index: 101; 
+            transition: 0.6s cubic-bezier(0.2, 1, 0.3, 1); 
         }
         .show-popup #overlay { opacity: 1; visibility: visible; }
         .show-popup #popup { bottom: 0; }
-        .show-popup .hero { filter: blur(10px); transform: scale(0.95); }
 
-        .popup-title { font-weight: 900; font-size: 24px; text-transform: uppercase; text-align: center; margin-bottom: 8px; }
+        .popup-title { font-weight: 900; font-size: 24px; text-align: center; margin-bottom: 8px; text-transform: uppercase; }
         .popup-subtitle { font-size: 14px; color: rgba(255,255,255,0.4); text-align: center; margin-bottom: 35px; }
-        
-        .messenger-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-        
-        .msg-item { 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; 
-            padding: 24px; border-radius: 24px; text-decoration: none; font-weight: 800; font-size: 11px; 
-            text-transform: uppercase; background: linear-gradient(145deg, #2C2C2E, #232325); 
-            color: #fff; border: 1px solid var(--glass-border); transition: 0.3s;
-        }
 
-        /* MAX - ОРИГИНАЛЬНЫЙ ВИД */
-        .msg-item.max { 
-            background: var(--lime); color: #000; border: none; grid-column: span 2; 
-            flex-direction: row; font-size: 16px; margin-bottom: 5px; 
-            box-shadow: 0 15px 30px rgba(223, 255, 0, 0.2);
+        /* MAX ORIGINAL WIDGET */
+        .max-widget {
+            display: flex; align-items: center; justify-content: space-between;
+            background: linear-gradient(135deg, #DFFF00 0%, #B6D000 100%);
+            padding: 24px; border-radius: 28px; text-decoration: none; margin-bottom: 15px;
+            box-shadow: 0 20px 40px rgba(223, 255, 0, 0.15); transition: 0.3s;
         }
-        .msg-item img { width: 28px; height: 28px; }
-        .msg-item.max img { filter: invert(1); } /* Если иконка черная */
+        .max-widget:active { transform: scale(0.97); }
+        .max-info { color: #000; }
+        .max-info b { font-size: 20px; font-weight: 900; display: block; line-height: 1; margin-bottom: 4px; }
+        .max-info span { font-size: 12px; font-weight: 700; opacity: 0.7; text-transform: uppercase; }
+        .max-logo { width: 50px; height: 50px; background: #000; border-radius: 15px; display: flex; align-items: center; justify-content: center; color: var(--lime); font-size: 26px; font-weight: 900; }
 
-        /* QUIZ */
-        #quiz-overlay { position: fixed; inset: 0; background: #000; z-index: 200; display: none; flex-direction: column; padding: 40px 24px; }
-        .quiz-active #quiz-overlay { display: flex; }
-        .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-        .progress-bar { height: 4px; background: rgba(255,255,255,0.1); flex-grow: 1; margin: 0 20px; border-radius: 2px; }
-        .progress-fill { height: 100%; background: var(--lime); width: 0%; transition: 0.4s; }
-        .option-card { padding: 22px; background: #1C1C1E; border: 1px solid var(--glass-border); border-radius: 20px; margin-bottom: 12px; font-weight: 700; display: flex; justify-content: space-between; }
+        /* SECONDARY MESSENGERS */
+        .messenger-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .msg-btn {
+            display: flex; align-items: center; gap: 12px; padding: 20px;
+            background: #1C1C1E; border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 24px; text-decoration: none; color: #fff; font-weight: 700; font-size: 13px;
+        }
+        .msg-btn img { width: 24px; height: 24px; }
+        .call-btn { grid-column: span 2; justify-content: center; background: none; border-color: rgba(255,255,255,0.1); margin-top: 10px; opacity: 0.5; font-size: 12px; }
 
     </style>
 </head>
 <body id="mainBody">
 
     <section class="hero">
-        <header class="header">
-            <div class="status-tag"><div class="radar"></div>Симферополь</div>
-            <div class="contact-info">
-                <a href="tel:+79785552114" class="phone-top">+7 978 555-21-14</a>
-                <span class="work-time">Доступны 24/7</span>
-            </div>
-        </header>
-
         <div class="main-box">
             <h1 class="main-title">ПОРЯДОК<br>ПОД КЛЮЧ</h1>
             
             <a href="javascript:void(0)" class="evaluation-badge" onclick="openPopup()">
-                <div class="evaluation-text">ОЦЕНКА ПО ФОТО &nbsp;&nbsp; 5 МИНУТ</div>
+                <div class="ev-text">Оценка по фото <span></span> 5 минут</div>
             </a>
             
             <div class="desc">
                 Заезжаем на заросший участок — выезжаем с идеально чистого. Спил, измельчение веток и вывоз мусора.
-                <span class="trigger-line">Вам остается только <b>принять работу</b></span>
+                <span class="trigger-line">Вам остается только принять работу</span>
             </div>
 
-            <a href="javascript:void(0)" class="cta-btn" onclick="openQuiz()">
+            <a href="javascript:void(0)" class="cta-btn" onclick="openQuiz()" style="display:inline-block; background:white; color:black; padding:22px 45px; border-radius:20px; text-decoration:none; font-weight:900; text-transform:uppercase; margin-top:20px;">
                 Рассчитать стоимость
             </a>
         </div>
@@ -160,61 +109,33 @@
 
     <div id="overlay" onclick="closePopup()"></div>
     <div id="popup">
-        <div class="popup-title">Где вам удобнее?</div>
-        <div class="popup-subtitle">Пришлите фото для точного расчета цены</div>
-        <div class="messenger-grid">
-            <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="msg-item max" onclick="haptic()">
-                Написать в MAX
-            </a>
-            <a href="https://t.me/daniil_glukhov17" class="msg-item" onclick="haptic()">Telegram</a>
-            <a href="https://vk.com/daniil_glukhov17" class="msg-item" onclick="haptic()">ВКонтакте</a>
-            <a href="tel:+79785552114" class="msg-item" style="grid-column: span 2; background: none; border: none; opacity: 0.6;">Позвонить +7 978 555-21-14</a>
-        </div>
-    </div>
+        <div class="popup-title">Связаться с Даниилом</div>
+        <div class="popup-subtitle">Выберите удобный способ связи</div>
+        
+        <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="max-widget">
+            <div class="max-info">
+                <b>Мессенджер MAX</b>
+                <span>Открыть официальный чат</span>
+            </div>
+            <div class="max-logo">M</div>
+        </a>
 
-    <div id="quiz-overlay">
-        <div class="quiz-header">
-            <div onclick="closeQuiz()" style="font-size: 28px;">✕</div>
-            <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
-            <div id="step-num" style="font-weight: 900; color: var(--lime);">1/3</div>
+        <div class="messenger-row">
+            <a href="https://t.me/daniil_glukhov17" class="msg-btn">
+                <img src="https://img.icons8.com/color/48/telegram-app.png"> Telegram
+            </a>
+            <a href="https://vk.com/daniil_glukhov17" class="msg-btn">
+                <img src="https://img.icons8.com/color/48/vkontakte.png"> VK
+            </a>
+            <a href="tel:+79785552114" class="msg-btn call-btn">Позвонить напрямую</a>
         </div>
-        <div id="quiz-content"></div>
     </div>
 
     <script>
         function haptic() { if (navigator.vibrate) navigator.vibrate(40); }
         function openPopup() { haptic(); document.getElementById('mainBody').classList.add('show-popup'); }
         function closePopup() { document.getElementById('mainBody').classList.remove('show-popup'); }
-
-        const questions = [
-            { title: "Что нужно сделать?", options: ["Спил деревьев", "Чистка участка", "Вывоз мусора", "Всё под ключ"] },
-            { title: "Объем работы?", options: ["Пара деревьев", "До 5 соток", "Весь участок", "Нужен замер"] },
-            { title: "Срочность?", options: ["Прямо сейчас", "На этой неделе", "Просто считаю цену"] }
-        ];
-
-        let currentStep = 0;
-        function openQuiz() { haptic(); document.getElementById('mainBody').classList.add('quiz-active'); renderQuestion(); }
-        function closeQuiz() { document.getElementById('mainBody').classList.remove('quiz-active'); currentStep = 0; }
-
-        function renderQuestion() {
-            const q = questions[currentStep];
-            document.getElementById('progress').style.width = ((currentStep + 1) / questions.length) * 100 + '%';
-            document.getElementById('step-num').innerText = `${currentStep + 1}/${questions.length}`;
-            let html = `<h2 style="font-size:26px; font-weight:900; margin-bottom:30px; text-transform:uppercase;">${q.title}</h2>`;
-            q.options.forEach(opt => { html += `<div class="option-card" onclick="nextStep()">${opt} <span>→</span></div>`; });
-            document.getElementById('quiz-content').innerHTML = html;
-        }
-
-        function nextStep() {
-            haptic();
-            if (currentStep < questions.length - 1) { currentStep++; renderQuestion(); } 
-            else { 
-                closeQuiz(); 
-                openPopup(); 
-                document.querySelector('.popup-title').innerText = "Расчет готов!";
-                document.querySelector('.popup-subtitle').innerText = "Выберите мессенджер, чтобы получить цену";
-            }
-        }
+        // ... (функция квиза)
     </script>
 </body>
 </html>

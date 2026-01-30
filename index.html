@@ -7,35 +7,24 @@
     <style>
         :root {
             --lime: #DFFF11; 
-            --glass-bg: #0A0A0B;
-            --max-glow: rgba(223, 255, 17, 0.5);
+            /* Глубокий неоновый оттенок для подложки */
+            --max-neon: rgba(223, 255, 17, 0.9);
         } 
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; } 
 
-        body { 
-            background: #FFFFFF; 
-            font-family: 'Inter', sans-serif; 
-            min-height: 200vh; /* Запас для теста скролла */
-        } 
+        body { background: #FFFFFF; font-family: 'Inter', sans-serif; min-height: 200vh; } 
 
-        /* Контейнер шапки с анимацией появления/скрытия */
         .header-container {
             position: fixed;
-            top: 25px;
-            left: 14px;
-            right: 14px;
+            top: 25px; left: 14px; right: 14px;
             z-index: 10000;
             max-width: 500px;
             margin: 0 auto;
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
         }
 
-        /* Состояние при скролле вниз */
-        .header-hidden {
-            transform: translateY(-130%);
-            opacity: 0;
-        }
+        .header-hidden { transform: translateY(-130%); opacity: 0; }
 
         .obsidian-panel {
             background: linear-gradient(165deg, #18181B 0%, #000000 100%);
@@ -44,10 +33,9 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border: 1px solid rgba(223, 255, 17, 0.15);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
             position: relative;
-            overflow: hidden;
         } 
 
         .text-stack { display: flex; flex-direction: column; gap: 1px; } 
@@ -63,16 +51,29 @@
             margin-bottom: 2px;
         } 
 
-        /* СВЕЧЕНИЕ НАДПИСИ КАК В MAX */
+        /* ЭФФЕКТ "БУКВА MAX": Интенсивное неоновое свечение */
         .status-line span {
             color: var(--lime);
-            text-shadow: 0 0 8px var(--max-glow);
-            animation: max-text-flicker 3s infinite alternate;
+            /* Используем drop-shadow для эффекта заливки светом */
+            filter: drop-shadow(0 0 2px var(--max-neon)) 
+                    drop-shadow(0 0 8px var(--max-neon));
+            animation: max-neon-throb 2.5s infinite ease-in-out;
+            will-change: filter, opacity;
         }
 
-        @keyframes max-text-flicker {
-            0%, 100% { opacity: 1; text-shadow: 0 0 8px var(--lime), 0 0 15px var(--max-glow); }
-            50% { opacity: 0.8; text-shadow: 0 0 4px var(--lime), 0 0 8px var(--max-glow); }
+        @keyframes max-neon-throb {
+            0%, 100% {
+                opacity: 1;
+                filter: drop-shadow(0 0 2px var(--max-neon)) 
+                        drop-shadow(0 0 10px var(--max-neon))
+                        brightness(1.2);
+            }
+            50% {
+                opacity: 0.85;
+                filter: drop-shadow(0 0 1px var(--max-neon)) 
+                        drop-shadow(0 0 5px var(--max-neon))
+                        brightness(1);
+            }
         }
 
         .pulse-box {
@@ -85,13 +86,13 @@
             width: 6px; height: 6px;
             background: var(--lime);
             border-radius: 50%;
-            box-shadow: 0 0 12px var(--lime);
+            filter: drop-shadow(0 0 5px var(--lime));
             animation: breathe 2.5s infinite ease-in-out;
         } 
 
         @keyframes breathe {
-            0%, 100% { opacity: 0.4; transform: scale(0.9); filter: blur(0.5px); }
-            50% { opacity: 1; transform: scale(1.1); filter: blur(0px); box-shadow: 0 0 20px var(--lime); }
+            0%, 100% { opacity: 0.5; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.1); }
         } 
 
         .soft-wave {
@@ -125,28 +126,18 @@
             gap: 10px;
             text-decoration: none;
             border: none;
-            position: relative;
             box-shadow: 
                 inset 4px 4px 8px rgba(0, 0, 0, 0.2), 
                 inset -3px -3px 6px rgba(255, 255, 255, 0.4);
-            transition: all 0.15s ease;
+            transition: 0.1s;
         } 
 
         .indented-btn:active {
             transform: translateY(2px) scale(0.96); 
-            box-shadow: 
-                inset 8px 8px 16px rgba(0, 0, 0, 0.4), 
-                inset -2px -2px 8px rgba(255, 255, 255, 0.2);
+            box-shadow: inset 8px 8px 16px rgba(0, 0, 0, 0.4);
         } 
 
-        .btn-label {
-            color: #000;
-            font-size: 12px;
-            font-weight: 950;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        } 
-
+        .btn-label { color: #000; font-size: 12px; font-weight: 950; text-transform: uppercase; } 
         .btn-icon { width: 16px; height: 16px; fill: #000; } 
     </style>
 </head>
@@ -175,47 +166,27 @@
     </div> 
 
     <script>
-        // 1. Звуковой движок и вибрация
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); 
-
         function handleInteraction(e) {
-            // Тактильный отклик
             if (navigator.vibrate) navigator.vibrate(30); 
-
-            // Синтез щелчка
             const t = audioCtx.currentTime;
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
-            
-            osc.type = 'sine';
             osc.frequency.setValueAtTime(120, t);
-            osc.frequency.exponentialRampToValueAtTime(0.01, t + 0.1);
-            
             gain.gain.setValueAtTime(0.5, t);
-            gain.gain.exponentialRampToValueAtTime(0.01, t + 0.1);
-            
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            
-            osc.start();
-            osc.stop(t + 0.1);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(t + 0.1);
         }
 
-        // 2. Логика скрытия шапки при скролле
         let lastScrollY = window.scrollY;
         const header = document.getElementById('mainHeader');
-
         window.addEventListener('scroll', () => {
             const currentScrollY = window.scrollY;
-
             if (currentScrollY > lastScrollY && currentScrollY > 80) {
-                // Скроллим вниз — прячем шапку
                 header.classList.add('header-hidden');
             } else if (currentScrollY < lastScrollY) {
-                // Скроллим вверх — показываем
                 header.classList.remove('header-hidden');
             }
-            
             lastScrollY = currentScrollY;
         }, { passive: true });
     </script>

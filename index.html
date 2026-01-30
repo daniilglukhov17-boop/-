@@ -440,6 +440,144 @@
         }
     }
 </script>
+<style>
+    .horizontal-portfolio {
+        padding: 40px 24px;
+        background: #FFFFFF;
+    }
+
+    /* ЗАГОЛОВОК */
+    .h-header {
+        margin-bottom: 20px;
+        border-left: 3px solid var(--lime);
+        padding-left: 15px;
+    }
+
+    .h-header h2 {
+        font-size: 22px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: -0.5px;
+        margin: 0;
+    }
+
+    /* КОНТЕЙНЕР ПАНОРАМЫ */
+    .h-compare-container {
+        position: relative;
+        width: 100%;
+        height: 280px; /* Широкий формат */
+        border-radius: 24px;
+        overflow: hidden;
+        background: #111;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        touch-action: pan-y;
+    }
+
+    .h-after, .h-before {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background-size: cover;
+        background-position: center;
+    }
+
+    /* ФОТО (Замени на свои) */
+    .h-after { background-image: url('URL_ПОСЛЕ'); }
+    .h-before { 
+        background-image: url('URL_ДО'); 
+        width: 50%; 
+        border-right: 2px solid var(--lime);
+    }
+
+    /* ПОЛЗУНОК */
+    .h-handle {
+        position: absolute;
+        top: 0; bottom: 0;
+        left: 50%;
+        width: 2px;
+        background: var(--lime);
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    .h-handle-btn {
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 44px; height: 44px;
+        background: #000;
+        border: 2px solid var(--lime);
+        border-radius: 12px; /* Квадратный скругленный стиль как кнопки */
+        display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    }
+
+    .h-handle-btn::before {
+        content: '↔';
+        color: var(--lime);
+        font-weight: 900;
+        font-size: 18px;
+    }
+
+    /* ТЕГИ-МЕТКИ */
+    .h-tag {
+        position: absolute;
+        bottom: 15px;
+        padding: 4px 10px;
+        background: rgba(0,0,0,0.6);
+        backdrop-filter: blur(4px);
+        color: #FFF;
+        font-size: 8px;
+        font-weight: 900;
+        text-transform: uppercase;
+        border-radius: 5px;
+    }
+    .tag-do { left: 15px; }
+    .tag-posle { right: 15px; }
+</style>
+
+<section class="horizontal-portfolio">
+    <div class="h-header">
+        <h2>Масштаб работ</h2>
+    </div>
+
+    <div class="h-compare-container" id="h-slider">
+        <div class="h-after"></div>
+        <div class="h-before" id="h-before-layer"></div>
+        
+        <div class="h-tag tag-do">До</div>
+        <div class="h-tag tag-posle">Результат</div>
+
+        <div class="h-handle" id="h-handle-bar">
+            <div class="h-handle-btn"></div>
+        </div>
+    </div>
+</section>
+
+<script>
+    const hContainer = document.getElementById('h-slider');
+    const hBefore = document.getElementById('h-before-layer');
+    const hHandle = document.getElementById('h-handle-bar');
+
+    const hMove = (e) => {
+        let x = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+        let rect = hContainer.getBoundingClientRect();
+        let pos = ((x - rect.left) / rect.width) * 100;
+
+        if (pos >= 0 && pos <= 100) {
+            hBefore.style.width = pos + '%';
+            hHandle.style.left = pos + '%';
+            
+            // Легкая вибрация каждые 25% пути
+            if (navigator.vibrate && Math.round(pos) % 25 === 0) {
+                navigator.vibrate(15);
+            }
+        }
+    };
+
+    hContainer.addEventListener('mousemove', hMove);
+    hContainer.addEventListener('touchmove', hMove);
+</script>
 
 </body>
 </html>

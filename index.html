@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@700;900&family=Inter:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --lime: #E6FF00; /* Чуть ярче лайм для контраста */
+            --lime: #E6FF00;
             --white: #FFFFFF;
+            --glow: rgba(230, 255, 0, 0.4);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -16,10 +17,10 @@
             background: #000; 
             font-family: 'Inter', sans-serif; 
             color: var(--white); 
-            overflow: hidden; 
+            overflow: hidden; /* Строго один экран */
+            height: 100vh;
         }
 
-        /* ГЛАВНЫЙ ФОН */
         .hero {
             position: relative;
             height: 100vh;
@@ -28,116 +29,139 @@
             background-size: cover;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 30px 20px;
+            justify-content: space-between; /* Распределяем верх-центр-низ */
+            padding: 20px 24px 40px;
             text-align: center;
         }
 
-        /* Усиленное затемнение для максимального контраста */
+        /* Глубокий градиент для "выжигания" текста */
         .hero::after {
             content: '';
             position: absolute;
             inset: 0;
-            /* Более глубокое затемнение по всей площади + виньетка */
-            background: rgba(0,0,0,0.3);
-            background-image: radial-gradient(circle at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 90%);
+            background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.8) 100%);
             z-index: 1;
         }
 
-        /* ШАПКА САЙТА */
+        /* ЖИВАЯ ШАПКА */
         .header {
-            position: absolute;
-            top: 0; left: 0; right: 0;
+            position: relative;
             z-index: 10;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 24px;
+            width: 100%;
         }
 
         .logo {
             font-family: 'Inter Tight', sans-serif;
             font-weight: 900;
-            font-size: 18px;
+            font-size: 16px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
         }
-        .logo span { color: var(--lime); }
 
-        .header-btn {
-            display: flex; align-items: center; gap: 8px;
-            font-size: 12px; font-weight: 700; text-transform: uppercase;
-            color: var(--white); text-decoration: none;
+        .online-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
             background: rgba(255,255,255,0.1);
-            padding: 8px 16px; border-radius: 100px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
+            padding: 5px 12px;
+            border-radius: 100px;
+            backdrop-filter: blur(5px);
         }
-        .header-btn img { width: 14px; filter: invert(1); }
 
-        /* КОНТЕНТ ПО ЦЕНТРУ */
-        .content { position: relative; z-index: 5; width: 100%; max-width: 500px; margin-top: 40px; }
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--lime);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--lime);
+            animation: pulse 1.5s infinite;
+        }
 
-        /* БЕЙДЖ */
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* КОНТЕНТ ЦЕНТР */
+        .content { position: relative; z-index: 5; margin-top: -20px; }
+
         .badge {
             display: inline-block;
-            font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 4px;
             color: var(--lime);
-            margin-bottom: 20px;
-            /* Двойная тень для четкости */
-            text-shadow: 0 1px 2px rgba(0,0,0,1), 0 0 15px rgba(230, 255, 0, 0.4);
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px var(--glow);
         }
 
-        /* ГЛАВНЫЙ ЗАГОЛОВОК - ИСПРАВЛЕННЫЙ */
         .main-title {
             font-family: 'Inter Tight', sans-serif;
-            font-size: clamp(46px, 15vw, 85px);
+            font-size: clamp(40px, 14vw, 75px);
             font-weight: 900;
-            /* Увеличили высоту строки, чтобы не слипалось */
-            line-height: 1.05;
-            /* Убрали отрицательный спейсинг */
-            letter-spacing: 0px;
+            line-height: 0.95;
             text-transform: uppercase;
-            margin-bottom: 30px;
-            color: #FFFFFF;
-            /* ДВОЙНАЯ ТЕНЬ: Жесткий контур + мягкое свечение */
+            margin-bottom: 20px;
+            /* ЭФФЕКТ ВЫЖИГАНИЯ ГЛАЗ */
+            color: #fff;
             text-shadow: 
-                0 3px 6px rgba(0, 0, 0, 0.9),
-                0 10px 30px rgba(0, 0, 0, 0.6);
+                0 0 20px rgba(255,255,255,0.3),
+                0 5px 15px rgba(0,0,0,0.8),
+                0 10px 40px rgba(0,0,0,0.9);
         }
 
-        /* ОФФЕР */
         .description {
-            font-size: 17px; line-height: 1.6; font-weight: 500;
-            color: rgba(255,255,255,1); /* Максимальная яркость */
-            margin-bottom: 40px;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.9);
+            font-size: 15px;
+            line-height: 1.4;
+            max-width: 300px;
+            margin: 0 auto 30px;
+            color: rgba(255,255,255,0.9);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
         }
         .description b { color: var(--lime); font-weight: 700; }
 
-        /* ГЛАВНАЯ КНОПКА */
+        /* ФУТЕР (КНОПКА И СОЦЫ) */
+        .footer-ui { position: relative; z-index: 10; width: 100%; }
+
         .main-btn {
-            width: 100%; height: 76px;
-            background: var(--lime); color: #000;
-            border-radius: 16px;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 900; font-size: 16px; text-transform: uppercase; text-decoration: none;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 20px rgba(230, 255, 0, 0.4);
-            margin-bottom: 35px;
+            width: 100%;
+            height: 68px;
+            background: var(--lime);
+            color: #000;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 15px;
+            text-transform: uppercase;
+            text-decoration: none;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            margin-bottom: 25px;
         }
 
-        /* СОЦСЕТИ */
-        .socials { display: flex; justify-content: center; gap: 25px; }
-        .s-link img { width: 24px; filter: invert(1); opacity: 0.8; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)); }
-        .s-link.active img { opacity: 1; filter: invert(0); }
-        .s-link.active { 
-            background: var(--lime);
-            width: 44px; height: 44px;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(230, 255, 0, 0.3);
+        .social-bar {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .s-icon img { width: 22px; filter: invert(1); opacity: 0.6; }
+        .s-icon.active img { filter: none; opacity: 1; }
+        .s-icon.active {
+            position: relative;
+        }
+        .s-icon.active::after {
+            content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+            width: 4px; height: 4px; background: var(--lime); border-radius: 50%;
         }
 
     </style>
@@ -146,34 +170,35 @@
 
     <section class="hero">
         <header class="header">
-            <div class="logo">Arborist <span>Pro</span></div>
-            <a href="tel:+79785552114" class="header-btn" onclick="haptic()">
-                <img src="https://img.icons8.com/ios-filled/50/ffffff/phone.png">
-                Позвонить
-            </a>
+            <div class="logo">Arborist<span>.pro</span></div>
+            <div class="online-status">
+                <div class="dot"></div>
+                Севастополь / Крым
+            </div>
         </header>
 
         <div class="content">
-            <span class="badge">Крым • Работаем под ключ</span>
-            <h1 class="main-title">ПОРЯДОК<br>НА УЧАСТКЕ</h1>
-            
+            <span class="badge">Professional Service</span>
+            <h1 class="main-title">ПОРЯДОК<br>ПОД КЛЮЧ</h1>
             <p class="description">
-                Спил сложных деревьев. <b>Расчистка, дробление и вывоз.</b> Идеальная чистота после работ.
+                Спил любой сложности. <b>Расчистка, дробление и вывоз.</b> Фиксируем цену до начала работ.
             </p>
+        </div>
 
+        <div class="footer-ui">
             <a href="#" class="main-btn" onclick="haptic()">
-                Рассчитать стоимость проекта
+                Узнать стоимость →
             </a>
 
-            <div class="socials">
-                <a href="https://t.me/daniil_glukhov17" class="s-link active" onclick="haptic()">
+            <div class="social-bar">
+                <a href="https://t.me/daniil_glukhov17" class="s-icon active" onclick="haptic()">
                     <img src="https://img.icons8.com/ios-filled/50/000000/telegram-app.png">
                 </a>
-                <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="s-link" onclick="haptic()">
+                <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="s-icon" onclick="haptic()">
                     <img src="https://img.icons8.com/ios-filled/50/ffffff/m.png">
                 </a>
-                <a href="https://vk.com/daniil_glukhov17" class="s-link" onclick="haptic()">
-                    <img src="https://img.icons8.com/ios-filled/50/ffffff/vkontakte.png">
+                <a href="tel:+79785552114" class="s-icon" onclick="haptic()">
+                    <img src="https://img.icons8.com/ios-filled/50/ffffff/phone.png">
                 </a>
             </div>
         </div>

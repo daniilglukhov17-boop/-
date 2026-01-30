@@ -441,19 +441,23 @@
     }
 </script>
 <style>
-    /* БЛОК ПОРТФОЛИО */
     .portfolio-horizontal {
-        padding: 20px 24px 60px;
+        /* Эти свойства гарантируют, что блок встанет ниже всех остальных */
+        display: block;
+        clear: both; 
+        position: relative;
+        
+        padding: 40px 24px 60px;
         background: #FFFFFF;
         font-family: 'Inter', sans-serif;
     }
 
     .portfolio-header {
-        margin-bottom: 20px;
+        margin-bottom: 24px;
     }
 
     .portfolio-header h2 {
-        font-size: 22px;
+        font-size: 24px;
         font-weight: 900;
         text-transform: uppercase;
         letter-spacing: -1px;
@@ -465,12 +469,13 @@
     .h-compare-container {
         position: relative;
         width: 100%;
-        aspect-ratio: 4 / 3; /* То самое идеальное соотношение */
+        aspect-ratio: 4 / 3;
         border-radius: 24px;
         overflow: hidden;
         background: #F0F0F0;
         box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-        touch-action: pan-y;
+        touch-action: pan-y; /* Важно для мобилок, чтобы скролл не дергался */
+        cursor: ew-resize;
     }
 
     .h-after, .h-before {
@@ -479,25 +484,26 @@
         width: 100%; height: 100%;
         background-size: cover;
         background-position: center;
+        pointer-events: none;
     }
 
-    /* ФОТО: Замени на свои ссылки */
+    /* СЮДА ВСТАВЛЯЙ СВОИ ССЫЛКИ НА ФОТО */
     .h-after { 
-        background-image: url('https://placehold.co/800x600/000000/FFFFFF?text=ПОСЛЕ'); 
+        background-image: url('URL_ФОТО_ПОСЛЕ'); 
     }
     .h-before { 
-        background-image: url('https://placehold.co/800x600/666666/FFFFFF?text=ДО'); 
+        background-image: url('URL_ФОТО_ДО'); 
         width: 50%; 
-        border-right: 2px solid var(--lime);
+        border-right: 2px solid #DFFF11; /* Лаймовая линия разделения */
     }
 
-    /* ПОЛЗУНОК */
+    /* ПОЛЗУНОК (КНОПКА) */
     .h-handle {
         position: absolute;
         top: 0; bottom: 0;
         left: 50%;
         width: 2px;
-        background: var(--lime);
+        background: #DFFF11;
         z-index: 10;
         pointer-events: none;
     }
@@ -506,49 +512,39 @@
         position: absolute;
         top: 50%; left: 50%;
         transform: translate(-50%, -50%);
-        width: 44px; height: 44px;
+        width: 46px; height: 46px;
         background: #000;
-        border: 2px solid var(--lime);
-        border-radius: 12px;
-        display: flex; align-items: center; justify-content: center;
+        border: 2px solid #DFFF11;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         box-shadow: 0 0 20px rgba(0,0,0,0.4);
     }
 
-    .h-handle-btn::before {
+    .h-handle-btn::after {
         content: '↔';
-        color: var(--lime);
+        color: #DFFF11;
         font-weight: 900;
-        font-size: 18px;
+        font-size: 20px;
     }
 
-    /* МЕТКИ */
+    /* ТЕГИ "ДО / ПОСЛЕ" */
     .h-tag {
         position: absolute;
         bottom: 15px;
-        padding: 4px 10px;
+        padding: 5px 12px;
         background: rgba(0,0,0,0.6);
         backdrop-filter: blur(4px);
         color: #FFF;
-        font-size: 8px;
+        font-size: 9px;
         font-weight: 900;
         text-transform: uppercase;
-        border-radius: 5px;
+        border-radius: 6px;
+        pointer-events: none;
     }
     .tag-do { left: 15px; }
     .tag-posle { right: 15px; }
-
-    /* ОПИСАНИЕ ОБЪЕКТА */
-    .object-desc {
-        margin-top: 15px;
-        font-size: 13px;
-        color: #666;
-        line-height: 1.4;
-    }
-    .object-desc strong {
-        color: #000;
-        display: block;
-        margin-bottom: 4px;
-    }
 </style>
 
 <section class="portfolio-horizontal">
@@ -556,53 +552,53 @@
         <h2>Масштаб работ</h2>
     </div>
 
-    <div class="h-compare-container" id="h-slider">
+    <div class="h-compare-container" id="h-slider-block">
         <div class="h-after"></div>
-        <div class="h-before" id="h-before-layer"></div>
+        <div class="h-before" id="h-before-img"></div>
         
-        <div class="h-tag tag-do">До расчистки</div>
-        <div class="h-tag tag-posle">Результат</div>
-
-        <div class="h-handle" id="h-handle-bar">
+        <div class="h-handle" id="h-handle-line">
             <div class="h-handle-btn"></div>
         </div>
-    </div>
 
-    <div class="object-desc">
-        <strong>Объект: Расчистка 12 соток</strong>
-        Срок выполнения: 8 часов. Вывезено 4 самосвала мусора и веток.
+        <div class="h-tag tag-do">До работы</div>
+        <div class="h-tag tag-posle">Результат</div>
     </div>
 </section>
 
 <script>
-    const hContainer = document.getElementById('h-slider');
-    const hBefore = document.getElementById('h-before-layer');
-    const hHandle = document.getElementById('h-handle-bar');
+    (function() {
+        const container = document.getElementById('h-slider-block');
+        const beforeImg = document.getElementById('h-before-img');
+        const handleLine = document.getElementById('h-handle-line');
 
-    const hMove = (e) => {
-        // Учитываем тач-события и мышь
-        let clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-        let rect = hContainer.getBoundingClientRect();
-        
-        // Расчет позиции в процентах
-        let x = clientX - rect.left;
-        let pos = (x / rect.width) * 100;
+        const moveSlider = (e) => {
+            let clientX;
+            if (e.type.includes('touch')) {
+                clientX = e.touches[0].clientX;
+            } else {
+                clientX = e.clientX;
+            }
 
-        // Ограничители
-        if (pos < 0) pos = 0;
-        if (pos > 100) pos = 100;
+            const rect = container.getBoundingClientRect();
+            let x = clientX - rect.left;
+            let position = (x / rect.width) * 100;
 
-        hBefore.style.width = pos + '%';
-        hHandle.style.left = pos + '%';
-        
-        // Микро-вибрация на 50% (центр)
-        if (navigator.vibrate && Math.round(pos) === 50) {
-            navigator.vibrate(10);
-        }
-    };
+            // Границы
+            if (position < 0) position = 0;
+            if (position > 100) position = 100;
 
-    hContainer.addEventListener('mousemove', hMove);
-    hContainer.addEventListener('touchmove', hMove, { passive: true });
+            beforeImg.style.width = position + '%';
+            handleLine.style.left = position + '%';
+
+            // Тактильный отклик на мобилках при проходе центра
+            if (navigator.vibrate && Math.round(position) === 50) {
+                navigator.vibrate(10);
+            }
+        };
+
+        container.addEventListener('mousemove', moveSlider);
+        container.addEventListener('touchmove', moveSlider, { passive: true });
+    })();
 </script>
 
 </body>

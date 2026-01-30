@@ -1,4 +1,248 @@
-        <div class="desc">
-            Заезжаем на заросший участок — выезжаем с идеально чистого. Спил, измельчение веток и вывоз мусора.
-            <span class="trigger-line">Вам остается только принять работу</span>
+       <!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --lime: #DFFF00;
+            --white: #FFFFFF;
+            --font: 'Inter Tight', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body { 
+            background: #000; 
+            font-family: var(--font); 
+            height: 100vh;
+            overflow: hidden;
+            color: var(--white);
+        }
+
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            background: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260131_002727_993.jpg') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            padding: 35px 24px 60px;
+        }
+
+        /* Усиленный градиент для читаемости */
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, 
+                rgba(0,0,0,0.85) 0%, 
+                rgba(0,0,0,0.3) 50%, 
+                rgba(0,0,0,0.92) 100%);
+            z-index: 1;
+        }
+
+        /* ШАПКА */
+        .header {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-tag {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+        }
+
+        .radar {
+            position: relative;
+            width: 8px;
+            height: 8px;
+            background: var(--lime);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--lime);
+        }
+
+        .radar::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%; height: 100%;
+            background: var(--lime);
+            border-radius: 50%;
+            animation: wave 2.5s infinite linear;
+        }
+
+        @keyframes wave {
+            0% { width: 8px; height: 8px; opacity: 0.8; }
+            100% { width: 40px; height: 40px; opacity: 0; }
+        }
+
+        .contact-info { text-align: right; }
+        .phone { text-decoration: none; color: white; font-size: 14px; font-weight: 800; display: block; }
+        .work-time { font-size: 10px; color: var(--lime); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* КОНТЕНТ */
+        .main-box {
+            position: relative;
+            z-index: 5;
+            margin: auto 0;
+            text-align: center;
+        }
+
+        .main-title {
+            font-size: clamp(42px, 13vw, 82px);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.9);
+        }
+
+        /* УСЛУГИ */
+        .premium-services {
+            margin: 0 auto 30px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .services-text {
+            font-size: 16px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--white);
+            display: flex;
+            gap: 8px;
+            padding-bottom: 14px;
+        }
+
+        .services-text span { color: var(--lime); }
+
+        .neon-line {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--lime) 50%, transparent 100%);
+            box-shadow: 0 0 15px var(--lime);
+            animation: line-pulse 3s infinite ease-in-out;
+        }
+
+        @keyframes line-pulse {
+            0%, 100% { opacity: 0.5; transform: scaleX(0.95); }
+            50% { opacity: 1; transform: scaleX(1.05); }
+        }
+
+        /* ОБНОВЛЕННОЕ ОПИСАНИЕ С ПОВЫШЕННОЙ ЧИТАЕМОСТЬЮ */
+        .desc {
+            font-size: 16px; /* Чуть крупнее */
+            line-height: 1.6;
+            max-width: 340px;
+            margin: 0 auto 40px;
+            font-weight: 500; /* Плотнее текст */
+            color: rgba(255,255,255,0.95); /* Почти чисто белый для контраста */
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+
+        .trigger-line {
+            display: block;
+            margin-top: 15px;
+            color: var(--white);
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1.2px;
+        }
+
+        .trigger-line::before {
+            content: '●';
+            color: var(--lime);
+            margin-right: 8px;
+            font-size: 9px;
+            vertical-align: middle;
+            text-shadow: 0 0 10px var(--lime);
+        }
+
+        /* КНОПКА */
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--white);
+            color: #000;
+            padding: 24px 48px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 900;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+            transition: 0.3s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        .cta-btn:active { transform: scale(0.96); background: var(--lime); }
+
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <header class="header">
+            <div class="status-tag">
+                <div class="radar"></div>
+                Симферополь
+            </div>
+            <div class="contact-info">
+                <a href="tel:+79785552114" class="phone">+7 978 555-21-14</a>
+                <span class="work-time">Доступны 24/7</span>
+            </div>
+        </header>
+
+        <div class="main-box">
+            <h1 class="main-title">ПОРЯДОК<br>ПОД КЛЮЧ</h1>
+            
+            <div class="premium-services">
+                <div class="services-text">Спил <span>•</span> Чистка <span>•</span> Вывоз</div>
+                <div class="neon-line"></div>
+            </div>
+            
+            <div class="desc">
+                Заезжаем на заросший участок — выезжаем с идеально чистого. Спил, измельчение веток и вывоз мусора.
+                <span class="trigger-line">Вам остается только принять работу</span>
+            </div>
+
+            <a href="#" class="cta-btn" onclick="haptic()">
+                Рассчитать стоимость
+                <svg width="20" height="12" viewBox="0 0 20 12" fill="none"><path d="M14 1L19 6M19 6L14 11M19 6H1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
         </div>
+        
+        <div style="height: 40px;"></div>
+    </section>
+
+    <script>
+        function haptic() {
+            if (navigator.vibrate) navigator.vibrate(40);
+        }
+    </script>
+</body>
+</html>
+ 

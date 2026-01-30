@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --lime: #E6FF00;
-            --white: #FFFFFF;
             --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
+            --border: rgba(255, 255, 255, 0.12);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -17,11 +16,11 @@
         body { 
             background: #000; 
             font-family: 'Inter', sans-serif; 
-            color: var(--white); 
+            color: #fff; 
             overflow: hidden; 
         }
 
-        /* ЭФФЕКТ ПОГРУЖЕНИЯ */
+        /* ОСНОВНОЙ ЭКРАН */
         .hero {
             position: relative;
             height: 100vh;
@@ -30,107 +29,109 @@
             background-size: cover;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end; /* Контент прижат к низу для удобства пальца */
-            padding: 40px 20px 140px;
+            justify-content: flex-end;
+            padding: 40px 24px 130px; /* Отступ снизу под кнопки */
         }
 
-        /* Сложное освещение кадра */
+        /* Градиент для эффекта "кино" */
         .hero::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.2) 100%);
+            background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%);
             z-index: 1;
         }
 
         .content { position: relative; z-index: 2; }
 
-        /* ОФФЕР КОТОРЫЙ ЦЕПЛЯЕТ */
+        /* НАДЗАГОЛОВОК */
         .badge {
-            display: inline-block;
-            padding: 6px 12px;
-            background: var(--lime);
-            color: #000;
             font-size: 10px;
-            font-weight: 900;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            border-radius: 4px;
-            margin-bottom: 20px;
+            letter-spacing: 3px;
+            color: var(--lime);
+            margin-bottom: 15px;
+            display: block;
         }
 
+        /* ЗАГОЛОВОК */
         .main-title {
-            font-size: clamp(48px, 15vw, 80px);
+            font-size: clamp(42px, 14vw, 70px);
             font-weight: 900;
-            line-height: 0.8;
-            letter-spacing: -4px;
+            line-height: 0.85;
+            letter-spacing: -3px;
             text-transform: uppercase;
             margin-bottom: 25px;
         }
 
-        .hero-desc {
+        /* ОФФЕР */
+        .description {
             font-size: 16px;
             line-height: 1.4;
-            max-width: 300px;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 320px;
             margin-bottom: 40px;
-            font-weight: 400;
-            color: rgba(255,255,255,0.7);
         }
 
-        .hero-desc b { color: var(--white); }
+        .description b { color: #fff; font-weight: 500; }
 
-        /* КНОПКА КВИЗА — НОВЫЙ УРОВЕНЬ */
-        .cta-box {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .main-btn {
-            flex: 1;
-            height: 70px;
-            background: var(--white);
+        /* КНОПКА КВИЗА */
+        .quiz-button {
+            width: 100%;
+            height: 72px;
+            background: #fff;
             color: #000;
-            border-radius: 20px;
+            border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 900;
-            text-transform: uppercase;
-            font-size: 14px;
             text-decoration: none;
+            font-weight: 900;
+            font-size: 15px;
+            text-transform: uppercase;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transition: 0.2s;
         }
 
-        /* ПРАВЫЕ КНОПКИ — ТОНКИЙ СТЕКЛОМОРФИЗМ */
-        .side-panel {
+        .quiz-button:active { transform: scale(0.96); }
+
+        /* ПАНЕЛЬ С КРУЖОЧКАМИ (СКВИРКЛЫ) */
+        .side-dock {
             position: fixed;
             right: 20px;
-            top: 50%;
+            top: 45%;
             transform: translateY(-50%);
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
             z-index: 1000;
         }
 
-        .action-circle {
-            width: 52px;
-            height: 52px;
-            border-radius: 18px; /* Квадрат со скруглением — это свежее */
+        .dock-item {
+            width: 56px;
+            height: 56px;
             background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            border-radius: 18px; /* Стиль Squircle */
             display: flex;
             align-items: center;
             justify-content: center;
-            text-decoration: none;
+            transition: 0.2s;
         }
 
-        .action-circle img { width: 22px; filter: invert(1); opacity: 0.8; }
-        .action-circle.call { background: var(--lime); border: none; }
-        .action-circle.call img { filter: none; opacity: 1; }
+        .dock-item img { width: 22px; filter: invert(1); opacity: 0.8; }
+        
+        /* Особый стиль для MAX и Телефона */
+        .dock-item.max { border: 1px solid var(--lime); }
+        .dock-item.max img { filter: none; opacity: 1; }
+        
+        .dock-item.phone { background: var(--lime); border: none; }
+        .dock-item.phone img { filter: none; opacity: 1; }
+
+        .dock-item:active { transform: scale(0.85); }
 
     </style>
 </head>
@@ -138,40 +139,39 @@
 
     <section class="hero">
         <div class="content">
-            <div class="badge">Крым • Арборизм</div>
-            <h1 class="main-title">ПОЛНАЯ<br>ЗАЧИСТКА</h1>
+            <span class="badge">Ваш участок — наша ответственность</span>
+            <h1 class="main-title">ПОРЯДОК<br>ПОД КЛЮЧ</h1>
             
-            <p class="hero-desc">
-                Премиальный спил деревьев, <b>расчистка территорий</b> и моментальный вывоз мусора. Порядок без компромиссов.
+            <p class="description">
+                Профессионально удаляем деревья, которые мешают вам жить. <b>Расчищаем, дробим, вывозим.</b> Ни одной ветки после нашего отъезда.
             </p>
 
-            <div class="cta-box">
-                <a href="#" class="main-btn" onclick="haptic()">
-                    Рассчитать проект →
-                </a>
-            </div>
+            <a href="#" class="quiz-button" onclick="haptic()">
+                Получить расчет проекта →
+            </a>
         </div>
 
-        <div class="side-panel">
-            <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="action-circle" style="border: 1px solid var(--lime)" onclick="haptic()">
-                <img src="https://img.icons8.com/ios-filled/50/ffffff/m.png" style="filter: none;">
+        <div class="side-dock">
+            <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="dock-item max" onclick="haptic()">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/m.png" alt="MAX">
             </a>
-            <a href="https://t.me/daniil_glukhov17" class="action-circle" onclick="haptic()">
-                <img src="https://img.icons8.com/ios-filled/50/ffffff/telegram-app.png">
+            <a href="https://t.me/daniil_glukhov17" class="dock-item" onclick="haptic()">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/telegram-app.png" alt="TG">
             </a>
-            <a href="https://vk.com/daniil_glukhov17" class="action-circle" onclick="haptic()">
-                <img src="https://img.icons8.com/ios-filled/50/ffffff/vkontakte.png">
+            <a href="https://vk.com/daniil_glukhov17" class="dock-item" onclick="haptic()">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/vkontakte.png" alt="VK">
             </a>
-            <a href="tel:+79785552114" class="action-circle call" onclick="haptic()">
-                <img src="https://img.icons8.com/ios-filled/50/000000/phone.png">
+            <a href="tel:+79785552114" class="dock-item phone" onclick="haptic()">
+                <img src="https://img.icons8.com/ios-filled/50/000000/phone.png" alt="Call">
             </a>
         </div>
     </section>
 
     <script>
         function haptic() {
-            if (navigator.vibrate) navigator.vibrate(50);
+            if (navigator.vibrate) navigator.vibrate(40);
         }
     </script>
+
 </body>
 </html>

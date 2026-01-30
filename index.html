@@ -7,173 +7,238 @@
     <style>
         :root {
             --lime: #DFFF11; 
-            --glass-bg: #0A0A0B;
+            --glass-bg: rgba(10, 10, 11, 0.8);
         } 
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; } 
 
         body { 
-            background: #FFFFFF; 
+            background: #000; 
             font-family: 'Inter', sans-serif; 
-            min-height: 200vh; /* Чтобы можно было скроллить */
-            padding-top: 80px; /* Отступ сверху, чтобы контент не залез под шапку */
+            color: #fff;
         } 
 
-        /* Шапка на всю ширину экрана */
+        /* Наша парящая шапка из прошлого шага */
         .header-full-width {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 10000;
-            /* Эффект матового стекла под шапкой */
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
         }
 
-        /* Панель, которая растянута, но "парит" за счет тени */
         .obsidian-panel {
-            background: linear-gradient(165deg, #18181B 0%, #000000 100%);
+            background: linear-gradient(165deg, rgba(24, 24, 27, 0.9) 0%, rgba(0, 0, 0, 0.9) 100%);
             width: 100%;
             padding: 12px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            /* Тень, создающая эффект парения */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-        } 
+        }
 
-        .text-stack { display: flex; flex-direction: column; gap: 2px; } 
-
-        .status-line {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 8px;
-            font-weight: 900;
-            color: rgba(255, 255, 255, 0.6);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        } 
-
-        .pulse-box {
+        /* Главная секция с фото */
+        .hero-fullscreen {
             position: relative;
-            width: 8px; height: 8px;
-            display: flex; align-items: center; justify-content: center;
-        } 
+            height: 100vh; /* На весь экран */
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* Контент прижат к низу */
+            background: url('IMG_20260130_202829_851.jpg') center center / cover no-repeat;
+            overflow: hidden;
+        }
 
-        .glow-dot {
-            width: 6px; height: 6px;
-            background: var(--lime);
-            border-radius: 50%;
-            box-shadow: 0 0 12px var(--lime);
-            animation: breathe 2.5s infinite ease-in-out;
-        } 
-
-        @keyframes breathe {
-            0%, 100% { opacity: 0.4; transform: scale(0.9); }
-            50% { opacity: 1; transform: scale(1.1); box-shadow: 0 0 20px var(--lime); }
-        } 
-
-        .soft-wave {
+        /* Затемнение фото для читаемости текста */
+        .hero-fullscreen::after {
+            content: '';
             position: absolute;
-            width: 100%; height: 100%;
-            border: 1px solid var(--lime);
-            border-radius: 50%;
-            animation: wave-out 3s infinite linear;
-        } 
+            inset: 0;
+            background: linear-gradient(to bottom, 
+                rgba(0,0,0,0.3) 0%, 
+                rgba(0,0,0,0.2) 40%, 
+                rgba(0,0,0,0.8) 80%, 
+                #000 100%);
+            z-index: 1;
+        }
 
-        @keyframes wave-out {
-            0% { transform: scale(1); opacity: 0.5; }
-            100% { transform: scale(4); opacity: 0; }
-        } 
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 0 24px 40px;
+        }
 
-        .name-carved {
-            color: #fff;
-            font-size: 15px;
+        .hero-h1 {
+            font-size: 38px;
+            line-height: 0.9;
             font-weight: 900;
-            letter-spacing: -0.3px;
             text-transform: uppercase;
+            letter-spacing: -1.5px;
+            margin-bottom: 20px;
         } 
 
-        .indented-btn {
+        .hero-h1 span {
+            display: block;
+            font-weight: 400;
+            font-size: 20px;
+            letter-spacing: 0;
+            margin-top: 8px;
+            opacity: 0.8;
+        } 
+
+        .benefit-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+        } 
+
+        .benefit-marker {
+            width: 8px;
+            height: 8px;
             background: var(--lime);
-            height: 46px;
-            padding: 0 20px;
-            border-radius: 16px;
+            margin-top: 6px;
+            flex-shrink: 0;
+            box-shadow: 0 0 10px var(--lime);
+        } 
+
+        .benefit-content strong {
+            display: block;
+            font-size: 13px;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: #fff;
+        } 
+
+        .benefit-content p {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.4;
+        } 
+
+        /* СТИЛЬ КНОПОК */
+        .sticky-contact {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        } 
+
+        .speed-tag {
             display: flex;
             align-items: center;
             gap: 8px;
+            margin-bottom: 4px;
+            padding: 6px 12px;
+            background: rgba(223, 255, 17, 0.15);
+            border-radius: 10px;
+            width: fit-content;
+            border: 1px solid rgba(223, 255, 17, 0.3);
+        } 
+
+        .speed-tag span {
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: var(--lime);
+        }
+
+        .btn-super {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-decoration: none;
-            border: none;
-            box-shadow: 
-                inset 2px 2px 4px rgba(0, 0, 0, 0.2), 
-                0 4px 15px rgba(223, 255, 17, 0.2);
-            transition: all 0.15s ease;
+            transition: all 0.1s ease;
         } 
 
-        .indented-btn:active {
-            transform: scale(0.95);
-            filter: brightness(0.9);
-        } 
-
-        .btn-label {
+        .btn-max-top {
+            background: var(--lime);
+            height: 65px;
+            border-radius: 20px;
+            flex-direction: column;
             color: #000;
+        } 
+
+        .btn-max-top .btn-text { color: #000; font-size: 14px; font-weight: 900; }
+        .btn-max-top .online-status { color: rgba(0,0,0,0.6); font-size: 8px; margin: 0; }
+
+        .sub-links-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        } 
+
+        .btn-secondary-top {
+            height: 55px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
             font-size: 11px;
             font-weight: 900;
             text-transform: uppercase;
         } 
 
-        .btn-icon { width: 14px; height: 14px; fill: #000; } 
+        .btn-super:active { transform: scale(0.95); }
+        .m-icon { width: 18px; height: 18px; margin-right: 8px; filter: brightness(10); }
+        .max-logo-dark { width: 22px; margin-bottom: 2px; filter: invert(1); }
+
     </style>
 </head>
 <body> 
 
     <header class="header-full-width">
         <div class="obsidian-panel">
-            <div class="text-stack">
-                <div class="status-line">
-                    <div class="pulse-box">
-                        <div class="glow-dot"></div>
-                        <div class="soft-wave"></div>
-                    </div>
-                    <span>На связи • Симферополь</span>
-                </div>
-                <div class="name-carved">Даниил Глухов</div>
-            </div> 
-
-            <a href="tel:+79785552114" class="indented-btn" onclick="masterClick(event)">
-                <svg class="btn-icon" viewBox="0 0 24 24">
-                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1v3.5c0 .55-.45 1-1 1C10.74 21 3 13.26 3 3.5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                </svg>
-                <span class="btn-label">Вызвать</span>
-            </a>
+            <div style="font-size: 13px; font-weight: 900; text-transform: uppercase;">Даниил Глухов</div>
+            <a href="tel:+79785552114" style="background: var(--lime); padding: 8px 16px; border-radius: 12px; color: #000; text-decoration: none; font-weight: 900; font-size: 12px;">ВЫЗВАТЬ</a>
         </div>
     </header>
 
+    <section class="hero-fullscreen">
+        <div class="hero-content">
+            <h1 class="hero-h1">
+                СПИЛ ДЕРЕВЬЕВ
+                <span>И РАСЧИСТКА УЧАСТКОВ</span>
+            </h1> 
+
+            <div class="benefit-row">
+                <div class="benefit-marker"></div>
+                <div class="benefit-content">
+                    <strong>За один рабочий день</strong>
+                    <p>Идеальная чистота под строительство.</p>
+                </div>
+            </div> 
+
+            <div class="sticky-contact">
+                <div class="speed-tag">
+                    <span>Оценка по фото за 5 мин</span>
+                </div> 
+
+                <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" 
+                   class="btn-super btn-max-top" onclick="hapticHeroClick(event)">
+                    <span class="btn-text">НАПИСАТЬ В MAX</span>
+                    <span class="online-status">● СЕЙЧАС ОНЛАЙН</span>
+                </a> 
+
+                <div class="sub-links-row">
+                    <a href="https://t.me/daniil_glukhov17" class="btn-super btn-secondary-top" onclick="hapticHeroClick(event)">
+                        Telegram
+                    </a>
+                    <a href="https://vk.com/daniil_glukhov17" class="btn-super btn-secondary-top" onclick="hapticHeroClick(event)">
+                        Вконтакте
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <script>
-        // Твой скрипт для звука и вибрации
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); 
-
-        function masterClick(e) {
-            if (navigator.vibrate) navigator.vibrate(30); 
-
-            const t = audioCtx.currentTime;
-            const lowOsc = audioCtx.createOscillator();
-            const lowGain = audioCtx.createGain();
-            
-            lowOsc.type = 'sine';
-            lowOsc.frequency.setValueAtTime(90, t); 
-            lowOsc.frequency.exponentialRampToValueAtTime(0.01, t + 0.15);
-            lowGain.gain.setValueAtTime(0.5, t);
-            lowGain.gain.exponentialRampToValueAtTime(0.01, t + 0.15);
-            
-            lowOsc.connect(lowGain); 
-            lowGain.connect(audioCtx.destination); 
-
-            lowOsc.start(); 
-            lowOsc.stop(t + 0.15);
+        function hapticHeroClick(e) {
+            if (navigator.vibrate) navigator.vibrate([30, 15, 30]);
+            // Твой код звука...
         }
     </script>
 </body>

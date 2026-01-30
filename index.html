@@ -9,97 +9,105 @@
             --lime: #DFFF00;
             --white: #FFFFFF;
             --font: 'Inter Tight', sans-serif;
-            --graphite: #18181A;
+            --bg-dark: #000000;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background: #000; font-family: var(--font); height: 100vh; overflow: hidden; color: var(--white); }
+        body { background: var(--bg-dark); font-family: var(--font); height: 100vh; overflow: hidden; color: var(--white); }
 
-        /* ГЛАВНЫЙ ЭКРАН */
+        /* ФОН И ГРАДИЕНТ */
         .hero {
             position: relative; height: 100vh; width: 100%;
             background: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260131_002727_993.jpg') no-repeat center center;
-            background-size: cover; display: flex; flex-direction: column; padding: 35px 24px 60px;
-            transition: 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+            background-size: cover; display: flex; flex-direction: column; padding: 30px 24px 50px;
         }
         .hero::after {
             content: ''; position: absolute; inset: 0;
-            background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.95) 100%);
+            background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.9) 100%);
             z-index: 1;
         }
 
         /* ШАПКА */
-        .header { position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .status-tag { display: flex; align-items: center; gap: 10px; padding: 8px 16px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 100px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; backdrop-filter: blur(10px); }
-        .radar { position: relative; width: 8px; height: 8px; background: var(--lime); border-radius: 50%; box-shadow: 0 0 12px var(--lime); }
-        .radar::before { content: ''; position: absolute; inset: 0; background: var(--lime); border-radius: 50%; animation: wave 2.5s infinite linear; }
-        @keyframes wave { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(4.5); opacity: 0; } }
+        .header { position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: flex-start; }
+        .status-tag { display: flex; align-items: center; gap: 8px; padding: 6px 12px; background: #000; border: 1px solid var(--lime); border-radius: 4px; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
+        .radar { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; position: relative; }
+        .radar::after { content: ''; position: absolute; inset: 0; background: var(--lime); border-radius: 50%; animation: wave 2s infinite; }
+        @keyframes wave { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(4); opacity: 0; } }
         
         .contact-info { text-align: right; }
-        .phone-top { text-decoration: none; color: white; font-size: 14px; font-weight: 800; display: block; margin-bottom: 2px; }
-        .work-time { font-size: 10px; color: var(--lime); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .phone-top { text-decoration: none; color: white; font-size: 15px; font-weight: 900; display: block; }
+        .work-time { font-size: 9px; color: var(--lime); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
 
         /* КОНТЕНТ */
         .main-box { position: relative; z-index: 5; margin: auto 0; text-align: center; display: flex; flex-direction: column; align-items: center; }
-        .main-title { font-size: clamp(40px, 12vw, 84px); font-weight: 900; line-height: 1.02; letter-spacing: -0.03em; text-transform: uppercase; margin-bottom: 20px; }
+        .main-title { font-size: clamp(42px, 13vw, 88px); font-weight: 900; line-height: 0.95; letter-spacing: -0.04em; text-transform: uppercase; margin-bottom: 30px; }
 
-        /* УЛЬТРА-ТОНКАЯ ПЛАШКА */
-        .evaluation-badge-slim {
-            display: inline-flex; align-items: center; padding: 10px 45px;
-            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(223, 255, 0, 0.2); border-radius: 100px;
-            margin-bottom: 45px; text-decoration: none; transition: 0.4s;
+        /* INDUSTRIAL BADGE (ОЦЕНКА) */
+        .industrial-eval { position: relative; margin-bottom: 40px; }
+        .evaluation-badge-heavy {
+            display: inline-flex; align-items: center; padding: 12px 45px;
+            background: #000; border: 1px solid var(--lime);
+            clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%);
+            text-decoration: none; transition: 0.2s;
+            box-shadow: -4px 4px 0px rgba(223, 255, 0, 0.4);
         }
-        .evaluation-badge-slim:active { transform: scale(0.97); background: rgba(223, 255, 0, 0.1); border-color: var(--lime); }
-        .ev-text-slim { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 4px; color: rgba(255, 255, 255, 0.9); display: flex; align-items: center; white-space: nowrap; }
-        .ev-diamond { width: 4px; height: 4px; background: var(--lime); transform: rotate(45deg); margin: 0 20px; box-shadow: 0 0 8px var(--lime); }
+        .evaluation-badge-heavy:active { transform: translate(-2px, 2px); box-shadow: 0 0 0 transparent; }
+        .ev-text-heavy { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; color: var(--lime); }
 
-        .desc { font-size: 16px; line-height: 1.6; max-width: 350px; margin: 0 auto 40px; font-weight: 500; color: rgba(255,255,255,0.9); }
-        .trigger-line { display: block; margin-top: 15px; color: var(--white); font-weight: 800; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
-        .trigger-line b { color: var(--lime); text-shadow: 0 0 10px rgba(223, 255, 0, 0.3); }
+        /* ТЕХНО-ПОДСКАЗКА */
+        .tech-hint {
+            position: absolute; top: -25px; right: 5px;
+            font-size: 9px; font-weight: 900; color: #fff;
+            text-transform: uppercase; letter-spacing: 2px;
+            animation: blinkTech 1.5s step-end infinite;
+        }
+        @keyframes blinkTech { 50% { opacity: 0; } }
 
-        /* ГЛАВНАЯ КНОПКА (КВИЗ) */
-        .cta-btn { display: inline-flex; background: #fff; color: #000; padding: 24px 52px; border-radius: 20px; text-decoration: none; font-weight: 900; text-transform: uppercase; font-size: 15px; letter-spacing: 1px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); transition: 0.3s; }
-        .cta-btn:active { transform: scale(0.96); background: var(--lime); }
+        .desc { font-size: 16px; line-height: 1.5; max-width: 340px; margin-bottom: 35px; font-weight: 500; color: rgba(255,255,255,0.9); }
+        .desc b { color: var(--lime); }
 
-        /* ПОПАП МЕССЕНДЖЕРОВ */
-        #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(15px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.5s; }
+        /* ГЛАВНАЯ КНОПКА */
+        .cta-btn { 
+            background: var(--white); color: #000; padding: 22px 45px; 
+            font-weight: 900; font-size: 15px; text-transform: uppercase; 
+            text-decoration: none; clip-path: polygon(0 0, 95% 0, 100% 30%, 100% 100%, 5% 100%, 0 70%);
+            transition: 0.2s;
+        }
+        .cta-btn:active { background: var(--lime); transform: scale(0.96); }
+
+        /* ПОПАП */
+        #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.4s; }
         #popup { 
             position: fixed; bottom: -100%; left: 0; width: 100%; 
-            background: var(--graphite); border-top: 1px solid rgba(255,255,255,0.12); 
-            border-radius: 35px 35px 0 0; padding: 45px 24px 60px; z-index: 101; 
-            transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1); 
+            background: #0a0a0a; border-top: 2px solid var(--lime); 
+            padding: 40px 24px 55px; z-index: 101; 
+            transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1);
         }
         .show-popup #overlay { opacity: 1; visibility: visible; }
         .show-popup #popup { bottom: 0; }
-        .show-popup .hero { filter: blur(8px); transform: scale(0.96); }
 
-        .popup-title { font-weight: 900; font-size: 24px; text-align: center; margin-bottom: 8px; text-transform: uppercase; }
-        .popup-subtitle { font-size: 14px; color: rgba(255,255,255,0.4); text-align: center; margin-bottom: 35px; }
+        .popup-title { font-weight: 900; font-size: 22px; text-transform: uppercase; margin-bottom: 25px; text-align: center; }
 
         /* MAX ORIGINAL CARD */
         .max-card {
             display: flex; align-items: center; justify-content: space-between;
-            background: linear-gradient(135deg, #111 0%, #222 100%);
-            padding: 24px; border-radius: 28px; text-decoration: none; margin-bottom: 15px;
-            border: 1px solid var(--lime);
-            box-shadow: 0 15px 35px rgba(223, 255, 0, 0.15); transition: 0.3s;
+            background: #000; padding: 22px; border: 1px solid var(--lime);
+            margin-bottom: 12px; text-decoration: none;
+            box-shadow: -6px 6px 0px rgba(223, 255, 0, 0.2);
         }
-        .max-card:active { transform: scale(0.97); background: #000; }
-        .max-info b { font-size: 19px; font-weight: 900; color: var(--lime); display: block; margin-bottom: 2px; text-transform: uppercase; }
-        .max-info span { font-size: 11px; font-weight: 700; color: #fff; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.5px; }
-        .max-logo { width: 52px; height: 52px; background: var(--lime); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: #000; font-size: 28px; font-weight: 900; box-shadow: 0 0 20px rgba(223, 255, 0, 0.3); }
+        .max-info b { font-size: 18px; font-weight: 900; color: var(--lime); display: block; text-transform: uppercase; }
+        .max-info span { font-size: 11px; color: #fff; opacity: 0.6; text-transform: uppercase; }
+        .max-logo { width: 48px; height: 48px; background: var(--lime); color: #000; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 900; }
 
-        /* ОСТАЛЬНЫЕ МЕССЕНДЖЕРЫ */
-        .msg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        /* GRID */
+        .msg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .msg-item {
-            display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 22px;
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 24px; text-decoration: none; color: #fff; font-weight: 700; font-size: 12px; text-transform: uppercase; transition: 0.3s;
+            background: #111; border: 1px solid rgba(255,255,255,0.1);
+            padding: 18px; display: flex; align-items: center; justify-content: center; gap: 10px;
+            text-decoration: none; color: #fff; font-weight: 800; font-size: 12px; text-transform: uppercase;
         }
-        .msg-item:active { background: rgba(255,255,255,0.08); }
-        .msg-item img { width: 28px; height: 28px; }
-        .call-item { grid-column: span 2; background: none; border-color: rgba(255,255,255,0.1); padding: 18px; opacity: 0.5; margin-top: 5px; font-size: 11px; }
+        .msg-item img { width: 22px; }
+        .call-item { grid-column: span 2; border: none; opacity: 0.5; font-size: 11px; }
 
     </style>
 </head>
@@ -110,66 +118,57 @@
             <div class="status-tag"><div class="radar"></div>Симферополь</div>
             <div class="contact-info">
                 <a href="tel:+79785552114" class="phone-top">+7 978 555-21-14</a>
-                <span class="work-time">Доступны 24/7</span>
+                <span class="work-time">Online 24/7</span>
             </div>
         </header>
 
         <div class="main-box">
             <h1 class="main-title">ПОРЯДОК<br>ПОД КЛЮЧ</h1>
             
-            <a href="javascript:void(0)" class="evaluation-badge-slim" onclick="openPopup()">
-                <div class="ev-text-slim">
-                    Оценка по фото
-                    <div class="ev-diamond"></div>
-                    5 минут
-                </div>
-            </a>
+            <div class="industrial-eval">
+                <div class="tech-hint">Жми здесь</div>
+                <a href="javascript:void(0)" class="evaluation-badge-heavy" onclick="openPopup()">
+                    <div class="ev-text-heavy">Оценка по фото // 5 минут</div>
+                </a>
+            </div>
             
             <div class="desc">
-                Заезжаем на заросший участок — выезжаем с идеально чистого. Спил, измельчение веток и вывоз мусора.
-                <span class="trigger-line">Вам остается только <b>принять работу</b></span>
+                Заезжаем на заросший участок — выезжаем с идеально чистого. <b>Вам остается только принять работу.</b>
             </div>
 
-            <a href="javascript:void(0)" class="cta-btn" onclick="openQuiz()">
-                Рассчитать стоимость
+            <a href="javascript:void(0)" class="cta-btn" onclick="haptic(); alert('Запуск расчета...')">
+                Узнать стоимость
             </a>
         </div>
     </section>
 
     <div id="overlay" onclick="closePopup()"></div>
     <div id="popup">
-        <div class="popup-title">Где вам удобнее?</div>
-        <div class="popup-subtitle">Пришлите фото для точного расчета</div>
+        <div class="popup-title">Где прислать фото?</div>
         
         <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="max-card" onclick="haptic()">
             <div class="max-info">
                 <b>Мессенджер MAX</b>
-                <span>Самый быстрый ответ здесь</span>
+                <span>Самый быстрый ответ</span>
             </div>
             <div class="max-logo">M</div>
         </a>
 
         <div class="msg-grid">
             <a href="https://t.me/daniil_glukhov17" class="msg-item" onclick="haptic()">
-                <img src="https://img.icons8.com/color/48/telegram-app.png"> Telegram
+                <img src="https://img.icons8.com/color/48/telegram-app.png"> TG
             </a>
             <a href="https://vk.com/daniil_glukhov17" class="msg-item" onclick="haptic()">
-                <img src="https://img.icons8.com/color/48/vkontakte.png"> ВКонтакте
+                <img src="https://img.icons8.com/color/48/vkontakte.png"> VK
             </a>
-            <a href="tel:+79785552114" class="msg-item call-item" onclick="haptic()">Позвонить напрямую</a>
+            <a href="tel:+79785552114" class="msg-item call-item" onclick="haptic()">Позвонить мастеру</a>
         </div>
     </div>
 
     <script>
         function haptic() { if (navigator.vibrate) navigator.vibrate(40); }
         function openPopup() { haptic(); document.getElementById('mainBody').classList.add('show-popup'); }
-        function closePopup() { document.getElementById('mainBody').classList.remove('remove-popup'); document.getElementById('mainBody').classList.remove('show-popup'); }
-        
-        function openQuiz() { 
-            haptic(); 
-            // Тут твоя логика квиза (если нужно вызвать его)
-            alert('Запуск расчета...'); 
-        }
+        function closePopup() { document.getElementById('mainBody').classList.remove('show-popup'); }
     </script>
 </body>
 </html>

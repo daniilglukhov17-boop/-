@@ -8,8 +8,7 @@
         :root {
             --lime: #DFFF11; 
             --glass-bg: #0A0A0B;
-            /* Цвет для эффекта свечения MAX */
-            --max-glow: rgba(223, 255, 17, 0.4);
+            --max-glow: rgba(223, 255, 17, 0.5);
         } 
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; } 
@@ -17,10 +16,10 @@
         body { 
             background: #FFFFFF; 
             font-family: 'Inter', sans-serif; 
-            min-height: 200vh; /* Чтобы было куда скроллить */
+            min-height: 200vh; /* Запас для теста скролла */
         } 
 
-        /* Контейнер с логикой скрытия */
+        /* Контейнер шапки с анимацией появления/скрытия */
         .header-container {
             position: fixed;
             top: 25px;
@@ -32,9 +31,9 @@
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
         }
 
-        /* Класс, который будет добавляться через JS */
+        /* Состояние при скролле вниз */
         .header-hidden {
-            transform: translateY(-120%);
+            transform: translateY(-130%);
             opacity: 0;
         }
 
@@ -45,21 +44,11 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            
-            /* Эффект свечения MAX */
-            border: 1px solid rgba(223, 255, 17, 0.3);
-            box-shadow: 
-                0 0 20px rgba(0, 0, 0, 0.4),
-                0 0 15px var(--max-glow);
-            animation: max-border-pulse 4s infinite alternate;
+            border: 1px solid rgba(223, 255, 17, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 0, 0, 0.2);
             position: relative;
-        }
-
-        /* Анимация пульсирующего свечения рамки */
-        @keyframes max-border-pulse {
-            0% { border-color: rgba(223, 255, 17, 0.2); box-shadow: 0 0 10px var(--max-glow); }
-            100% { border-color: rgba(223, 255, 17, 0.6); box-shadow: 0 0 25px var(--max-glow); }
-        }
+            overflow: hidden;
+        } 
 
         .text-stack { display: flex; flex-direction: column; gap: 1px; } 
 
@@ -69,11 +58,22 @@
             gap: 10px;
             font-size: 8px;
             font-weight: 900;
-            color: rgba(255, 255, 255, 0.9);
             letter-spacing: 2.5px;
             text-transform: uppercase;
             margin-bottom: 2px;
         } 
+
+        /* СВЕЧЕНИЕ НАДПИСИ КАК В MAX */
+        .status-line span {
+            color: var(--lime);
+            text-shadow: 0 0 8px var(--max-glow);
+            animation: max-text-flicker 3s infinite alternate;
+        }
+
+        @keyframes max-text-flicker {
+            0%, 100% { opacity: 1; text-shadow: 0 0 8px var(--lime), 0 0 15px var(--max-glow); }
+            50% { opacity: 0.8; text-shadow: 0 0 4px var(--lime), 0 0 8px var(--max-glow); }
+        }
 
         .pulse-box {
             position: relative;
@@ -127,16 +127,16 @@
             border: none;
             position: relative;
             box-shadow: 
-                inset 4px 4px 8px rgba(0, 0, 0, 0.3), 
+                inset 4px 4px 8px rgba(0, 0, 0, 0.2), 
                 inset -3px -3px 6px rgba(255, 255, 255, 0.4);
-            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.15s ease;
         } 
 
         .indented-btn:active {
-            transform: translateY(2px) scale(0.97); 
+            transform: translateY(2px) scale(0.96); 
             box-shadow: 
-                inset 10px 10px 20px rgba(0, 0, 0, 0.5), 
-                inset -2px -2px 10px rgba(255, 255, 255, 0.3);
+                inset 8px 8px 16px rgba(0, 0, 0, 0.4), 
+                inset -2px -2px 8px rgba(255, 255, 255, 0.2);
         } 
 
         .btn-label {
@@ -165,7 +165,7 @@
                 <div class="name-carved">Даниил Глухов</div>
             </div> 
 
-            <a href="tel:+79785552114" class="indented-btn" onclick="masterClick(event)">
+            <a href="tel:+79785552114" class="indented-btn" onclick="handleInteraction(event)">
                 <svg class="btn-icon" viewBox="0 0 24 24">
                     <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1v3.5c0 .55-.45 1-1 1C10.74 21 3 13.26 3 3.5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                 </svg>
@@ -175,36 +175,49 @@
     </div> 
 
     <script>
-        // Логика звука и вибрации
+        // 1. Звуковой движок и вибрация
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); 
-        function masterClick(e) {
-            if (navigator.vibrate) navigator.vibrate(25); 
+
+        function handleInteraction(e) {
+            // Тактильный отклик
+            if (navigator.vibrate) navigator.vibrate(30); 
+
+            // Синтез щелчка
             const t = audioCtx.currentTime;
-            const lowOsc = audioCtx.createOscillator();
-            const lowGain = audioCtx.createGain();
-            lowOsc.type = 'sine';
-            lowOsc.frequency.setValueAtTime(90, t); 
-            lowOsc.frequency.exponentialRampToValueAtTime(0.01, t + 0.15);
-            lowGain.gain.setValueAtTime(0.7, t);
-            lowGain.gain.exponentialRampToValueAtTime(0.01, t + 0.15);
-            lowOsc.connect(lowGain); lowGain.connect(audioCtx.destination); 
-            lowOsc.start(); lowOsc.stop(t + 0.15);
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(120, t);
+            osc.frequency.exponentialRampToValueAtTime(0.01, t + 0.1);
+            
+            gain.gain.setValueAtTime(0.5, t);
+            gain.gain.exponentialRampToValueAtTime(0.01, t + 0.1);
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.start();
+            osc.stop(t + 0.1);
         }
 
-        // --- ЛОГИКА СКРОЛЛА ---
+        // 2. Логика скрытия шапки при скролле
         let lastScrollY = window.scrollY;
         const header = document.getElementById('mainHeader');
 
         window.addEventListener('scroll', () => {
-            if (window.scrollY > lastScrollY && window.scrollY > 100) {
-                // Скролл вниз — скрываем
+            const currentScrollY = window.scrollY;
+
+            if (currentScrollY > lastScrollY && currentScrollY > 80) {
+                // Скроллим вниз — прячем шапку
                 header.classList.add('header-hidden');
-            } else {
-                // Скролл вверх — показываем
+            } else if (currentScrollY < lastScrollY) {
+                // Скроллим вверх — показываем
                 header.classList.remove('header-hidden');
             }
-            lastScrollY = window.scrollY;
-        });
+            
+            lastScrollY = currentScrollY;
+        }, { passive: true });
     </script>
 </body>
 </html>

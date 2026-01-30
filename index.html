@@ -463,252 +463,256 @@
         }
     }
 </script>
-<section class="pro-portfolio">
+<section class="premium-portfolio">
     <style>
-        .pro-portfolio {
+        :root { --lime: #DFFF11; }
+
+        .premium-portfolio {
             width: 100%;
             max-width: 500px;
-            padding: 60px 0;
+            padding: 50px 0;
             background: #FFFFFF;
             font-family: 'Inter', sans-serif;
-            overflow: hidden;
         }
 
-        /* ЗАГОЛОВОК С ЭФФЕКТОМ ГЛУБИНЫ */
-        .section-label {
+        /* ЧИСТЫЙ ПРЕМИАЛЬНЫЙ ЗАГОЛОВОК */
+        .portfolio-title-wrap {
             padding: 0 24px;
-            position: relative;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
         }
 
-        .bg-text {
-            position: absolute;
-            top: -20px;
-            left: 10px;
-            font-size: 70px;
-            font-weight: 900;
-            color: #F5F5F5;
-            z-index: 1;
-            letter-spacing: -4px;
+        .portfolio-title-wrap h2 {
+            font-size: 42px;
+            font-weight: 950;
             text-transform: uppercase;
-        }
-
-        .main-title {
-            position: relative;
-            z-index: 2;
-            font-size: 32px;
-            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 0.8;
             color: #000;
-            text-transform: uppercase;
-            letter-spacing: -1.5px;
-            line-height: 1;
         }
 
-        .main-title span {
-            display: block;
+        .portfolio-title-wrap h2::after {
+            content: '.';
             color: var(--lime);
-            background: #000;
-            width: fit-content;
-            padding: 0 10px;
-            margin-top: 5px;
         }
 
-        /* СЛАЙДЕР */
-        .slider-wrapper {
-            position: relative;
-            padding: 0 24px;
+        .portfolio-title-wrap p {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 700;
+            color: #BBB;
+            margin-top: 10px;
         }
 
-        .cards-viewport {
+        /* КАРУСЕЛЬ */
+        .cards-container {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
+            padding: 0 24px 40px;
             scrollbar-width: none;
-            padding-bottom: 30px;
+            -webkit-overflow-scrolling: touch;
         }
-        .cards-viewport::-webkit-scrollbar { display: none; }
+        .cards-container::-webkit-scrollbar { display: none; }
 
-        .work-item {
-            min-width: 100%;
+        .portfolio-card {
+            min-width: 88vw;
+            max-width: 420px;
             scroll-snap-align: center;
-            perspective: 1000px;
+            position: relative;
         }
 
-        .frame-4-3 {
+        /* РАМКА 4:3 */
+        .compare-stage {
             position: relative;
             width: 100%;
             aspect-ratio: 4 / 3;
-            border-radius: 35px;
+            border-radius: 30px;
             overflow: hidden;
             background: #000;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
-            transform: translateZ(0);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            /* Убираем конфликты скролла */
+            touch-action: pan-y; 
         }
 
-        .img-base {
+        .img-layer {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-size: cover; background-position: center;
-        }
-
-        .img-reveal {
-            position: absolute;
-            top: 0; left: 0; width: 50%; height: 100%;
-            background-size: cover; background-position: center;
-            z-index: 2;
-            border-right: 3px solid var(--lime);
-        }
-
-        /* ПРЕМИАЛЬНЫЙ ПОЛЗУНОК */
-        .ultra-handle {
-            position: absolute;
-            top: 0; bottom: 0; left: 50%;
-            width: 4px;
-            z-index: 10;
-            transform: translateX(-50%);
+            background-size: cover;
+            background-position: center;
             pointer-events: none;
         }
 
-        .glass-trigger {
+        .img-before-overlay {
+            z-index: 2;
+            width: 50%;
+            border-right: 2px solid var(--lime);
+        }
+
+        /* ПОЛЗУНОК */
+        .slider-bar {
+            position: absolute;
+            top: 0; bottom: 0; left: 50%;
+            width: 2px; background: var(--lime);
+            z-index: 10; transform: translateX(-50%);
+            pointer-events: none;
+        }
+
+        .slider-knob {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 60px; height: 60px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 22px;
+            width: 50px; height: 50px;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--lime);
+            border-radius: 16px;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .glass-trigger::before {
-            content: '';
-            width: 20px; height: 2px;
-            background: var(--lime);
-            box-shadow: 0 0 10px var(--lime);
-        }
-
-        /* ИНДИКАТОРЫ ЛИСТАНИЯ (Dots) */
-        .nav-dots {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 20px;
-        }
-
-        .dot {
-            width: 8px; height: 8px;
-            background: #EEE;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .dot.active {
-            width: 30px;
-            background: #000;
+        .slider-knob::after {
+            content: '↔'; color: var(--lime); font-weight: 900; font-size: 18px;
         }
 
         /* ПОДПИСЬ */
-        .work-meta {
-            margin-top: 20px;
+        .card-info {
+            margin-top: 18px;
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
+            padding: 0 5px;
         }
 
-        .work-info h3 { font-size: 18px; font-weight: 900; text-transform: uppercase; margin: 0; }
-        .work-info p { font-size: 13px; color: #888; margin: 5px 0 0; }
-
-        .case-tag {
-            font-size: 10px;
-            font-weight: 950;
-            background: var(--lime);
-            padding: 5px 12px;
-            border-radius: 8px;
+        .card-info .text h3 {
+            font-size: 17px;
+            font-weight: 900;
             text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .card-info .tag {
+            font-size: 10px;
+            font-weight: 900;
+            background: #000;
+            color: #FFF;
+            padding: 4px 10px;
+            border-radius: 7px;
+        }
+
+        /* НАВИГАЦИЯ (ЛИНИЯ ПРОГРЕССА) */
+        .progress-nav {
+            display: flex;
+            gap: 6px;
+            padding: 0 24px;
+            margin-top: -10px;
+        }
+
+        .progress-bar {
+            height: 3px;
+            flex: 1;
+            background: #EEE;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            position: absolute;
+            top: 0; left: 0; height: 100%;
+            width: 0%;
+            background: #000;
+            transition: width 0.3s ease;
         }
     </style>
 
-    <div class="section-label">
-        <div class="bg-text">WORKS</div>
-        <h2 class="main-title">Кейсы <span>Результаты</span></h2>
+    <div class="portfolio-title-wrap">
+        <p>Наши работы</p>
+        <h2>Портфолио</h2>
     </div>
 
-    <div class="slider-wrapper">
-        <div class="cards-viewport" id="viewport">
-            
-            <div class="work-item">
-                <div class="frame-4-3" onpointermove="ultraCompare(event)">
-                    <div class="img-base" style="background-image: url('https://clck.ru/388888');"></div>
-                    <div class="img-reveal" style="background-image: url('https://clck.ru/399999');"></div>
-                    <div class="ultra-handle"><div class="glass-trigger"></div></div>
-                </div>
-                <div class="work-meta">
-                    <div class="work-info">
-                        <h3>Сложное удаление</h3>
-                        <p>Симферополь • 4 часа</p>
-                    </div>
-                    <div class="case-tag">01</div>
-                </div>
+    <div class="cards-container" id="pCards">
+        
+        <div class="portfolio-card">
+            <div class="compare-stage" onpointermove="doCompare(event)">
+                <div class="img-layer" style="background-image: url('ФОТО_1_ПОСЛЕ.jpg');"></div>
+                <div class="img-layer img-before-overlay" style="background-image: url('ФОТО_1_ДО.jpg');"></div>
+                <div class="slider-bar"><div class="slider-knob"></div></div>
             </div>
-
-            <div class="work-item">
-                <div class="frame-4-3" onpointermove="ultraCompare(event)">
-                    <div class="img-base" style="background-image: url('ФОТО_2_ПОСЛЕ.jpg');"></div>
-                    <div class="img-reveal" style="background-image: url('ФОТО_2_ДО.jpg');"></div>
-                    <div class="ultra-handle"><div class="glass-trigger"></div></div>
-                </div>
-                <div class="work-meta">
-                    <div class="work-info">
-                        <h3>Расчистка под ключ</h3>
-                        <p>Севастополь • 1 день</p>
-                    </div>
-                    <div class="case-tag">02</div>
-                </div>
+            <div class="card-info">
+                <div class="text"><h3>Спил в Симферополе</h3></div>
+                <div class="tag">01</div>
             </div>
-
-            </div>
-
-        <div class="nav-dots" id="dotsContainer">
-            <div class="dot active"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
         </div>
+
+        <div class="portfolio-card">
+            <div class="compare-stage" onpointermove="doCompare(event)">
+                <div class="img-layer" style="background-image: url('ФОТО_2_ПОСЛЕ.jpg');"></div>
+                <div class="img-layer img-before-overlay" style="background-image: url('ФОТО_2_ДО.jpg');"></div>
+                <div class="slider-bar"><div class="slider-knob"></div></div>
+            </div>
+            <div class="card-info">
+                <div class="text"><h3>Расчистка участка</h3></div>
+                <div class="tag">02</div>
+            </div>
+        </div>
+
+        <div class="portfolio-card">
+            <div class="compare-stage">
+                <div class="img-layer" style="background-image: url('ФОТО_ПРОЦЕССА.jpg');"></div>
+                <div style="position:absolute; top:20px; right:20px; background:var(--lime); color:#000; padding:5px 12px; border-radius:10px; font-size:10px; font-weight:900; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">LIVE PROCESS</div>
+            </div>
+            <div class="card-info">
+                <div class="text"><h3>Работаем сейчас</h3></div>
+                <div class="tag">05</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="progress-nav" id="pNav">
+        <div class="progress-bar"><div class="progress-fill" style="width: 20%"></div></div>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
     </div>
 
     <script>
-        function ultraCompare(e) {
-            const frame = e.currentTarget;
-            const reveal = frame.querySelector('.img-reveal');
-            const handle = frame.querySelector('.ultra-handle');
+        function doCompare(e) {
+            // Чтобы не мешать скроллу, срабатывает только при зажатии или таче
+            if (e.pointerType === 'mouse' && e.buttons !== 1) return;
             
-            const rect = frame.getBoundingClientRect();
+            const stage = e.currentTarget;
+            const before = stage.querySelector('.img-before-overlay');
+            const bar = stage.querySelector('.slider-bar');
+            
+            const rect = stage.getBoundingClientRect();
             let x = e.clientX - rect.left;
             let pos = (x / rect.width) * 100;
 
             if (pos >= 0 && pos <= 100) {
-                reveal.style.width = pos + '%';
-                handle.style.left = pos + '%';
+                before.style.width = pos + '%';
+                bar.style.left = pos + '%';
                 
-                // Тот самый тактильный отклик (Haptic)
-                if (navigator.vibrate && Math.round(pos) % 2 === 0) {
-                    navigator.vibrate(8);
+                // Haptic Feedback
+                if (navigator.vibrate && Math.round(pos) % 3 === 0) {
+                    navigator.vibrate(5);
                 }
             }
         }
 
-        // Логика активных точек (Dots)
-        const viewport = document.getElementById('viewport');
-        const dots = document.querySelectorAll('.dot');
+        // Индикатор прогресса
+        const container = document.getElementById('pCards');
+        const fills = document.querySelectorAll('.progress-fill');
 
-        viewport.addEventListener('scroll', () => {
-            const index = Math.round(viewport.scrollLeft / viewport.offsetWidth);
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === index);
+        container.addEventListener('scroll', () => {
+            const scrollPos = container.scrollLeft;
+            const cardWidth = container.offsetWidth;
+            const index = Math.round(scrollPos / cardWidth);
+            
+            fills.forEach((fill, i) => {
+                fill.style.width = i === index ? '100%' : '0%';
             });
         });
     </script>

@@ -2,214 +2,194 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Спил деревьев в Крыму | Профессиональные услуги</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-orange: #FF7F00; /* Цвет формы арбориста с фото */
-            --white: #ffffff;
-        }
+            --lime: #DFFF11; 
+            --glass-bg: #0A0A0B;
+        } 
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; } 
 
-        body {
-            background-color: #000;
-            color: var(--white);
-            overflow-x: hidden;
-        }
+        body { 
+            background: #FFFFFF; 
+            font-family: 'Inter', sans-serif; 
+            min-height: 200vh; /* Чтобы можно было поскроллить и увидеть эффект парения */
+        } 
 
-        /* ГЛАВНЫЙ ЭКРАН */
-        .hero {
-            position: relative;
-            height: 100vh;
-            width: 100%;
-            /* Прямая ссылка на твое фото из репозитория */
-            background: linear-gradient(to right, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.3) 100%), 
-                        url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260130_202829_851.jpg');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* ШАПКА (Glassmorphism) */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 8%;
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.03);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        /* Шапка на всю ширину */
+        .header-full-width {
             position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            z-index: 1000;
+            z-index: 10000;
+            /* Эффект парения над контентом */
+            background: rgba(255, 255, 255, 0.01); 
+            backdrop-filter: blur(8px);
+            padding: 10px 0; /* Небольшой отступ сверху/снизу */
         }
 
-        .logo {
-            font-weight: 900;
-            font-size: 24px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .logo span { color: var(--primary-orange); }
-
-        nav a {
-            color: var(--white);
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 14px;
-            font-weight: 700;
-            transition: 0.3s;
-            opacity: 0.7;
-        }
-        nav a:hover { opacity: 1; color: var(--primary-orange); }
-
-        .header-phone {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 900;
-            font-size: 18px;
-            border-bottom: 2px solid var(--primary-orange);
-        }
-
-        /* КОНТЕНТ */
-        .hero-content {
-            flex: 1;
+        /* Контейнер для центрирования содержимого */
+        .obsidian-panel {
+            max-width: 1200px; /* Ограничиваем ширину контента для десктопов */
+            margin: 0 auto;
+            width: calc(100% - 28px); /* Оставляем небольшие зазоры по бокам для изящности */
+            
+            background: linear-gradient(165deg, #18181B 0%, #000000 100%);
+            border-radius: 26px;
+            padding: 8px 10px 8px 24px;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 0 8%;
-            max-width: 850px;
-        }
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        } 
 
-        .badge {
-            background: var(--primary-orange);
-            color: #000;
-            padding: 5px 12px;
+        .text-stack { display: flex; flex-direction: column; gap: 1px; } 
+
+        .status-line {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 8px;
             font-weight: 900;
-            font-size: 12px;
-            width: fit-content;
-            margin-bottom: 20px;
-            border-radius: 2px;
+            color: rgba(255, 255, 255, 0.9);
+            letter-spacing: 2.5px;
             text-transform: uppercase;
-        }
+            margin-bottom: 2px;
+        } 
 
-        h1 {
-            font-size: clamp(32px, 6vw, 60px);
-            line-height: 1.1;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-            font-weight: 900;
-        }
-        h1 span { color: var(--primary-orange); }
-
-        p {
-            font-size: 18px;
-            margin-bottom: 45px;
-            line-height: 1.6;
-            color: rgba(255, 255, 255, 0.8);
-            max-width: 550px;
-        }
-
-        /* КРАСИВАЯ КНОПОЧКА */
-        .btn-main {
-            display: inline-block;
-            padding: 22px 40px;
-            background: var(--primary-orange);
-            color: white;
-            text-decoration: none;
-            font-weight: 800;
-            border-radius: 50px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            box-shadow: 0 10px 20px rgba(255, 127, 0, 0.3);
-            transition: all 0.4s ease;
+        .pulse-box {
             position: relative;
-            overflow: hidden;
-            width: fit-content;
-        }
+            width: 8px; height: 8px;
+            display: flex; align-items: center; justify-content: center;
+        } 
 
-        .btn-main:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(255, 127, 0, 0.5);
-        }
+        .glow-dot {
+            width: 6px; height: 6px;
+            background: var(--lime);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--lime);
+            animation: breathe 2.5s infinite ease-in-out;
+        } 
 
-        /* Эффект блика */
-        .btn-main::after {
-            content: '';
+        @keyframes breathe {
+            0%, 100% { opacity: 0.4; transform: scale(0.9); filter: blur(0.5px); }
+            50% { opacity: 1; transform: scale(1.1); filter: blur(0px); box-shadow: 0 0 20px var(--lime); }
+        } 
+
+        .soft-wave {
             position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 20%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.4);
-            transform: rotate(30deg);
-            transition: 0.6s;
-        }
+            width: 100%; height: 100%;
+            border: 1px solid var(--lime);
+            border-radius: 50%;
+            animation: wave-out 3s infinite linear;
+        } 
 
-        .btn-main:hover::after {
-            left: 130%;
-        }
+        @keyframes wave-out {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(4); opacity: 0; }
+        } 
 
-        /* СОЦСЕТИ */
-        .social-bar {
-            position: absolute;
-            bottom: 40px;
-            left: 8%;
+        .name-carved {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 900;
+            letter-spacing: -0.2px;
+            text-transform: uppercase;
+        } 
+
+        .indented-btn {
+            background: var(--lime);
+            height: 50px;
+            padding: 0 24px;
+            border-radius: 20px;
             display: flex;
-            gap: 20px;
-        }
-
-        .social-bar a {
-            color: white;
+            align-items: center;
+            gap: 10px;
             text-decoration: none;
-            font-size: 12px;
-            font-weight: 700;
-            opacity: 0.5;
-            transition: 0.3s;
-        }
-        .social-bar a:hover { opacity: 1; color: var(--primary-orange); }
+            border: none;
+            box-shadow: 
+                inset 4px 4px 8px rgba(0, 0, 0, 0.3), 
+                inset -3px -3px 6px rgba(255, 255, 255, 0.4),
+                0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+        } 
 
-        @media (max-width: 768px) {
-            nav { display: none; }
-            .hero-content { text-align: center; align-items: center; }
-        }
+        .indented-btn:active {
+            transform: translateY(2px) scale(0.97); 
+            box-shadow: 
+                inset 10px 10px 20px rgba(0, 0, 0, 0.5), 
+                inset -2px -2px 10px rgba(255, 255, 255, 0.3);
+            filter: brightness(0.9);
+        } 
+
+        .btn-label {
+            color: #000;
+            font-size: 12px;
+            font-weight: 950;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        } 
+
+        .btn-icon { width: 16px; height: 16px; fill: #000; } 
     </style>
 </head>
-<body>
+<body> 
 
-<div class="hero">
-    <header>
-        <div class="logo">Tree<span>Cut</span></div>
-        <nav>
-            <a href="#">Услуги</a>
-            <a href="#">Цены</a>
-            <a href="#">Контакты</a>
-        </nav>
-        <a href="tel:+79785552114" class="header-phone">+7 (978) 555-21-14</a>
+    <header class="header-full-width">
+        <div class="obsidian-panel">
+            <div class="text-stack">
+                <div class="status-line">
+                    <div class="pulse-box">
+                        <div class="glow-dot"></div>
+                        <div class="soft-wave"></div>
+                    </div>
+                    <span>На связи • Симферополь</span>
+                </div>
+                <div class="name-carved">Даниил Глухов</div>
+            </div> 
+
+            <a href="tel:+79785552114" class="indented-btn" onclick="masterClick(event)">
+                <svg class="btn-icon" viewBox="0 0 24 24">
+                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1v3.5c0 .55-.45 1-1 1C10.74 21 3 13.26 3 3.5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
+                <span class="btn-label">Вызвать</span>
+            </a>
+        </div>
     </header>
 
-    <main class="hero-content">
-        <div class="badge">Работаем по всему Крыму</div>
-        <h1>КАЧЕСТВЕННЫЙ <span>СПИЛ ДЕРЕВЬЕВ</span></h1>
-        <p>Безопасно удаляем сложные деревья, расчищаем участки и вывозим мусор. Оценка по фото за 5 минут.</p>
-        
-        <a href="https://t.me/daniil_glukhov17" class="btn-main">Рассчитать стоимость</a>
-    </main>
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); 
 
-    <div class="social-bar">
-        <a href="https://t.me/daniil_glukhov17" target="_blank">TELEGRAM</a>
-        <a href="https://vk.com/daniil_glukhov17" target="_blank">VKONTAKTE</a>
-        <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" target="_blank">MAX ID</a>
-    </div>
-</div>
+        function masterClick(e) {
+            if (navigator.vibrate) navigator.vibrate(25); 
 
+            const t = audioCtx.currentTime;
+            
+            const lowOsc = audioCtx.createOscillator();
+            const lowGain = audioCtx.createGain();
+            lowOsc.type = 'sine';
+            lowOsc.frequency.setValueAtTime(90, t); 
+            lowOsc.frequency.exponentialRampToValueAtTime(0.01, t + 0.15);
+            lowGain.gain.setValueAtTime(0.7, t);
+            lowGain.gain.exponentialRampToValueAtTime(0.01, t + 0.15);
+            lowOsc.connect(lowGain); lowGain.connect(audioCtx.destination); 
+
+            const midOsc = audioCtx.createOscillator();
+            const midGain = audioCtx.createGain();
+            midOsc.type = 'triangle'; 
+            midOsc.frequency.setValueAtTime(400, t);
+            midOsc.frequency.exponentialRampToValueAtTime(100, t + 0.05);
+            midGain.gain.setValueAtTime(0.15, t);
+            midGain.gain.exponentialRampToValueAtTime(0.01, t + 0.05);
+            midOsc.connect(midGain); midGain.connect(audioCtx.destination); 
+
+            lowOsc.start(); lowOsc.stop(t + 0.15);
+            midOsc.start(); midOsc.stop(t + 0.05);
+        }
+    </script>
 </body>
 </html>

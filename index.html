@@ -463,284 +463,245 @@
         }
     }
 </script>
-<section class="case-master">
+<section class="neo-portfolio">
     <style>
-        .case-master {
+        :root { --lime: #DFFF11; }
+
+        .neo-portfolio {
             width: 100%;
             max-width: 500px;
             margin: 0 auto;
-            padding: 10px 0 50px; /* Минимум отступа сверху */
+            padding: 0 0 50px;
             background: #fff;
             font-family: 'Inter', sans-serif;
         }
 
-        /* ЗАГОЛОВОК С ЛИНИЕЙ */
-        .case-header {
-            padding: 0 20px;
-            margin-bottom: 20px;
+        /* НЕОНОВЫЙ ЗАГОЛОВОК */
+        .neo-header {
+            padding: 0 24px 30px;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 5px;
         }
-        .case-header h2 {
-            font-size: 24px;
+
+        .neo-header h2 {
+            font-size: 34px;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: -1px;
-        }
-        .case-counter {
-            font-family: monospace;
-            font-size: 16px;
-            font-weight: 900;
+            letter-spacing: -2px;
             color: #000;
-            background: var(--lime);
-            padding: 2px 8px;
-            border-radius: 6px;
+            margin: 0;
+            position: relative;
+            display: inline-block;
         }
 
-        /* ГЛАВНЫЙ КОНТЕЙНЕР */
-        .case-viewport {
+        .neo-header h2 span {
+            display: block;
+            height: 4px;
+            width: 60px;
+            background: var(--lime);
+            margin-top: 5px;
+            box-shadow: 0 0 15px var(--lime); /* Неоновое свечение */
+            border-radius: 2px;
+        }
+
+        /* КОНТЕЙНЕР СЛАЙДЕРА */
+        .neo-viewport {
             position: relative;
             width: 100%;
-            overflow: hidden;
         }
 
-        .case-track {
+        .neo-track {
             display: flex;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
             scroll-behavior: smooth;
-            scrollbar-width: none;
-            -webkit-overflow-scrolling: touch;
-            padding: 0 20px;
+            padding: 0 24px 25px;
             gap: 12px;
+            scrollbar-width: none;
         }
-        .case-track::-webkit-scrollbar { display: none; }
+        .neo-track::-webkit-scrollbar { display: none; }
 
-        .case-card {
-            min-width: calc(100vw - 40px);
-            max-width: 460px;
+        .neo-card {
+            min-width: calc(100vw - 48px);
+            max-width: 452px;
             scroll-snap-align: center;
-            position: relative;
         }
 
-        /* ФОТО-БОКС */
-        .case-img-box {
+        .neo-img-box {
             position: relative;
             width: 100%;
             aspect-ratio: 4/3;
-            border-radius: 24px;
+            border-radius: 28px;
             overflow: hidden;
-            background: #111;
+            background: #000;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             touch-action: pan-y;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
         }
 
-        .case-img {
-            position: absolute;
-            inset: 0;
-            background-size: cover;
-            background-position: center;
-            pointer-events: none;
-        }
-
-        .case-before {
-            z-index: 2;
-            width: 50%;
-            border-right: 2px solid var(--lime);
-        }
-
-        /* КНОПКИ ДЛЯ ЛИСТАНИЯ (НЕВИДИМЫЕ ЗОНЫ) */
-        .nav-tap-zone {
-            position: absolute;
-            top: 0; bottom: 0;
-            width: 25%;
-            z-index: 20;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s;
-            color: #fff;
-            font-size: 30px;
-            pointer-events: auto;
-        }
-        .nav-tap-zone.left { left: 0; cursor: w-resize; }
-        .nav-tap-zone.right { right: 0; cursor: e-resize; }
-        .case-img-box:hover .nav-tap-zone { opacity: 0.2; }
-
-        /* ПОЛЗУНОК */
-        .case-handle {
+        /* ФУНКЦИЯ СРАВНЕНИЯ */
+        .neo-img { position: absolute; inset: 0; background-size: cover; background-position: center; pointer-events: none; }
+        .neo-before { z-index: 2; width: 50%; border-right: 2.5px solid var(--lime); }
+        
+        .neo-handle {
             position: absolute;
             top: 0; bottom: 0; left: 50%;
-            width: 2px; background: var(--lime);
-            z-index: 15; transform: translateX(-50%);
+            width: 2.5px; background: var(--lime);
+            z-index: 10; transform: translateX(-50%);
             pointer-events: none;
         }
-        .case-knob {
+
+        .neo-knob {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 48px; height: 48px;
-            background: #000;
+            width: 50px; height: 50px;
+            background: rgba(0,0,0,0.9);
             border: 2px solid var(--lime);
-            border-radius: 50%;
+            border-radius: 16px;
             display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
-        .case-knob::after {
-            content: '↔'; color: var(--lime); font-weight: 900; font-size: 18px;
-        }
+        .neo-knob::after { content: '↔'; color: var(--lime); font-weight: 900; font-size: 20px; }
 
-        /* ПОДПИСЬ */
-        .case-info {
+        /* ИНФОРМАЦИЯ */
+        .neo-footer {
             margin-top: 15px;
+            padding: 0 5px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 5px;
         }
-        .case-info h3 { font-size: 16px; font-weight: 800; text-transform: uppercase; }
-        .case-info span { font-size: 12px; color: #aaa; font-weight: 600; }
+        .neo-footer strong { font-size: 16px; font-weight: 900; text-transform: uppercase; }
+        .neo-footer span { font-size: 12px; font-weight: 700; color: #BBB; }
 
-        /* ИНДИКАТОР ПРОГРЕССА */
-        .case-progress {
-            margin: 20px 20px 0;
+        /* НОВЫЙ НИЖНИЙ ПОЛЗУНОК УПРАВЛЕНИЯ */
+        .neo-controls {
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            width: 44px; height: 44px;
+            background: #F5F5F5;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; font-weight: 900;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .nav-btn:active { background: var(--lime); transform: scale(0.9); }
+
+        .progress-rail {
+            flex: 1;
             height: 4px;
-            background: #eee;
+            background: #F0F0F0;
             border-radius: 10px;
             position: relative;
             overflow: hidden;
         }
-        .case-bar {
+
+        .progress-active {
             position: absolute;
-            height: 100%;
-            width: 20%;
+            height: 100%; width: 20%;
             background: #000;
-            transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+            left: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
         }
 
-        /* МЕТКА LIVE */
-        .case-live {
+        .live-badge {
             position: absolute;
-            top: 15px; right: 15px;
+            top: 20px; left: 20px;
             background: #000;
             color: var(--lime);
             padding: 5px 12px;
             border-radius: 10px;
             font-size: 10px;
             font-weight: 900;
-            z-index: 25;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 5;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
         }
     </style>
 
-    <div class="case-header">
-        <h2>Портфолио</h2>
-        <div class="case-counter" id="caseNum">01</div>
+    <div class="neo-header">
+        <h2>Портфолио<span></span></h2>
     </div>
 
-    <div class="case-viewport">
-        <div class="case-track" id="caseTrack">
+    <div class="neo-viewport">
+        <div class="neo-track" id="neoTrack">
             
-            <div class="case-card">
-                <div class="case-img-box" onpointermove="caseComp(event)">
-                    <div class="nav-tap-zone left" onclick="caseScroll(-1)">‹</div>
-                    <div class="nav-tap-zone right" onclick="caseScroll(1)">›</div>
-                    <div class="case-img" style="background-image: url('1_ПОСЛЕ.jpg');"></div>
-                    <div class="case-img case-before" style="background-image: url('1_ДО.jpg');"></div>
-                    <div class="case-handle"><div class="case-knob"></div></div>
+            <div class="neo-card">
+                <div class="neo-img-box" onpointermove="neoComp(event)">
+                    <div class="neo-img" style="background-image: url('ФОТО_1_ПОСЛЕ.jpg');"></div>
+                    <div class="neo-img neo-before" style="background-image: url('ФОТО_1_ДО.jpg');"></div>
+                    <div class="neo-handle"><div class="neo-knob"></div></div>
                 </div>
-                <div class="case-info"><h3>Удаление деревьев</h3><span>СИМФЕРОПОЛЬ</span></div>
+                <div class="neo-footer"><strong>Удаление сосен</strong><span>01 / 05</span></div>
             </div>
 
-            <div class="case-card">
-                <div class="case-img-box" onpointermove="caseComp(event)">
-                    <div class="nav-tap-zone left" onclick="caseScroll(-1)">‹</div>
-                    <div class="nav-tap-zone right" onclick="caseScroll(1)">›</div>
-                    <div class="case-img" style="background-image: url('2_ПОСЛЕ.jpg');"></div>
-                    <div class="case-img case-before" style="background-image: url('2_ДО.jpg');"></div>
-                    <div class="case-handle"><div class="case-knob"></div></div>
+            <div class="neo-card">
+                <div class="neo-img-box" onpointermove="neoComp(event)">
+                    <div class="neo-img" style="background-image: url('ФОТО_2_ПОСЛЕ.jpg');"></div>
+                    <div class="neo-img neo-before" style="background-image: url('ФОТО_2_ДО.jpg');"></div>
+                    <div class="neo-handle"><div class="neo-knob"></div></div>
                 </div>
-                <div class="case-info"><h3>Расчистка участка</h3><span>ЮБК</span></div>
+                <div class="neo-footer"><strong>Расчистка участка</strong><span>02 / 05</span></div>
             </div>
 
-            <div class="case-card">
-                <div class="case-img-box" onpointermove="caseComp(event)">
-                    <div class="nav-tap-zone left" onclick="caseScroll(-1)">‹</div>
-                    <div class="nav-tap-zone right" onclick="caseScroll(1)">›</div>
-                    <div class="case-img" style="background-image: url('3_ПОСЛЕ.jpg');"></div>
-                    <div class="case-img case-before" style="background-image: url('3_ДО.jpg');"></div>
-                    <div class="case-handle"><div class="case-knob"></div></div>
+            <div class="neo-card">
+                <div class="neo-img-box">
+                    <div class="live-badge">LIVE ПРОЦЕСС</div>
+                    <div class="neo-img" style="background-image: url('LIVE_ФОТО.jpg');"></div>
                 </div>
-                <div class="case-info"><h3>Обрезка сосен</h3><span>ЯЛТА</span></div>
-            </div>
-
-            <div class="case-card">
-                <div class="case-img-box" onpointermove="caseComp(event)">
-                    <div class="nav-tap-zone left" onclick="caseScroll(-1)">‹</div>
-                    <div class="nav-tap-zone right" onclick="caseScroll(1)">›</div>
-                    <div class="case-img" style="background-image: url('4_ПОСЛЕ.jpg');"></div>
-                    <div class="case-img case-before" style="background-image: url('4_ДО.jpg');"></div>
-                    <div class="case-handle"><div class="case-knob"></div></div>
-                </div>
-                <div class="case-info"><h3>Корчевание пней</h3><span>АЛУШТА</span></div>
-            </div>
-
-            <div class="case-card">
-                <div class="case-img-box">
-                    <div class="nav-tap-zone left" onclick="caseScroll(-1)">‹</div>
-                    <div class="case-img" style="background-image: url('LIVE_ФОТО.jpg');"></div>
-                    <div class="case-live">LIVE PROCESS</div>
-                </div>
-                <div class="case-info"><h3>Наша команда</h3><span>В РАБОТЕ</span></div>
+                <div class="neo-footer"><strong>Работа в Крыму</strong><span>05 / 05</span></div>
             </div>
 
         </div>
     </div>
 
-    <div class="case-progress">
-        <div class="case-bar" id="caseBar"></div>
+    <div class="neo-controls">
+        <div class="nav-btn" onclick="neoScroll(-1)">‹</div>
+        <div class="progress-rail">
+            <div class="progress-active" id="neoBar"></div>
+        </div>
+        <div class="nav-btn" onclick="neoScroll(1)">›</div>
     </div>
 
     <script>
-        const track = document.getElementById('caseTrack');
-        const bar = document.getElementById('caseBar');
-        const num = document.getElementById('caseNum');
+        const nTrack = document.getElementById('neoTrack');
+        const nBar = document.getElementById('neoBar');
 
-        // Функция сравнения До/После
-        function caseComp(e) {
+        function neoComp(e) {
             if (e.pointerType === 'mouse' && e.buttons !== 1) return;
             const box = e.currentTarget;
-            const before = box.querySelector('.case-before');
-            const handle = box.querySelector('.case-handle');
-            if (!before) return;
+            const before = box.querySelector('.neo-before');
+            const handle = box.querySelector('.neo-handle');
+            if(!before) return;
 
             const rect = box.getBoundingClientRect();
-            let x = (e.clientX || e.touches[0].clientX) - rect.left;
+            let x = e.clientX - rect.left;
             let pos = (x / rect.width) * 100;
 
             if (pos >= 0 && pos <= 100) {
                 before.style.width = pos + '%';
                 handle.style.left = pos + '%';
-                if (navigator.vibrate && Math.round(pos) % 4 === 0) navigator.vibrate(5);
+                if (navigator.vibrate && Math.round(pos) % 3 === 0) navigator.vibrate(5);
             }
         }
 
-        // Функция листания по тапу
-        function caseScroll(dir) {
-            const cardWidth = track.querySelector('.case-card').offsetWidth + 12;
-            track.scrollBy({ left: dir * cardWidth, behavior: 'smooth' });
+        function neoScroll(dir) {
+            const cardW = nTrack.querySelector('.neo-card').offsetWidth + 12;
+            nTrack.scrollBy({ left: dir * cardW, behavior: 'smooth' });
         }
 
-        // Обновление навигации при скролле
-        track.addEventListener('scroll', () => {
-            const scrollPos = track.scrollLeft;
-            const cardWidth = track.querySelector('.case-card').offsetWidth + 12;
-            const index = Math.round(scrollPos / cardWidth);
-            
-            num.innerText = `0${index + 1}`;
-            bar.style.transform = `translateX(${index * 100}%)`;
+        nTrack.addEventListener('scroll', () => {
+            const index = Math.round(nTrack.scrollLeft / nTrack.offsetWidth);
+            nBar.style.left = (index * 20) + '%';
         });
     </script>
 </section>

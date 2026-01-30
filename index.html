@@ -159,100 +159,75 @@
     </div> 
 
     <script>
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); 
-
-        function masterClick(e) {
-            if (navigator.vibrate) navigator.vibrate(25); 
-
-            const t = audioCtx.currentTime;
-            
-            const lowOsc = audioCtx.createOscillator();
-            const lowGain = audioCtx.createGain();
-            lowOsc.type = 'sine';
-            lowOsc.frequency.setValueAtTime(90, t); 
-            lowOsc.frequency.exponentialRampToValueAtTime(0.01, t + 0.15);
-            lowGain.gain.setValueAtTime(0.7, t);
-            lowGain.gain.exponentialRampToValueAtTime(0.01, t + 0.15);
-            lowOsc.connect(lowGain); lowGain.connect(audioCtx.destination); 
-
-            const midOsc = audioCtx.createOscillator();
-            const midGain = audioCtx.createGain();
-            midOsc.type = 'triangle'; 
-            midOsc.frequency.setValueAtTime(400, t);
-            midOsc.frequency.exponentialRampToValueAtTime(100, t + 0.05);
-            midGain.gain.setValueAtTime(0.15, t);
-            midGain.gain.exponentialRampToValueAtTime(0.01, t + 0.05);
-            midOsc.connect(midGain); midGain.connect(audioCtx.destination); 
-
-            lowOsc.start(); lowOsc.stop(t + 0.15);
-            midOsc.start(); midOsc.stop(t + 0.05);
-        }
-    </script>
-<style>
+ <style>
     :root { --lime: #DFFF11; } 
 
     .hero-clean {
         margin-top: 85px; 
-        padding: 0;
-        background: #FFFFFF;
+        padding: 40px 24px; /* Отступы внутри, чтобы текст не лип к краям */
         font-family: 'Inter', sans-serif;
         display: block;
         position: relative;
         border-radius: 30px;
         overflow: hidden;
-        border: 1px solid #EEE;
+        border: 1px solid rgba(255,255,255,0.1);
         max-width: 500px;
         margin-left: auto;
         margin-right: auto;
+        
+        /* ФОТО ТЕПЕРЬ ТУТ */
+        background: url('IMG_20260130_155048_396.jpg') center/cover no-repeat;
+        min-height: 550px; /* Чтобы блок был высоким и солидным */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end; /* Текст прижмем к низу, так стильнее */
     } 
 
-    /* Контейнер для фото */
-    .hero-image-box {
-        width: 100%;
-        height: 250px;
-        background: url('IMG_20260130_155048_396.jpg') center/cover no-repeat; /* Подхватит твой файл */
-        position: relative;
-    }
-
-    .hero-image-box::after {
+    /* ТЕМНАЯ ПОДЛОЖКА, чтобы текст всегда читался */
+    .hero-clean::before {
         content: '';
         position: absolute;
-        bottom: 0; left: 0; right: 0;
-        height: 80px;
-        background: linear-gradient(0deg, #FFFFFF 0%, transparent 100%);
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
+        z-index: 1;
     }
 
-    .hero-content-padding { padding: 0 24px 30px; position: relative; z-index: 2; }
+    .hero-content-padding { 
+        position: relative; 
+        z-index: 2; 
+    }
 
     .hero-h1 {
-        font-size: 32px; line-height: 1.0; font-weight: 900; color: #000;
+        font-size: 32px; line-height: 1.0; font-weight: 900; color: #FFF; /* Текст белый */
         text-transform: uppercase; letter-spacing: -1.5px; margin-bottom: 25px;
     } 
 
-    .hero-h1 span { display: block; font-weight: 400; font-size: 22px; color: #444; margin-top: 5px; letter-spacing: 0; } 
+    .hero-h1 span { display: block; font-weight: 400; font-size: 22px; color: var(--lime); margin-top: 5px; letter-spacing: 0; } 
 
-    .benefit-row { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 15px; padding-top: 15px; border-top: 1px solid #EEE; } 
+    .benefit-row { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2); } 
     .benefit-marker { width: 12px; height: 12px; background: var(--lime); margin-top: 4px; flex-shrink: 0; } 
-    .benefit-content strong { display: block; font-size: 14px; font-weight: 900; text-transform: uppercase; color: #000; } 
-    .benefit-content p { font-size: 13px; color: #666; line-height: 1.4; } 
+    .benefit-content strong { display: block; font-size: 14px; font-weight: 900; text-transform: uppercase; color: #FFF; } 
+    .benefit-content p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.4; } 
 
     .sticky-contact { margin-top: 30px; display: flex; flex-direction: column; gap: 12px; } 
-    .speed-tag { display: flex; align-items: center; gap: 10px; padding: 8px 14px; background: #F9F9F9; border-radius: 12px; border-left: 3px solid var(--lime); width: fit-content; } 
-    .speed-tag span { font-size: 11px; font-weight: 950; text-transform: uppercase; color: #000; } 
+    .speed-tag { display: flex; align-items: center; gap: 10px; padding: 8px 14px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px); border-radius: 12px; border-left: 3px solid var(--lime); width: fit-content; } 
+    .speed-tag span { font-size: 11px; font-weight: 950; text-transform: uppercase; color: #FFF; } 
 
     .btn-super { position: relative; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.1s; } 
-    .btn-max-top { background: #000; height: 72px; border-radius: 24px; flex-direction: column; gap: 2px; } 
+    .btn-max-top { background: var(--lime); height: 72px; border-radius: 24px; flex-direction: column; gap: 2px; } 
+    .btn-max-top .btn-text { color: #000; } /* На лаймовой кнопке текст черный */
+    .btn-max-top .online-status { color: rgba(0,0,0,0.5); }
+
     .btn-text { color: #FFF; font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; } 
     .online-status { font-size: 7px; font-weight: 900; color: var(--lime); text-transform: uppercase; letter-spacing: 3px; } 
 
     .sub-links-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; } 
-    .btn-secondary-top { height: 60px; background: #FFFFFF; border-radius: 20px; border: 1px solid #EAEAEA; color: #000; font-size: 11px; font-weight: 950; text-transform: uppercase; } 
+    .btn-secondary-top { height: 60px; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 20px; border: 1px solid rgba(255,255,255,0.2); color: #FFF; font-size: 11px; font-weight: 950; text-transform: uppercase; } 
     .btn-super:active { transform: scale(0.96); } 
-    .m-icon { width: 20px; height: 20px; margin-right: 8px; }
+    .m-icon { width: 20px; height: 20px; margin-right: 8px; filter: brightness(0) invert(1); } /* Иконки делаем белыми */
 </style> 
 
 <section class="hero-clean">
-    <div class="hero-image-box"></div>
     <div class="hero-content-padding">
         <h1 class="hero-h1">СПИЛ ДЕРЕВЬЕВ <span>И РАСЧИСТКА УЧАСТКОВ</span></h1> 
 
@@ -274,6 +249,7 @@
 
         <div class="sticky-contact">
             <div class="speed-tag"><span>Оценка по фото за 5 мин</span></div> 
+            
             <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="btn-super btn-max-top" onclick="hapticHeroClick(event)">
                 <span class="btn-text">Написать в MAX</span>
                 <span class="online-status">● Сейчас ОНЛАЙН</span>
@@ -290,6 +266,6 @@
         </div>
     </div>
 </section>
-
+       
 </body>
 </html>

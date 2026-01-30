@@ -22,13 +22,13 @@
         }
         .hero::after {
             content: ''; position: absolute; inset: 0;
-            background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.95) 100%);
+            background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.9) 100%);
             z-index: 1;
         }
 
         /* ШАПКА */
         .header { position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: flex-start; }
-        .status-tag { display: flex; align-items: center; gap: 8px; padding: 6px 14px; background: rgba(0,0,0,0.8); border: 1px solid var(--lime); border-radius: 4px; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
+        .status-tag { display: flex; align-items: center; gap: 8px; padding: 6px 14px; background: rgba(0,0,0,0.5); border: 1px solid var(--lime); border-radius: 4px; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
         .radar { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; position: relative; }
         .radar::after { content: ''; position: absolute; inset: 0; background: var(--lime); border-radius: 50%; animation: wave 2s infinite; }
         @keyframes wave { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(4); opacity: 0; } }
@@ -41,42 +41,52 @@
         .main-box { position: relative; z-index: 5; margin: auto 0; text-align: center; display: flex; flex-direction: column; align-items: center; }
         .main-title { font-size: clamp(40px, 12vw, 86px); font-weight: 900; line-height: 0.95; letter-spacing: -0.04em; text-transform: uppercase; margin-bottom: 35px; }
 
-        /* ПЛАШКА С ПРИЦЕЛОМ */
+        /* ПРОЗРАЧНАЯ ПЛАШКА */
         .industrial-eval { position: relative; margin-bottom: 45px; }
+        
         .aim-arrow { 
-            position: absolute; top: -25px; left: 50%; transform: translateX(-50%);
-            font-size: 20px; color: var(--lime); 
+            position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
+            font-size: 24px; color: var(--lime); 
             animation: aimPush 0.8s infinite ease-in-out; 
-            text-shadow: 0 0 10px var(--lime);
+            text-shadow: 0 0 15px var(--lime);
             z-index: 6;
         }
-        @keyframes aimPush { 0%, 100% { transform: translate(-50%, 0); opacity: 0.6; } 50% { transform: translate(-50%, 8px); opacity: 1; } }
+        @keyframes aimPush { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 10px); } }
 
         .evaluation-badge-heavy {
-            position: relative; display: inline-flex; align-items: center; padding: 14px 45px;
-            background: #000; border: 2px solid var(--lime);
+            position: relative; display: inline-flex; align-items: center; padding: 16px 45px;
+            background: rgba(223, 255, 0, 0.03); /* Почти прозрачный фон */
+            border: 1.5px solid var(--lime);
             clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%);
-            text-decoration: none; overflow: hidden; transition: 0.2s;
-            box-shadow: 0 0 20px rgba(223, 255, 0, 0.2);
+            text-decoration: none; overflow: hidden; transition: 0.3s;
+            backdrop-filter: blur(2px); /* Легкое размытие под плашкой */
         }
+
+        /* Лазерный блик */
         .evaluation-badge-heavy::before {
             content: ''; position: absolute; top: 0; left: -150%;
             width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(223, 255, 0, 0.6), transparent);
+            background: linear-gradient(90deg, transparent, rgba(223, 255, 0, 0.5), transparent);
             transform: skewX(-20deg);
-            animation: laserScan 2.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+            animation: laserScan 3s infinite cubic-bezier(0.4, 0, 0.2, 1);
         }
         @keyframes laserScan { 0% { left: -150%; } 30%, 100% { left: 150%; } }
-        .ev-text-heavy { font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; color: var(--lime); position: relative; z-index: 2; }
 
-        /* ПОЛНЫЙ ТЕКСТ ВОССТАНОВЛЕН */
-        .desc { font-size: 16px; line-height: 1.6; max-width: 350px; margin-bottom: 40px; font-weight: 500; color: rgba(255,255,255,1); }
+        .ev-text-heavy { 
+            font-size: 13px; font-weight: 900; text-transform: uppercase; 
+            letter-spacing: 2.5px; color: var(--lime); position: relative; z-index: 2;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
 
-        /* ГЛАВНАЯ КНОПКА */
+        /* ТЕКСТ */
+        .desc { font-size: 16px; line-height: 1.6; max-width: 350px; margin-bottom: 40px; font-weight: 500; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+
+        /* КНОПКА */
         .cta-btn { 
             background: var(--white); color: #000; padding: 22px 50px; 
             font-weight: 900; font-size: 15px; text-transform: uppercase; 
             text-decoration: none; clip-path: polygon(0 0, 95% 0, 100% 30%, 100% 100%, 5% 100%, 0 70%);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         /* ПОПАП */
@@ -86,11 +96,11 @@
             background: #111; border-top: 4px solid var(--lime); 
             border-radius: 40px 40px 0 0; padding: 45px 24px 60px; z-index: 101; 
             transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-            box-shadow: 0 -20px 40px rgba(223, 255, 0, 0.15);
         }
         .show-popup #overlay { opacity: 1; visibility: visible; }
         .show-popup #popup { bottom: 0; }
-        .popup-title { font-weight: 900; font-size: 24px; text-transform: uppercase; margin-bottom: 30px; text-align: center; color: var(--lime); text-shadow: 0 0 10px rgba(223, 255, 0, 0.3); }
+        
+        .popup-title { font-weight: 900; font-size: 24px; text-transform: uppercase; margin-bottom: 30px; text-align: center; color: var(--lime); }
 
         .max-card {
             display: flex; align-items: center; justify-content: space-between;
@@ -98,14 +108,13 @@
             margin-bottom: 20px; text-decoration: none;
             box-shadow: 0 10px 30px rgba(223, 255, 0, 0.4);
         }
-        .max-info b { font-size: 22px; font-weight: 900; color: #000; display: block; text-transform: uppercase; line-height: 1; margin-bottom: 4px; }
-        .max-info span { font-size: 12px; color: #000; font-weight: 800; text-transform: uppercase; }
+        .max-info b { font-size: 22px; font-weight: 900; color: #000; display: block; text-transform: uppercase; line-height: 1; }
         .max-logo { width: 55px; height: 55px; background: #000; border-radius: 16px; display: flex; align-items: center; justify-content: center; color: var(--lime); font-size: 30px; font-weight: 900; }
 
         .msg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .msg-item { background: #222; border: 2px solid rgba(255,255,255,0.1); border-radius: 22px; padding: 22px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-decoration: none; color: #fff; font-weight: 900; font-size: 13px; text-transform: uppercase; }
         .msg-item img { width: 30px; height: 30px; }
-        .call-item { grid-column: span 2; background: rgba(223, 255, 0, 0.05); border: 1px dashed var(--lime); margin-top: 10px; opacity: 0.8; padding: 15px; }
+        .call-item { grid-column: span 2; background: rgba(223, 255, 0, 0.05); border: 1px dashed var(--lime); margin-top: 10px; opacity: 0.8; padding: 15px; text-align: center; }
 
     </style>
 </head>
@@ -134,7 +143,7 @@
                 Заезжаем на заросший участок — выезжаем с идеально чистого. Спил, измельчение веток и вывоз мусора. Вам остается только принять работу.
             </div>
 
-            <a href="javascript:void(0)" class="cta-btn" onclick="haptic(); alert('Рассчитать...')">
+            <a href="javascript:void(0)" class="cta-btn" onclick="haptic(); openPopup()">
                 Узнать стоимость
             </a>
         </div>
@@ -147,7 +156,7 @@
         <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="max-card" onclick="haptic()">
             <div class="max-info">
                 <b>Мессенджер MAX</b>
-                <span>Отвечу моментально</span>
+                <span style="font-size: 11px; text-transform: uppercase; opacity: 0.8; font-weight: 800; color: #000; display: block; margin-top: 4px;">Отвечу моментально</span>
             </div>
             <div class="max-logo">M</div>
         </a>

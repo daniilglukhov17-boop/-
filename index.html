@@ -288,5 +288,246 @@
             setTimeout(closePopup, 1500);
         }
     </script>
+<section class="p-wrap">
+    <style>
+        :root { --lime: #DFFF00; --black: #0c0c0c; }
+        
+        .p-wrap {
+            width: 100%; padding: 60px 0; background: #000; 
+            font-family: 'Inter Tight', sans-serif; overflow: hidden;
+            color: #fff;
+        } 
+
+        .p-header { padding: 0 24px 30px; position: relative; }
+        .p-header h2 {
+            font-size: clamp(28px, 6vw, 40px); font-weight: 900; text-transform: uppercase; 
+            letter-spacing: -1px; margin: 0; color: var(--white);
+        }
+        .p-header span { color: var(--lime); display: block; font-size: 12px; letter-spacing: 3px; }
+
+        .p-slider { position: relative; width: 100%; }
+        .p-track {
+            display: flex; overflow-x: auto; scroll-snap-type: x mandatory; 
+            scroll-behavior: smooth; -webkit-overflow-scrolling: touch; 
+            scrollbar-width: none; padding: 0 24px 20px; gap: 20px;
+        }
+        .p-track::-webkit-scrollbar { display: none; } 
+
+        .p-card { 
+            min-width: calc(100vw - 48px); max-width: 450px; 
+            scroll-snap-align: center; flex-shrink: 0; 
+        } 
+
+        .p-img-area {
+            position: relative; width: 100%; aspect-ratio: 4/3; 
+            background: #111; touch-action: pan-y;
+            /* Индустриальный срез углов */
+            clip-path: polygon(0 0, 95% 0, 100% 7%, 100% 100%, 5% 100%, 0 93%);
+            border: 1px solid rgba(223, 255, 0, 0.2);
+        } 
+
+        .p-img-full { position: absolute; inset: 0; background-size: cover; background-position: center; pointer-events: none; }
+        .p-img-before { 
+            z-index: 2; width: 50%; 
+            border-right: 2px solid var(--lime);
+            box-shadow: 5px 0 15px rgba(223, 255, 0, 0.3);
+        }
+        
+        /* Метки ДО / ПОСЛЕ */
+        .p-label {
+            position: absolute; bottom: 15px; font-size: 10px; font-weight: 900;
+            padding: 4px 10px; background: rgba(0,0,0,0.8); border: 1px solid var(--lime);
+            z-index: 5; text-transform: uppercase;
+        }
+        .label-before { left: 15px; color: var(--lime); }
+        .label-after { right: 15px; color: #fff; }
+
+        .p-handle { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: var(--lime); z-index: 10; transform: translateX(-50%); pointer-events: none; }
+        .p-knob {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 40px; height: 40px; background: var(--lime); 
+            clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 20px var(--lime);
+        }
+        .p-knob::after { content: '↔'; color: #000; font-weight: 900; font-size: 18px; } 
+
+        .p-footer { 
+            margin-top: 15px; display: flex; justify-content: space-between; align-items: flex-end; 
+            padding: 0 5px;
+        }
+        .p-info-text { display: flex; flex-direction: column; }
+        .p-info-text strong { font-size: 14px; font-weight: 900; text-transform: uppercase; color: #fff; letter-spacing: 0.5px; }
+        .p-info-text span { font-size: 10px; color: var(--lime); text-transform: uppercase; font-weight: 700; margin-top: 4px; }
+        
+        .p-counter { font-family: monospace; font-size: 12px; font-weight: 900; color: #444; } 
+
+        .p-controls { 
+            margin: 20px 24px 0; display: flex; align-items: center; 
+            background: #111; padding: 10px; border-radius: 2px; gap: 15px;
+            border: 1px solid #222;
+        } 
+
+        .p-btn {
+            width: 44px; height: 34px; background: #000; border: 1px solid #333;
+            display: flex; align-items: center; justify-content: center; 
+            color: var(--lime); font-weight: 900; cursor: pointer;
+            clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
+        }
+        .p-btn:active { background: var(--lime); color: #000; } 
+
+        .p-bar-bg { flex: 1; height: 2px; background: #222; position: relative; }
+        .p-bar-fill { 
+            position: absolute; height: 100%; width: 20%; background: var(--lime); 
+            box-shadow: 0 0 10px var(--lime);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+        } 
+
+        .p-live { 
+            position: absolute; top: 15px; left: 15px; background: #ff0000; color: #fff; 
+            padding: 4px 10px; font-size: 9px; font-weight: 900; z-index: 5; 
+            text-transform: uppercase; letter-spacing: 1px;
+            animation: blink 1.5s infinite;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    </style> 
+
+    <div class="p-header">
+        <span>WORK REPORT // 2026</span>
+        <h2>Наши объекты</h2>
+    </div> 
+
+    <div class="p-slider">
+        <div class="p-track" id="portTrack">
+            <div class="p-card" id="pc1">
+                <div class="p-img-area" onpointermove="portImgMove(event)" ontouchmove="portImgMove(event)">
+                    <div class="p-label label-before">ДО</div>
+                    <div class="p-label label-after">ПОСЛЕ</div>
+                    <div class="p-img-full" style="background-image: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260130_165415_302.jpg');"></div>
+                    <div class="p-img-full p-img-before" style="background-image: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260130_165418_559.jpg');"></div>
+                    <div class="p-handle"><div class="p-knob"></div></div>
+                </div>
+                <div class="p-footer">
+                    <div class="p-info-text">
+                        <strong>Удаление деревьев</strong>
+                        <span>Сложный спил частями</span>
+                    </div>
+                    <div class="p-counter">01/05</div>
+                </div>
+            </div> 
+
+            <div class="p-card" id="pc2">
+                <div class="p-img-area" onpointermove="portImgMove(event)" ontouchmove="portImgMove(event)">
+                    <div class="p-label label-before">ДО</div>
+                    <div class="p-label label-after">ПОСЛЕ</div>
+                    <div class="p-img-full" style="background-image: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260130_165425_057.jpg');"></div>
+                    <div class="p-img-full p-img-before" style="background-image: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260130_165423_619.jpg');"></div>
+                    <div class="p-handle"><div class="p-knob"></div></div>
+                </div>
+                <div class="p-footer">
+                    <div class="p-info-text">
+                        <strong>Спил деревьев</strong>
+                        <span>Расчистка под ЛЭП</span>
+                    </div>
+                    <div class="p-counter">02/05</div>
+                </div>
+            </div> 
+
+            <div class="p-card" id="pc3">
+                <div class="p-img-area" onpointermove="portImgMove(event)" ontouchmove="portImgMove(event)">
+                    <div class="p-label label-before">ДО</div>
+                    <div class="p-label label-after">ПОСЛЕ</div>
+                    <div class="p-img-full" style="background-image: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260130_165410_906.jpg');"></div>
+                    <div class="p-img-full p-img-before" style="background-image: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260130_165413_215.jpg');"></div>
+                    <div class="p-handle"><div class="p-knob"></div></div>
+                </div>
+                <div class="p-footer">
+                    <div class="p-info-text">
+                        <strong>Расчистка с уборкой</strong>
+                        <span>Вывоз 3-х самосвалов мусора</span>
+                    </div>
+                    <div class="p-counter">03/05</div>
+                </div>
+            </div> 
+
+            <div class="p-card" id="pc4">
+                <div class="p-img-area" onpointermove="portImgMove(event)" ontouchmove="portImgMove(event)">
+                    <div class="p-label label-before">ДО</div>
+                    <div class="p-label label-after">ПОСЛЕ</div>
+                    <div class="p-img-full" style="background-image: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260130_165419_418.jpg');"></div>
+                    <div class="p-img-full p-img-before" style="background-image: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260130_165421_933.jpg');"></div>
+                    <div class="p-handle"><div class="p-knob"></div></div>
+                </div>
+                <div class="p-footer">
+                    <div class="p-info-text">
+                        <strong>Расчистка участка</strong>
+                        <span>Удаление поросли и кустарника</span>
+                    </div>
+                    <div class="p-counter">04/05</div>
+                </div>
+            </div> 
+
+            <div class="p-card" id="pc5">
+                <div class="p-img-area">
+                    <div class="p-live">PROCESS</div>
+                    <div class="p-img-full" style="background-image: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260130_165427_214.jpg');"></div>
+                </div>
+                <div class="p-footer">
+                    <div class="p-info-text">
+                        <strong>Техника в работе</strong>
+                        <span>Профессиональное снаряжение</span>
+                    </div>
+                    <div class="p-counter">05/05</div>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <div class="p-controls">
+        <button class="p-btn" onclick="portBtnGo(-1)" aria-label="Назад">‹</button>
+        <div class="p-bar-bg"><div class="p-bar-fill" id="portBarFill"></div></div>
+        <button class="p-btn" onclick="portBtnGo(1)" aria-label="Вперед">›</button>
+    </div> 
+
+    <script>
+        const pTrk = document.getElementById('portTrack');
+        const pBF = document.getElementById('portBarFill');
+        let pCurIdx = 0;
+        let pLastVibIdx = 0; 
+
+        function portImgMove(e) {
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const b = e.currentTarget;
+            const bef = b.querySelector('.p-img-before');
+            const hnd = b.querySelector('.p-handle');
+            const r = b.getBoundingClientRect();
+            let x = clientX - r.left;
+            let p = (x / r.width) * 100;
+            if (p >= 0 && p <= 100) {
+                bef.style.width = p + '%';
+                hnd.style.left = p + '%';
+                if (navigator.vibrate && Math.round(p) % 10 === 0) navigator.vibrate(2);
+            }
+        } 
+
+        function portBtnGo(d) {
+            pCurIdx = Math.max(0, Math.min(4, pCurIdx + d));
+            const target = document.getElementById('pc' + (pCurIdx + 1));
+            pTrk.scrollTo({ left: target.offsetLeft - 24, behavior: 'smooth' });
+            if (navigator.vibrate) navigator.vibrate(15);
+        } 
+
+        pTrk.addEventListener('scroll', () => {
+            const idx = Math.round(pTrk.scrollLeft / (pTrk.querySelector('.p-card').offsetWidth + 20));
+            if (idx !== pLastVibIdx) {
+                pLastVibIdx = idx;
+                pCurIdx = idx;
+                pBF.style.left = (idx * 20) + '%';
+                if (navigator.vibrate) navigator.vibrate(10);
+            }
+        });
+    </script>
+</section>
+
 </body>
 </html>

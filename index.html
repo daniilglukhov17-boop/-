@@ -72,7 +72,6 @@
         .m-box { width: 40px; height: 40px; background: #000; border: 1px solid var(--lime); display: flex; align-items: center; justify-content: center; color: var(--lime); font-weight: 900; font-size: 20px; }
         .soc-btn span { color: #fff; font-weight: 800; text-transform: uppercase; font-size: 14px; }
         
-        /* СТИЛЬ ДЛЯ ПОДСКАЗКИ МАКСА */
         .max-hint { font-size: 9px; color: #777; text-align: center; margin-top: -5px; margin-bottom: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
     </style>
 </head>
@@ -199,9 +198,9 @@
 
     <div id="popupEval" class="popup-window">
         <div class="q-title">Пришлите фото в мессенджер:</div>
-        <a href="https://max.ru/u/f9LHodD0cOKYGnigBf8f1GmElnhydAMPHC3daJ1KR-FyymDlxLNs2ky1EU0" class="soc-btn"><div class="m-box">M</div><span>Messenger MAX</span></a>
-        <a href="https://t.me/daniil_glukhov17" class="soc-btn"><div class="m-box" style="background:#fff;border:none;padding:8px"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="100%"></div><span>Telegram</span></a>
-        <a href="https://vk.com/im?sel=701091614" class="soc-btn"><div class="m-box" style="background:#fff;border:none;padding:10px"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/VK_Compact_Logo_%282021-present%29.svg" width="100%"></div><span>VKontakte</span></a>
+        <a href="javascript:void(0)" onclick="goEval('MAX')" class="soc-btn"><div class="m-box">M</div><span>Messenger MAX</span></a>
+        <a href="javascript:void(0)" onclick="goEval('TG')" class="soc-btn"><div class="m-box" style="background:#fff;border:none;padding:8px"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="100%"></div><span>Telegram</span></a>
+        <a href="javascript:void(0)" onclick="goEval('VK')" class="soc-btn"><div class="m-box" style="background:#fff;border:none;padding:10px"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/VK_Compact_Logo_%282021-present%29.svg" width="100%"></div><span>VKontakte</span></a>
     </div>
 
     <script>
@@ -259,20 +258,29 @@
             next('Final');
         }
 
+        // Логика перехода с авто-закрытием попапа
         function go(p) { 
             haptic(); 
             let encodedMsg = encodeURIComponent(finalMsg); 
-            if (p === 'TG') {
-                window.location.href = `${links.TG}?text=${encodedMsg}`;
-            } 
-            else if (p === 'VK') {
-                window.location.href = `${links.VK}&message=${encodedMsg}`;
-            } 
+            let targetUrl = "";
+            
+            if (p === 'TG') targetUrl = `${links.TG}?text=${encodedMsg}`;
+            else if (p === 'VK') targetUrl = `${links.VK}&message=${encodedMsg}`;
             else if (p === 'MAX') {
-                // ПОДСКАЗКА ДЛЯ МАКСА
                 alert("Данные расчета скопированы! В чате MAX зажмите поле ввода и выберите «Вставить»");
-                window.location.href = `${links.MAX}?text=${encodedMsg}`;
+                targetUrl = `${links.MAX}?text=${encodedMsg}`;
             }
+
+            window.location.href = targetUrl;
+            // Закрываем попап через 1.5 секунды, чтобы при возврате сайт был "чистым"
+            setTimeout(closePopup, 1500);
+        }
+
+        // Логика для попапа оценки по фото (тоже с авто-закрытием)
+        function goEval(p) {
+            haptic();
+            window.location.href = links[p];
+            setTimeout(closePopup, 1500);
         }
     </script>
 </body>

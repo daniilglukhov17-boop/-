@@ -5,137 +5,140 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root { --lime: #DFFF00; --black: #000000; --white: #FFFFFF; }
+        :root { --lime: #DFFF00; --black: #000000; --white: #FFFFFF; --gray: #121212; }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background: #000; font-family: 'Inter Tight', sans-serif; height: 100vh; overflow: hidden; color: var(--white); }
 
         .hero {
             position: relative; height: 100vh; width: 100%;
             background: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260131_002727_993.jpg') no-repeat center center;
-            background-size: cover; display: flex; flex-direction: column; padding: 20px 24px;
+            background-size: cover; display: flex; flex-direction: column; padding: 25px 24px;
         }
-        .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.95) 100%); z-index: 1; }
+        .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.9) 100%); z-index: 1; }
 
-        /* ИСПРАВЛЕННАЯ ШАПКА */
-        .header { position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; }
-        
-        /* Симферополь в лаймовом квадратике */
-        .loc-box { background: var(--lime); color: var(--black); padding: 6px 10px; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; border-radius: 2px; display: flex; align-items: center; gap: 5px; }
-        
-        .contact-box { text-align: right; }
-        .phone { color: #fff; text-decoration: none; font-weight: 900; font-size: 16px; display: block; margin-bottom: 2px; }
-        /* Лаймовый статус */
-        .online-tag { font-size: 9px; font-weight: 900; color: var(--lime); text-transform: uppercase; letter-spacing: 1px; }
+        .header { position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center; }
+        .status-tag { display: flex; align-items: center; gap: 8px; padding: 6px 14px; background: rgba(0,0,0,0.9); border: 1px solid var(--lime); border-radius: 2px; font-size: 10px; font-weight: 900; text-transform: uppercase; }
+        .radar { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; position: relative; }
+        .radar::after { content: ''; position: absolute; inset: 0; background: var(--lime); border-radius: 50%; animation: wave 2s infinite; }
+        @keyframes wave { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(4); opacity: 0; } }
 
-        /* КОМПАКТНЫЙ КОНТЕНТ */
-        .main-box { position: relative; z-index: 5; margin: auto 0; text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; }
-        
-        .main-title { 
-            font-size: clamp(24px, 7.5vw, 36px); /* Сделал компактней */
-            font-weight: 900; 
-            line-height: 1.05; 
-            text-transform: uppercase; 
-            margin-bottom: 20px;
-            letter-spacing: -0.8px;
-            max-width: 320px;
-        }
-        .main-title span { color: var(--lime); display: block; }
+        .main-box { position: relative; z-index: 5; margin-top: auto; margin-bottom: 40px; }
+        .main-title { font-size: clamp(32px, 10vw, 48px); font-weight: 900; line-height: 0.95; text-transform: uppercase; margin-bottom: 20px; letter-spacing: -1px; }
+        .main-title span { color: var(--lime); }
+        .main-desc { font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 30px; line-height: 1.4; max-width: 280px; }
 
-        .eval-wrapper { margin-bottom: 20px; }
+        .cta-wrapper { display: flex; flex-direction: column; gap: 15px; }
+        .cta-main { position: relative; display: flex; align-items: center; justify-content: center; padding: 22px; background: var(--lime); color: var(--black); font-weight: 900; text-transform: uppercase; text-decoration: none; font-size: 15px; clip-path: polygon(0 0, 92% 0, 100% 25%, 100% 100%, 8% 100%, 0 75%); }
+        
         .industrial-badge {
-            position: relative; display: inline-flex; padding: 12px 24px; border: 1px solid var(--lime);
-            clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%); overflow: hidden; text-decoration: none;
-            background: rgba(0, 0, 0, 0.6);
+            position: relative; display: flex; align-items: center; justify-content: center; padding: 12px; border: 1px solid var(--lime);
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%); overflow: hidden; text-decoration: none;
         }
-        .industrial-badge::before { content: ''; position: absolute; top: 0; left: -150%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(223, 255, 0, 0.4), transparent); animation: scan 3s infinite; }
-        @keyframes scan { 0% { left: -150%; } 30%, 100% { left: 150%; } }
-        
-        .main-desc { font-size: 13px; color: rgba(255,255,255,0.9); margin-bottom: 30px; line-height: 1.4; max-width: 300px; }
-        .highlight-line { display: block; color: var(--lime); font-weight: 900; text-transform: uppercase; font-size: 10px; margin-top: 8px; }
+        .industrial-badge::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(223, 255, 0, 0.3), transparent); animation: scan 3s infinite; }
+        @keyframes scan { 0% { left: -100%; } 100% { left: 100%; } }
 
-        .cta-main { display: inline-flex; padding: 20px 40px; background: var(--lime); color: #000; font-weight: 900; text-transform: uppercase; clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%); text-decoration: none; font-size: 14px; }
-
-        /* POPUP */
-        #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.96); backdrop-filter: blur(15px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.4s; }
-        .popup { position: fixed; bottom: -110%; left: 0; width: 100%; background: #080808; border-top: 3px solid var(--lime); border-radius: 25px 25px 0 0; padding: 30px 24px 40px; z-index: 101; transition: 0.5s cubic-bezier(0.2, 1, 0.2, 1); max-height: 95vh; overflow-y: auto; }
+        /* POPUP SYSTEM */
+        #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.3s; }
+        .popup { position: fixed; bottom: -100%; left: 0; width: 100%; background: #0a0a0a; border-top: 2px solid var(--lime); border-radius: 20px 20px 0 0; padding: 30px 24px 40px; z-index: 101; transition: 0.5s cubic-bezier(0.2, 1, 0.2, 1); }
         .show-popup #overlay { opacity: 1; visibility: visible; }
         .show-popup .popup { bottom: 0; }
+
         .step { display: none; }
         .step.active { display: block; }
-        .q-title { font-size: 18px; font-weight: 900; text-transform: uppercase; color: var(--lime); margin-bottom: 20px; text-align: center; }
-        .opt-grid { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; margin-bottom: 20px; }
-        .opt-card { background: #111; padding: 15px 10px; border: 1px solid #222; text-align: center; font-size: 11px; font-weight: 800; text-transform: uppercase; clip-path: polygon(0 0, 92% 0, 100% 25%, 100% 100%, 8% 100%, 0 75%); }
-        .opt-card.selected { border-color: var(--lime); color: var(--lime); background: rgba(223, 255, 0, 0.1); }
-        .btn-next { width: 100%; padding: 18px; background: var(--lime); color: #000; font-weight: 900; text-transform: uppercase; text-align: center; clip-path: polygon(0 0, 94% 0, 100% 25%, 100% 100%, 6% 100%, 0 75%); }
-        .soc-btn { display: flex; align-items: center; gap: 15px; background: #111; padding: 12px; margin-bottom: 10px; border: 1px solid #333; clip-path: polygon(0 0, 98% 0, 100% 20%, 100% 100%, 2% 100%, 0 80%); text-decoration: none; color: #fff; font-weight: 800; text-transform: uppercase; font-size: 14px; }
-        .m-box { width: 40px; height: 40px; background: #000; border: 1px solid var(--lime); display: flex; align-items: center; justify-content: center; color: var(--lime); clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%); }
-        input[type=range] { width: 100%; accent-color: var(--lime); margin: 15px 0 25px; }
-        .val-display { font-size: 32px; font-weight: 900; color: var(--lime); text-align: center; }
+        .q-title { font-size: 20px; font-weight: 900; text-transform: uppercase; color: var(--lime); margin-bottom: 25px; }
+        .opt-grid { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+        .opt-card { background: #111; padding: 20px 15px; border: 1px solid #222; text-align: center; font-size: 11px; font-weight: 800; text-transform: uppercase; clip-path: polygon(0 0, 90% 0, 100% 20%, 100% 100%, 10% 100%, 0 80%); }
+        .opt-card.selected { border-color: var(--lime); color: var(--lime); background: rgba(223, 255, 0, 0.05); }
+        
+        .val-display { font-size: 42px; font-weight: 900; color: var(--lime); text-align: center; margin: 10px 0; }
+        input[type=range] { width: 100%; accent-color: var(--lime); margin-bottom: 25px; }
+        .btn-next { width: 100%; padding: 20px; background: var(--lime); color: #000; font-weight: 900; text-transform: uppercase; text-align: center; clip-path: polygon(0 0, 95% 0, 100% 20%, 100% 100%, 5% 100%, 0 80%); }
+        
+        .soc-btn { display: flex; align-items: center; gap: 15px; background: #111; padding: 15px; margin-bottom: 12px; border: 1px solid #333; clip-path: polygon(0 0, 98% 0, 100% 20%, 100% 100%, 2% 100%, 0 80%); text-decoration: none; color: #fff; font-weight: 800; text-transform: uppercase; font-size: 14px; }
+        .m-box { width: 35px; height: 35px; background: #000; border: 1px solid var(--lime); display: flex; align-items: center; justify-content: center; color: var(--lime); font-size: 18px; }
     </style>
 </head>
 <body id="b">
 
     <section class="hero">
         <div class="header">
-            <div class="loc-box">СИМФЕРОПОЛЬ</div>
-            
-            <div class="contact-box">
-                <a href="tel:+79785552114" class="phone">+7 978 555-21-14</a>
-                <div class="online-tag">НА СВЯЗИ 24/7</div>
-            </div>
+            <div class="status-tag"><div class="radar"></div> КРЫМ / СИМФЕРОПОЛЬ</div>
+            <a href="tel:+79785552114" style="color:#fff; text-decoration:none; font-weight:900; font-size:14px">+7 978 555-21-14</a>
         </div>
 
         <div class="main-box">
-            <h1 class="main-title">Профессиональный спил деревьев <span>и полная расчистка участков</span></h1>
+            <h1 class="main-title">ПРОФЕССИОНАЛЬНЫЙ <span>СПИЛ ДЕРЕВЬЕВ</span></h1>
+            <p class="main-desc">Полная расчистка участков в Крыму. Собственный парк техники. Работаем под ключ.</p>
             
-            <div class="eval-wrapper">
+            <div class="cta-wrapper">
+                <a href="javascript:void(0)" class="cta-main" onclick="startQuiz()">Узнать стоимость</a>
                 <a href="javascript:void(0)" class="industrial-badge" onclick="openDirect()">
-                    <span style="font-size:10px; font-weight:900; color:var(--lime); letter-spacing:2px">ОЦЕНКА ПО ФОТО ЗА 5 МИН</span>
+                    <span style="font-size:10px; font-weight:900; color:var(--lime); letter-spacing:2px">ОЦЕНКА ПО ФОТО // 5 МИН</span>
                 </a>
             </div>
-
-            <p class="main-desc">
-                Заезжаем на заросший участок — выезжаем с идеально чистого. Спил, измельчение веток и вывоз мусора.
-                <span class="highlight-line">Вам остается только принять работу.</span>
-            </p>
-
-            <a href="javascript:void(0)" class="cta-main" onclick="startQuiz()">Узнать стоимость</a>
         </div>
     </section>
 
     <div id="overlay" onclick="closePop()"></div>
 
     <div id="p" class="popup">
-        <div id="s1" class="step active"><div class="q-title">Выберите услугу:</div><div class="opt-grid" style="grid-template-columns: 1fr;"><div class="opt-card" onclick="set('mode','Расчистка'); next('Land1')">Расчистка участка</div><div class="opt-card" onclick="set('mode','Спил'); next('Tree1')">Спил деревьев</div></div></div>
-        <div id="sLand1" class="step"><div class="q-title">Площадь (соток):</div><div class="val-display" id="lV">10</div><input type="range" min="1" max="100" value="10" oninput="lV.innerText=this.value; set('area', this.value+' сот.')"><div class="btn-next" onclick="next('Land2')">Далее</div></div>
-        <div id="sLand2" class="step"><div class="q-title">Детали:</div><div class="opt-grid"><div class="opt-card toggle" onclick="tgl(this, 'type', 'Трава')">Трава</div><div class="opt-card toggle" onclick="tgl(this, 'type', 'Мусор')">Мусор</div><div class="opt-card toggle" onclick="tgl(this, 'add', 'Ровный')">Ровный</div><div class="opt-card toggle" onclick="tgl(this, 'add', 'Рельеф')">Рельеф</div></div><div class="btn-next" onclick="next('Out')">Далее</div></div>
-        <div id="sTree1" class="step"><div class="val-label">Высота (м)</div><div class="val-display" id="tH">5</div><input type="range" min="2" max="30" value="5" oninput="tH.innerText=this.value; set('h', this.value+'м')"><div class="val-label">Диаметр (см)</div><div class="val-display" id="tD">30</div><input type="range" min="10" max="200" step="5" value="30" oninput="tD.innerText=this.value; set('d', this.value+'см')"><div class="btn-next" onclick="next('Tree2')">Далее</div></div>
-        <div id="sTree2" class="step"><div class="q-title">Рядом есть:</div><div class="opt-grid"><div class="opt-card toggle" onclick="tgl(this, 'add', 'Забор')">Забор</div><div class="opt-card toggle" onclick="tgl(this, 'add', 'Газ')">Газ</div><div class="opt-card toggle" onclick="tgl(this, 'add', 'Провода')">Провода</div><div class="opt-card toggle" onclick="tgl(this, 'add', 'Дом')">Дом</div></div><div class="btn-next" onclick="next('Out')">Далее</div></div>
-        <div id="sOut" class="step"><div class="q-title">Вывоз мусора?</div><div class="opt-grid"><div class="opt-card" onclick="set('out','Да'); next('Geo')">Нужен</div><div class="opt-card" onclick="set('out','Нет'); next('Geo')">Не нужен</div></div></div>
-        <div id="sGeo" class="step"><div class="q-title">Локация?</div><div class="opt-grid" style="grid-template-columns: 1fr;"><div class="opt-card" onclick="set('loc','Симферополь'); next('Final')">Симферополь</div><div class="opt-card" onclick="set('loc','Район'); next('Final')">Район</div><div class="opt-card" onclick="set('loc','Крым'); next('Final')">Крым</div></div></div>
-        <div id="sFinal" class="step"><div class="q-title">ГОТОВО</div><p style="font-size:11px; text-align:center; color:#888; margin-bottom:20px; text-transform:uppercase">Текст скопирован</p><div class="soc-grid"><a href="javascript:void(0)" class="soc-btn" onclick="send('MAX')"><div class="m-box">M</div> Messenger MAX</a><a href="javascript:void(0)" class="soc-btn" onclick="send('TG')"><div class="m-box" style="background:#fff;border:none;padding:8px"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="100%"></div> Telegram</a><a href="javascript:void(0)" class="soc-btn" onclick="send('VK')"><div class="m-box" style="background:#fff;border:none;padding:10px"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/VK_Compact_Logo_%282021-present%29.svg" width="100%"></div> VK</a></div></div>
-        <div id="sDirect" class="step"><div class="q-title">ПРИШЛИТЕ ФОТО</div><p style="font-size:11px; text-align:center; color:#888; margin-bottom:20px; text-transform:uppercase">Выберите мессенджер</p><div class="soc-grid"><a href="javascript:void(0)" class="soc-btn" onclick="go('MAX')"><div class="m-box">M</div> Messenger MAX</a><a href="javascript:void(0)" class="soc-btn" onclick="go('TG')"><div class="m-box" style="background:#fff;border:none;padding:8px"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="100%"></div> Telegram</a><a href="javascript:void(0)" class="soc-btn" onclick="go('VK')"><div class="m-box" style="background:#fff;border:none;padding:10px"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/VK_Compact_Logo_%282021-present%29.svg" width="100%"></div> VK</a></div></div>
+        <div id="s1" class="step active">
+            <div class="q-title">Что нужно сделать?</div>
+            <div class="opt-grid">
+                <div class="opt-card" onclick="set('mode','Расчистка'); next('Land1')">Расчистка</div>
+                <div class="opt-card" onclick="set('mode','Спил'); next('Tree1')">Спил</div>
+            </div>
+        </div>
+
+        <div id="sLand1" class="step">
+            <div class="q-title">Площадь (соток):</div>
+            <div class="val-display" id="lV">10</div>
+            <input type="range" min="1" max="100" value="10" oninput="lV.innerText=this.value; set('area', this.value+' сот.')">
+            <div class="btn-next" onclick="next('Geo')">Далее</div>
+        </div>
+
+        <div id="sTree1" class="step">
+            <div class="q-title">Высота (метры):</div>
+            <div class="val-display" id="tH">5</div>
+            <input type="range" min="2" max="30" value="5" oninput="tH.innerText=this.value; set('h', this.value+'м')">
+            <div class="btn-next" onclick="next('Geo')">Далее</div>
+        </div>
+
+        <div id="sGeo" class="step">
+            <div class="q-title">Где объект?</div>
+            <div class="opt-grid">
+                <div class="opt-card" onclick="set('loc','Симферополь'); next('Final')">Симферополь</div>
+                <div class="opt-card" onclick="set('loc','Крым'); next('Final')">Другой город</div>
+            </div>
+        </div>
+
+        <div id="sFinal" class="step">
+            <div class="q-title">Куда отправить расчет?</div>
+            <div class="soc-grid">
+                <a href="javascript:void(0)" class="soc-btn" onclick="send('MAX')"><div class="m-box">M</div> Messenger MAX</a>
+                <a href="javascript:void(0)" class="soc-btn" onclick="send('TG')"><div class="m-box" style="background:#fff;border:none;padding:5px"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="100%"></div> Telegram</a>
+                <a href="javascript:void(0)" class="soc-btn" onclick="send('VK')"><div class="m-box" style="background:#fff;border:none;padding:8px"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/VK_Compact_Logo_%282021-present%29.svg" width="100%"></div> Вконтакте</a>
+            </div>
+        </div>
     </div>
 
     <script>
-        let d = { loc:'', mode:'', area:'10 сот.', h:'5м', d:'30см', type:[], add:[], out:'' };
-        const l = { MAX: "https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg", TG: "https://t.me/daniil_glukhov17", VK: "https://vk.com/daniil_glukhov17" };
+        let d = { loc:'', mode:'', area:'10 сот.', h:'5м' };
+        const l = {
+            MAX: "https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg",
+            TG: "https://t.me/daniil_glukhov17",
+            VK: "https://vk.com/daniil_glukhov17"
+        };
         function h() { if(navigator.vibrate) navigator.vibrate(40); }
         function set(k,v) { d[k]=v; h(); }
-        function tgl(el, k, v) { h(); el.classList.toggle('selected'); const i = d[k].indexOf(v); if(i>-1) d[k].splice(i,1); else d[k].push(v); }
-        function startQuiz() { d.add=[]; d.type=[]; show('s1'); }
-        function openDirect() { show('sDirect'); }
+        function startQuiz() { show('s1'); }
+        function openDirect() { d={loc:'-', mode:'Прямая связь', area:'-', h:'-'}; show('sFinal'); }
         function next(s) { h(); show('s'+s); }
         function show(id) { document.querySelectorAll('.step').forEach(x=>x.classList.remove('active')); document.getElementById(id).classList.add('active'); document.getElementById('b').classList.add('show-popup'); }
         function closePop() { document.getElementById('b').classList.remove('show-popup'); }
-        function go(p) { window.location.href = l[p]; }
         async function send(p) {
             h();
-            let msg = `🛠 ЗАЯВКА:\n📍 Гео: ${d.loc}\n📋 Работа: ${d.mode}\n`;
-            if(d.mode === 'Спил') msg += `📏 Рост: ${d.h}, Диам: ${d.d}\n`; else msg += `📏 Площадь: ${d.area}\n`;
-            if(d.type.length) msg += `🌱 Тип: ${d.type.join(', ')}\n`;
-            if(d.add.length) msg += `⚠️ Рядом: ${d.add.join(', ')}\n`;
-            msg += `🚛 Вывоз: ${d.out}`;
+            let msg = `Заявка:\n📍 Локация: ${d.loc}\n🛠 Тип: ${d.mode}\n📏 Размер: ${d.mode==='Спил'?d.h:d.area}`;
             try { await navigator.clipboard.writeText(msg); } catch(e) {}
             window.location.href = l[p];
         }

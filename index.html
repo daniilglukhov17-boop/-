@@ -9,12 +9,13 @@
             --lime: #DFFF00;
             --white: #FFFFFF;
             --font: 'Inter Tight', sans-serif;
+            --max-grad: linear-gradient(45deg, #1b66fb, #9b4dff, #ff3d81);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background: #000; font-family: var(--font); height: 100vh; overflow: hidden; color: var(--white); }
 
-        /* ФОН */
+        /* ФОН С ГЛУБОКИМ ГРАДИЕНТОМ */
         .hero {
             position: relative; height: 100vh; width: 100%;
             background: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260131_002727_993.jpg') no-repeat center center;
@@ -36,11 +37,11 @@
         .phone-top { text-decoration: none; color: white; font-size: 15px; font-weight: 900; display: block; }
         .work-time { font-size: 9px; color: var(--lime); font-weight: 800; text-transform: uppercase; text-align: right; }
 
-        /* КОНТЕНТ */
+        /* ЦЕНТРАЛЬНЫЙ БЛОК */
         .main-box { position: relative; z-index: 5; margin: auto 0; text-align: center; display: flex; flex-direction: column; align-items: center; }
         .main-title { font-size: clamp(40px, 12vw, 86px); font-weight: 900; line-height: 0.95; letter-spacing: -0.04em; text-transform: uppercase; margin-bottom: 35px; }
 
-        /* УТОНЧЕННАЯ ПЛАШКА В ОДНУ СТРОКУ */
+        /* УТОНЧЕННАЯ ПЛАШКА "ОЦЕНКА" */
         .industrial-eval { position: relative; margin-bottom: 45px; }
         .aim-arrow { 
             position: absolute; top: -28px; left: 50%; transform: translateX(-50%);
@@ -64,9 +65,9 @@
             animation: laserScan 3s infinite cubic-bezier(0.4, 0, 0.2, 1);
         }
         @keyframes laserScan { 0% { left: -150%; } 30%, 100% { left: 150%; } }
-        .ev-text-heavy { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; color: var(--lime); text-shadow: 0 0 8px rgba(223, 255, 0, 0.4); }
+        .ev-text-heavy { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; color: var(--lime); }
 
-        /* ПОДПИСЬ В ОДНУ СТРОКУ */
+        /* ТЕКСТ С ПОДСВЕТКОЙ */
         .desc { font-size: 15px; line-height: 1.6; max-width: 380px; margin-bottom: 40px; font-weight: 500; color: #fff; }
         .highlight-line { 
             display: block; white-space: nowrap; color: var(--lime); 
@@ -74,40 +75,53 @@
             margin-top: 8px; text-shadow: 0 0 15px rgba(223, 255, 0, 0.6); 
         }
 
+        /* КНОПКА КВИЗА */
         .cta-btn { 
             background: var(--white); color: #000; padding: 22px 50px; 
             font-weight: 900; font-size: 15px; text-transform: uppercase; 
             text-decoration: none; clip-path: polygon(0 0, 95% 0, 100% 30%, 100% 100%, 5% 100%, 0 70%);
         }
 
-        /* ПОПАПЫ */
-        #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(15px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.4s; }
+        /* ОБЩИЙ СТИЛЬ СТЕКЛЯННЫХ ПОПАПОВ */
+        #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(15px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.4s; }
         .popup-window { 
-            position: fixed; bottom: -100%; left: 0; width: 100%; 
-            background: #111; border-top: 4px solid var(--lime); 
-            border-radius: 40px 40px 0 0; padding: 40px 24px 60px; z-index: 101; 
-            transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            position: fixed; bottom: -110%; left: 0; width: 100%; 
+            background: rgba(25, 25, 25, 0.7); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+            border-top: 1px solid rgba(255,255,255,0.1); border-radius: 40px 40px 0 0; 
+            padding: 40px 24px 60px; z-index: 101; 
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
             display: none;
         }
         .show-popup #overlay { opacity: 1; visibility: visible; }
         .show-popup .popup-window.active { display: block; bottom: 0; }
 
-        .popup-title { font-weight: 900; font-size: 22px; text-transform: uppercase; margin-bottom: 30px; text-align: center; color: var(--lime); }
+        .popup-title { font-weight: 900; font-size: 22px; text-transform: uppercase; margin-bottom: 30px; text-align: center; color: #fff; letter-spacing: 1px; }
 
-        /* МЕССЕНДЖЕРЫ (ДЛЯ ОЦЕНКИ) */
-        .max-card { background: var(--lime); padding: 25px; border-radius: 28px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; margin-bottom: 15px; }
-        .max-card b { color: #000; font-size: 20px; font-weight: 900; text-transform: uppercase; }
-        .max-logo { width: 50px; height: 50px; background: #000; color: var(--lime); display: flex; align-items: center; justify-content: center; border-radius: 12px; font-weight: 900; font-size: 24px; }
-        
-        .msg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .msg-item { background: #222; padding: 20px; border-radius: 20px; text-align: center; text-decoration: none; color: #fff; font-weight: 800; text-transform: uppercase; font-size: 12px; }
+        /* ОРИГИНАЛЬНАЯ КАРТОЧКА MAX */
+        .max-card-premium {
+            background: var(--max-grad); padding: 22px; border-radius: 24px;
+            display: flex; align-items: center; justify-content: space-between;
+            text-decoration: none; margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 15px 30px rgba(155, 77, 255, 0.3);
+        }
+        .max-card-premium b { color: #fff; font-size: 24px; font-weight: 900; letter-spacing: 1px; }
+        .max-icon-box { width: 48px; height: 48px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; }
 
-        /* КВИЗ */
-        .quiz-step { display: none; animation: slideIn 0.3s; }
+        /* СЕТКА МЕССЕНДЖЕРОВ */
+        .msg-grid-glass { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .msg-btn-glass { 
+            background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); 
+            padding: 20px; border-radius: 20px; text-align: center; 
+            text-decoration: none; color: #fff; font-weight: 800; font-size: 12px; text-transform: uppercase;
+        }
+
+        /* КВИЗ СТИЛИ */
+        .quiz-step { display: none; animation: slideUp 0.4s ease-out; }
         .quiz-step.active { display: block; }
-        .quiz-opt { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 16px; margin-bottom: 10px; font-weight: 800; text-transform: uppercase; text-align: center; }
+        .quiz-opt { background: rgba(255,255,255,0.05); padding: 22px; border-radius: 18px; margin-bottom: 12px; font-weight: 800; text-transform: uppercase; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
         .quiz-opt:active { background: var(--lime); color: #000; }
-        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
     </style>
 </head>
@@ -144,14 +158,16 @@
     <div id="overlay" onclick="closePopup()"></div>
 
     <div id="popupEval" class="popup-window">
-        <div class="popup-title">Где прислать фото?</div>
-        <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="max-card">
-            <b>Мессенджер MAX</b>
-            <div class="max-logo">M</div>
+        <div class="popup-title">Куда прислать фото?</div>
+        
+        <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="max-card-premium" onclick="haptic()">
+            <b>MAX</b>
+            <div class="max-icon-box">🔵</div>
         </a>
-        <div class="msg-grid">
-            <a href="https://t.me/daniil_glukhov17" class="msg-item">Telegram</a>
-            <a href="https://vk.com/daniil_glukhov17" class="msg-item">Вконтакте</a>
+
+        <div class="msg-grid-glass">
+            <a href="https://t.me/daniil_glukhov17" class="msg-btn-glass" onclick="haptic()">Telegram</a>
+            <a href="https://vk.com/daniil_glukhov17" class="msg-btn-glass" onclick="haptic()">Вконтакте</a>
         </div>
     </div>
 
@@ -164,17 +180,17 @@
                 <div class="quiz-opt" onclick="nextStep(2, 'Деревья')">Много деревьев</div>
             </div>
             <div class="quiz-step" id="q2">
-                <div class="popup-title">Площадь?</div>
+                <div class="popup-title">Площадь участка?</div>
                 <div class="quiz-opt" onclick="nextStep(3, 'до 6 соток')">До 6 соток</div>
                 <div class="quiz-opt" onclick="nextStep(3, '6-12 соток')">6 - 12 соток</div>
                 <div class="quiz-opt" onclick="nextStep(3, '15+ соток')">От 15 соток</div>
             </div>
             <div class="quiz-step" id="q3">
-                <div class="popup-title">Результат готов</div>
-                <p style="text-align:center; margin-bottom:20px; font-size:12px; opacity:0.6;">Данные будут скопированы. Вставьте их в чат.</p>
-                <a href="javascript:void(0)" class="max-card" onclick="finish('https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg')">
+                <div class="popup-title">Расчет готов</div>
+                <p style="text-align:center; margin-bottom:25px; font-size:13px; color: rgba(255,255,255,0.6);">Данные скопированы автоматически.<br>Просто вставьте их в чат.</p>
+                <a href="javascript:void(0)" class="max-card-premium" onclick="finish('https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg')">
                     <b>Отправить в MAX</b>
-                    <div class="max-logo">M</div>
+                    <div class="max-icon-box">🔵</div>
                 </a>
             </div>
         </div>
@@ -204,9 +220,9 @@
 
         function finish(url) {
             haptic();
-            const msg = `Заказ: участок ${data.size}, тип: ${data.type}.`;
+            const msg = `Заявка: расчистка (${data.type}), участок ${data.size}. Жду цену.`;
             navigator.clipboard.writeText(msg).then(() => {
-                alert('Данные скопированы! Вставьте их в чат.');
+                alert('Данные скопированы! Переходим в чат.');
                 window.location.href = url;
             });
         }

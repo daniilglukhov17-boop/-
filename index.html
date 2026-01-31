@@ -14,11 +14,11 @@
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background: #000; font-family: 'Inter Tight', sans-serif; height: 100vh; overflow: hidden; color: var(--white); }
 
-        /* ГЛАВНЫЙ ЭКРАН */
+        /* ЭКРАН */
         .hero {
             position: relative; height: 100vh; width: 100%;
             background: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260131_002727_993.jpg') no-repeat center center;
-            background-size: cover; display: flex; flex-direction: column; padding: 30px 24px 50px;
+            background-size: cover; display: flex; flex-direction: column; padding: 25px 24px 40px;
         }
         .hero::after {
             content: ''; position: absolute; inset: 0;
@@ -26,7 +26,8 @@
             z-index: 1;
         }
 
-        .header { position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center; }
+        /* ШАПКА */
+        .header { position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .status-tag { display: flex; align-items: center; gap: 8px; padding: 6px 14px; background: rgba(0,0,0,0.8); border: 1px solid var(--lime); border-radius: 2px; font-size: 10px; font-weight: 900; text-transform: uppercase; }
         .radar { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; position: relative; }
         .radar::after { content: ''; position: absolute; inset: 0; background: var(--lime); border-radius: 50%; animation: wave 2s infinite; }
@@ -36,11 +37,22 @@
         .header-info a { color: #fff; text-decoration: none; font-weight: 900; font-size: 15px; display: block; }
         .online-status { color: var(--lime); font-size: 9px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
 
+        /* КОНТЕНТ */
         .main-box { position: relative; z-index: 5; margin: auto 0; text-align: center; display: flex; flex-direction: column; align-items: center; }
-        .main-title { font-size: clamp(40px, 12vw, 86px); font-weight: 900; line-height: 0.95; text-transform: uppercase; margin-bottom: 35px; }
+        
+        /* НОВЫЙ ОФФЕР */
+        .main-title { 
+            font-size: clamp(28px, 8.5vw, 56px); 
+            font-weight: 900; 
+            line-height: 1.1; 
+            text-transform: uppercase; 
+            margin-bottom: 25px;
+            max-width: 90%;
+        }
+        .main-title span { color: var(--lime); }
 
-        /* ПЛАШКА ОЦЕНКИ */
-        .industrial-eval { position: relative; margin-bottom: 45px; }
+        /* ПЛАШКА */
+        .industrial-eval { position: relative; margin-bottom: 35px; }
         .aim-arrow { 
             position: absolute; top: -28px; left: 50%; transform: translateX(-50%);
             font-size: 22px; color: var(--lime); 
@@ -50,29 +62,23 @@
         @keyframes aimPush { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 8px); } }
 
         .evaluation-badge-heavy {
-            position: relative; display: inline-flex; align-items: center; padding: 12px 35px;
+            position: relative; display: inline-flex; align-items: center; padding: 12px 30px;
             background: transparent; border: 1px solid var(--lime);
             clip-path: polygon(6% 0%, 100% 0%, 94% 100%, 0% 100%);
             text-decoration: none; overflow: hidden;
         }
-        .evaluation-badge-heavy::before {
-            content: ''; position: absolute; top: 0; left: -150%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(223, 255, 0, 0.4), transparent);
-            animation: laserScan 3s infinite;
-        }
-        @keyframes laserScan { 0% { left: -150%; } 30%, 100% { left: 150%; } }
-        .ev-text-heavy { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; color: var(--lime); }
+        .ev-text-heavy { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; color: var(--lime); }
 
-        .desc { font-size: 15px; line-height: 1.6; max-width: 380px; margin-bottom: 40px; font-weight: 500; }
-        .highlight-line { display: block; color: var(--lime); font-weight: 900; text-transform: uppercase; font-size: 13px; margin-top: 8px; }
+        .desc { font-size: 14px; line-height: 1.5; max-width: 340px; margin-bottom: 35px; font-weight: 500; color: rgba(255,255,255,0.9); }
+        .highlight-line { display: block; color: var(--lime); font-weight: 900; text-transform: uppercase; font-size: 12px; margin-top: 8px; }
 
         .cta-btn { 
-            background: var(--white); color: #000; padding: 22px 50px; 
-            font-weight: 900; font-size: 15px; text-transform: uppercase; text-decoration: none;
+            background: var(--white); color: #000; padding: 20px 45px; 
+            font-weight: 900; font-size: 14px; text-transform: uppercase; text-decoration: none;
             clip-path: polygon(0 0, 95% 0, 100% 30%, 100% 100%, 5% 100%, 0 70%);
         }
 
-        /* ЛАЙМОВЫЙ ПОПАП */
+        /* ПОПАП */
         #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.4s; }
         .popup-window { 
             position: fixed; bottom: -110%; left: 0; width: 100%; 
@@ -85,32 +91,24 @@
         }
         .show-popup #overlay { opacity: 1; visibility: visible; }
         .show-popup .popup-window.active { display: block; bottom: 0; }
-        .popup-title { text-align:center; color: var(--lime); margin-bottom:30px; font-weight: 900; text-transform:uppercase; font-size: 18px; letter-spacing: 2px; }
+        .popup-title { text-align:center; color: var(--lime); margin-bottom:30px; font-weight: 900; text-transform:uppercase; font-size: 18px; }
 
-        /* КНОПКИ МЕССЕНДЖЕРОВ */
         .social-stack { display: flex; flex-direction: column; gap: 15px; }
         .btn-industrial {
-            background: rgba(0,0,0,0.9);
-            border: 1px solid rgba(223, 255, 0, 0.3);
-            display: flex; align-items: center; gap: 20px;
-            padding: 10px 15px;
+            background: rgba(0,0,0,0.9); border: 1px solid rgba(223, 255, 0, 0.3);
+            display: flex; align-items: center; gap: 20px; padding: 10px 15px;
             clip-path: polygon(0 0, 98% 0, 100% 20%, 100% 100%, 2% 100%, 0 80%);
-            text-decoration: none; transition: 0.2s;
+            text-decoration: none;
         }
-        .btn-industrial:active { background: var(--lime); }
-        .btn-industrial:active span, .btn-industrial:active .m-letter { color: #000; }
-
         .messenger-icon {
-            width: 52px; height: 52px;
-            background: #000;
-            flex-shrink: 0;
+            width: 52px; height: 52px; background: #000; flex-shrink: 0;
             clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%);
             display: flex; align-items: center; justify-content: center;
             border: 1px solid rgba(223, 255, 0, 0.5);
         }
         .m-letter { color: var(--lime); font-size: 26px; font-weight: 900; }
-        .messenger-icon img { width: 100%; height: 100%; object-fit: cover; }
         .btn-industrial span { color: var(--white); font-size: 17px; font-weight: 800; text-transform: uppercase; }
+        .messenger-icon img { width: 100%; height: 100%; object-fit: cover; }
 
     </style>
 </head>
@@ -126,7 +124,7 @@
         </header>
 
         <div class="main-box">
-            <h1 class="main-title">ПОРЯДОК<br>ПОД КЛЮЧ</h1>
+            <h2 class="main-title">Профессиональный спил деревьев <br><span>и полная расчистка участков</span></h2>
             
             <div class="industrial-eval">
                 <div class="aim-arrow">▼</div>
@@ -147,27 +145,18 @@
     <div id="overlay" onclick="closePopup()"></div>
 
     <div id="popupEval" class="popup-window">
-        <div class="popup-title">Где удобнее общаться?</div>
-        
+        <div class="popup-title">Где прислать фото?</div>
         <div class="social-stack">
             <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="btn-industrial" onclick="haptic()">
-                <div class="messenger-icon">
-                    <div class="m-letter">M</div>
-                </div>
+                <div class="messenger-icon"><div class="m-letter">M</div></div>
                 <span>Messenger MAX</span>
             </a>
-            
             <a href="https://t.me/daniil_glukhov17" class="btn-industrial" onclick="haptic()">
-                <div class="messenger-icon" style="background: #fff; padding: 10px;">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="TG">
-                </div>
+                <div class="messenger-icon" style="background: #fff; padding: 10px;"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg"></div>
                 <span>Telegram</span>
             </a>
-
             <a href="https://vk.com/daniil_glukhov17" class="btn-industrial" onclick="haptic()">
-                <div class="messenger-icon" style="background: #fff; padding: 12px;">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/VK_Compact_Logo_%282021-present%29.svg" alt="VK">
-                </div>
+                <div class="messenger-icon" style="background: #fff; padding: 12px;"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/VK_Compact_Logo_%282021-present%29.svg"></div>
                 <span>VKontakte</span>
             </a>
         </div>

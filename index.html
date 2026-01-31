@@ -1,57 +1,228 @@
-<style>
-    /* ОБНОВЛЕННЫЙ КОМПАКТНЫЙ СТИЛЬ */
-    .popup-window { 
-        background: rgba(20, 20, 20, 0.7); 
-        backdrop-filter: blur(25px); 
-        -webkit-backdrop-filter: blur(25px);
-        padding: 30px 20px 40px; 
-    }
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --lime: #DFFF00;
+            --white: #FFFFFF;
+            --font: 'Inter Tight', sans-serif;
+            --max-grad: linear-gradient(45deg, #1b66fb, #9b4dff, #ff3d81);
+        }
 
-    .popup-title { font-size: 18px; margin-bottom: 25px; opacity: 0.9; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background: #000; font-family: var(--font); height: 100vh; overflow: hidden; color: var(--white); }
 
-    /* Кнопка MAX - Компактная */
-    .btn-max {
-        background: var(--max-grad);
-        display: flex; align-items: center; gap: 12px;
-        padding: 14px 20px; border-radius: 18px;
-        text-decoration: none; color: #fff; font-weight: 800;
-        margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.1);
-        box-shadow: 0 8px 20px rgba(155, 77, 255, 0.2);
-    }
-    .btn-max img { width: 32px; height: 32px; border-radius: 8px; object-fit: cover; }
+        /* ФОН */
+        .hero {
+            position: relative; height: 100vh; width: 100%;
+            background: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260131_002727_993.jpg') no-repeat center center;
+            background-size: cover; display: flex; flex-direction: column; padding: 30px 24px 50px;
+        }
+        .hero::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.95) 100%);
+            z-index: 1;
+        }
 
-    /* Сетка мессенджеров - Аккуратная */
-    .msg-grid-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    
-    .btn-social {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        display: flex; align-items: center; justify-content: center; gap: 8px;
-        padding: 12px; border-radius: 15px;
-        text-decoration: none; color: #fff; font-size: 13px; font-weight: 700;
-    }
-    .btn-social img { width: 20px; height: 20px; }
+        /* ШАПКА */
+        .header { position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: flex-start; }
+        .status-tag { display: flex; align-items: center; gap: 8px; padding: 6px 14px; background: rgba(0,0,0,0.6); border: 1px solid var(--lime); border-radius: 4px; font-size: 10px; font-weight: 900; text-transform: uppercase; }
+        .radar { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; position: relative; }
+        .radar::after { content: ''; position: absolute; inset: 0; background: var(--lime); border-radius: 50%; animation: wave 2s infinite; }
+        @keyframes wave { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(4); opacity: 0; } }
+        
+        .phone-top { text-decoration: none; color: white; font-size: 15px; font-weight: 900; display: block; }
+        .work-time { font-size: 9px; color: var(--lime); font-weight: 800; text-transform: uppercase; text-align: right; }
 
-    /* Кнопки в квизе тоже стали меньше */
-    .quiz-opt { padding: 16px; font-size: 13px; border-radius: 14px; }
-</style>
+        /* КОНТЕНТ */
+        .main-box { position: relative; z-index: 5; margin: auto 0; text-align: center; display: flex; flex-direction: column; align-items: center; }
+        .main-title { font-size: clamp(40px, 12vw, 86px); font-weight: 900; line-height: 0.95; letter-spacing: -0.04em; text-transform: uppercase; margin-bottom: 35px; }
 
-<div id="popupEval" class="popup-window">
-    <div class="popup-title">Где прислать фото?</div>
-    
-    <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="btn-max" onclick="haptic()">
-        <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/767.jpg" alt="MAX">
-        <span>Мессенджер MAX</span>
-    </a>
+        /* ПЛАШКА "ОЦЕНКА" */
+        .industrial-eval { position: relative; margin-bottom: 45px; }
+        .aim-arrow { 
+            position: absolute; top: -28px; left: 50%; transform: translateX(-50%);
+            font-size: 22px; color: var(--lime); 
+            animation: aimPush 0.8s infinite ease-in-out; 
+            z-index: 6;
+        }
+        @keyframes aimPush { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 8px); } }
 
-    <div class="msg-grid-mini">
-        <a href="https://t.me/daniil_glukhov17" class="btn-social" onclick="haptic()">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="TG">
-            Telegram
+        .evaluation-badge-heavy {
+            position: relative; display: inline-flex; align-items: center; padding: 12px 35px;
+            background: transparent; border: 1px solid var(--lime);
+            clip-path: polygon(6% 0%, 100% 0%, 94% 100%, 0% 100%);
+            text-decoration: none; overflow: hidden; white-space: nowrap;
+        }
+        .ev-text-heavy { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; color: var(--lime); }
+
+        /* ТЕКСТ */
+        .desc { font-size: 15px; line-height: 1.6; max-width: 380px; margin-bottom: 40px; font-weight: 500; color: #fff; }
+        .highlight-line { 
+            display: block; white-space: nowrap; color: var(--lime); 
+            font-weight: 900; text-transform: uppercase; font-size: 13px; 
+            margin-top: 8px; text-shadow: 0 0 15px rgba(223, 255, 0, 0.6); 
+        }
+
+        .cta-btn { 
+            background: var(--white); color: #000; padding: 22px 50px; 
+            font-weight: 900; font-size: 15px; text-transform: uppercase; 
+            text-decoration: none; clip-path: polygon(0 0, 95% 0, 100% 30%, 100% 100%, 5% 100%, 0 70%);
+        }
+
+        /* ПОПАПЫ */
+        #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(15px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.4s; }
+        .popup-window { 
+            position: fixed; bottom: -110%; left: 0; width: 100%; 
+            background: rgba(25, 25, 25, 0.75); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+            border-top: 1px solid rgba(255,255,255,0.1); border-radius: 40px 40px 0 0; 
+            padding: 30px 24px 50px; z-index: 101; 
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            display: none;
+        }
+        .show-popup #overlay { opacity: 1; visibility: visible; }
+        .show-popup .popup-window.active { display: block; bottom: 0; }
+
+        .popup-title { font-weight: 900; font-size: 18px; text-transform: uppercase; margin-bottom: 25px; text-align: center; color: #fff; }
+
+        /* КНОПКА MAX */
+        .btn-max {
+            background: var(--max-grad); display: flex; align-items: center; gap: 12px;
+            padding: 16px 20px; border-radius: 20px; text-decoration: none; color: #fff;
+            margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 25px rgba(155, 77, 255, 0.2);
+        }
+        .btn-max img { width: 34px; height: 34px; border-radius: 10px; object-fit: cover; }
+        .btn-max b { font-size: 20px; font-weight: 900; letter-spacing: 0.5px; }
+
+        /* СЕТКА TG/VK */
+        .msg-grid-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .btn-social {
+            background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 14px; border-radius: 16px; text-decoration: none; color: #fff; font-size: 12px; font-weight: 800; text-transform: uppercase;
+        }
+        .btn-social img { width: 22px; height: 22px; }
+
+        /* КВИЗ */
+        .quiz-step { display: none; animation: slideUp 0.4s ease-out; }
+        .quiz-step.active { display: block; }
+        .quiz-opt { background: rgba(255,255,255,0.06); padding: 18px; border-radius: 16px; margin-bottom: 10px; font-weight: 800; text-transform: uppercase; text-align: center; font-size: 13px; }
+        .quiz-opt:active { background: var(--lime); color: #000; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    </style>
+</head>
+<body id="mainBody">
+
+    <section class="hero">
+        <header class="header">
+            <div class="status-tag"><div class="radar"></div>Симферополь</div>
+            <div class="contact-info">
+                <a href="tel:+79785552114" class="phone-top">+7 978 555-21-14</a>
+                <span class="work-time">ONLINE 24/7</span>
+            </div>
+        </header>
+
+        <div class="main-box">
+            <h1 class="main-title">ПОРЯДОК<br>ПОД КЛЮЧ</h1>
+            
+            <div class="industrial-eval">
+                <div class="aim-arrow">▼</div>
+                <a href="javascript:void(0)" class="evaluation-badge-heavy" onclick="openMode('eval')">
+                    <div class="ev-text-heavy">Оценка по фото // 5 минут</div>
+                </a>
+            </div>
+            
+            <div class="desc">
+                Заезжаем на заросший участок — выезжаем с идеально чистого. Спил, измельчение веток и вывоз мусора.
+                <span class="highlight-line">Вам остается только принять работу.</span>
+            </div>
+
+            <a href="javascript:void(0)" class="cta-btn" onclick="openMode('quiz')">Узнать стоимость</a>
+        </div>
+    </section>
+
+    <div id="overlay" onclick="closePopup()"></div>
+
+    <div id="popupEval" class="popup-window">
+        <div class="popup-title">Где прислать фото?</div>
+        
+        <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="btn-max" onclick="haptic()">
+            <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/767.jpg" alt="MAX">
+            <b>MAX</b>
         </a>
-        <a href="https://vk.com/daniil_glukhov17" class="btn-social" onclick="haptic()">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/VK_Compact_Logo_%282021-present%29.svg" alt="VK">
-            Вконтакте
-        </a>
+
+        <div class="msg-grid-mini">
+            <a href="https://t.me/daniil_glukhov17" class="btn-social" onclick="haptic()">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="TG">
+                Telegram
+            </a>
+            <a href="https://vk.com/daniil_glukhov17" class="btn-social" onclick="haptic()">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/VK_Compact_Logo_%282021-present%29.svg" alt="VK">
+                VKontakte
+            </a>
+        </div>
     </div>
-</div>
+
+    <div id="popupQuiz" class="popup-window">
+        <div id="quizFlow">
+            <div class="quiz-step active" id="q1">
+                <div class="popup-title">Состояние участка?</div>
+                <div class="quiz-opt" onclick="nextStep(2, 'Бурьян')">Бурьян и трава</div>
+                <div class="quiz-opt" onclick="nextStep(2, 'Кусты')">Густой кустарник</div>
+                <div class="quiz-opt" onclick="nextStep(2, 'Деревья')">Сложные деревья</div>
+            </div>
+            <div class="quiz-step" id="q2">
+                <div class="popup-title">Площадь?</div>
+                <div class="quiz-opt" onclick="nextStep(3, 'до 6 сот')">До 6 соток</div>
+                <div class="quiz-opt" onclick="nextStep(3, '6-12 сот')">6 - 12 соток</div>
+                <div class="quiz-opt" onclick="nextStep(3, '15+ сот')">От 15 соток</div>
+            </div>
+            <div class="quiz-step" id="q3">
+                <div class="popup-title">Результат готов</div>
+                <p style="text-align:center; margin-bottom:20px; font-size:12px; opacity:0.6;">Данные скопированы.<br>Вставьте их в чат.</p>
+                <a href="javascript:void(0)" class="btn-max" onclick="finish('https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg')">
+                    <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/767.jpg" alt="MAX">
+                    <b>Отправить в MAX</b>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let data = { type: '', size: '' };
+        function haptic() { if (navigator.vibrate) navigator.vibrate(40); }
+        
+        function openMode(mode) {
+            haptic();
+            document.querySelectorAll('.popup-window').forEach(p => p.classList.remove('active'));
+            document.getElementById('mainBody').classList.add('show-popup');
+            if(mode === 'eval') document.getElementById('popupEval').classList.add('active');
+            if(mode === 'quiz') document.getElementById('popupQuiz').classList.add('active');
+        }
+
+        function closePopup() { document.getElementById('mainBody').classList.remove('show-popup'); }
+
+        function nextStep(s, v) {
+            haptic();
+            if(s === 2) data.type = v;
+            if(s === 3) data.size = v;
+            document.querySelectorAll('.quiz-step').forEach(step => step.classList.remove('active'));
+            document.getElementById('q' + s).classList.add('active');
+        }
+
+        function finish(url) {
+            haptic();
+            const msg = `Расчистка: ${data.type}, участок ${data.size}. Жду расчет.`;
+            navigator.clipboard.writeText(msg).then(() => {
+                alert('Данные скопированы! Переходим в MAX.');
+                window.location.href = url;
+            });
+        }
+    </script>
+</body>
+</html>

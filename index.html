@@ -7,86 +7,97 @@
     <style>
         :root {
             --lime: #DFFF00;
-            --black: #111111;
+            --white: #FFFFFF;
+            --font: 'Inter Tight', sans-serif;
             --max-grad: linear-gradient(90deg, #1b66fb 0%, #9b4dff 50%, #ff3d81 100%);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background: #fff; font-family: 'Inter Tight', sans-serif; height: 100vh; overflow: hidden; }
+        body { background: #000; font-family: var(--font); height: 100vh; overflow: hidden; color: var(--white); }
 
-        /* ЧИСТЫЙ ФОН БЕЗ ЗАТЕМНЕНИЯ */
+        /* ВЕРНУЛ ТЕМНЫЙ ФОН */
         .hero {
             position: relative; height: 100vh; width: 100%;
             background: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260131_002727_993.jpg') no-repeat center center;
             background-size: cover; display: flex; flex-direction: column; padding: 30px 24px 50px;
         }
+        .hero::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.9) 100%);
+            z-index: 1;
+        }
 
-        /* ШАПКА */
-        .header { position: relative; z-index: 10; display: flex; justify-content: space-between; }
-        .status-tag { display: flex; align-items: center; gap: 8px; padding: 6px 14px; background: rgba(255,255,255,0.8); border: 1px solid var(--black); border-radius: 6px; font-size: 10px; font-weight: 900; text-transform: uppercase; color: var(--black); }
-        .radar { width: 6px; height: 6px; background: #ff3d81; border-radius: 50%; position: relative; }
-        .radar::after { content: ''; position: absolute; inset: 0; background: #ff3d81; border-radius: 50%; animation: wave 2s infinite; }
+        .header { position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: flex-start; }
+        .status-tag { display: flex; align-items: center; gap: 8px; padding: 6px 14px; background: rgba(0,0,0,0.5); border: 1px solid var(--lime); border-radius: 4px; font-size: 10px; font-weight: 900; text-transform: uppercase; }
+        .radar { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; position: relative; }
+        .radar::after { content: ''; position: absolute; inset: 0; background: var(--lime); border-radius: 50%; animation: wave 2s infinite; }
         @keyframes wave { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(4); opacity: 0; } }
         
-        .phone-top { text-decoration: none; color: var(--black); font-size: 15px; font-weight: 900; }
+        .phone-top { text-decoration: none; color: white; font-size: 15px; font-weight: 900; display: block; }
+        .work-time { font-size: 9px; color: var(--lime); font-weight: 800; text-transform: uppercase; text-align: right; }
 
-        /* КОНТЕНТ */
-        .main-box { position: relative; z-index: 5; margin: auto 0; text-align: center; }
-        .main-title { font-size: clamp(40px, 12vw, 86px); font-weight: 900; line-height: 0.95; color: var(--black); text-transform: uppercase; margin-bottom: 30px; }
+        .main-box { position: relative; z-index: 5; margin: auto 0; text-align: center; display: flex; flex-direction: column; align-items: center; }
+        .main-title { font-size: clamp(40px, 12vw, 86px); font-weight: 900; line-height: 0.95; letter-spacing: -0.04em; text-transform: uppercase; margin-bottom: 35px; }
 
-        /* ПЛАШКА ОЦЕНКА */
-        .industrial-eval { position: relative; margin-bottom: 40px; display: inline-block; }
-        .evaluation-badge {
-            background: rgba(255,255,255,0.9); border: 2px solid var(--black);
-            padding: 12px 30px; font-size: 12px; font-weight: 900; text-transform: uppercase;
-            text-decoration: none; color: var(--black); clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
+        .industrial-eval { position: relative; margin-bottom: 45px; }
+        .evaluation-badge-heavy {
+            position: relative; display: inline-flex; align-items: center; padding: 12px 35px;
+            background: transparent; border: 1px solid var(--lime);
+            clip-path: polygon(6% 0%, 100% 0%, 94% 100%, 0% 100%);
+            text-decoration: none; overflow: hidden; white-space: nowrap;
         }
+        .ev-text-heavy { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; color: var(--lime); }
 
-        .desc { font-size: 15px; font-weight: 600; color: var(--black); max-width: 350px; margin: 30px auto; line-height: 1.4; }
-        .highlight-line { display: block; color: #ff3d81; text-transform: uppercase; font-weight: 900; }
+        .desc { font-size: 15px; line-height: 1.6; max-width: 380px; margin-bottom: 40px; font-weight: 500; color: #fff; }
+        .highlight-line { 
+            display: block; white-space: nowrap; color: var(--lime); 
+            font-weight: 900; text-transform: uppercase; font-size: 13px; 
+            margin-top: 8px; text-shadow: 0 0 15px rgba(223, 255, 0, 0.6); 
+        }
 
         .cta-btn { 
-            display: inline-block; background: var(--black); color: #fff; padding: 20px 45px; 
-            font-weight: 900; font-size: 15px; text-transform: uppercase; text-decoration: none;
-            clip-path: polygon(0 0, 95% 0, 100% 30%, 100% 100%, 5% 100%, 0 70%);
+            background: var(--white); color: #000; padding: 22px 50px; 
+            font-weight: 900; font-size: 15px; text-transform: uppercase; 
+            text-decoration: none; clip-path: polygon(0 0, 95% 0, 100% 30%, 100% 100%, 5% 100%, 0 70%);
         }
 
-        /* СВЕТЛЫЙ ПРОЗРАЧНЫЙ ПОПАП */
-        #overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.4s; }
+        /* НАСТРОЕННЫЙ ПОПАП: СВЕТЛЫЙ И ПРОЗРАЧНЫЙ */
+        #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.4s; }
         .popup-window { 
             position: fixed; bottom: -110%; left: 0; width: 100%; 
             background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border-top: 2px solid #fff; border-radius: 40px 40px 0 0; 
-            padding: 35px 24px 50px; z-index: 101; 
-            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-            display: none; box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
+            border-top: 1px solid rgba(255,255,255,0.6); border-radius: 40px 40px 0 0; 
+            padding: 30px 24px 50px; z-index: 101; 
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            display: none;
         }
         .show-popup #overlay { opacity: 1; visibility: visible; }
         .show-popup .popup-window.active { display: block; bottom: 0; }
 
-        .popup-title { font-weight: 900; font-size: 18px; text-transform: uppercase; margin-bottom: 25px; text-align: center; color: var(--black); }
+        .popup-title { font-weight: 900; font-size: 18px; text-transform: uppercase; margin-bottom: 25px; text-align: center; color: #000; }
 
         /* ИДЕАЛЬНАЯ КНОПКА MAX */
-        .btn-max-perfect {
+        .btn-max-ideal {
             background: var(--max-grad); display: flex; align-items: center; justify-content: space-between;
-            padding: 14px 20px; border-radius: 22px; text-decoration: none;
-            border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 10px 25px rgba(155, 77, 255, 0.4);
+            padding: 16px 20px; border-radius: 20px; text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: 0 12px 24px rgba(155, 77, 255, 0.4);
         }
-        .btn-max-perfect span { color: #fff; font-size: 20px; font-weight: 900; letter-spacing: 0.5px; }
-        .max-img-circle { width: 42px; height: 42px; border-radius: 50%; border: 2px solid #fff; object-fit: cover; }
+        .btn-max-ideal span { color: #fff; font-size: 20px; font-weight: 900; letter-spacing: 0.5px; }
+        .max-logo-circle { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #fff; object-fit: cover; }
 
-        /* СОЦСЕТИ */
-        .msg-grid-light { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
-        .btn-soc-light {
-            background: #fff; border: 1px solid rgba(0,0,0,0.1);
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            padding: 14px; border-radius: 18px; text-decoration: none; color: var(--black); font-size: 12px; font-weight: 800; text-transform: uppercase;
+        /* КНОПКИ TG / VK */
+        .msg-grid-clean { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
+        .btn-social-clean {
+            background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(0,0,0,0.05);
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 14px; border-radius: 16px; text-decoration: none; color: #000; font-size: 12px; font-weight: 800; text-transform: uppercase;
         }
-        .btn-soc-light img { width: 20px; height: 20px; }
+        .btn-social-clean img { width: 22px; height: 22px; }
 
-        /* КВИЗ ОПЦИИ */
-        .quiz-opt-light { background: #fff; padding: 16px; border-radius: 15px; margin-bottom: 10px; font-weight: 800; text-transform: uppercase; text-align: center; color: var(--black); border: 1px solid rgba(0,0,0,0.05); }
-        .quiz-opt-light:active { background: var(--black); color: #fff; }
+        /* КВИЗ В СВЕТЛОМ ПОПАПЕ */
+        .quiz-opt-clean { background: rgba(255,255,255,0.9); padding: 18px; border-radius: 16px; margin-bottom: 10px; font-weight: 800; text-transform: uppercase; text-align: center; font-size: 13px; color: #000; border: 1px solid rgba(0,0,0,0.05); }
+        .quiz-opt-clean:active { background: #000; color: #fff; }
 
     </style>
 </head>
@@ -94,21 +105,24 @@
 
     <section class="hero">
         <header class="header">
-            <div class="status-tag"><div class="radar"></div>Крым</div>
-            <a href="tel:+79785552114" class="phone-top">+7 978 555-21-14</a>
+            <div class="status-tag"><div class="radar"></div>Симферополь</div>
+            <div class="contact-info">
+                <a href="tel:+79785552114" class="phone-top">+7 978 555-21-14</a>
+                <span class="work-time">ONLINE 24/7</span>
+            </div>
         </header>
 
         <div class="main-box">
-            <h1 class="main-title">ПОРЯДОК<br>НА УЧАСТКЕ</h1>
+            <h1 class="main-title">ПОРЯДОК<br>ПОД КЛЮЧ</h1>
             
             <div class="industrial-eval">
-                <a href="javascript:void(0)" class="evaluation-badge" onclick="openMode('eval')">
-                    Оценка по фото // 5 минут
+                <a href="javascript:void(0)" class="evaluation-badge-heavy" onclick="openMode('eval')">
+                    <div class="ev-text-heavy">Оценка по фото // 5 минут</div>
                 </a>
             </div>
             
             <div class="desc">
-                Профессиональная расчистка любой сложности.
+                Заезжаем на заросший участок — выезжаем с идеально чистого.
                 <span class="highlight-line">Вам остается только принять работу.</span>
             </div>
 
@@ -121,17 +135,17 @@
     <div id="popupEval" class="popup-window">
         <div class="popup-title">Где прислать фото?</div>
         
-        <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="btn-max-perfect" onclick="haptic()">
+        <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="btn-max-ideal" onclick="haptic()">
             <span>Messenger MAX</span>
-            <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/767.jpg" class="max-img-circle" alt="MAX">
+            <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/767.jpg" class="max-logo-circle" alt="MAX">
         </a>
 
-        <div class="msg-grid-light">
-            <a href="https://t.me/daniil_glukhov17" class="btn-soc-light" onclick="haptic()">
+        <div class="msg-grid-clean">
+            <a href="https://t.me/daniil_glukhov17" class="btn-social-clean" onclick="haptic()">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="TG"> Telegram
             </a>
-            <a href="https://vk.com/daniil_glukhov17" class="btn-soc-light" onclick="haptic()">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/VK_Compact_Logo_%282021-present%29.svg" alt="VK"> VK
+            <a href="https://vk.com/daniil_glukhov17" class="btn-social-clean" onclick="haptic()">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/VK_Compact_Logo_%282021-present%29.svg" alt="VK"> VKontakte
             </a>
         </div>
     </div>
@@ -140,19 +154,19 @@
         <div id="quizFlow">
             <div class="quiz-step active" id="q1">
                 <div class="popup-title">Что на участке?</div>
-                <div class="quiz-opt-light" onclick="nextStep(2, 'Бурьян')">Трава и бурьян</div>
-                <div class="quiz-opt-light" onclick="nextStep(2, 'Деревья')">Спил деревьев</div>
+                <div class="quiz-opt-clean" onclick="nextStep(2, 'Бурьян')">Трава и бурьян</div>
+                <div class="quiz-opt-clean" onclick="nextStep(2, 'Деревья')">Сложные деревья</div>
             </div>
             <div class="quiz-step" id="q2">
                 <div class="popup-title">Площадь?</div>
-                <div class="quiz-opt-light" onclick="nextStep(3, 'До 6 сот')">До 6 соток</div>
-                <div class="quiz-opt-light" onclick="nextStep(3, '10+ сот')">Более 10 соток</div>
+                <div class="quiz-opt-clean" onclick="nextStep(3, 'до 6 сот')">До 6 соток</div>
+                <div class="quiz-opt-clean" onclick="nextStep(3, '15+ сот')">От 15 соток</div>
             </div>
             <div class="quiz-step" id="q3">
-                <div class="popup-title">Расчет готов</div>
-                <a href="javascript:void(0)" class="btn-max-perfect" onclick="finish('https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg')">
+                <div class="popup-title">Результат готов</div>
+                <a href="javascript:void(0)" class="btn-max-ideal" onclick="finish('https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg')">
                     <span>Отправить в MAX</span>
-                    <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/767.jpg" class="max-img-circle" alt="MAX">
+                    <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/767.jpg" class="max-logo-circle" alt="MAX">
                 </a>
             </div>
         </div>
@@ -182,7 +196,7 @@
 
         function finish(url) {
             haptic();
-            const msg = `Расчистка: ${data.type}, участок ${data.size}.`;
+            const msg = `Расчистка: ${data.type}, участок ${data.size}. Жду расчет.`;
             navigator.clipboard.writeText(msg).then(() => {
                 window.location.href = url;
             });

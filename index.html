@@ -258,7 +258,6 @@
             next('Final');
         }
 
-        // Логика перехода с авто-закрытием попапа
         function go(p) { 
             haptic(); 
             let encodedMsg = encodeURIComponent(finalMsg); 
@@ -272,11 +271,9 @@
             }
 
             window.location.href = targetUrl;
-            // Закрываем попап через 1.5 секунды, чтобы при возврате сайт был "чистым"
             setTimeout(closePopup, 1500);
         }
 
-        // Логика для попапа оценки по фото (тоже с авто-закрытием)
         function goEval(p) {
             haptic();
             window.location.href = links[p];

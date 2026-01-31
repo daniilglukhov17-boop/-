@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Спил деревьев в Симферополе</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --lime: #DFFF00; --black: #000000; --white: #FFFFFF; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        /* ИСПРАВЛЕНО: Разрешен вертикальный скролл */
+        body { 
+            background: #000; 
+            font-family: 'Inter Tight', sans-serif; 
+            min-height: 100vh; 
+            overflow-x: hidden; 
+            overflow-y: auto; 
+            color: var(--white); 
+        } 
+
+        .hero {
+            position: relative; height: 100vh; width: 100%;
+            background: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260131_002727_993.jpg') no-repeat center center;
+            background-size: cover; display: flex; flex-direction: column; padding: 20px 24px 30px;
+            image-rendering: -webkit-optimize-contrast;
+        }
+        .hero::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.95) 100%);
+            z-index: 1;
+        } 
+
+        /* ШАПКА */
+        .header { position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .status-tag { display: flex; align-items: center; gap: 8px; padding: 6px 12px; background: rgba(0,0,0,0.8); border: 1px solid var(--lime); border-radius: 2px; font-size: 10px; font-weight: 900; text-transform: uppercase; }
+        .radar { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; position: relative; }
+        .radar::after { content: ''; position: absolute; inset: 0; background: var(--lime); border-radius: 50%; animation: wave 2s infinite; }
+        @keyframes wave { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(4); opacity: 0; } }
+        
+        .header-info { text-align: right; }
+        .header-info a { color: #fff; text-decoration: none; font-weight: 900; font-size: 14px; display: block; }
+        .online-status { color: var(--lime); font-size: 8px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; } 
+
+        /* КОНТЕНТ */
+        .main-box { position: relative; z-index: 5; margin: auto 0; text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; }
+        .main-title { font-size: clamp(22px, 7vw, 44px); font-weight: 900; line-height: 1.1; text-transform: uppercase; margin-bottom: 20px; }
+        .main-title span { color: var(--lime); display: block; margin-top: 4px; } 
+
+        .industrial-eval { position: relative; margin-bottom: 30px; }
+        .aim-arrow { position: absolute; top: -25px; left: 50%; transform: translateX(-50%); font-size: 20px; color: var(--lime); animation: aimPush 0.8s infinite ease-in-out; z-index: 6; }
+        @keyframes aimPush { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 6px); } }
+        
+        button { border: none; cursor: pointer; font-family: inherit; }
+        
+        .evaluation-badge-heavy { position: relative; display: inline-flex; align-items: center; padding: 12px 25px; background: transparent; border: 1px solid var(--lime); clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%); text-decoration: none; overflow: hidden; }
+        .evaluation-badge-heavy::before { content: ''; position: absolute; top: 0; left: -150%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(223, 255, 0, 0.4), transparent); animation: laserScan 3s infinite; }
+        @keyframes laserScan { 0% { left: -150%; } 30%, 100% { left: 150%; } }
+        .ev-text-heavy { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; color: var(--lime); } 
+
+        .desc { font-size: 13px; line-height: 1.4; max-width: 320px; margin-bottom: 30px; font-weight: 500; color: rgba(255,255,255,0.85); }
+        .highlight-line { display: block; color: var(--lime); font-weight: 900; text-transform: uppercase; font-size: 11px; margin-top: 6px; } 
+
+        .cta-btn-industrial { position: relative; display: inline-flex; align-items: center; padding: 20px 45px; background: var(--lime); color: var(--black); font-weight: 900; font-size: 14px; text-transform: uppercase; clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%); transition: 0.2s; } 
+
+        /* ПОПАПЫ */
+        #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.4s; }
+        .popup-window { position: fixed; bottom: -110%; left: 0; width: 100%; background: #0c0c0c; border-top: 4px solid var(--lime); border-radius: 30px 30px 0 0; padding: 30px 24px 40px; z-index: 101; transition: 0.5s cubic-bezier(0.2, 1, 0.2, 1); max-height: 90vh; overflow-y: auto; display: none; }
+        .show-popup #overlay { opacity: 1; visibility: visible; }
+        .show-popup .popup-window.active { display: block; bottom: 0; } 
+
+        .step { display: none; }
+        .step.active { display: block; }
+        .q-title { color: var(--lime); font-weight: 900; text-transform: uppercase; font-size: 15px; margin-bottom: 20px; text-align: center; letter-spacing: 1px; } 
+
+        .opt-grid { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; margin-bottom: 15px; }
+        .opt-card { background: #181818; border: 1px solid #333; padding: 15px 10px; text-align: center; color: #fff; font-size: 11px; font-weight: 800; text-transform: uppercase; clip-path: polygon(0 0, 92% 0, 100% 25%, 100% 100%, 8% 100%, 0 75%); }
+        .opt-card.selected { border-color: var(--lime); color: var(--lime); background: rgba(223, 255, 0, 0.05); }
+        
+        input[type=range] { width: 100%; accent-color: var(--lime); margin: 15px 0; }
+        .range-val { font-size: 32px; font-weight: 900; color: var(--lime); text-align: center; display: block; }
+        .range-label { font-size: 9px; text-transform: uppercase; color: #666; text-align: center; margin-top: -5px; margin-bottom: 10px; font-weight: 800; } 
+
+        .btn-next { width: 100%; padding: 18px; background: var(--lime); color: #000; font-weight: 900; text-transform: uppercase; text-align: center; margin-top: 15px; clip-path: polygon(0 0, 96% 0, 100% 20%, 100% 100%, 4% 100%, 0 80%); } 
+
+        .soc-btn { background: #111; border: 1px solid #333; display: flex; align-items: center; gap: 15px; padding: 12px; clip-path: polygon(0 0, 98% 0, 100% 20%, 100% 100%, 2% 100%, 0 80%); text-decoration: none; margin-bottom: 10px; width: 100%; }
+        .m-box { width: 40px; height: 40px; background: #000; border: 1px solid var(--lime); display: flex; align-items: center; justify-content: center; color: var(--lime); font-weight: 900; font-size: 20px; }
+        .soc-btn span { color: #fff; font-weight: 800; text-transform: uppercase; font-size: 14px; }
+        
+        .max-hint { font-size: 9px; color: #777; text-align: center; margin-top: -5px; margin-bottom: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+    </style>
+</head>
+<body id="mainBody"> 
+
+    <section class="hero">
+        <header class="header">
+            <div class="status-tag"><div class="radar"></div>Симферополь</div>
+            <div class="header-info">
+                <a href="tel:+79785552114" aria-label="Позвонить нам">+7 978 555-21-14</a>
+                <div class="online-status">На связи 24/7</div>
+            </div>
+        </header> 
+
+        <div class="main-box">
+            <h1 class="main-title">Профессиональный спил деревьев <span>и полная расчистка участков</span></h1>
+            
+            <div class="industrial-eval">
+                <div class="aim-arrow" aria-hidden="true">▼</div>
+                <button class="evaluation-badge-heavy" onclick="openPopup('eval')" aria-label="Оценка по фото за 5 минут">
+                    <span class="ev-text-heavy">Оценка по фото // 5 минут</span>
+                </button>
+            </div>
+            
+            <div class="desc">
+                Заезжаем на заросший участок — выезжаем с идеально чистого. Спил, измельчение веток и вывоз мусора.
+                <span class="highlight-line">Вам остается только принять работу.</span>
+            </div> 
+
+            <button class="cta-btn-industrial" onclick="openPopup('quiz')" aria-label="Начать расчет стоимости">Узнать стоимость</button>
+        </div>
+    </section> 
+
+    <div id="overlay" onclick="closePopup()" role="none"></div> 
+
+    <div id="popupQuiz" class="popup-window" role="dialog" aria-modal="true">
+        <div id="q1" class="step active">
+            <div class="q-title">Выберите услугу:</div>
+            <div class="opt-grid" style="grid-template-columns: 1fr;">
+                <button class="opt-card" onclick="setMode('Спил'); next('Tree1')">Спил деревьев</button>
+                <button class="opt-card" onclick="setMode('Расчистка'); next('Land1')">Расчистка участка</button>
+            </div>
+        </div>
+        <div id="qTree1" class="step">
+            <div class="q-title">Параметры деревьев:</div>
+            <div class="range-label">Количество (шт)</div>
+            <div class="range-val" id="tCountVal">1</div>
+            <input type="range" min="1" max="50" value="1" oninput="upd('tCountVal', this.value, 'count')">
+            <div class="range-label">Высота (метры)</div>
+            <div class="range-val" id="tHeightVal">5</div>
+            <input type="range" min="2" max="30" value="5" oninput="upd('tHeightVal', this.value, 'h')">
+            <div class="range-label">Диаметр (см)</div>
+            <div class="range-val" id="tDiamVal">30</div>
+            <input type="range" min="10" max="200" step="5" value="30" oninput="upd('tDiamVal', this.value, 'd')">
+            <button class="btn-next" onclick="next('Tree2')">Далее</button>
+        </div>
+        <div id="qTree2" class="step">
+            <div class="q-title">Что есть рядом?</div>
+            <div class="opt-grid">
+                <button class="opt-card tgl" onclick="tgl(this, 'obs', 'Крыша/Дом')">Дом</button>
+                <button class="opt-card tgl" onclick="tgl(this, 'obs', 'Забор')">Забор</button>
+                <button class="opt-card tgl" onclick="tgl(this, 'obs', 'Газ.труба')">Газ.труба</button>
+                <button class="opt-card tgl" onclick="tgl(this, 'obs', 'Провода')">Провода</button>
+            </div>
+            <button class="btn-next" onclick="next('CommonOut')">Далее</button>
+        </div>
+        <div id="qLand1" class="step">
+            <div class="q-title">Параметры участка:</div>
+            <div class="range-val" id="lAreaVal">5</div><div class="range-label">Соток</div>
+            <input type="range" min="1" max="100" value="5" oninput="upd('lAreaVal', this.value, 'area')">
+            <div class="q-title" style="margin-top:20px;">Тип растительности:</div>
+            <div class="opt-grid">
+                <button class="opt-card" onclick="setVal('type', 'Трава'); next('Land2')">Трава</button>
+                <button class="opt-card" onclick="setVal('type', 'Кустарник'); next('Land2')">Кустарник</button>
+                <button class="opt-card" onclick="setVal('type', 'Деревья'); next('Land2')">Деревья</button>
+                <button class="opt-card" onclick="setVal('type', 'Трава + Кусты'); next('Land2')">Трава+Кусты</button>
+                <button class="opt-card" onclick="setVal('type', 'Кусты + Деревья'); next('Land2')">Кусты+Деревья</button>
+                <button class="opt-card" onclick="setVal('type', 'МИКС (Все вместе)'); next('Land2')">МИКС (Все)</button>
+            </div>
+        </div>
+        <div id="qLand2" class="step">
+            <div class="q-title">Особенности:</div>
+            <div class="opt-grid">
+                <button class="opt-card tgl" onclick="tgl(this, 'obs', 'Есть мусор')">Есть мусор</button>
+                <button class="opt-card tgl" onclick="tgl(this, 'rel', 'Ровный участок')">Ровный</button>
+                <button class="opt-card tgl" onclick="tgl(this, 'rel', 'Рельефный')">Рельеф</button>
+            </div>
+            <button class="btn-next" onclick="next('CommonOut')">Далее</button>
+        </div>
+        <div id="qCommonOut" class="step">
+            <div class="q-title">Нужен вывоз мусора?</div>
+            <div class="opt-grid">
+                <button class="opt-card" onclick="setVal('out', 'Нужен'); next('CommonGeo')">Да, вывезти</button>
+                <button class="opt-card" onclick="setVal('out', 'Не нужен'); next('CommonGeo')">Нет, оставить</button>
+            </div>
+        </div>
+        <div id="qCommonGeo" class="step">
+            <div class="q-title">Где находится объект?</div>
+            <div class="opt-grid" style="grid-template-columns: 1fr;">
+                <button class="opt-card" onclick="setVal('geo', 'Симферополь'); finish()">Симферополь</button>
+                <button class="opt-card" onclick="setVal('geo', 'Симферопольский район'); finish()">Симф. район</button>
+                <button class="opt-card" onclick="setVal('geo', 'Отдаленный объект (Крым)'); finish()">За пределами района</button>
+            </div>
+        </div>
+        <div id="qFinal" class="step">
+            <div class="q-title">Расчет готов</div>
+            <div style="font-size:10px; text-align:center; color:#666; margin-bottom:20px; text-transform:uppercase">Текст скопирован в буфер обмена</div>
+            <div class="soc-grid">
+                <button class="soc-btn" onclick="go('MAX')"><div class="m-box">M</div><span>Messenger MAX</span></button>
+                <div class="max-hint">После перехода зажмите поле ввода и нажмите «Вставить»</div>
+                <button class="soc-btn" onclick="go('TG')"><div class="m-box" style="background:#fff;border:none;padding:8px"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="100%" alt=""></div><span>Telegram</span></button>
+                <button class="soc-btn" onclick="go('VK')"><div class="m-box" style="background:#fff;border:none;padding:10px"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/VK_Compact_Logo_%282021-present%29.svg" width="100%" alt=""></div><span>ВКонтакте</span></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="popupEval" class="popup-window" role="dialog" aria-modal="true">
+        <div class="q-title">Пришлите фото в мессенджер:</div>
+        <button onclick="goEval('MAX')" class="soc-btn"><div class="m-box">M</div><span>Messenger MAX</span></button>
+        <button onclick="goEval('TG')" class="soc-btn"><div class="m-box" style="background:#fff;border:none;padding:8px"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="100%" alt=""></div><span>Telegram</span></button>
+        <button onclick="goEval('VK')" class="soc-btn"><div class="m-box" style="background:#fff;border:none;padding:10px"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/VK_Compact_Logo_%282021-present%29.svg" width="100%" alt=""></div><span>VKontakte</span></button>
+    </div>
+
+    <script>
+        let data = { mode:'', count:'1', h:'5', d:'30', area:'5', type:'', obs:[], rel:'', out:'', geo:'' };
+        let finalMsg = ""; 
+
+        const links = { 
+            MAX: "https://max.ru/u/f9LHodD0cOKYGnigBf8f1GmElnhydAMPHC3daJ1KR-FyymDlxLNs2ky1EU0", 
+            TG: "https://t.me/daniil_glukhov17",
+            VK: "https://vk.com/im?sel=701091614"
+        };
+        
+        function haptic() { if(navigator.vibrate) navigator.vibrate(50); } 
+
+        window.onpopstate = function() {
+            if (document.getElementById('mainBody').classList.contains('show-popup')) {
+                document.getElementById('mainBody').classList.remove('show-popup');
+                document.querySelectorAll('.popup-window').forEach(p => p.classList.remove('active'));
+            }
+        }; 
+
+        function openPopup(t) { 
+            haptic(); 
+            document.getElementById('mainBody').classList.add('show-popup');
+            document.querySelectorAll('.popup-window').forEach(p=>p.classList.remove('active'));
+            if(t==='quiz') { document.getElementById('popupQuiz').classList.add('active'); resetSteps(); }
+            else { document.getElementById('popupEval').classList.add('active'); }
+            history.pushState({popup: true}, "");
+        } 
+
+        function closePopup() { 
+            document.getElementById('mainBody').classList.remove('show-popup');
+            if (history.state && history.state.popup) history.back();
+        } 
+
+        function resetSteps() { document.querySelectorAll('.step').forEach(s=>s.classList.remove('active')); document.getElementById('q1').classList.add('active'); }
+        function next(id) { haptic(); document.querySelectorAll('.step').forEach(s=>s.classList.remove('active')); document.getElementById('q'+id).classList.add('active'); }
+        function setMode(m) { data.mode=m; haptic(); }
+        function setVal(k,v) { data[k]=v; haptic(); }
+        function upd(id, v, k) { document.getElementById(id).innerText=v; data[k]=v; }
+        function tgl(el, k, v) { haptic(); el.classList.toggle('selected'); if(Array.isArray(data[k])) { let i=data[k].indexOf(v); if(i>-1) data[k].splice(i,1); else data[k].push(v); } else data[k]=v; }
+        
+        async function finish() {
+            finalMsg = `🛠 ЗАЯВКА:\nУслуга: ${data.mode}\n`;
+            if(data.mode==='Спил') {
+                finalMsg += `🌳 Количество: ${data.count} шт.\n📏 Высота: ${data.h} м.\n🔘 Диаметр: ${data.d} см.\n`;
+            } else {
+                finalMsg += `📏 Площадь: ${data.area} сот.\n🌿 Тип: ${data.type}\n`;
+            }
+            if(data.obs.length) finalMsg += `⚠️ Помехи: ${data.obs.join(', ')}\n`;
+            if(data.rel) finalMsg += `⛰ Рельеф: ${data.rel}\n`;
+            finalMsg += `🚛 Вывоз: ${data.out}\n📍 ГЕО: ${data.geo}`;
+            
+            try { await navigator.clipboard.writeText(finalMsg); } catch(e){ console.error("Clip Error", e); }
+            next('Final');
+        } 
+
+        function go(p) { 
+            haptic(); 
+            let encodedMsg = encodeURIComponent(finalMsg); 
+            let targetUrl = "";
+            
+            if (p === 'TG') targetUrl = `${links.TG}?text=${encodedMsg}`;
+            else if (p === 'VK') targetUrl = `${links.VK}&message=${encodedMsg}`;
+            else if (p === 'MAX') {
+                alert("Данные расчета скопированы! В чате MAX зажмите поле ввода и выберите «Вставить»");
+                targetUrl = `${links.MAX}?text=${encodedMsg}`;
+            } 
+
+            window.location.href = targetUrl;
+            setTimeout(closePopup, 1500);
+        } 
+
+        function goEval(p) {
+            haptic();
+            window.location.href = links[p];
+            setTimeout(closePopup, 1500);
+        }
+    </script>
+</body>
+</html>

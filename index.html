@@ -289,5 +289,220 @@
             setTimeout(closePopup, 1500);
         }
     </script>
+<section class="p-wrap">
+    <style>
+        :root { --p-lime: #DFFF00; } /* Используем твой основной лайм */
+        .p-wrap {
+            width: 100%;
+            padding: 60px 0;
+            background: #000; /* Черный фон под основной стиль */
+            font-family: 'Inter Tight', sans-serif;
+            overflow: hidden;
+            color: #fff;
+        } 
+
+        .p-header { padding: 0 24px 30px; }
+        .p-header h2 {
+            font-size: 32px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin: 0;
+            color: #fff;
+        }
+        .p-header .neon-line {
+            height: 4px;
+            width: 60px;
+            background: var(--p-lime);
+            border-radius: 2px;
+            box-shadow: 0 0 15px rgba(223, 255, 0, 0.4);
+            margin-top: 8px;
+        } 
+
+        .p-slider { position: relative; width: 100%; }
+        .p-track {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding: 0 24px 25px;
+            gap: 15px;
+        }
+        .p-track::-webkit-scrollbar { display: none; } 
+
+        /* Карточка на всю ширину экрана минус отступы */
+        .p-card { 
+            min-width: calc(100vw - 48px); 
+            scroll-snap-align: center; 
+            flex-shrink: 0; 
+        } 
+
+        .p-img-area {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/3;
+            border-radius: 4px; /* Более острые углы в индустриальном стиле */
+            overflow: hidden;
+            background: #111;
+            touch-action: pan-y;
+            border: 1px solid #222;
+        } 
+
+        .p-img-full { position: absolute; inset: 0; background-size: cover; background-position: center; pointer-events: none; }
+        .p-img-before { z-index: 2; width: 50%; border-right: 2px solid var(--p-lime); }
+        
+        .p-handle { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: var(--p-lime); z-index: 10; transform: translateX(-50%); pointer-events: none; }
+        .p-knob {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: #000;
+            border: 2px solid var(--p-lime);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        .p-knob::after { content: '↔'; color: var(--p-lime); font-weight: 900; font-size: 18px; } 
+
+        .p-footer { margin-top: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .p-footer strong { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+        .p-footer span { font-family: monospace; font-size: 12px; font-weight: 900; color: var(--p-lime); } 
+
+        .p-controls { margin: 10px 24px 0; display: flex; align-items: center; background: #111; padding: 10px; border-radius: 4px; gap: 15px; border: 1px solid #222; } 
+
+        .p-btn {
+            width: 36px;
+            height: 36px;
+            background: #222;
+            color: var(--p-lime);
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            cursor: pointer;
+            user-select: none;
+            transition: 0.2s;
+        }
+        .p-btn:active { background: var(--p-lime); color: #000; } 
+
+        .p-bar-bg { flex: 1; height: 4px; background: #222; border-radius: 2px; position: relative; overflow: hidden; }
+        .p-bar-fill { position: absolute; height: 100%; width: 20%; background: var(--p-lime); border-radius: 2px; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); } 
+
+        .p-live { position: absolute; top: 15px; right: 15px; background: var(--p-lime); color: #000; padding: 4px 10px; border-radius: 2px; font-size: 9px; font-weight: 900; z-index: 5; text-transform: uppercase; }
+    </style> 
+
+    <div class="p-header">
+        <h2>Наши работы</h2>
+        <div class="neon-line"></div>
+    </div> 
+
+    <div class="p-slider">
+        <div class="p-track" id="portTrack">
+            <div class="p-card" id="pc1">
+                <div class="p-img-area" onpointermove="portImgMove(event)" onpointerdown="portImgMove(event)">
+                    <div class="p-img-full" style="background-image: url('IMG_20260130_165415_302.jpg');"></div>
+                    <div class="p-img-full p-img-before" style="background-image: url('IMG_20260130_165418_559.jpg');"></div>
+                    <div class="p-handle"><div class="p-knob"></div></div>
+                </div>
+                <div class="p-footer"><strong>Удаление деревьев</strong><span>01 / 05</span></div>
+            </div> 
+
+            <div class="p-card" id="pc2">
+                <div class="p-img-area" onpointermove="portImgMove(event)" onpointerdown="portImgMove(event)">
+                    <div class="p-img-full" style="background-image: url('IMG_20260130_165425_057.jpg');"></div>
+                    <div class="p-img-full p-img-before" style="background-image: url('IMG_20260130_165423_619.jpg');"></div>
+                    <div class="p-handle"><div class="p-knob"></div></div>
+                </div>
+                <div class="p-footer"><strong>Спил аварийных веток</strong><span>02 / 05</span></div>
+            </div> 
+
+            <div class="p-card" id="pc3">
+                <div class="p-img-area" onpointermove="portImgMove(event)" onpointerdown="portImgMove(event)">
+                    <div class="p-img-full" style="background-image: url('IMG_20260130_165410_906.jpg');"></div>
+                    <div class="p-img-full p-img-before" style="background-image: url('IMG_20260130_165413_215.jpg');"></div>
+                    <div class="p-handle"><div class="p-knob"></div></div>
+                </div>
+                <div class="p-footer"><strong>Расчистка под ключ</strong><span>03 / 05</span></div>
+            </div> 
+
+            <div class="p-card" id="pc4">
+                <div class="p-img-area" onpointermove="portImgMove(event)" onpointerdown="portImgMove(event)">
+                    <div class="p-img-full" style="background-image: url('IMG_20260130_165419_418.jpg');"></div>
+                    <div class="p-img-full p-img-before" style="background-image: url('IMG_20260130_165421_933.jpg');"></div>
+                    <div class="p-handle"><div class="p-knob"></div></div>
+                </div>
+                <div class="p-footer"><strong>Уборка участка</strong><span>04 / 05</span></div>
+            </div> 
+
+            <div class="p-card" id="pc5">
+                <div class="p-img-area">
+                    <div class="p-live">В процессе</div>
+                    <div class="p-img-full" style="background-image: url('IMG_20260130_165427_214.jpg');"></div>
+                </div>
+                <div class="p-footer"><strong>Сложный объект</strong><span>05 / 05</span></div>
+            </div>
+        </div>
+    </div> 
+
+    <div class="p-controls">
+        <div class="p-btn" onclick="portBtnGo(-1)">‹</div>
+        <div class="p-bar-bg"><div class="p-bar-fill" id="portBarFill"></div></div>
+        <div class="p-btn" onclick="portBtnGo(1)">›</div>
+    </div> 
+
+    <script>
+        const pTrk = document.getElementById('portTrack');
+        const pBF = document.getElementById('portBarFill');
+        let pCurIdx = 0;
+        let pLastVibIdx = 0; 
+
+        function portImgMove(e) {
+            // Разрешаем работу и для мыши (при нажатии) и для тача
+            if (e.pointerType === 'mouse' && e.buttons !== 1) return;
+            const b = e.currentTarget;
+            const bef = b.querySelector('.p-img-before');
+            const hnd = b.querySelector('.p-handle');
+            if(!bef || !hnd) return;
+
+            const r = b.getBoundingClientRect();
+            let x = (e.clientX || (e.touches && e.touches[0].clientX)) - r.left;
+            let p = (x / r.width) * 100;
+            
+            if (p >= 0 && p <= 100) {
+                bef.style.width = p + '%';
+                hnd.style.left = p + '%';
+                // Легкая вибрация при прохождении через деления
+                if (navigator.vibrate && Math.round(p) % 5 === 0) navigator.vibrate(2);
+            }
+        } 
+
+        function portBtnGo(d) {
+            pCurIdx = Math.max(0, Math.min(4, pCurIdx + d));
+            const target = document.getElementById('pc' + (pCurIdx + 1));
+            target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            if (navigator.vibrate) navigator.vibrate(10);
+        } 
+
+        pTrk.addEventListener('scroll', () => {
+            const cardWidth = pTrk.querySelector('.p-card').offsetWidth;
+            const idx = Math.round(pTrk.scrollLeft / cardWidth);
+            if (idx !== pLastVibIdx) {
+                pLastVibIdx = idx;
+                pCurIdx = idx;
+                pBF.style.left = (idx * 20) + '%';
+                if (navigator.vibrate) navigator.vibrate(5);
+            }
+        });
+    </script>
+</section>
+
 </body>
 </html>

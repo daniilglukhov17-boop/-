@@ -206,14 +206,33 @@
         };
         
         function haptic() { if(navigator.vibrate) navigator.vibrate(50); }
+
+        // --- ЛОГИКА ИСТОРИИ (КНОПКА НАЗАД) ---
+        window.onpopstate = function() {
+            if (document.getElementById('mainBody').classList.contains('show-popup')) {
+                document.getElementById('mainBody').classList.remove('show-popup');
+                document.querySelectorAll('.popup-window').forEach(p => p.classList.remove('active'));
+            }
+        };
+
         function openPopup(t) { 
             haptic(); 
             document.getElementById('mainBody').classList.add('show-popup');
             document.querySelectorAll('.popup-window').forEach(p=>p.classList.remove('active'));
             if(t==='quiz') { document.getElementById('popupQuiz').classList.add('active'); resetSteps(); }
             else { document.getElementById('popupEval').classList.add('active'); }
+            
+            // Добавляем запись в историю, чтобы "Назад" закрыло только попап
+            history.pushState({popup: true}, "");
         }
-        function closePopup() { document.getElementById('mainBody').classList.remove('show-popup'); }
+
+        function closePopup() { 
+            document.getElementById('mainBody').classList.remove('show-popup');
+            // Если попап закрыт кликом на фон, убираем виртуальный шаг из истории
+            if (history.state && history.state.popup) history.back();
+        }
+        // ------------------------------------
+
         function resetSteps() { document.querySelectorAll('.step').forEach(s=>s.classList.remove('active')); document.getElementById('q1').classList.add('active'); }
         function next(id) { haptic(); document.querySelectorAll('.step').forEach(s=>s.classList.remove('active')); document.getElementById('q'+id).classList.add('active'); }
         function setMode(m) { data.mode=m; haptic(); }

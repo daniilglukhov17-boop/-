@@ -309,5 +309,163 @@
             setTimeout(closePopup, 1500);
         }
     </script>
+<style>
+    .portfolio { 
+        padding: 50px 20px; 
+        background: #000; 
+        position: relative; 
+        z-index: 5; 
+    }
+    .port-title { 
+        color: var(--lime); 
+        font-weight: 900; 
+        text-transform: uppercase; 
+        font-size: 22px; 
+        margin-bottom: 30px; 
+        text-align: center; 
+        letter-spacing: 1px; 
+    }
+    .gallery-grid { 
+        display: grid; 
+        gap: 25px; 
+        margin-bottom: 50px; 
+    }
+    .work-card { 
+        border: 1px solid #222; 
+        background: #0a0a0a; 
+        border-radius: 8px; 
+        overflow: hidden; 
+    }
+    .compare-box {
+        display: grid; 
+        grid-template-columns: 1fr 1fr; 
+        gap: 2px;
+        background: #222;
+    }
+    .compare-box img { 
+        width: 100%; 
+        aspect-ratio: 3/4; 
+        object-fit: cover; 
+        display: block;
+    }
+    .work-info { 
+        padding: 12px; 
+        font-size: 10px; 
+        font-weight: 900; 
+        color: var(--lime); 
+        text-transform: uppercase; 
+        display: flex; 
+        justify-content: space-between; 
+        background: #0c0c0c;
+    }
+    .label-before-after {
+        display: flex;
+        justify-content: space-around;
+        background: #111;
+        padding: 4px 0;
+        font-size: 8px;
+        font-weight: 900;
+        color: #666;
+        text-transform: uppercase;
+    }
+    .process-title { 
+        color: #fff; 
+        font-weight: 900; 
+        text-transform: uppercase; 
+        font-size: 18px; 
+        margin-bottom: 20px; 
+        text-align: center; 
+    }
+    .process-grid { 
+        display: grid; 
+        grid-template-columns: 1fr 1fr 1fr; 
+        gap: 8px; 
+    }
+    .process-grid img { 
+        width: 100%; 
+        aspect-ratio: 1/1; 
+        object-fit: cover; 
+        border-radius: 4px; 
+        border: 1px solid #333; 
+    }
+</style>
+
+<section class="portfolio">
+    <h2 class="port-title">Выполненные работы</h2>
+    
+    <div class="gallery-grid">
+        
+        <div class="work-card">
+            <div class="label-before-after"><span>До начала</span><span>Результат</span></div>
+            <div class="compare-box">
+                <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/Расчистка%20участка%20Симферополь%201.webp" alt="Расчистка участка Симферополь до">
+                <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/Расчистка%20участка%20Симферополь%202.webp" alt="Расчистка участка Симферополь после">
+            </div>
+            <div class="work-info"><span>Объект №1</span><span>Расчистка участка</span></div>
+        </div>
+
+        <div class="work-card">
+            <div class="label-before-after"><span>До начала</span><span>Результат</span></div>
+            <div class="compare-box">
+                <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/Спил%20деревьев%20симферополь%203.webp" alt="Спил деревьев симферополь до">
+                <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/Спил%20деревьев%20симферополь%204.webp" alt="Спил деревьев симферополь после">
+            </div>
+            <div class="work-info"><span>Объект №2</span><span>Спил деревьев</span></div>
+        </div>
+
+        <div class="work-card">
+            <div class="label-before-after"><span>До начала</span><span>Результат</span></div>
+            <div class="compare-box">
+                <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/Расчистка%20участка%20Симферополь%205.webp" alt="Расчистка участка Симферополь до">
+                <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/Расчистка%20участка%20Симферополь%206.webp" alt="Расчистка участка Симферополь после">
+            </div>
+            <div class="work-info"><span>Объект №3</span><span>Расчистка территории</span></div>
+        </div>
+
+        <div class="work-card">
+            <div class="label-before-after"><span>До начала</span><span>Результат</span></div>
+            <div class="compare-box">
+                <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/Спил%20деревьев%20симферополь%207.webp" alt="Спил деревьев симферополь до">
+                <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/Спил%20деревьев%20симферополь%208.webp" alt="Спил деревьев симферополь после">
+            </div>
+            <div class="work-info"><span>Объект №4</span><span>Удаление деревьев</span></div>
+        </div>
+
+        <div class="work-card">
+            <div class="label-before-after"><span>До начала</span><span>Результат</span></div>
+            <div class="compare-box">
+                <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/Спил%20деревьев%20в%20Симферополе%209.webp" alt="Спил деревьев в Симферополе до">
+                <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/Спил%20деревьев%20в%20Симферополе%2010.webp" alt="Спил деревьев в Симферополе после">
+            </div>
+            <div class="work-info"><span>Объект №5</span><span>Спил в городе</span></div>
+        </div>
+
+        <div class="work-card">
+            <div class="label-before-after"><span>До начала</span><span>Результат</span></div>
+            <div class="compare-box">
+                <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/Спил%20деревьев%20в%20Симферополе%2011.webp" alt="Спил деревьев до">
+                <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/Вырубка%20деревьев%20в%20Симферополе%2012.webp" alt="Вырубка деревьев после">
+            </div>
+            <div class="work-info"><span>Объект №6</span><span>Валка и вырубка</span></div>
+        </div>
+
+        <div class="work-card">
+            <div class="label-before-after"><span>До начала</span><span>Результат</span></div>
+            <div class="compare-box">
+                <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/Расчистка%20участка%20Симферополь%2013.webp" alt="Расчистка участка до">
+                <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/Расчистка%20участка%20Симферополь%2014.webp" alt="Расчистка участка после">
+            </div>
+            <div class="work-info"><span>Объект №7</span><span>Расчистка под ключ</span></div>
+        </div>
+    </div>
+
+    <h3 class="process-title">Вывоз мусора и веток</h3>
+    <div class="process-grid">
+        <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/Вывоз%20веток%20и%20мусора%201%20.webp" alt="Вывоз веток Симферополь">
+        <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/Вывоз%20веток%20и%20мусора%202.webp" alt="Вывоз мусора Крым">
+        <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/Вывоз%20веток%20и%20мусора%203.webp" alt="Погрузка мусора">
+    </div>
+</section>
+
 </body>
 </html>

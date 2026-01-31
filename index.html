@@ -65,7 +65,6 @@
             clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%);
             text-decoration: none; overflow: hidden;
         }
-        /* ЛАЗЕРНЫЙ БЛИК */
         .evaluation-badge-heavy::before {
             content: ''; position: absolute; top: 0; left: -150%; width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(223, 255, 0, 0.4), transparent);
@@ -78,7 +77,6 @@
         .desc { font-size: 13px; line-height: 1.4; max-width: 320px; margin-bottom: 30px; font-weight: 500; color: rgba(255,255,255,0.85); }
         .highlight-line { display: block; color: var(--lime); font-weight: 900; text-transform: uppercase; font-size: 11px; margin-top: 6px; }
 
-        /* НОВАЯ КНОПКА В ТОМ ЖЕ СТИЛЕ */
         .cta-btn-industrial { 
             position: relative; display: inline-flex; align-items: center; padding: 20px 45px;
             background: var(--lime); color: var(--black);
@@ -88,20 +86,42 @@
         }
         .cta-btn-industrial:active { transform: scale(0.96); }
 
-        /* ПОПАП */
+        /* ПОПАП СИСТЕМА */
         #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.4s; }
         .popup-window { 
             position: fixed; bottom: -110%; left: 0; width: 100%; 
-            background: rgba(223, 255, 0, 0.12); 
+            background: rgba(10, 10, 10, 0.95);
             backdrop-filter: blur(35px); -webkit-backdrop-filter: blur(35px);
             border-top: 4px solid var(--lime); border-radius: 30px 30px 0 0; 
             padding: 30px 24px 50px; z-index: 101; 
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            display: none;
+            max-height: 90vh; overflow-y: auto;
         }
         .show-popup #overlay { opacity: 1; visibility: visible; }
-        .show-popup .popup-window.active { display: block; bottom: 0; }
+        .show-popup .popup-window.active { bottom: 0; }
+        
+        .step { display: none; }
+        .step.active { display: block; }
+
         .popup-title { text-align:center; color: var(--lime); margin-bottom:25px; font-weight: 900; text-transform:uppercase; font-size: 16px; }
+
+        /* КНОПКИ В КВИЗЕ */
+        .opt-grid { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; margin-bottom: 20px; }
+        .opt-card { 
+            background: rgba(255,255,255,0.05); padding: 20px 10px; border: 1px solid rgba(223, 255, 0, 0.1); 
+            text-align: center; font-size: 11px; font-weight: 800; text-transform: uppercase; color: #fff;
+            clip-path: polygon(0 0, 92% 0, 100% 25%, 100% 100%, 8% 100%, 0 75%);
+        }
+        .opt-card.selected { border-color: var(--lime); background: rgba(223, 255, 0, 0.1); color: var(--lime); }
+        
+        input[type=range] { width: 100%; accent-color: var(--lime); margin: 20px 0; }
+        .val-num { font-size: 42px; font-weight: 900; color: var(--lime); text-align: center; display: block; }
+
+        .btn-next {
+            width: 100%; padding: 18px; background: var(--lime); color: #000; font-weight: 900; 
+            text-transform: uppercase; text-align: center; margin-top: 10px;
+            clip-path: polygon(0 0, 95% 0, 100% 25%, 100% 100%, 5% 100%, 0 75%);
+        }
 
         .social-stack { display: flex; flex-direction: column; gap: 12px; }
         .btn-industrial {
@@ -119,6 +139,7 @@
         .m-letter { color: var(--lime); font-size: 24px; font-weight: 900; }
         .btn-industrial span { color: var(--white); font-size: 16px; font-weight: 800; text-transform: uppercase; }
         .messenger-icon img { width: 100%; height: 100%; object-fit: cover; }
+        .copy-hint { font-size: 10px; color: #888; text-align: center; margin-bottom: 15px; text-transform: uppercase; }
 
     </style>
 </head>
@@ -138,7 +159,7 @@
             
             <div class="industrial-eval">
                 <div class="aim-arrow">▼</div>
-                <a href="javascript:void(0)" class="evaluation-badge-heavy" onclick="openMode()">
+                <a href="javascript:void(0)" class="evaluation-badge-heavy" onclick="openMode('eval')">
                     <div class="ev-text-heavy">Оценка по фото // 5 минут</div>
                 </a>
             </div>
@@ -148,11 +169,59 @@
                 <span class="highlight-line">Вам остается только принять работу.</span>
             </div>
 
-            <a href="javascript:void(0)" class="cta-btn-industrial" onclick="openMode()">Узнать стоимость</a>
+            <a href="javascript:void(0)" class="cta-btn-industrial" onclick="openMode('quiz')">Узнать стоимость</a>
         </div>
     </section>
 
     <div id="overlay" onclick="closePopup()"></div>
+
+    <div id="popupQuiz" class="popup-window">
+        <div id="step1" class="step active">
+            <div class="popup-title">Выберите услугу:</div>
+            <div class="opt-grid">
+                <div class="opt-card" onclick="setVal('mode', 'Расчистка'); nextStep(2)">Расчистка участка</div>
+                <div class="opt-card" onclick="setVal('mode', 'Спил'); nextStep(3)">Спил деревьев</div>
+            </div>
+        </div>
+
+        <div id="step2" class="step">
+            <div class="popup-title">Площадь (соток):</div>
+            <span class="val-num" id="areaVal">10</span>
+            <input type="range" min="1" max="100" value="10" oninput="updateRange('areaVal', this.value, 'area')">
+            <div class="btn-next" onclick="nextStep(4)">Далее</div>
+        </div>
+
+        <div id="step3" class="step">
+            <div class="popup-title">Высота (м) / Диаметр (см):</div>
+            <span class="val-num" id="treeVal">5м / 30см</span>
+            <input type="range" min="2" max="30" value="5" oninput="setVal('h', this.value); updateTreeText()">
+            <input type="range" min="10" max="150" value="30" oninput="setVal('d', this.value); updateTreeText()">
+            <div class="btn-next" onclick="nextStep(4)">Далее</div>
+        </div>
+
+        <div id="step4" class="step">
+            <div class="popup-title">Где объект?</div>
+            <div class="opt-grid" style="grid-template-columns: 1fr;">
+                <div class="opt-card" onclick="setVal('geo', 'Симферополь'); finishQuiz()">Симферополь</div>
+                <div class="opt-card" onclick="setVal('geo', 'Район / Крым'); finishQuiz()">Другой город / Район</div>
+            </div>
+        </div>
+
+        <div id="stepFinal" class="step">
+            <div class="popup-title">ТЗ Сформировано</div>
+            <div class="copy-hint">Данные скопированы. Выберите мессенджер:</div>
+            <div class="social-stack">
+                <a href="javascript:void(0)" class="btn-industrial" onclick="sendTo('MAX')">
+                    <div class="messenger-icon"><div class="m-letter">M</div></div>
+                    <span>Messenger MAX</span>
+                </a>
+                <a href="javascript:void(0)" class="btn-industrial" onclick="sendTo('TG')">
+                    <div class="messenger-icon" style="background: #fff; padding: 10px;"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg"></div>
+                    <span>Telegram</span>
+                </a>
+            </div>
+        </div>
+    </div>
 
     <div id="popupEval" class="popup-window">
         <div class="popup-title">Где прислать фото?</div>
@@ -173,15 +242,65 @@
     </div>
 
     <script>
+        let quizData = { mode: '', area: '10', h: '5', d: '30', geo: '' };
+        const links = {
+            MAX: "https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg",
+            TG: "https://t.me/daniil_glukhov17"
+        };
+
         function haptic() { if (navigator.vibrate) navigator.vibrate(50); }
-        function openMode() {
+        
+        function openMode(type) {
             haptic();
             document.getElementById('mainBody').classList.add('show-popup');
-            document.getElementById('popupEval').classList.add('active');
+            if(type === 'eval') {
+                document.getElementById('popupEval').classList.add('active');
+            } else {
+                resetSteps();
+                document.getElementById('popupQuiz').classList.add('active');
+            }
         }
+
         function closePopup() { 
             document.getElementById('mainBody').classList.remove('show-popup');
-            document.getElementById('popupEval').classList.remove('active');
+            document.querySelectorAll('.popup-window').forEach(p => p.classList.remove('active'));
+        }
+
+        function nextStep(n) {
+            haptic();
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step' + n).classList.add('active');
+        }
+
+        function resetSteps() {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step1').classList.add('active');
+        }
+
+        function setVal(k, v) { haptic(); quizData[k] = v; }
+
+        function updateRange(id, v, k) {
+            document.getElementById(id).innerText = v;
+            quizData[k] = v;
+        }
+
+        function updateTreeText() {
+            document.getElementById('treeVal').innerText = `${quizData.h}м / ${quizData.d}см`;
+        }
+
+        async function finishQuiz() {
+            let text = `ЗАЯВКА:\nУслуга: ${quizData.mode}\n`;
+            if(quizData.mode === 'Расчистка') text += `Площадь: ${quizData.area} сот.\n`;
+            else text += `Параметры: ${quizData.h}м высота, ${quizData.d}см диаметр\n`;
+            text += `Локация: ${quizData.geo}`;
+            
+            try { await navigator.clipboard.writeText(text); } catch (err) {}
+            nextStep('Final');
+        }
+
+        function sendTo(p) {
+            haptic();
+            window.location.href = links[p];
         }
     </script>
 </body>

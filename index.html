@@ -14,7 +14,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background: #000; font-family: 'Inter Tight', sans-serif; height: 100vh; overflow: hidden; color: var(--white); }
 
-        /* ФОНОВЫЙ БЛОК */
+        /* ОСНОВНОЙ ФОН */
         .hero {
             position: relative; height: 100vh; width: 100%;
             background: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260131_002727_993.jpg') no-repeat center center;
@@ -37,7 +37,7 @@
         .main-box { position: relative; z-index: 5; margin: auto 0; text-align: center; display: flex; flex-direction: column; align-items: center; }
         .main-title { font-size: clamp(40px, 12vw, 86px); font-weight: 900; line-height: 0.95; text-transform: uppercase; margin-bottom: 35px; }
 
-        /* ПЛАШКА: СТРЕЛКА + БЛИК */
+        /* ПЛАШКА ОЦЕНКИ */
         .industrial-eval { position: relative; margin-bottom: 45px; }
         .aim-arrow { 
             position: absolute; top: -28px; left: 50%; transform: translateX(-50%);
@@ -61,7 +61,7 @@
         @keyframes laserScan { 0% { left: -150%; } 30%, 100% { left: 150%; } }
         .ev-text-heavy { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; color: var(--lime); }
 
-        /* ТЕКСТ ПОЛНОСТЬЮ */
+        /* ТЕКСТ КЛИЕНТА */
         .desc { font-size: 15px; line-height: 1.6; max-width: 380px; margin-bottom: 40px; font-weight: 500; }
         .highlight-line { display: block; color: var(--lime); font-weight: 900; text-transform: uppercase; font-size: 13px; margin-top: 8px; }
 
@@ -71,11 +71,11 @@
             clip-path: polygon(0 0, 95% 0, 100% 30%, 100% 100%, 5% 100%, 0 70%);
         }
 
-        /* ПОПАП: ЧИСТОЕ СТЕКЛО */
+        /* АХУЕННЫЙ ПОПАП (СТЕКЛО) */
         #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(15px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.4s; }
         .popup-window { 
             position: fixed; bottom: -110%; left: 0; width: 100%; 
-            background: rgba(255, 255, 255, 0.5); 
+            background: rgba(255, 255, 255, 0.45); 
             backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
             border-top: 1px solid rgba(255,255,255,0.7); border-radius: 40px 40px 0 0; 
             padding: 40px 24px 60px; z-index: 101; 
@@ -84,22 +84,23 @@
         }
         .show-popup #overlay { opacity: 1; visibility: visible; }
         .show-popup .popup-window.active { display: block; bottom: 0; }
+        .popup-title { text-align:center; color:#000; margin-bottom:25px; font-weight:900; text-transform:uppercase; font-size: 17px; }
 
-        /* КНОПКА MAX С НОРМАЛЬНЫМ ЛОГО */
+        /* КНОПКА MAX С НОРМАЛЬНЫМ ЛОГОТИПОМ */
         .btn-max-final {
             background: var(--max-grad); display: flex; align-items: center; gap: 15px;
             padding: 12px 20px; border-radius: 20px; text-decoration: none;
             box-shadow: 0 15px 35px rgba(144, 53, 255, 0.4);
             border: 1px solid rgba(255,255,255,0.3);
         }
-        .max-logo-clean {
+        .max-logo-norm {
             width: 44px; height: 44px; border-radius: 12px; /* Стиль иконки приложения */
             object-fit: cover; flex-shrink: 0;
-            border: 1px solid rgba(255,255,255,0.4);
+            border: 1px solid rgba(255,255,255,0.5);
         }
         .btn-max-final span { color: #fff; font-size: 22px; font-weight: 900; letter-spacing: -0.5px; }
 
-        /* КНОПКИ СОЦСЕТЕЙ */
+        /* КНОПКИ ТГ / ВК */
         .social-stack { display: flex; flex-direction: column; gap: 12px; margin-top: 25px; }
         .btn-white {
             background: #fff; display: flex; align-items: center; justify-content: center; gap: 12px;
@@ -140,10 +141,10 @@
     <div id="overlay" onclick="closePopup()"></div>
 
     <div id="popupEval" class="popup-window">
-        <div class="popup-title" style="text-align:center; color:#000; margin-bottom:25px; font-weight:900; text-transform:uppercase;">Где прислать фото?</div>
+        <div class="popup-title">Где прислать фото?</div>
         
         <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="btn-max-final" onclick="haptic()">
-            <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/767.jpg" class="max-logo-clean" alt="MAX">
+            <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/767.jpg" class="max-logo-norm" alt="MAX">
             <span>Messenger MAX</span>
         </a>
 

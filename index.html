@@ -14,7 +14,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background: #000; font-family: 'Inter Tight', sans-serif; height: 100vh; overflow: hidden; color: var(--white); }
 
-        /* ГЛАВНЫЙ ФОН - БРУТАЛЬНЫЙ И ТЕМНЫЙ */
+        /* ГЛАВНЫЙ ФОН */
         .hero {
             position: relative; height: 100vh; width: 100%;
             background: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260131_002727_993.jpg') no-repeat center center;
@@ -40,7 +40,7 @@
         .main-box { position: relative; z-index: 5; margin: auto 0; text-align: center; display: flex; flex-direction: column; align-items: center; }
         .main-title { font-size: clamp(40px, 12vw, 86px); font-weight: 900; line-height: 0.95; letter-spacing: -0.04em; text-transform: uppercase; margin-bottom: 35px; }
 
-        /* ПЛАШКА СО СТРЕЛКОЙ И БЛИКОМ */
+        /* ОЦЕНКА ПО ФОТО: СТРЕЛКА И БЛИК */
         .industrial-eval { position: relative; margin-bottom: 45px; }
         .aim-arrow { 
             position: absolute; top: -28px; left: 50%; transform: translateX(-50%);
@@ -66,7 +66,7 @@
         @keyframes laserScan { 0% { left: -150%; } 30%, 100% { left: 150%; } }
         .ev-text-heavy { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; color: var(--lime); }
 
-        /* ТЕКСТ ПОЛНОСТЬЮ */
+        /* ТЕКСТ КЛИЕНТА */
         .desc { font-size: 15px; line-height: 1.6; max-width: 380px; margin-bottom: 40px; font-weight: 500; color: #fff; }
         .highlight-line { 
             display: block; white-space: nowrap; color: var(--lime); 
@@ -84,7 +84,7 @@
         #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.4s; }
         .popup-window { 
             position: fixed; bottom: -110%; left: 0; width: 100%; 
-            background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            background: rgba(255, 255, 255, 0.55); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
             border-top: 1px solid rgba(255,255,255,0.8); border-radius: 40px 40px 0 0; 
             padding: 30px 24px 50px; z-index: 101; 
             transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
@@ -98,16 +98,17 @@
         /* ИДЕАЛЬНАЯ КНОПКА MAX */
         .btn-max-perfect {
             background: var(--max-grad); display: flex; align-items: center; gap: 15px;
-            padding: 12px 18px; border-radius: 20px; text-decoration: none;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 10px 25px rgba(155, 77, 255, 0.4), inset 0 2px 10px rgba(255, 255, 255, 0.2);
+            padding: 10px 16px; border-radius: 22px; text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 12px 30px rgba(27, 102, 251, 0.3), inset 0 2px 10px rgba(255, 255, 255, 0.2);
+            position: relative; overflow: hidden;
         }
-        .max-logo-box { width: 46px; height: 46px; background: #fff; border-radius: 14px; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
-        .max-logo-box img { width: 100%; height: 100%; object-fit: cover; }
-        .btn-max-perfect span { color: #fff; font-size: 21px; font-weight: 900; letter-spacing: -0.5px; }
-        .max-arrow-icon { margin-left: auto; color: rgba(255, 255, 255, 0.7); font-size: 18px; }
+        .max-logo-clean { width: 48px; height: 48px; border-radius: 12px; object-fit: cover; border: 1.5px solid rgba(255, 255, 255, 0.5); flex-shrink: 0; }
+        .btn-max-perfect span { color: #fff; font-size: 20px; font-weight: 900; letter-spacing: -0.2px; }
+        .btn-max-perfect::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%); pointer-events: none; }
+        .max-arrow-icon { margin-left: auto; background: rgba(255,255,255,0.2); width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: #fff; font-size: 14px; }
 
-        /* СОЦСЕТИ */
+        /* ДРУГИЕ СОЦСЕТИ */
         .msg-grid-clean { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
         .btn-social-clean {
             background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0,0,0,0.1);
@@ -116,7 +117,7 @@
         }
         .btn-social-clean img { width: 22px; height: 22px; }
 
-        /* КВИЗ ОПЦИИ */
+        /* КВИЗ */
         .quiz-opt-clean { background: rgba(255,255,255,0.9); padding: 18px; border-radius: 16px; margin-bottom: 10px; font-weight: 800; text-transform: uppercase; text-align: center; font-size: 13px; color: #000; border: 1px solid rgba(0,0,0,0.05); }
         .quiz-opt-clean:active { background: #000; color: #fff; }
 
@@ -155,12 +156,10 @@
     <div id="overlay" onclick="closePopup()"></div>
 
     <div id="popupEval" class="popup-window">
-        <div class="popup-title">Где прислать фото?</div>
+        <div class="popup-title">Куда прислать фото?</div>
         
         <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="btn-max-perfect" onclick="haptic()">
-            <div class="max-logo-box">
-                <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/767.jpg" alt="MAX">
-            </div>
+            <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/767.jpg" class="max-logo-clean" alt="MAX">
             <span>Messenger MAX</span>
             <div class="max-arrow-icon">➜</div>
         </a>
@@ -180,20 +179,19 @@
             <div class="quiz-step" id="q1" style="display:block;">
                 <div class="popup-title">Что на участке?</div>
                 <div class="quiz-opt-clean" onclick="nextStep(2, 'Бурьян')">Трава и бурьян</div>
-                <div class="quiz-opt-clean" onclick="nextStep(2, 'Деревья')">Спил деревьев</div>
+                <div class="quiz-opt-clean" onclick="nextStep(2, 'Деревья')">Сложные деревья</div>
             </div>
-            <div class="quiz-step" id="q2">
+            <div class="quiz-step" id="q2" style="display:none;">
                 <div class="popup-title">Площадь?</div>
                 <div class="quiz-opt-clean" onclick="nextStep(3, 'до 6 сот')">До 6 соток</div>
                 <div class="quiz-opt-clean" onclick="nextStep(3, '15+ сот')">От 15 соток</div>
             </div>
-            <div class="quiz-step" id="q3">
-                <div class="popup-title">Результат готов</div>
+            <div class="quiz-step" id="q3" style="display:none;">
+                <div class="popup-title">Расчет готов</div>
                 <a href="javascript:void(0)" class="btn-max-perfect" onclick="finish('https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg')">
-                    <div class="max-logo-box">
-                        <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/767.jpg" alt="MAX">
-                    </div>
+                    <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/767.jpg" class="max-logo-clean" alt="MAX">
                     <span>Отправить в MAX</span>
+                    <div class="max-arrow-icon">➜</div>
                 </a>
             </div>
         </div>
@@ -217,7 +215,9 @@
             haptic();
             if(s === 2) data.type = v;
             if(s === 3) data.size = v;
-            document.querySelectorAll('.quiz-step').forEach(step => step.style.display = 'none');
+            document.getElementById('q1').style.display = 'none';
+            document.getElementById('q2').style.display = 'none';
+            document.getElementById('q3').style.display = 'none';
             document.getElementById('q' + s).style.display = 'block';
         }
 

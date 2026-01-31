@@ -14,7 +14,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background: #000; font-family: 'Inter Tight', sans-serif; height: 100vh; overflow: hidden; color: var(--white); }
 
-        /* ОСНОВНОЙ ГЕРОЙ-БЛОК */
+        /* ГЛАВНЫЙ ЭКРАН */
         .hero {
             position: relative; height: 100vh; width: 100%;
             background: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260131_002727_993.jpg') no-repeat center center;
@@ -26,16 +26,20 @@
             z-index: 1;
         }
 
-        .header { position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: flex-start; }
+        .header { position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center; }
         .status-tag { display: flex; align-items: center; gap: 8px; padding: 6px 14px; background: rgba(0,0,0,0.8); border: 1px solid var(--lime); border-radius: 2px; font-size: 10px; font-weight: 900; text-transform: uppercase; }
         .radar { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; position: relative; }
         .radar::after { content: ''; position: absolute; inset: 0; background: var(--lime); border-radius: 50%; animation: wave 2s infinite; }
         @keyframes wave { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(4); opacity: 0; } }
+        
+        .header-info { text-align: right; }
+        .header-info a { color: #fff; text-decoration: none; font-weight: 900; font-size: 15px; display: block; }
+        .online-status { color: var(--lime); font-size: 9px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
 
         .main-box { position: relative; z-index: 5; margin: auto 0; text-align: center; display: flex; flex-direction: column; align-items: center; }
         .main-title { font-size: clamp(40px, 12vw, 86px); font-weight: 900; line-height: 0.95; text-transform: uppercase; margin-bottom: 35px; }
 
-        /* ИНДУСТРИАЛЬНАЯ ПЛАШКА */
+        /* ПЛАШКА ОЦЕНКИ */
         .industrial-eval { position: relative; margin-bottom: 45px; }
         .aim-arrow { 
             position: absolute; top: -28px; left: 50%; transform: translateX(-50%);
@@ -68,7 +72,7 @@
             clip-path: polygon(0 0, 95% 0, 100% 30%, 100% 100%, 5% 100%, 0 70%);
         }
 
-        /* ЛАЙМОВЫЙ РУБЛЕНЫЙ ПОПАП */
+        /* ЛАЙМОВЫЙ ПОПАП */
         #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.4s; }
         .popup-window { 
             position: fixed; bottom: -110%; left: 0; width: 100%; 
@@ -94,9 +98,8 @@
             text-decoration: none; transition: 0.2s;
         }
         .btn-industrial:active { background: var(--lime); }
-        .btn-industrial:active span { color: #000; }
+        .btn-industrial:active span, .btn-industrial:active .m-letter { color: #000; }
 
-        /* ИКОНКИ С РУБЛЕННЫМИ УГЛАМИ */
         .messenger-icon {
             width: 52px; height: 52px;
             background: #000;
@@ -105,6 +108,7 @@
             display: flex; align-items: center; justify-content: center;
             border: 1px solid rgba(223, 255, 0, 0.5);
         }
+        .m-letter { color: var(--lime); font-size: 26px; font-weight: 900; }
         .messenger-icon img { width: 100%; height: 100%; object-fit: cover; }
         .btn-industrial span { color: var(--white); font-size: 17px; font-weight: 800; text-transform: uppercase; }
 
@@ -114,8 +118,11 @@
 
     <section class="hero">
         <header class="header">
-            <div class="status-tag"><div class="radar"></div>Крым</div>
-            <a href="tel:+79785552114" style="color:#fff; text-decoration:none; font-weight:900;">+7 978 555-21-14</a>
+            <div class="status-tag"><div class="radar"></div>Симферополь</div>
+            <div class="header-info">
+                <a href="tel:+79785552114">+7 978 555-21-14</a>
+                <div class="online-status">На связи 24/7</div>
+            </div>
         </header>
 
         <div class="main-box">
@@ -140,12 +147,12 @@
     <div id="overlay" onclick="closePopup()"></div>
 
     <div id="popupEval" class="popup-window">
-        <div class="popup-title">Связь с нами</div>
+        <div class="popup-title">Где удобнее общаться?</div>
         
         <div class="social-stack">
             <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="btn-industrial" onclick="haptic()">
                 <div class="messenger-icon">
-                    <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/768.png" alt="MAX">
+                    <div class="m-letter">M</div>
                 </div>
                 <span>Messenger MAX</span>
             </a>

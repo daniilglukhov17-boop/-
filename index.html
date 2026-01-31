@@ -5,122 +5,190 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root { --lime: #DFFF00; --black: #000000; --white: #FFFFFF; }
+        :root { --lime: #DFFF00; --black: #000000; --white: #FFFFFF; --gray: #151515; }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background: #000; font-family: 'Inter Tight', sans-serif; height: 100vh; overflow: hidden; color: var(--white); }
 
+        /* HERO */
         .hero {
             position: relative; height: 100vh; width: 100%;
             background: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260131_002727_993.jpg') no-repeat center center;
-            background-size: cover; display: flex; flex-direction: column; padding: 20px 24px;
+            background-size: cover; display: flex; flex-direction: column; padding: 20px 24px 30px;
         }
-        .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.95) 100%); z-index: 1; }
+        .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.95) 100%); z-index: 1; }
 
-        /* ШАПКА КАК РАНЬШЕ */
-        .header { position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: flex-start; }
-        .loc-box { background: var(--lime); color: var(--black); padding: 6px 12px; font-size: 10px; font-weight: 900; text-transform: uppercase; border-radius: 2px; }
+        .header { position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center; }
+        .status-tag { display: flex; align-items: center; gap: 8px; padding: 6px 12px; background: rgba(0,0,0,0.8); border: 1px solid var(--lime); border-radius: 2px; font-size: 10px; font-weight: 900; text-transform: uppercase; }
+        .radar { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; position: relative; }
+        .radar::after { content: ''; position: absolute; inset: 0; background: var(--lime); border-radius: 50%; animation: wave 2s infinite; }
+        @keyframes wave { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(4); opacity: 0; } }
         
-        .contact-box { text-align: right; }
-        .phone { color: #fff; text-decoration: none; font-weight: 900; font-size: 16px; display: block; }
-        .online-tag { font-size: 9px; font-weight: 900; color: var(--lime); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+        .header-info { text-align: right; }
+        .header-info a { color: #fff; text-decoration: none; font-weight: 900; font-size: 14px; display: block; }
+        .online-status { color: var(--lime); font-size: 8px; font-weight: 900; text-transform: uppercase; margin-top: 2px; }
 
-        /* ЗАГОЛОВОК ПО ЦЕНТРУ */
-        .main-box { position: relative; z-index: 5; margin: auto 0; text-align: center; display: flex; flex-direction: column; align-items: center; }
-        
-        .main-title { 
-            font-size: clamp(26px, 8vw, 44px); 
-            font-weight: 900; 
-            line-height: 1.0; 
-            text-transform: uppercase; 
-            margin-bottom: 30px;
-            letter-spacing: -1px;
-            max-width: 400px;
-        }
-        .main-title span { color: var(--lime); }
+        .main-box { position: relative; z-index: 5; margin: auto 0; text-align: center; width: 100%; }
+        .main-title { font-size: clamp(22px, 7vw, 44px); font-weight: 900; line-height: 1.1; text-transform: uppercase; margin-bottom: 25px; }
+        .main-title span { color: var(--lime); display: block; margin-top: 4px; }
 
-        /* КНОПКА ОЦЕНКИ С БЛИКОМ И СТРЕЛКОЙ */
-        .eval-btn {
-            position: relative; display: flex; align-items: center; justify-content: center; gap: 10px;
-            padding: 20px 30px; border: 1px solid var(--lime); background: rgba(0,0,0,0.6);
+        .industrial-eval { position: relative; margin-bottom: 30px; }
+        .evaluation-badge-heavy {
+            position: relative; display: inline-flex; align-items: center; padding: 12px 25px;
+            background: transparent; border: 1px solid var(--lime);
+            clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%);
             text-decoration: none; overflow: hidden;
-            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
-            margin-bottom: 40px;
         }
-        
-        /* Лазерный блик */
-        .eval-btn::before {
+        .evaluation-badge-heavy::before {
             content: ''; position: absolute; top: 0; left: -150%; width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(223, 255, 0, 0.4), transparent);
-            animation: laser 3s infinite;
+            animation: laserScan 3s infinite;
         }
-        @keyframes laser { 0% { left: -150%; } 30%, 100% { left: 150%; } }
+        @keyframes laserScan { 0% { left: -150%; } 30%, 100% { left: 150%; } }
+        .ev-text-heavy { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; color: var(--lime); }
 
-        .eval-text { font-size: 11px; font-weight: 900; color: var(--lime); letter-spacing: 2px; text-transform: uppercase; }
-        
-        /* Мигающая стрелка */
-        .arrow { font-size: 18px; color: var(--lime); animation: blink 1s infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-        /* КНОПКА КВИЗА */
-        .cta-quiz { 
-            display: inline-flex; padding: 22px 45px; background: var(--lime); color: #000; 
-            font-weight: 900; text-transform: uppercase; text-decoration: none; font-size: 15px;
+        .cta-btn-industrial { 
+            display: inline-flex; padding: 20px 45px; background: var(--lime); color: var(--black);
+            font-weight: 900; font-size: 14px; text-transform: uppercase; text-decoration: none;
             clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%);
         }
 
-        /* POPUP */
-        #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.3s; }
-        .popup { position: fixed; bottom: -110%; left: 0; width: 100%; background: #080808; border-top: 3px solid var(--lime); border-radius: 20px 20px 0 0; padding: 30px 24px 40px; z-index: 101; transition: 0.5s cubic-bezier(0.2, 1, 0.2, 1); }
+        /* КВИЗ ПОПАП */
+        #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.4s; }
+        .popup-window { 
+            position: fixed; bottom: -110%; left: 0; width: 100%; 
+            background: #0a0a0a; border-top: 4px solid var(--lime); border-radius: 30px 30px 0 0; 
+            padding: 30px 24px 50px; z-index: 101; transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
         .show-popup #overlay { opacity: 1; visibility: visible; }
-        .show-popup .popup { bottom: 0; }
+        .show-popup .popup-window { bottom: 0; }
+
+        .quiz-step { display: none; }
+        .quiz-step.active { display: block; }
+        .quiz-title { font-size: 18px; font-weight: 900; text-transform: uppercase; color: var(--lime); margin-bottom: 25px; text-align: center; }
         
-        .q-title { font-size: 18px; font-weight: 900; text-transform: uppercase; color: var(--lime); margin-bottom: 25px; text-align: center; }
-        .soc-btn { display: flex; align-items: center; gap: 15px; background: #111; padding: 15px; margin-bottom: 12px; border: 1px solid #333; text-decoration: none; color: #fff; font-weight: 800; text-transform: uppercase; font-size: 14px; clip-path: polygon(0 0, 98% 0, 100% 20%, 100% 100%, 2% 100%, 0 80%); }
-        .m-box { width: 35px; height: 35px; background: #000; border: 1px solid var(--lime); display: flex; align-items: center; justify-content: center; color: var(--lime); }
+        .quiz-options { display: grid; gap: 12px; margin-bottom: 20px; }
+        .quiz-card {
+            background: var(--gray); padding: 18px; border: 1px solid #222;
+            clip-path: polygon(0 0, 96% 0, 100% 25%, 100% 100%, 4% 100%, 0 75%);
+            text-align: center; font-weight: 800; text-transform: uppercase; font-size: 13px;
+        }
+        .quiz-card:active { background: var(--lime); color: #000; border-color: var(--lime); }
+
+        .range-container { margin: 30px 0; text-align: center; }
+        .range-val { font-size: 36px; font-weight: 900; color: var(--lime); margin-bottom: 10px; }
+        input[type=range] { width: 100%; accent-color: var(--lime); height: 8px; outline: none; }
+
+        .btn-next { width: 100%; padding: 20px; background: var(--lime); color: #000; font-weight: 900; text-transform: uppercase; text-align: center; clip-path: polygon(0 0, 92% 0, 100% 30%, 100% 100%, 8% 100%, 0 70%); margin-top: 15px; }
+
+        /* ФИНАЛЬНЫЕ КНОПКИ */
+        .social-stack { display: flex; flex-direction: column; gap: 12px; }
+        .btn-social {
+            background: #111; border: 1px solid #333; display: flex; align-items: center; gap: 15px; padding: 12px;
+            clip-path: polygon(0 0, 98% 0, 100% 20%, 100% 100%, 2% 100%, 0 80%);
+            text-decoration: none; color: #fff; font-weight: 800; text-transform: uppercase; font-size: 15px;
+        }
+        .m-icon { width: 44px; height: 44px; background: #000; display: flex; align-items: center; justify-content: center; color: var(--lime); font-size: 24px; border: 1px solid var(--lime); clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%); }
+
     </style>
 </head>
-<body id="b">
+<body id="mainBody">
 
     <section class="hero">
-        <div class="header">
-            <div class="loc-box">СИМФЕРОПОЛЬ</div>
-            <div class="contact-box">
-                <a href="tel:+79785552114" class="phone">+7 978 555-21-14</a>
-                <div class="online-tag">НА СВЯЗИ 24/7</div>
+        <header class="header">
+            <div class="status-tag"><div class="radar"></div>Симферополь</div>
+            <div class="header-info">
+                <a href="tel:+79785552114">+7 978 555-21-14</a>
+                <div class="online-status">На связи 24/7</div>
             </div>
-        </div>
+        </header>
 
         <div class="main-box">
             <h1 class="main-title">Профессиональный спил деревьев <span>и полная расчистка участков</span></h1>
-            
-            <a href="javascript:void(0)" class="eval-btn" onclick="openDirect()">
-                <span class="arrow">➤</span>
-                <span class="eval-text">Оценить по фото за 5 мин</span>
-                <span class="arrow">➤</span>
-            </a>
-
-            <a href="javascript:void(0)" class="cta-quiz" onclick="startQuiz()">Узнать стоимость</a>
+            <div class="industrial-eval">
+                <a href="javascript:void(0)" class="evaluation-badge-heavy" onclick="openQuiz()">
+                    <div class="ev-text-heavy">Оценка по фото // 5 минут</div>
+                </a>
+            </div>
+            <a href="javascript:void(0)" class="cta-btn-industrial" onclick="openQuiz()">Узнать стоимость</a>
         </div>
     </section>
 
-    <div id="overlay" onclick="closePop()"></div>
+    <div id="overlay" onclick="closeQuiz()"></div>
 
-    <div id="p" class="popup">
-        <div id="sDirect" class="step active">
-            <div class="q-title">ГДЕ ВАМ УДОБНО ПРИСЛАТЬ ФОТО?</div>
-            <div class="soc-grid">
-                <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="soc-btn"><div class="m-box">M</div> Messenger MAX</a>
-                <a href="https://t.me/daniil_glukhov17" class="soc-btn"><div class="m-box" style="background:#fff;border:none;padding:5px"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="100%"></div> Telegram</a>
-                <a href="https://vk.com/daniil_glukhov17" class="soc-btn"><div class="m-box" style="background:#fff;border:none;padding:8px"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/VK_Compact_Logo_%282021-present%29.svg" width="100%"></div> Вконтакте</a>
+    <div id="quizPopup" class="popup-window">
+        <div id="step1" class="quiz-step active">
+            <div class="quiz-title">Локация объекта:</div>
+            <div class="quiz-options">
+                <div class="quiz-card" onclick="nextStep(2)">Симферополь</div>
+                <div class="quiz-card" onclick="nextStep(2)">Симферопольский район</div>
+                <div class="quiz-card" onclick="nextStep(2)">Весь Крым</div>
+            </div>
+        </div>
+
+        <div id="step2" class="quiz-step">
+            <div class="quiz-title">Что нужно сделать?</div>
+            <div class="quiz-options">
+                <div class="quiz-card" onclick="setMode('land')">Расчистка участка</div>
+                <div class="quiz-card" onclick="setMode('tree')">Спил деревьев</div>
+            </div>
+        </div>
+
+        <div id="stepLand" class="quiz-step">
+            <div class="quiz-title">Площадь (соток): <span id="areaVal">10</span></div>
+            <div class="range-container">
+                <input type="range" min="1" max="50" value="10" oninput="document.getElementById('areaVal').innerText = this.value">
+            </div>
+            <div class="quiz-title">Степень заросли:</div>
+            <div class="quiz-options">
+                <div class="quiz-card" onclick="nextStep('final')">Трава / Бурьян</div>
+                <div class="quiz-card" onclick="nextStep('final')">Кусты / Лес</div>
+            </div>
+        </div>
+
+        <div id="stepTree" class="quiz-step">
+            <div class="quiz-title">Высота (метров): <span id="heightVal">5</span></div>
+            <div class="range-container">
+                <input type="range" min="2" max="25" value="5" oninput="document.getElementById('heightVal').innerText = this.value">
+            </div>
+            <div class="quiz-title">Сложность:</div>
+            <div class="quiz-options">
+                <div class="quiz-card" onclick="nextStep('final')">Чистый спил</div>
+                <div class="quiz-card" onclick="nextStep('final')">Рядом провода/дом</div>
+            </div>
+        </div>
+
+        <div id="stepFinal" class="quiz-step">
+            <div class="quiz-title">Данные приняты</div>
+            <p style="text-align:center; font-size:13px; margin-bottom:25px; color:#ccc;">Специалист на связи. Выберите мессенджер для получения сметы:</p>
+            <div class="social-stack">
+                <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="btn-social">
+                    <div class="m-icon">M</div> Messenger MAX
+                </a>
+                <a href="https://t.me/daniil_glukhov17" class="btn-social">
+                    <div class="m-icon" style="background:#fff; border:none; padding:10px;"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" style="width:100%"></div> Telegram
+                </a>
             </div>
         </div>
     </div>
 
     <script>
-        function h() { if(navigator.vibrate) navigator.vibrate(40); }
-        function openDirect() { h(); document.getElementById('b').classList.add('show-popup'); }
-        function startQuiz() { alert('Квиз в разработке'); } // Временно, как ты и сказал
-        function closePop() { document.getElementById('b').classList.remove('show-popup'); }
+        function haptic() { if (navigator.vibrate) navigator.vibrate(50); }
+        function openQuiz() { haptic(); document.getElementById('mainBody').classList.add('show-popup'); }
+        function closeQuiz() { document.getElementById('mainBody').classList.remove('show-popup'); }
+        
+        function nextStep(step) {
+            haptic();
+            document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
+            if(step === 'final') document.getElementById('stepFinal').classList.add('active');
+            else document.getElementById('step' + step).classList.add('active');
+        }
+
+        function setMode(mode) {
+            haptic();
+            document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
+            if(mode === 'land') document.getElementById('stepLand').classList.add('active');
+            if(mode === 'tree') document.getElementById('stepTree').classList.add('active');
+        }
     </script>
 </body>
 </html>

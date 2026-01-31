@@ -20,7 +20,7 @@
             z-index: 1;
         }
 
-        /* ШАПКА - БЕЗ ИЗМЕНЕНИЙ */
+        /* ШАПКА */
         .header { position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .status-tag { display: flex; align-items: center; gap: 8px; padding: 6px 12px; background: rgba(0,0,0,0.8); border: 1px solid var(--lime); border-radius: 2px; font-size: 10px; font-weight: 900; text-transform: uppercase; }
         .radar { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; position: relative; }
@@ -30,12 +30,12 @@
         .header-info a { color: #fff; text-decoration: none; font-weight: 900; font-size: 14px; display: block; }
         .online-status { color: var(--lime); font-size: 8px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
 
-        /* КОНТЕНТ - БЕЗ ИЗМЕНЕНИЙ */
+        /* КОНТЕНТ */
         .main-box { position: relative; z-index: 5; margin: auto 0; text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; }
         .main-title { font-size: clamp(22px, 7vw, 44px); font-weight: 900; line-height: 1.1; text-transform: uppercase; margin-bottom: 20px; text-align: center; }
         .main-title span { color: var(--lime); display: block; margin-top: 4px; }
 
-        /* ПЛАШКА С БЛИКОМ - БЕЗ ИЗМЕНЕНИЙ */
+        /* ПЛАШКА С БЛИКОМ */
         .industrial-eval { position: relative; margin-bottom: 30px; }
         .aim-arrow { position: absolute; top: -25px; left: 50%; transform: translateX(-50%); font-size: 20px; color: var(--lime); animation: aimPush 0.8s infinite ease-in-out; z-index: 6; }
         @keyframes aimPush { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 6px); } }
@@ -48,7 +48,7 @@
 
         .cta-btn-industrial { position: relative; display: inline-flex; align-items: center; padding: 20px 45px; background: var(--lime); color: var(--black); font-weight: 900; font-size: 14px; text-transform: uppercase; text-decoration: none; clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%); transition: transform 0.1s; }
 
-        /* СИСТЕМА ПОПАПА И КВИЗА */
+        /* ПОПАПЫ */
         #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.4s; }
         .popup-window { position: fixed; bottom: -110%; left: 0; width: 100%; background: #0c0c0c; border-top: 4px solid var(--lime); border-radius: 30px 30px 0 0; padding: 30px 24px 40px; z-index: 101; transition: 0.5s cubic-bezier(0.2, 1, 0.2, 1); max-height: 90vh; overflow-y: auto; display: none; }
         .show-popup #overlay { opacity: 1; visibility: visible; }
@@ -58,7 +58,6 @@
         .step.active { display: block; }
         .q-title { color: var(--lime); font-weight: 900; text-transform: uppercase; font-size: 15px; margin-bottom: 20px; text-align: center; letter-spacing: 1px; }
 
-        /* ЭЛЕМЕНТЫ КВИЗА */
         .opt-grid { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; margin-bottom: 15px; }
         .opt-card { background: #181818; border: 1px solid #333; padding: 15px 10px; text-align: center; color: #fff; font-size: 11px; font-weight: 800; text-transform: uppercase; clip-path: polygon(0 0, 92% 0, 100% 25%, 100% 100%, 8% 100%, 0 75%); }
         .opt-card.selected { border-color: var(--lime); color: var(--lime); background: rgba(223, 255, 0, 0.05); }
@@ -128,6 +127,7 @@
             <input type="range" min="10" max="200" step="5" value="30" oninput="upd('tDiamVal', this.value, 'd')">
             <div class="btn-next" onclick="next('Tree2')">Далее</div>
         </div>
+        
         <div id="qTree2" class="step">
             <div class="q-title">Что есть рядом?</div>
             <div class="opt-grid">
@@ -153,6 +153,7 @@
                 <div class="opt-card" onclick="setVal('type', 'МИКС (Все вместе)'); next('Land2')">МИКС (Все)</div>
             </div>
         </div>
+
         <div id="qLand2" class="step">
             <div class="q-title">Особенности участка:</div>
             <div class="opt-grid">
@@ -170,6 +171,7 @@
                 <div class="opt-card" onclick="setVal('out', 'Не нужен'); next('CommonGeo')">Нет, оставить</div>
             </div>
         </div>
+
         <div id="qCommonGeo" class="step">
             <div class="q-title">Где находится объект?</div>
             <div class="opt-grid" style="grid-template-columns: 1fr;">
@@ -192,23 +194,23 @@
 
     <div id="popupEval" class="popup-window">
         <div class="q-title">Пришлите фото в мессенджер:</div>
-        <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="soc-btn"><div class="m-box">M</div><span>Messenger MAX</span></a>
+        <a href="https://max.ru/u/f9LHodD0cOKYGnigBf8f1GmElnhydAMPHC3daJ1KR-FyymDlxLNs2ky1EU0" class="soc-btn"><div class="m-box">M</div><span>Messenger MAX</span></a>
         <a href="https://t.me/daniil_glukhov17" class="soc-btn"><div class="m-box" style="background:#fff;border:none;padding:8px"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="100%"></div><span>Telegram</span></a>
-        <a href="https://vk.com/daniil_glukhov17" class="soc-btn"><div class="m-box" style="background:#fff;border:none;padding:10px"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/VK_Compact_Logo_%282021-present%29.svg" width="100%"></div><span>VKontakte</span></a>
+        <a href="https://vk.com/im?sel=701091614" class="soc-btn"><div class="m-box" style="background:#fff;border:none;padding:10px"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/VK_Compact_Logo_%282021-present%29.svg" width="100%"></div><span>VKontakte</span></a>
     </div>
 
     <script>
         let data = { mode:'', count:'1', h:'5', d:'30', area:'5', type:'', obs:[], rel:'', out:'', geo:'' };
-        let finalMsg = ""; // Глобальная переменная для сообщения
+        let finalMsg = ""; 
+
         const links = { 
-            MAX: "https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg", 
+            MAX: "https://max.ru/u/f9LHodD0cOKYGnigBf8f1GmElnhydAMPHC3daJ1KR-FyymDlxLNs2ky1EU0", 
             TG: "https://t.me/daniil_glukhov17",
-            VK: "https://vk.com/daniil_glukhov17"
+            VK: "https://vk.com/im?sel=701091614"
         };
         
         function haptic() { if(navigator.vibrate) navigator.vibrate(50); }
 
-        // --- ЛОГИКА ИСТОРИИ (КНОПКА НАЗАД) ---
         window.onpopstate = function() {
             if (document.getElementById('mainBody').classList.contains('show-popup')) {
                 document.getElementById('mainBody').classList.remove('show-popup');
@@ -238,7 +240,6 @@
         function tgl(el, k, v) { haptic(); el.classList.toggle('selected'); if(Array.isArray(data[k])) { let i=data[k].indexOf(v); if(i>-1) data[k].splice(i,1); else data[k].push(v); } else data[k]=v; }
         
         async function finish() {
-            // Формируем красивое ТЗ
             finalMsg = `🛠 ЗАЯВКА:\nУслуга: ${data.mode}\n`;
             if(data.mode==='Спил') {
                 finalMsg += `🌳 Количество: ${data.count} шт.\n📏 Высота: ${data.h} м.\n🔘 Диаметр: ${data.d} см.\n`;
@@ -249,7 +250,6 @@
             if(data.rel) finalMsg += `⛰ Рельеф: ${data.rel}\n`;
             finalMsg += `🚛 Вывоз: ${data.out}\n📍 ГЕО: ${data.geo}`;
             
-            // Копируем в буфер (сработает при клике на финальный город)
             try { await navigator.clipboard.writeText(finalMsg); } catch(e){}
             next('Final');
         }
@@ -257,15 +257,14 @@
         function go(p) { 
             haptic(); 
             let encodedMsg = encodeURIComponent(finalMsg); 
-            
             if (p === 'TG') {
-                window.location.href = `https://t.me/daniil_glukhov17?text=${encodedMsg}`;
+                window.location.href = `${links.TG}?text=${encodedMsg}`;
             } 
             else if (p === 'VK') {
-                window.location.href = `https://vk.com/write-daniil_glukhov17?message=${encodedMsg}`;
+                window.location.href = `${links.VK}&message=${encodedMsg}`;
             } 
             else if (p === 'MAX') {
-                window.location.href = links[p] + `?text=${encodedMsg}`;
+                window.location.href = `${links.MAX}?text=${encodedMsg}`;
             }
         }
     </script>

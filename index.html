@@ -316,12 +316,13 @@
         .p-wrap {
             width: 100%; max-width: 500px; margin: 0 auto;
             padding: 50px 0 60px; 
-            /* ФИНАЛЬНЫЙ НЕОНОВЫЙ ФОН: Усиленный лаймовый отсвет */
-            background-color: #0c0c0c;
+            /* УМНЫЙ ПЕРЕХОД: Черный верх -> Лаймовый низ */
+            background-color: #000;
             background-image: 
-                radial-gradient(circle at 50% -10%, rgba(223, 255, 17, 0.15) 0%, transparent 60%),
-                radial-gradient(circle at 50% 110%, rgba(223, 255, 17, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, #1a1a1a 0%, #0c0c0c 100%);
+                /* Основной лаймовый засвет снизу */
+                radial-gradient(circle at 50% 120%, rgba(223, 255, 17, 0.2) 0%, transparent 60%),
+                /* Мягкий графитовый объем в центре */
+                radial-gradient(circle at 50% 50%, #0f0f0f 0%, #000 100%);
             font-family: 'Inter', sans-serif; overflow: hidden;
             color: #fff;
         } 

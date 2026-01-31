@@ -14,7 +14,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background: #000; font-family: 'Inter Tight', sans-serif; height: 100vh; overflow: hidden; color: var(--white); }
 
-        /* ФОНОВЫЙ БЛОК */
+        /* ФОН */
         .hero {
             position: relative; height: 100vh; width: 100%;
             background: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260131_002727_993.jpg') no-repeat center center;
@@ -54,13 +54,13 @@
             clip-path: polygon(0 0, 95% 0, 100% 30%, 100% 100%, 5% 100%, 0 70%);
         }
 
-        /* РУБЛЕННЫЙ ЛАЙМОВЫЙ ПОПАП */
-        #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.4s; }
+        /* ЛАЙМОВЫЙ РУБЛЕНЫЙ ПОПАП */
+        #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.4s; }
         .popup-window { 
             position: fixed; bottom: -110%; left: 0; width: 100%; 
             background: rgba(223, 255, 0, 0.1); 
-            backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-            border-top: 3px solid var(--lime); border-radius: 30px 30px 0 0; 
+            backdrop-filter: blur(35px); -webkit-backdrop-filter: blur(35px);
+            border-top: 4px solid var(--lime); border-radius: 30px 30px 0 0; 
             padding: 40px 24px 60px; z-index: 101; 
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
             display: none;
@@ -68,24 +68,24 @@
         .show-popup #overlay { opacity: 1; visibility: visible; }
         .show-popup .popup-window.active { display: block; bottom: 0; }
 
-        .popup-title { text-align:center; color: var(--lime); margin-bottom:30px; font-weight: 900; text-transform:uppercase; font-size: 18px; letter-spacing: 1px; }
+        .popup-title { text-align:center; color: var(--lime); margin-bottom:30px; font-weight: 900; text-transform:uppercase; font-size: 18px; letter-spacing: 2px; }
 
-        /* РУБЛЕННЫЕ КНОПКИ МЕССЕНДЖЕРОВ */
+        /* КНОПКИ МЕССЕНДЖЕРОВ */
         .social-stack { display: flex; flex-direction: column; gap: 15px; }
         .btn-industrial {
-            background: rgba(0,0,0,0.8);
-            border: 1px solid rgba(223, 255, 0, 0.3);
+            background: rgba(0,0,0,0.9);
+            border: 1px solid rgba(223, 255, 0, 0.4);
             display: flex; align-items: center; gap: 20px;
-            padding: 12px 15px;
-            clip-path: polygon(0 0, 97% 0, 100% 25%, 100% 100%, 3% 100%, 0 75%);
+            padding: 10px 15px;
+            clip-path: polygon(0 0, 98% 0, 100% 20%, 100% 100%, 2% 100%, 0 80%);
             text-decoration: none; transition: 0.2s;
         }
         .btn-industrial:active { background: var(--lime); }
         .btn-industrial:active span { color: #000; }
 
-        /* КВАДРАТНЫЕ ИКОНКИ БЕЗ КРУЖКОВ */
+        /* ИКОНКИ С РУБЛЕННЫМИ УГЛАМИ */
         .messenger-icon {
-            width: 48px; height: 48px;
+            width: 52px; height: 52px;
             object-fit: cover;
             border: 1px solid var(--lime);
             background: #000;
@@ -93,7 +93,7 @@
             clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%);
         }
 
-        .btn-industrial span { color: var(--white); font-size: 18px; font-weight: 800; text-transform: uppercase; }
+        .btn-industrial span { color: var(--white); font-size: 17px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
 
     </style>
 </head>
@@ -102,7 +102,7 @@
     <section class="hero">
         <header class="header">
             <div class="status-tag"><div class="radar"></div>Крым</div>
-            <a href="tel:+79785552114" class="phone-top" style="color:#fff; text-decoration:none; font-weight:900;">+7 978 555-21-14</a>
+            <a href="tel:+79785552114" style="color:#fff; text-decoration:none; font-weight:900;">+7 978 555-21-14</a>
         </header>
 
         <div class="main-box">
@@ -126,7 +126,7 @@
     <div id="overlay" onclick="closePopup()"></div>
 
     <div id="popupEval" class="popup-window">
-        <div class="popup-title">Выбери мессенджер</div>
+        <div class="popup-title">Связь с нами</div>
         
         <div class="social-stack">
             <a href="https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg" class="btn-industrial" onclick="haptic()">
@@ -135,12 +135,12 @@
             </a>
             
             <a href="https://t.me/daniil_glukhov17" class="btn-industrial" onclick="haptic()">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" class="messenger-icon" style="padding:8px" alt="TG">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" class="messenger-icon" style="padding:10px" alt="TG">
                 <span>Telegram</span>
             </a>
 
             <a href="https://vk.com/daniil_glukhov17" class="btn-industrial" onclick="haptic()">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/VK_Compact_Logo_%282021-present%29.svg" class="messenger-icon" style="padding:10px" alt="VK">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/VK_Compact_Logo_%282021-present%29.svg" class="messenger-icon" style="padding:12px" alt="VK">
                 <span>VKontakte</span>
             </a>
         </div>

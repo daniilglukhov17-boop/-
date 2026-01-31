@@ -10,7 +10,16 @@
     <style>
         :root { --lime: #DFFF00; --black: #000000; --white: #FFFFFF; }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background: #000; font-family: 'Inter Tight', sans-serif; height: 100vh; overflow: hidden; color: var(--white); }
+        
+        /* ИСПРАВЛЕНО: Разрешен вертикальный скролл */
+        body { 
+            background: #000; 
+            font-family: 'Inter Tight', sans-serif; 
+            min-height: 100vh; 
+            overflow-x: hidden; 
+            overflow-y: auto; 
+            color: var(--white); 
+        } 
 
         .hero {
             position: relative; height: 100vh; width: 100%;
@@ -22,7 +31,7 @@
             content: ''; position: absolute; inset: 0;
             background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.95) 100%);
             z-index: 1;
-        }
+        } 
 
         /* ШАПКА */
         .header { position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
@@ -33,12 +42,12 @@
         
         .header-info { text-align: right; }
         .header-info a { color: #fff; text-decoration: none; font-weight: 900; font-size: 14px; display: block; }
-        .online-status { color: var(--lime); font-size: 8px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+        .online-status { color: var(--lime); font-size: 8px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; } 
 
         /* КОНТЕНТ */
         .main-box { position: relative; z-index: 5; margin: auto 0; text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; }
         .main-title { font-size: clamp(22px, 7vw, 44px); font-weight: 900; line-height: 1.1; text-transform: uppercase; margin-bottom: 20px; }
-        .main-title span { color: var(--lime); display: block; margin-top: 4px; }
+        .main-title span { color: var(--lime); display: block; margin-top: 4px; } 
 
         .industrial-eval { position: relative; margin-bottom: 30px; }
         .aim-arrow { position: absolute; top: -25px; left: 50%; transform: translateX(-50%); font-size: 20px; color: var(--lime); animation: aimPush 0.8s infinite ease-in-out; z-index: 6; }
@@ -49,22 +58,22 @@
         .evaluation-badge-heavy { position: relative; display: inline-flex; align-items: center; padding: 12px 25px; background: transparent; border: 1px solid var(--lime); clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%); text-decoration: none; overflow: hidden; }
         .evaluation-badge-heavy::before { content: ''; position: absolute; top: 0; left: -150%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(223, 255, 0, 0.4), transparent); animation: laserScan 3s infinite; }
         @keyframes laserScan { 0% { left: -150%; } 30%, 100% { left: 150%; } }
-        .ev-text-heavy { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; color: var(--lime); }
+        .ev-text-heavy { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; color: var(--lime); } 
 
         .desc { font-size: 13px; line-height: 1.4; max-width: 320px; margin-bottom: 30px; font-weight: 500; color: rgba(255,255,255,0.85); }
-        .highlight-line { display: block; color: var(--lime); font-weight: 900; text-transform: uppercase; font-size: 11px; margin-top: 6px; }
+        .highlight-line { display: block; color: var(--lime); font-weight: 900; text-transform: uppercase; font-size: 11px; margin-top: 6px; } 
 
-        .cta-btn-industrial { position: relative; display: inline-flex; align-items: center; padding: 20px 45px; background: var(--lime); color: var(--black); font-weight: 900; font-size: 14px; text-transform: uppercase; clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%); transition: 0.2s; }
+        .cta-btn-industrial { position: relative; display: inline-flex; align-items: center; padding: 20px 45px; background: var(--lime); color: var(--black); font-weight: 900; font-size: 14px; text-transform: uppercase; clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%); transition: 0.2s; } 
 
         /* ПОПАПЫ */
         #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.4s; }
         .popup-window { position: fixed; bottom: -110%; left: 0; width: 100%; background: #0c0c0c; border-top: 4px solid var(--lime); border-radius: 30px 30px 0 0; padding: 30px 24px 40px; z-index: 101; transition: 0.5s cubic-bezier(0.2, 1, 0.2, 1); max-height: 90vh; overflow-y: auto; display: none; }
         .show-popup #overlay { opacity: 1; visibility: visible; }
-        .show-popup .popup-window.active { display: block; bottom: 0; }
+        .show-popup .popup-window.active { display: block; bottom: 0; } 
 
         .step { display: none; }
         .step.active { display: block; }
-        .q-title { color: var(--lime); font-weight: 900; text-transform: uppercase; font-size: 15px; margin-bottom: 20px; text-align: center; letter-spacing: 1px; }
+        .q-title { color: var(--lime); font-weight: 900; text-transform: uppercase; font-size: 15px; margin-bottom: 20px; text-align: center; letter-spacing: 1px; } 
 
         .opt-grid { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; margin-bottom: 15px; }
         .opt-card { background: #181818; border: 1px solid #333; padding: 15px 10px; text-align: center; color: #fff; font-size: 11px; font-weight: 800; text-transform: uppercase; clip-path: polygon(0 0, 92% 0, 100% 25%, 100% 100%, 8% 100%, 0 75%); }
@@ -72,9 +81,9 @@
         
         input[type=range] { width: 100%; accent-color: var(--lime); margin: 15px 0; }
         .range-val { font-size: 32px; font-weight: 900; color: var(--lime); text-align: center; display: block; }
-        .range-label { font-size: 9px; text-transform: uppercase; color: #666; text-align: center; margin-top: -5px; margin-bottom: 10px; font-weight: 800; }
+        .range-label { font-size: 9px; text-transform: uppercase; color: #666; text-align: center; margin-top: -5px; margin-bottom: 10px; font-weight: 800; } 
 
-        .btn-next { width: 100%; padding: 18px; background: var(--lime); color: #000; font-weight: 900; text-transform: uppercase; text-align: center; margin-top: 15px; clip-path: polygon(0 0, 96% 0, 100% 20%, 100% 100%, 4% 100%, 0 80%); }
+        .btn-next { width: 100%; padding: 18px; background: var(--lime); color: #000; font-weight: 900; text-transform: uppercase; text-align: center; margin-top: 15px; clip-path: polygon(0 0, 96% 0, 100% 20%, 100% 100%, 4% 100%, 0 80%); } 
 
         .soc-btn { background: #111; border: 1px solid #333; display: flex; align-items: center; gap: 15px; padding: 12px; clip-path: polygon(0 0, 98% 0, 100% 20%, 100% 100%, 2% 100%, 0 80%); text-decoration: none; margin-bottom: 10px; width: 100%; }
         .m-box { width: 40px; height: 40px; background: #000; border: 1px solid var(--lime); display: flex; align-items: center; justify-content: center; color: var(--lime); font-weight: 900; font-size: 20px; }
@@ -83,7 +92,7 @@
         .max-hint { font-size: 9px; color: #777; text-align: center; margin-top: -5px; margin-bottom: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
     </style>
 </head>
-<body id="mainBody">
+<body id="mainBody"> 
 
     <section class="hero">
         <header class="header">
@@ -92,7 +101,7 @@
                 <a href="tel:+79785552114" aria-label="Позвонить нам">+7 978 555-21-14</a>
                 <div class="online-status">На связи 24/7</div>
             </div>
-        </header>
+        </header> 
 
         <div class="main-box">
             <h1 class="main-title">Профессиональный спил деревьев <span>и полная расчистка участков</span></h1>
@@ -107,13 +116,13 @@
             <div class="desc">
                 Заезжаем на заросший участок — выезжаем с идеально чистого. Спил, измельчение веток и вывоз мусора.
                 <span class="highlight-line">Вам остается только принять работу.</span>
-            </div>
+            </div> 
 
             <button class="cta-btn-industrial" onclick="openPopup('quiz')" aria-label="Начать расчет стоимости">Узнать стоимость</button>
         </div>
-    </section>
+    </section> 
 
-    <div id="overlay" onclick="closePopup()" role="none"></div>
+    <div id="overlay" onclick="closePopup()" role="none"></div> 
 
     <div id="popupQuiz" class="popup-window" role="dialog" aria-modal="true">
         <div id="q1" class="step active">
@@ -123,7 +132,6 @@
                 <button class="opt-card" onclick="setMode('Расчистка'); next('Land1')">Расчистка участка</button>
             </div>
         </div>
-
         <div id="qTree1" class="step">
             <div class="q-title">Параметры деревьев:</div>
             <div class="range-label">Количество (шт)</div>
@@ -137,7 +145,6 @@
             <input type="range" min="10" max="200" step="5" value="30" oninput="upd('tDiamVal', this.value, 'd')">
             <button class="btn-next" onclick="next('Tree2')">Далее</button>
         </div>
-        
         <div id="qTree2" class="step">
             <div class="q-title">Что есть рядом?</div>
             <div class="opt-grid">
@@ -148,7 +155,6 @@
             </div>
             <button class="btn-next" onclick="next('CommonOut')">Далее</button>
         </div>
-
         <div id="qLand1" class="step">
             <div class="q-title">Параметры участка:</div>
             <div class="range-val" id="lAreaVal">5</div><div class="range-label">Соток</div>
@@ -163,7 +169,6 @@
                 <button class="opt-card" onclick="setVal('type', 'МИКС (Все вместе)'); next('Land2')">МИКС (Все)</button>
             </div>
         </div>
-
         <div id="qLand2" class="step">
             <div class="q-title">Особенности:</div>
             <div class="opt-grid">
@@ -173,7 +178,6 @@
             </div>
             <button class="btn-next" onclick="next('CommonOut')">Далее</button>
         </div>
-
         <div id="qCommonOut" class="step">
             <div class="q-title">Нужен вывоз мусора?</div>
             <div class="opt-grid">
@@ -181,7 +185,6 @@
                 <button class="opt-card" onclick="setVal('out', 'Не нужен'); next('CommonGeo')">Нет, оставить</button>
             </div>
         </div>
-
         <div id="qCommonGeo" class="step">
             <div class="q-title">Где находится объект?</div>
             <div class="opt-grid" style="grid-template-columns: 1fr;">
@@ -190,14 +193,12 @@
                 <button class="opt-card" onclick="setVal('geo', 'Отдаленный объект (Крым)'); finish()">За пределами района</button>
             </div>
         </div>
-
         <div id="qFinal" class="step">
             <div class="q-title">Расчет готов</div>
             <div style="font-size:10px; text-align:center; color:#666; margin-bottom:20px; text-transform:uppercase">Текст скопирован в буфер обмена</div>
             <div class="soc-grid">
                 <button class="soc-btn" onclick="go('MAX')"><div class="m-box">M</div><span>Messenger MAX</span></button>
                 <div class="max-hint">После перехода зажмите поле ввода и нажмите «Вставить»</div>
-                
                 <button class="soc-btn" onclick="go('TG')"><div class="m-box" style="background:#fff;border:none;padding:8px"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="100%" alt=""></div><span>Telegram</span></button>
                 <button class="soc-btn" onclick="go('VK')"><div class="m-box" style="background:#fff;border:none;padding:10px"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/VK_Compact_Logo_%282021-present%29.svg" width="100%" alt=""></div><span>ВКонтакте</span></button>
             </div>
@@ -221,14 +222,14 @@
             VK: "https://vk.com/im?sel=701091614"
         };
         
-        function haptic() { if(navigator.vibrate) navigator.vibrate(50); }
+        function haptic() { if(navigator.vibrate) navigator.vibrate(50); } 
 
         window.onpopstate = function() {
             if (document.getElementById('mainBody').classList.contains('show-popup')) {
                 document.getElementById('mainBody').classList.remove('show-popup');
                 document.querySelectorAll('.popup-window').forEach(p => p.classList.remove('active'));
             }
-        };
+        }; 
 
         function openPopup(t) { 
             haptic(); 
@@ -237,12 +238,12 @@
             if(t==='quiz') { document.getElementById('popupQuiz').classList.add('active'); resetSteps(); }
             else { document.getElementById('popupEval').classList.add('active'); }
             history.pushState({popup: true}, "");
-        }
+        } 
 
         function closePopup() { 
             document.getElementById('mainBody').classList.remove('show-popup');
             if (history.state && history.state.popup) history.back();
-        }
+        } 
 
         function resetSteps() { document.querySelectorAll('.step').forEach(s=>s.classList.remove('active')); document.getElementById('q1').classList.add('active'); }
         function next(id) { haptic(); document.querySelectorAll('.step').forEach(s=>s.classList.remove('active')); document.getElementById('q'+id).classList.add('active'); }
@@ -264,7 +265,7 @@
             
             try { await navigator.clipboard.writeText(finalMsg); } catch(e){ console.error("Clip Error", e); }
             next('Final');
-        }
+        } 
 
         function go(p) { 
             haptic(); 
@@ -276,11 +277,11 @@
             else if (p === 'MAX') {
                 alert("Данные расчета скопированы! В чате MAX зажмите поле ввода и выберите «Вставить»");
                 targetUrl = `${links.MAX}?text=${encodedMsg}`;
-            }
+            } 
 
             window.location.href = targetUrl;
             setTimeout(closePopup, 1500);
-        }
+        } 
 
         function goEval(p) {
             haptic();
@@ -288,101 +289,5 @@
             setTimeout(closePopup, 1500);
         }
     </script>
-<section class="p-wrap">
-    <style>
-        .p-wrap {
-            width: 100%; padding: 60px 0; background: #000; 
-            font-family: 'Inter Tight', sans-serif; overflow: hidden; color: #fff;
-        } 
-        .p-header { padding: 0 24px 30px; }
-        .p-header span { color: #DFFF00; display: block; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 5px; }
-        .p-header h2 { font-size: 32px; font-weight: 900; text-transform: uppercase; margin: 0; }
-
-        .p-slider { position: relative; width: 100%; }
-        .p-track {
-            display: flex; overflow-x: auto; scroll-snap-type: x mandatory; 
-            scrollbar-width: none; padding: 0 24px 20px; gap: 20px;
-        }
-        .p-track::-webkit-scrollbar { display: none; } 
-
-        .p-card { min-width: calc(100vw - 48px); max-width: 450px; scroll-snap-align: center; flex-shrink: 0; } 
-
-        .p-img-area {
-            position: relative; width: 100%; aspect-ratio: 4/3; 
-            background: #111; touch-action: pan-y;
-            clip-path: polygon(0 0, 95% 0, 100% 7%, 100% 100%, 5% 100%, 0 93%);
-            border: 1px solid rgba(223, 255, 0, 0.3);
-            overflow: hidden;
-        } 
-
-        .p-img-full { position: absolute; inset: 0; background-size: cover; background-position: center; pointer-events: none; }
-        .p-img-before { z-index: 2; width: 50%; border-right: 2px solid #DFFF00; }
-        
-        .p-handle { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #DFFF00; z-index: 10; transform: translateX(-50%); pointer-events: none; }
-        .p-knob {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 36px; height: 36px; background: #DFFF00; 
-            clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
-            display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px #DFFF00;
-        }
-        .p-knob::after { content: '↔'; color: #000; font-weight: 900; } 
-
-        .p-footer { margin-top: 15px; display: flex; justify-content: space-between; padding: 0 5px; }
-        .p-info-text strong { font-size: 14px; font-weight: 900; text-transform: uppercase; display: block; }
-        .p-info-text span { font-size: 10px; color: #DFFF00; text-transform: uppercase; }
-        
-        .p-controls { margin: 20px 24px 0; display: flex; align-items: center; background: #111; padding: 10px; gap: 15px; } 
-        .p-btn { width: 44px; height: 34px; background: #000; border: 1px solid #333; color: #DFFF00; font-weight: 900; cursor: pointer; }
-        .p-bar-bg { flex: 1; height: 2px; background: #222; position: relative; }
-        .p-bar-fill { position: absolute; height: 100%; width: 20%; background: #DFFF00; transition: 0.3s; }
-    </style> 
-
-    <div class="p-header">
-        <span>WORK REPORT // 2026</span>
-        <h2>Наши объекты</h2>
-    </div> 
-
-    <div class="p-slider">
-        <div class="p-track" id="portTrack">
-            <div class="p-card" id="pc1">
-                <div class="p-img-area" onpointermove="portImgMove(event)" ontouchmove="portImgMove(event)">
-                    <div class="p-img-full" style="background-image: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260130_165415_302.jpg');"></div>
-                    <div class="p-img-full p-img-before" style="background-image: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260130_165418_559.jpg');"></div>
-                    <div class="p-handle"><div class="p-knob"></div></div>
-                </div>
-                <div class="p-footer">
-                    <div class="p-info-text"><strong>Удаление деревьев</strong><span>Сложный спил частями</span></div>
-                    <div style="font-family:monospace; color:#444">01/05</div>
-                </div>
-            </div> 
-            </div>
-    </div> 
-
-    <div class="p-controls">
-        <button class="p-btn" onclick="portBtnGo(-1)">‹</button>
-        <div class="p-bar-bg"><div class="p-bar-fill" id="portBarFill"></div></div>
-        <button class="p-btn" onclick="portBtnGo(1)">›</button>
-    </div> 
-
-    <script>
-        function portImgMove(e) {
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const b = e.currentTarget;
-            const bef = b.querySelector('.p-img-before');
-            const hnd = b.querySelector('.p-handle');
-            const r = b.getBoundingClientRect();
-            let p = ((clientX - r.left) / r.width) * 100;
-            if (p >= 0 && p <= 100) {
-                bef.style.width = p + '%';
-                hnd.style.left = p + '%';
-            }
-        } 
-        function portBtnGo(d) {
-            const trk = document.getElementById('portTrack');
-            trk.scrollBy({ left: d * 300, behavior: 'smooth' });
-        }
-    </script>
-</section>
-
 </body>
 </html>

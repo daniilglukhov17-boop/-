@@ -8,10 +8,6 @@
     <meta name="description" content="Профессиональный спил деревьев в Симферополе. Расчистка участков, вывоз мусора. Оценка по фото за 5 минут. Работаем 24/7.">
     <meta name="keywords" content="спил деревьев, расчистка участка, Симферополь, вывоз мусора, удаление деревьев">
     
-    <meta property="og:title" content="Спил деревьев и расчистка в Симферополе">
-    <meta property="og:description" content="Оценка стоимости по фото за 5 минут!">
-    <meta property="og:image" content="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260131_002727_993.jpg">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;800;900&display=swap" rel="stylesheet">
@@ -20,8 +16,9 @@
         :root { --lime: #DFFF00; --black: #000000; --white: #FFFFFF; }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
-        body { background: #000; font-family: 'Inter Tight', sans-serif; min-height: 100vh; overflow-x: hidden; color: var(--white); } 
+        body { background: #000; font-family: 'Inter Tight', sans-serif; min-height: 100vh; color: var(--white); } 
 
+        /* HERO SECTION */
         .hero { position: relative; min-height: 90vh; width: 100%; display: flex; flex-direction: column; padding: 20px 24px 40px; overflow: hidden; }
         .hero-bg { position: absolute; inset: 0; z-index: 0; }
         .hero-bg img { width: 100%; height: 100%; object-fit: cover; }
@@ -41,46 +38,34 @@
         .main-title { font-size: clamp(22px, 7vw, 44px); font-weight: 900; line-height: 1.1; text-transform: uppercase; margin-bottom: 20px; }
         .main-title span { color: var(--lime); display: block; margin-top: 4px; } 
 
-        .industrial-eval { position: relative; margin-bottom: 30px; }
-        .aim-arrow { position: absolute; top: -25px; left: 50%; transform: translateX(-50%); font-size: 20px; color: var(--lime); animation: aimPush 0.8s infinite ease-in-out; z-index: 6; }
-        @keyframes aimPush { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 6px); } }
-        
-        .evaluation-badge-heavy { position: relative; display: inline-flex; align-items: center; padding: 12px 25px; background: transparent; border: 1px solid var(--lime); clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%); text-decoration: none; overflow: hidden; cursor: pointer; border: none; font-family: inherit; }
-        .evaluation-badge-heavy::before { content: ''; position: absolute; top: 0; left: -150%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(223, 255, 0, 0.4), transparent); animation: laserScan 3s infinite; }
-        @keyframes laserScan { 0% { left: -150%; } 30%, 100% { left: 150%; } }
-        .ev-text-heavy { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; color: var(--lime); } 
+        .evaluation-badge-heavy { position: relative; display: inline-flex; align-items: center; padding: 12px 25px; background: transparent; border: 1px solid var(--lime); clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%); cursor: pointer; border: none; overflow: hidden; margin-bottom: 30px; }
+        .ev-text-heavy { font-size: 10px; font-weight: 900; text-transform: uppercase; color: var(--lime); font-family: inherit; } 
 
-        .desc { font-size: 13px; line-height: 1.4; max-width: 320px; margin-bottom: 30px; font-weight: 500; color: rgba(255,255,255,0.85); }
-        .highlight-line { display: block; color: var(--lime); font-weight: 900; text-transform: uppercase; font-size: 11px; margin-top: 6px; } 
+        .cta-btn-industrial { position: relative; cursor: pointer; border: none; padding: 20px 45px; background: var(--lime); color: var(--black); font-weight: 900; font-size: 14px; text-transform: uppercase; clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%); font-family: inherit; } 
 
-        .cta-btn-industrial { position: relative; cursor: pointer; border: none; font-family: inherit; display: inline-flex; align-items: center; padding: 20px 45px; background: var(--lime); color: var(--black); font-weight: 900; font-size: 14px; text-transform: uppercase; clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%); transition: 0.2s; } 
-
-        /* ПОПАПЫ */
+        /* POPUPS */
         #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 100; opacity: 0; visibility: hidden; transition: 0.4s; }
         .popup-window { position: fixed; bottom: -110%; left: 0; width: 100%; background: #0c0c0c; border-top: 4px solid var(--lime); border-radius: 30px 30px 0 0; padding: 30px 24px 40px; z-index: 101; transition: 0.5s cubic-bezier(0.2, 1, 0.2, 1); max-height: 90vh; overflow-y: auto; display: none; }
         .show-popup #overlay { opacity: 1; visibility: visible; }
         .show-popup .popup-window.active { display: block; bottom: 0; } 
-
         .step { display: none; }
         .step.active { display: block; }
-        .q-title { color: var(--lime); font-weight: 900; text-transform: uppercase; font-size: 15px; margin-bottom: 20px; text-align: center; letter-spacing: 1px; } 
+        .q-title { color: var(--lime); font-weight: 900; text-transform: uppercase; font-size: 15px; margin-bottom: 20px; text-align: center; } 
         .opt-grid { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; margin-bottom: 15px; }
-        .opt-card { background: #181818; cursor: pointer; border: 1px solid #333; padding: 15px 10px; text-align: center; color: #fff; font-size: 11px; font-weight: 800; text-transform: uppercase; clip-path: polygon(0 0, 92% 0, 100% 25%, 100% 100%, 8% 100%, 0 75%); }
-        .opt-card.selected { border-color: var(--lime); color: var(--lime); background: rgba(223, 255, 0, 0.05); }
+        .opt-card { background: #181818; border: 1px solid #333; padding: 15px 10px; text-align: center; color: #fff; font-size: 11px; font-weight: 800; text-transform: uppercase; clip-path: polygon(0 0, 92% 0, 100% 25%, 100% 100%, 8% 100%, 0 75%); cursor: pointer; }
+        .opt-card.selected { border-color: var(--lime); color: var(--lime); }
+        .btn-next { width: 100%; border: none; padding: 18px; background: var(--lime); color: #000; font-weight: 900; text-transform: uppercase; margin-top: 15px; clip-path: polygon(0 0, 96% 0, 100% 20%, 100% 100%, 4% 100%, 0 80%); cursor: pointer; }
         input[type=range] { width: 100%; accent-color: var(--lime); margin: 15px 0; }
         .range-val { font-size: 32px; font-weight: 900; color: var(--lime); text-align: center; display: block; }
-        .range-label { font-size: 9px; text-transform: uppercase; color: #666; text-align: center; margin-top: -5px; margin-bottom: 10px; font-weight: 800; } 
-        .btn-next { width: 100%; border: none; cursor: pointer; padding: 18px; background: var(--lime); color: #000; font-weight: 900; text-transform: uppercase; text-align: center; margin-top: 15px; clip-path: polygon(0 0, 96% 0, 100% 20%, 100% 100%, 4% 100%, 0 80%); } 
+        .range-label { font-size: 9px; text-transform: uppercase; color: #666; text-align: center; font-weight: 800; }
         .soc-btn { background: #111; border: 1px solid #333; display: flex; align-items: center; gap: 15px; padding: 12px; clip-path: polygon(0 0, 98% 0, 100% 20%, 100% 100%, 2% 100%, 0 80%); text-decoration: none; margin-bottom: 10px; width: 100%; }
         .m-box { width: 40px; height: 40px; background: #000; border: 1px solid var(--lime); display: flex; align-items: center; justify-content: center; color: var(--lime); font-weight: 900; font-size: 20px; }
         .soc-btn span { color: #fff; font-weight: 800; text-transform: uppercase; font-size: 14px; }
-        .max-hint { font-size: 9px; color: #777; text-align: center; margin-top: -5px; margin-bottom: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        /* ПОРТФОЛИО */
-        .p-wrap { width: 100%; max-width: 500px; margin: 0 auto; padding: 50px 0 60px; background-color: #000; background-image: radial-gradient(circle at 50% 120%, rgba(223, 255, 17, 0.2) 0%, transparent 60%), radial-gradient(circle at 50% 50%, #0f0f0f 0%, #000 100%); font-family: 'Inter', sans-serif; overflow: hidden; color: #fff; } 
+        /* ПОРТФОЛИО С ГРАДИЕНТОМ */
+        .p-wrap { width: 100%; max-width: 500px; margin: 0 auto; padding: 50px 0 60px; background-color: #000; background-image: radial-gradient(circle at 50% 120%, rgba(223, 255, 17, 0.2) 0%, transparent 60%), radial-gradient(circle at 50% 50%, #0f0f0f 0%, #000 100%); overflow: hidden; color: #fff; } 
         .p-header { padding: 0 24px 25px; }
-        .p-header h2 { font-size: 32px; font-weight: 900; text-transform: uppercase; letter-spacing: -1.5px; margin: 0; display: inline-block; background: linear-gradient(90deg, #fff 70%, var(--lime) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .p-header .neon-line { height: 4px; width: 50px; background: var(--lime); border-radius: 10px; box-shadow: 0 0 15px var(--lime); margin-top: 5px; } 
+        .p-header h2 { font-size: 32px; font-weight: 900; text-transform: uppercase; background: linear-gradient(90deg, #fff 70%, var(--lime) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .p-slider { position: relative; width: 100%; }
         .p-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding: 0 24px 25px; gap: 15px; }
         .p-track::-webkit-scrollbar { display: none; } 
@@ -93,12 +78,11 @@
         .p-knob { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 46px; height: 46px; background: #000; border: 2px solid var(--lime); border-radius: 14px; display: flex; align-items: center; justify-content: center; }
         .p-knob::after { content: '↔'; color: var(--lime); font-weight: 900; } 
         .p-footer { margin-top: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .p-footer strong { font-size: 16px; font-weight: 900; text-transform: uppercase; color: #fff; }
-        .p-footer span { font-family: monospace; font-size: 14px; font-weight: 900; color: #555; } 
+        .p-footer strong { font-size: 14px; font-weight: 900; text-transform: uppercase; }
         .p-controls { margin: 10px 24px 0; display: flex; align-items: center; background: rgba(255,255,255,0.03); padding: 8px; border-radius: 20px; gap: 10px; border: 1px solid rgba(255,255,255,0.05); } 
-        .p-btn { width: 44px; height: 44px; background: #1a1a1a; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-weight: 900; cursor: pointer; color: #fff; border: 1px solid #333; }
+        .p-btn { width: 44px; height: 44px; background: #1a1a1a; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-weight: 900; cursor: pointer; color: #fff; }
         .p-bar-bg { flex: 1; height: 4px; background: #222; border-radius: 10px; position: relative; overflow: hidden; }
-        .p-bar-fill { position: absolute; height: 100%; width: 10%; background: var(--lime); border-radius: 10px; transition: all 0.4s ease; } 
+        .p-bar-fill { position: absolute; height: 100%; width: 10%; background: var(--lime); transition: 0.4s; } 
         .p-live { position: absolute; top: 20px; right: 20px; background: var(--lime); color: #000; padding: 5px 12px; border-radius: 10px; font-size: 10px; font-weight: 900; z-index: 5; }
     </style>
 </head>
@@ -106,10 +90,7 @@
 
     <section class="hero">
         <div class="hero-bg">
-            <picture>
-                <source srcset="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260131_002727_993.webp" type="image/webp">
-                <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260131_002727_993.jpg" alt="Спил деревьев Симферополь">
-            </picture>
+            <img src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260131_002727_993.jpg" alt="Спил деревьев">
         </div>
         <header class="header">
             <div class="status-tag"><div class="radar"></div>Симферополь</div>
@@ -119,17 +100,10 @@
             </div>
         </header> 
         <div class="main-box">
-            <h1 class="main-title">Профессиональный спил деревьев <span>и полная расчистка участков</span></h1>
-            <div class="industrial-eval">
-                <div class="aim-arrow">▼</div>
-                <button class="evaluation-badge-heavy" onclick="openPopup('eval')">
-                    <span class="ev-text-heavy">Оценка по фото // 5 минут</span>
-                </button>
-            </div>
-            <div class="desc">
-                Заезжаем на заросший участок — выезжаем с идеально чистого. Спил, измельчение веток и вывоз мусора.
-                <span class="highlight-line">Вам остается только принять работу.</span>
-            </div> 
+            <h1 class="main-title">Спил деревьев <span>и расчистка участков</span></h1>
+            <button class="evaluation-badge-heavy" onclick="openPopup('eval')">
+                <span class="ev-text-heavy">Оценка по фото // 5 минут</span>
+            </button>
             <button class="cta-btn-industrial" onclick="openPopup('quiz')">Узнать стоимость</button>
         </div>
     </section>
@@ -144,18 +118,41 @@
                 <button class="opt-card" onclick="setMode('Расчистка'); next('Land1')">Расчистка участка</button>
             </div>
         </div>
-        <div id="qFinal" class="step">
-            <div class="q-title">Расчет готов</div>
-            <div class="soc-grid">
-                <button class="soc-btn" onclick="go('MAX')"><div class="m-box">M</div><span>Messenger MAX</span></button>
-                <div class="max-hint">Зажмите поле ввода и выберите «Вставить»</div>
-                <button class="soc-btn" onclick="go('TG')"><div class="m-box" style="background:#fff;border:none;padding:8px"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="100%"></div><span>Telegram</span></button>
+        <div id="qTree1" class="step">
+            <div class="q-title">Параметры:</div>
+            <div class="range-label">Количество</div>
+            <div class="range-val" id="tCountVal">1</div>
+            <input type="range" min="1" max="50" value="1" oninput="upd('tCountVal', this.value, 'count')">
+            <button class="btn-next" onclick="next('CommonOut')">Далее</button>
+        </div>
+        <div id="qLand1" class="step">
+            <div class="q-title">Площадь:</div>
+            <div class="range-val" id="lAreaVal">5</div><div class="range-label">Соток</div>
+            <input type="range" min="1" max="100" value="5" oninput="upd('lAreaVal', this.value, 'area')">
+            <button class="btn-next" onclick="next('CommonOut')">Далее</button>
+        </div>
+        <div id="qCommonOut" class="step">
+            <div class="q-title">Нужен вывоз?</div>
+            <div class="opt-grid">
+                <button class="opt-card" onclick="setVal('out', 'Нужен'); finish()">Да</button>
+                <button class="opt-card" onclick="setVal('out', 'Нет'); finish()">Нет</button>
             </div>
+        </div>
+        <div id="qFinal" class="step">
+            <div class="q-title">Готово!</div>
+            <button class="soc-btn" onclick="go('TG')"><div class="m-box">TG</div><span>Telegram</span></button>
+            <button class="soc-btn" onclick="go('MAX')"><div class="m-box">M</div><span>Messenger MAX</span></button>
         </div>
     </div>
 
+    <div id="popupEval" class="popup-window">
+        <div class="q-title">Пришлите фото:</div>
+        <button onclick="goEval('TG')" class="soc-btn"><span>Telegram</span></button>
+        <button onclick="goEval('MAX')" class="soc-btn"><span>Messenger MAX</span></button>
+    </div>
+
     <section class="p-wrap">
-        <div class="p-header"><h2>Портфолио</h2><div class="neon-line"></div></div> 
+        <div class="p-header"><h2>Портфолио</h2></div> 
         <div class="p-slider">
             <div class="p-track" id="portTrack">
                 <div class="p-card" id="pc1">
@@ -164,7 +161,15 @@
                         <div class="p-img-full p-img-before lazy-bg" data-src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/Спил11.webp"></div>
                         <div class="p-handle"><div class="p-knob"></div></div>
                     </div>
-                    <div class="p-footer"><strong>Удаление деревьев</strong><span>01/10</span></div>
+                    <div class="p-footer"><strong>Удаление</strong><span>01/10</span></div>
+                </div>
+                <div class="p-card" id="pc2">
+                    <div class="p-img-area" onpointermove="portImgMove(event)" onpointerdown="portImgMove(event)">
+                        <div class="p-img-full lazy-bg" data-src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/Расчистка1.webp"></div>
+                        <div class="p-img-full p-img-before lazy-bg" data-src="https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/Расчистка11.webp"></div>
+                        <div class="p-handle"><div class="p-knob"></div></div>
+                    </div>
+                    <div class="p-footer"><strong>Расчистка</strong><span>02/10</span></div>
                 </div>
                 </div>
         </div>
@@ -176,45 +181,80 @@
     </section>
 
     <script>
-        let data = { mode:'', count:'1', h:'5', d:'30', area:'5', type:'', obs:[], rel:'', out:'', geo:'' };
+        let data = { mode:'', count:'1', area:'5', out:'' };
         let finalMsg = ""; 
         let popupTriggered = false;
 
-        // ЛОГИКА ТАЙМЕРА (15 секунд)
+        const links = { 
+            MAX: "https://max.ru/u/f9LHodD0cOKYGnigBf8f1GmElnhydAMPHC3daJ1KR-FyymDlxLNs2ky1EU0", 
+            TG: "https://t.me/daniil_glukhov17"
+        };
+
+        // ТАЙМЕР 15 СЕКУНД
         const autoOpenTimer = setTimeout(() => {
             if (!document.getElementById('mainBody').classList.contains('show-popup') && !popupTriggered) {
                 openPopup('quiz');
-                popupTriggered = true;
             }
         }, 15000);
 
-        function haptic() { if(navigator.vibrate) navigator.vibrate(50); } 
+        function haptic() { if(navigator.vibrate) navigator.vibrate(40); }
 
         function openPopup(t) { 
             clearTimeout(autoOpenTimer);
             popupTriggered = true;
-            haptic(); 
+            haptic();
             document.getElementById('mainBody').classList.add('show-popup');
             document.querySelectorAll('.popup-window').forEach(p=>p.classList.remove('active'));
-            if(t==='quiz') { document.getElementById('popupQuiz').classList.add('active'); }
-            else { document.getElementById('popupEval').classList.add('active'); }
-        } 
+            if(t==='quiz') document.getElementById('popupQuiz').classList.add('active');
+            else document.getElementById('popupEval').classList.add('active');
+        }
 
         function closePopup() { document.getElementById('mainBody').classList.remove('show-popup'); }
+        function next(id) { haptic(); document.querySelectorAll('.step').forEach(s=>s.classList.remove('active')); document.getElementById('q'+id).classList.add('active'); }
+        function setMode(m) { data.mode=m; haptic(); }
+        function setVal(k,v) { data[k]=v; haptic(); }
+        function upd(id, v, k) { document.getElementById(id).innerText=v; data[k]=v; }
+
+        async function finish() {
+            finalMsg = `Заявка: ${data.mode}\nПараметры: ${data.mode==='Спил'?data.count+' шт':data.area+' сот'}\nВывоз: ${data.out}`;
+            try { await navigator.clipboard.writeText(finalMsg); } catch(e){}
+            next('Final');
+        }
+
+        function go(p) { window.location.href = links[p]; }
+        function goEval(p) { window.location.href = links[p]; }
+
+        // ПОРТФОЛИО ЛОГИКА
+        function portImgMove(e) {
+            const b = e.currentTarget;
+            const bef = b.querySelector('.p-img-before');
+            const hnd = b.querySelector('.p-handle');
+            const r = b.getBoundingClientRect();
+            let x = (e.pageX || e.touches?.[0].pageX) - r.left;
+            let p = (x / r.width) * 100;
+            if (p >= 0 && p <= 100) {
+                bef.style.width = p + '%';
+                hnd.style.left = p + '%';
+            }
+        }
+
+        function portBtnGo(d) {
+            const trk = document.getElementById('portTrack');
+            trk.scrollLeft += d * 300;
+            haptic();
+        }
 
         // LAZY LOADING
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
+        const obs = new IntersectionObserver((es) => {
+            es.forEach(entry => {
                 if (entry.isIntersecting) {
                     const el = entry.target;
                     el.style.backgroundImage = `url(${el.getAttribute('data-src')})`;
                     el.classList.add('loaded');
                 }
             });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.lazy-bg').forEach(bg => observer.observe(bg));
-
-        // ... (вставь остальные свои функции: next, setMode, go, portImgMove и т.д.)
+        });
+        document.querySelectorAll('.lazy-bg').forEach(bg => obs.observe(bg));
     </script>
 </body>
 </html>

@@ -14,11 +14,11 @@
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background: #000; font-family: 'Inter Tight', sans-serif; height: 100vh; overflow: hidden; color: var(--white); }
 
-        /* ЭКРАН */
+        /* ФОНОВЫЙ БЛОК */
         .hero {
             position: relative; height: 100vh; width: 100%;
             background: url('https://raw.githubusercontent.com/daniilglukhov17-boop/-/main/IMG_20260131_002727_993.jpg') no-repeat center center;
-            background-size: cover; display: flex; flex-direction: column; padding: 25px 24px 40px;
+            background-size: cover; display: flex; flex-direction: column; padding: 20px 24px 30px;
         }
         .hero::after {
             content: ''; position: absolute; inset: 0;
@@ -27,58 +27,57 @@
         }
 
         /* ШАПКА */
-        .header { position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .status-tag { display: flex; align-items: center; gap: 8px; padding: 6px 14px; background: rgba(0,0,0,0.8); border: 1px solid var(--lime); border-radius: 2px; font-size: 10px; font-weight: 900; text-transform: uppercase; }
+        .header { position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .status-tag { display: flex; align-items: center; gap: 8px; padding: 6px 12px; background: rgba(0,0,0,0.8); border: 1px solid var(--lime); border-radius: 2px; font-size: 10px; font-weight: 900; text-transform: uppercase; }
         .radar { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; position: relative; }
         .radar::after { content: ''; position: absolute; inset: 0; background: var(--lime); border-radius: 50%; animation: wave 2s infinite; }
         @keyframes wave { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(4); opacity: 0; } }
         
         .header-info { text-align: right; }
-        .header-info a { color: #fff; text-decoration: none; font-weight: 900; font-size: 15px; display: block; }
-        .online-status { color: var(--lime); font-size: 9px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+        .header-info a { color: #fff; text-decoration: none; font-weight: 900; font-size: 14px; display: block; }
+        .online-status { color: var(--lime); font-size: 8px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
 
-        /* КОНТЕНТ */
+        /* КОНТЕНТ ЦЕНТР */
         .main-box { position: relative; z-index: 5; margin: auto 0; text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; }
         
-        /* ИСПРАВЛЕННЫЙ ЗАГОЛОВОК */
+        /* ЗАГОЛОВОК С ФИКСОМ СМЕЩЕНИЯ */
         .main-title { 
-            font-size: clamp(24px, 7.5vw, 48px); 
+            font-size: clamp(22px, 7vw, 44px); 
             font-weight: 900; 
             line-height: 1.1; 
             text-transform: uppercase; 
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             width: 100%;
             text-align: center;
-            word-wrap: break-word;
-            hyphens: auto;
+            letter-spacing: -0.5px;
         }
-        .main-title span { color: var(--lime); display: block; margin-top: 5px; }
+        .main-title span { color: var(--lime); display: block; margin-top: 4px; }
 
-        /* ПЛАШКА */
-        .industrial-eval { position: relative; margin-bottom: 35px; }
+        /* ИНДУСТРИАЛЬНАЯ ПЛАШКА */
+        .industrial-eval { position: relative; margin-bottom: 30px; }
         .aim-arrow { 
-            position: absolute; top: -28px; left: 50%; transform: translateX(-50%);
-            font-size: 22px; color: var(--lime); 
+            position: absolute; top: -25px; left: 50%; transform: translateX(-50%);
+            font-size: 20px; color: var(--lime); 
             animation: aimPush 0.8s infinite ease-in-out; 
             z-index: 6;
         }
-        @keyframes aimPush { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 8px); } }
+        @keyframes aimPush { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 6px); } }
 
         .evaluation-badge-heavy {
-            position: relative; display: inline-flex; align-items: center; padding: 12px 30px;
+            position: relative; display: inline-flex; align-items: center; padding: 10px 25px;
             background: transparent; border: 1px solid var(--lime);
-            clip-path: polygon(6% 0%, 100% 0%, 94% 100%, 0% 100%);
+            clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
             text-decoration: none; overflow: hidden;
         }
-        .ev-text-heavy { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; color: var(--lime); }
+        .ev-text-heavy { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; color: var(--lime); }
 
-        .desc { font-size: 14px; line-height: 1.5; max-width: 340px; margin-bottom: 35px; font-weight: 500; color: rgba(255,255,255,0.9); }
-        .highlight-line { display: block; color: var(--lime); font-weight: 900; text-transform: uppercase; font-size: 12px; margin-top: 8px; }
+        .desc { font-size: 13px; line-height: 1.4; max-width: 320px; margin-bottom: 30px; font-weight: 500; color: rgba(255,255,255,0.85); }
+        .highlight-line { display: block; color: var(--lime); font-weight: 900; text-transform: uppercase; font-size: 11px; margin-top: 6px; }
 
         .cta-btn { 
-            background: var(--white); color: #000; padding: 20px 45px; 
-            font-weight: 900; font-size: 14px; text-transform: uppercase; text-decoration: none;
-            clip-path: polygon(0 0, 95% 0, 100% 30%, 100% 100%, 5% 100%, 0 70%);
+            background: var(--white); color: #000; padding: 18px 40px; 
+            font-weight: 900; font-size: 13px; text-transform: uppercase; text-decoration: none;
+            clip-path: polygon(0 0, 96% 0, 100% 30%, 100% 100%, 4% 100%, 0 70%);
         }
 
         /* ПОПАП */
@@ -88,29 +87,29 @@
             background: rgba(223, 255, 0, 0.12); 
             backdrop-filter: blur(35px); -webkit-backdrop-filter: blur(35px);
             border-top: 4px solid var(--lime); border-radius: 30px 30px 0 0; 
-            padding: 40px 24px 60px; z-index: 101; 
+            padding: 30px 24px 50px; z-index: 101; 
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
             display: none;
         }
         .show-popup #overlay { opacity: 1; visibility: visible; }
         .show-popup .popup-window.active { display: block; bottom: 0; }
-        .popup-title { text-align:center; color: var(--lime); margin-bottom:30px; font-weight: 900; text-transform:uppercase; font-size: 18px; }
+        .popup-title { text-align:center; color: var(--lime); margin-bottom:25px; font-weight: 900; text-transform:uppercase; font-size: 16px; }
 
-        .social-stack { display: flex; flex-direction: column; gap: 15px; }
+        .social-stack { display: flex; flex-direction: column; gap: 12px; }
         .btn-industrial {
             background: rgba(0,0,0,0.9); border: 1px solid rgba(223, 255, 0, 0.3);
-            display: flex; align-items: center; gap: 20px; padding: 10px 15px;
+            display: flex; align-items: center; gap: 15px; padding: 8px 15px;
             clip-path: polygon(0 0, 98% 0, 100% 20%, 100% 100%, 2% 100%, 0 80%);
             text-decoration: none;
         }
         .messenger-icon {
-            width: 52px; height: 52px; background: #000; flex-shrink: 0;
+            width: 48px; height: 48px; background: #000; flex-shrink: 0;
             clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%);
             display: flex; align-items: center; justify-content: center;
-            border: 1px solid rgba(223, 255, 0, 0.5);
+            border: 1px solid rgba(223, 255, 0, 0.4);
         }
-        .m-letter { color: var(--lime); font-size: 26px; font-weight: 900; }
-        .btn-industrial span { color: var(--white); font-size: 17px; font-weight: 800; text-transform: uppercase; }
+        .m-letter { color: var(--lime); font-size: 24px; font-weight: 900; }
+        .btn-industrial span { color: var(--white); font-size: 16px; font-weight: 800; text-transform: uppercase; }
         .messenger-icon img { width: 100%; height: 100%; object-fit: cover; }
 
     </style>

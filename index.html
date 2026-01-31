@@ -199,6 +199,7 @@
 
     <script>
         let data = { mode:'', count:'1', h:'5', d:'30', area:'5', type:'', obs:[], rel:'', out:'', geo:'' };
+        let finalMsg = ""; // Глобальная переменная для сообщения
         const links = { 
             MAX: "https://max.ru/u/f9LHodD0cOL4xhpQUy8JbK8yPr7uYEfXPM1AH_b6oHgMJqbLvCFTKSImCAg", 
             TG: "https://t.me/daniil_glukhov17",
@@ -221,17 +222,13 @@
             document.querySelectorAll('.popup-window').forEach(p=>p.classList.remove('active'));
             if(t==='quiz') { document.getElementById('popupQuiz').classList.add('active'); resetSteps(); }
             else { document.getElementById('popupEval').classList.add('active'); }
-            
-            // Добавляем запись в историю, чтобы "Назад" закрыло только попап
             history.pushState({popup: true}, "");
         }
 
         function closePopup() { 
             document.getElementById('mainBody').classList.remove('show-popup');
-            // Если попап закрыт кликом на фон, убираем виртуальный шаг из истории
             if (history.state && history.state.popup) history.back();
         }
-        // ------------------------------------
 
         function resetSteps() { document.querySelectorAll('.step').forEach(s=>s.classList.remove('active')); document.getElementById('q1').classList.add('active'); }
         function next(id) { haptic(); document.querySelectorAll('.step').forEach(s=>s.classList.remove('active')); document.getElementById('q'+id).classList.add('active'); }
@@ -241,16 +238,36 @@
         function tgl(el, k, v) { haptic(); el.classList.toggle('selected'); if(Array.isArray(data[k])) { let i=data[k].indexOf(v); if(i>-1) data[k].splice(i,1); else data[k].push(v); } else data[k]=v; }
         
         async function finish() {
-            let msg = `🛠 ЗАЯВКА:\nУслуга: ${data.mode}\n`;
-            if(data.mode==='Спил') msg += `🌳 Кол-во: ${data.count}шт, Выс: ${data.h}м, Диам: ${data.d}см\n`;
-            else msg += `📏 Площадь: ${data.area}сот, Тип: ${data.type}\n`;
-            if(data.obs.length) msg += `⚠️ Особенности: ${data.obs.join(', ')}\n`;
-            if(data.rel) msg += `⛰ Рельеф: ${data.rel}\n`;
-            msg += `🚛 Вывоз: ${data.out}\n📍 Гео: ${data.geo}`;
-            try { await navigator.clipboard.writeText(msg); } catch(e){}
+            // Формируем красивое ТЗ
+            finalMsg = `🛠 ЗАЯВКА:\nУслуга: ${data.mode}\n`;
+            if(data.mode==='Спил') {
+                finalMsg += `🌳 Количество: ${data.count} шт.\n📏 Высота: ${data.h} м.\n🔘 Диаметр: ${data.d} см.\n`;
+            } else {
+                finalMsg += `📏 Площадь: ${data.area} сот.\n🌿 Тип: ${data.type}\n`;
+            }
+            if(data.obs.length) finalMsg += `⚠️ Помехи: ${data.obs.join(', ')}\n`;
+            if(data.rel) finalMsg += `⛰ Рельеф: ${data.rel}\n`;
+            finalMsg += `🚛 Вывоз: ${data.out}\n📍 ГЕО: ${data.geo}`;
+            
+            // Копируем в буфер (сработает при клике на финальный город)
+            try { await navigator.clipboard.writeText(finalMsg); } catch(e){}
             next('Final');
         }
-        function go(p) { haptic(); window.location.href = links[p]; }
+
+        function go(p) { 
+            haptic(); 
+            let encodedMsg = encodeURIComponent(finalMsg); 
+            
+            if (p === 'TG') {
+                window.location.href = `https://t.me/daniil_glukhov17?text=${encodedMsg}`;
+            } 
+            else if (p === 'VK') {
+                window.location.href = `https://vk.com/write-daniil_glukhov17?message=${encodedMsg}`;
+            } 
+            else if (p === 'MAX') {
+                window.location.href = links[p] + `?text=${encodedMsg}`;
+            }
+        }
     </script>
 </body>
 </html>
